@@ -1,0 +1,55 @@
+@use '../../theme/values/colors' as *;
+@use '../../theme/values/sizes' as *;
+
+.cat-sidebar {
+  width: 250px;
+  border-right: 1px solid $grey_dark;
+  padding-right: 20px;
+}
+
+.cat-sidebar__title {
+  color: $white;
+  margin: 0 0 8px;
+}
+
+.cat-sidebar__btn {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 5px;
+  background: $black;
+  color: $white;
+  border-radius: $smooth;
+  cursor: pointer;
+  border: none;
+  text-align: left;
+
+  &:hover {
+    background: $primary_dark;
+    color: $white_light;
+  }
+}
+
+.cat-sidebar__btn--all {
+  margin-bottom: 10px;
+}
+
+.cat-sidebar__btn--active {
+  background: $primary;
+  color: $white_light;
+}
+
+.cat-sidebar__stats {
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 1px solid $grey_dark;
+}
+
+.cat-sidebar__stats-title {
+  color: $grey_light;
+  margin: 0 0 8px;
+}
+
+.cat-sidebar__stat {
+  color: $grey_light;
+  margin: 4px 0;
+}

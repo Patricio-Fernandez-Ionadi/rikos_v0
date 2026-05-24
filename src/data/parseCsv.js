@@ -4,6 +4,10 @@ import { fileURLToPath } from 'node:url'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
+/**
+ * Parses an Argentine-format number string (e.g. "$5.500,50") into a float.
+ * Handles leading dollar signs, thousand separators (dots), and comma decimals.
+ */
 export function parseNumber(raw) {
   if (raw == null) return null
   const str = String(raw).trim()
@@ -16,6 +20,9 @@ export function parseNumber(raw) {
   return isNaN(n) ? null : n
 }
 
+/**
+ * Splits a CSV line into columns, respecting double-quote escaping.
+ */
 export function parseCsvLine(line) {
   const cols = []
   let current = ''
@@ -36,6 +43,10 @@ export function parseCsvLine(line) {
   return cols
 }
 
+/**
+ * Reads a CSV file (relative to this file's directory) and returns
+ * an object with headers and an array of row objects keyed by header.
+ */
 export function readCsv(filePath) {
   const fullPath = resolve(__dirname, filePath)
   const content = readFileSync(fullPath, 'utf-8')
@@ -55,6 +66,10 @@ export function readCsv(filePath) {
   return { headers, rows }
 }
 
+/**
+ * Extracts typed fields from a raw CSV row for the Rikos product schema.
+ * Column naming matches the original "productos-exel.csv" file.
+ */
 export function parseRow(raw) {
   return {
     catId: raw['Cat ID'] ? parseInt(raw['Cat ID'], 10) : null,

@@ -1,3 +1,11 @@
+/**
+ * Displays pricing details and calculated fields for a product's presentations.
+ *
+ * @param {Object}   props
+ * @param {Object|null}   props.selectedProd       Selected product object
+ * @param {Array}         props.presentations      Presentations belonging to the selected product
+ * @param {Function}      props.calculate          Calculation function (product, presentation) => derived fields
+ */
 export const ProductPresentation = ({
 	selectedProd,
 	presentations,
@@ -6,91 +14,57 @@ export const ProductPresentation = ({
 	return (
 		<>
 			{selectedProd && (
-				<div
-					style={{
-						marginTop: '25px',
-						padding: '20px',
-						border: '1px solid #ddd',
-						borderRadius: '4px',
-					}}
-				>
-					<h3>{selectedProd.name}</h3>
-					<p>
+				<div className="detail">
+					<h3 className="detail__title">{selectedProd.name}</h3>
+					<p className="detail__cost">
 						<strong>Costo de compra:</strong> $
 						{selectedProd.purchaseCost?.toLocaleString() ?? 'Sin datos'}
 					</p>
 
 					{presentations.length === 0 ? (
-						<p>No hay presentaciones para este producto</p>
+						<p className="empty">No hay presentaciones para este producto</p>
 					) : (
 						<>
-							<h4>Presentaciones:</h4>
-							<div
-								style={{
-									maxHeight: '300px',
-									overflowY: 'auto',
-									border: '1px solid #eee',
-									borderRadius: '4px',
-									padding: '10px',
-								}}
-							>
+							<h4 className="detail__pres-title">Presentaciones:</h4>
+							<div className="pres-list">
 								{presentations.map((pres) => {
 									const calc = calculate(selectedProd, pres)
+									const diffClass =
+										calc.priceDifference !== null
+											? calc.priceDifference < 0
+												? 'pres-card__diff--negative'
+												: calc.priceDifference > 0
+													? 'pres-card__diff--positive'
+													: 'pres-card__diff--neutral'
+											: 'pres-card__diff--neutral'
 									return (
-										<div
-											key={pres._id}
-											style={{
-												padding: '10px',
-												marginBottom: '10px',
-												border: '1px solid #f0f0f0',
-												borderRadius: '4px',
-											}}
-										>
-											<div
-												style={{
-													display: 'flex',
-													justifyContent: 'space-between',
-												}}
-											>
+										<div key={pres._id} className="pres-card">
+											<div className="pres-card__content">
 												<div>
-													<strong>{pres.label}</strong>
-													{pres.grams !== null
-														? `(${pres.grams}g)`
-														: '(unidad completa)'}
+													<div className="pres-card__label">{pres.label}</div>
+													<div className="pres-card__unit">
+														{pres.grams !== null
+															? `(${pres.grams}g)`
+															: '(unidad completa)'}
+													</div>
 												</div>
-												<div
-													style={{
-														textAlign: 'right',
-														minWidth: '150px',
-													}}
-												>
-													<div>Margen: {pres.margin ?? '—'}%</div>
-													<div>
+												<div className="pres-card__details">
+													<div className="pres-card__detail">
+														Margen: {pres.margin ?? '—'}%
+													</div>
+													<div className="pres-card__detail">
 														Costo pres.: $
 														{calc.costPerPresentation?.toLocaleString() ?? '—'}
 													</div>
-													<div>
+													<div className="pres-card__detail">
 														Precio lista: $
 														{calc.listPrice?.toLocaleString() ?? '—'}
 													</div>
-													<div>
+													<div className="pres-card__detail pres-card__sale">
 														Precio venta: $
 														{pres.salePrice?.toLocaleString() ?? 'Sin datos'}
 													</div>
-													<div
-														style={{
-															marginTop: '5px',
-															fontSize: '0.9em',
-															color:
-																calc.priceDifference !== null &&
-																calc.priceDifference < 0
-																	? '#d32f2f'
-																	: calc.priceDifference !== null &&
-																		  calc.priceDifference > 0
-																		? '#388e3c'
-																		: '#666',
-														}}
-													>
+													<div className={'pres-card__diff ' + diffClass}>
 														Diferencia:{' '}
 														{calc.priceDifferencePercent !== null
 															? `${calc.priceDifferencePercent.toFixed(2)}%`

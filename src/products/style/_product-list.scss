@@ -1,0 +1,43 @@
+@use '../../theme/values/colors' as *;
+@use '../../theme/values/sizes' as *;
+
+.product-list {
+  max-height: 400px;
+  overflow-y: auto;
+  border: 1px solid $grey_dark;
+  border-radius: $smooth;
+}
+
+.product-list__item {
+  padding: 12px;
+  border-bottom: 1px solid $black_light;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.product-list__item--selected {
+  background: $primary_darken_light;
+}
+
+.product-list__item-name {
+  color: $white;
+  font-weight: 700;
+}
+
+.product-list__item-cost {
+  color: $grey;
+  font-size: 0.85em;
+}
+
+.product-list__item-meta {
+  text-align: right;
+  min-width: 120px;
+  color: $grey_light;
+  font-size: 0.85em;
+}

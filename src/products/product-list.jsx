@@ -1,3 +1,14 @@
+/**
+ * Displays a list of products filtered by the selected category.
+ * Clicking a product triggers the onEvent callback with the product ID.
+ *
+ * @param {Object}        props
+ * @param {Object|null}   props.selectedCat       Selected category object (falsy means "all")
+ * @param {Function}      props.onEvent           Callback when a product is clicked (receives product ID)
+ * @param {Array}         props.filteredProducts  Products to display
+ * @param {string|null}   props.selectedProd      Currently selected product ID
+ * @param {Array}         props.presentations     All presentations (used to compute per-product counts)
+ */
 export const ProductList = ({
 	selectedCat,
 	onEvent,
@@ -8,72 +19,55 @@ export const ProductList = ({
 	return (
 		<>
 			{!selectedCat ? (
-				<div style={{ textAlign: 'center', padding: '40px', color: '#666' }}>
+				<div className="placeholder">
 					<h3>Selecciona una categoría</h3>
 					<p>Para ver los productos disponibles</p>
 				</div>
 			) : filteredProducts.length === 0 ? (
-				<div style={{ textAlign: 'center', padding: '40px', color: '#666' }}>
+				<div className="placeholder">
 					<h3>No hay productos en esta categoría</h3>
 				</div>
 			) : (
 				<>
 					<h3>Productos</h3>
-					<div
-						style={{
-							maxHeight: '400px',
-							overflowY: 'auto',
-							border: '1px solid #ddd',
-							borderRadius: '4px',
-						}}
-					>
-						{filteredProducts.map((product) => (
-							<div
-								key={product._id}
-								onClick={() => onEvent(product._id)}
-								style={{
-									padding: '12px',
-									borderBottom: '1px solid #f0f0f0',
-									background:
-										selectedProd === product._id ? '#e9f5ff' : 'white',
-									cursor: 'pointer',
-								}}
-							>
+					<div className="product-list">
+						{filteredProducts.map((product) => {
+							const presCount = presentations.filter(
+								(p) => p.productId === product._id
+							)
+							return (
 								<div
-									style={{
-										display: 'flex',
-										justifyContent: 'space-between',
-										alignItems: 'center',
-									}}
+									key={product._id}
+									className={
+										'product-list__item' +
+										(selectedProd === product._id
+											? ' product-list__item--selected'
+											: '')
+									}
+									onClick={() => onEvent(product._id)}
 								>
 									<div>
-										<strong>{product.name}</strong>
-										<br />
-										<small style={{ color: '#666' }}>
-											Costo: $
+										<div className="product-list__item-name">{product.name}</div>
+										<div className="product-list__item-cost">
+											Costo: ${' '}
 											{product.purchaseCost?.toLocaleString() ?? 'Sin datos'}
-										</small>
+										</div>
 									</div>
-									<div style={{ textAlign: 'right', minWidth: '120px' }}>
-										{presentations.length > 0 ? (
+									<div className="product-list__item-meta">
+										{presCount.length > 0 ? (
 											<>
-												<strong>{presentations.length}</strong> presentaciones
+												<strong>{presCount.length}</strong> presentaciones
 												<br />
-												<small style={{ color: '#666' }}>
-													{
-														presentations.filter((p) => p.salePrice !== null)
-															.length
-													}{' '}
-													con precio
-												</small>
+												{presCount.filter((p) => p.salePrice !== null).length} con
+												precio
 											</>
 										) : (
-											<span style={{ color: '#999' }}>Sin presentaciones</span>
+											'Sin presentaciones'
 										)}
 									</div>
 								</div>
-							</div>
-						))}
+							)
+						})}
 					</div>
 				</>
 			)}

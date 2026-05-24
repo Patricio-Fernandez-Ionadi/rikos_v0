@@ -1,0 +1,10 @@
+@use '../../theme/values/colors' as *;
+
+.app-header {
+  h1 {
+    color: $white;
+    font-size: 56px;
+    letter-spacing: -1.68px;
+    margin: 32px 0;
+  }
+}

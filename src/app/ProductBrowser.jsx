@@ -6,6 +6,11 @@ import {
 	calculate,
 } from '../data/index.js'
 
+/**
+ * Main product browsing interface.
+ * Displays a category sidebar, product list, and presentation detail panel.
+ * All data is read from the static seed via mock.js; calculations are derived on render.
+ */
 export const ProductBrowser = () => {
 	console.log('Data loaded:', {
 		categoriesCount: categories.length,
@@ -16,47 +21,31 @@ export const ProductBrowser = () => {
 	const [selectedCategoryId, setSelectedCategoryId] = useState(null)
 	const [selectedProductId, setSelectedProductId] = useState(null)
 
-	// Get products for selected category (or all if none selected)
 	const filteredProducts = selectedCategoryId
 		? products.filter((p) => p.categoryId === selectedCategoryId)
 		: products
 
-	// Get selected product
 	const selectedProduct = selectedProductId
 		? products.find((p) => p._id === selectedProductId)
 		: null
 
-	// Get presentations for selected product
 	const productPresentations = selectedProduct
 		? presentations.filter((p) => p.productId === selectedProduct._id)
 		: []
 
 	return (
-		<div style={{ padding: '20px', fontFamily: 'Arial, sans-serif' }}>
-			<h2>RIKOS - Navegador de Productos</h2>
+		<div className="product-browser">
+			<h2 className="product-browser__title">RIKOS - Navegador de Productos</h2>
 
-			<div style={{ display: 'flex', gap: '20px', marginBottom: '30px' }}>
-				{/* Category Sidebar */}
-				<div
-					style={{
-						width: '250px',
-						borderRight: '1px solid #eee',
-						paddingRight: '20px',
-					}}
-				>
-					<h3>Categorías</h3>
+			<div className="product-browser__layout">
+				<div className="sidebar">
+					<h3 className="sidebar__title">Categorías</h3>
 					<button
+						className={
+							'sidebar__btn sidebar__btn--all' +
+							(selectedCategoryId === null ? ' sidebar__btn--active' : '')
+						}
 						onClick={() => setSelectedCategoryId(null)}
-						style={{
-							width: '100%',
-							padding: '8px',
-							marginBottom: '10px',
-							background: selectedCategoryId === null ? '#007bff' : '#f8f9fa',
-							color: selectedCategoryId === null ? 'white' : 'black',
-							border: 'none',
-							borderRadius: '4px',
-							cursor: 'pointer',
-						}}
 					>
 						Todas las categorías
 					</button>
@@ -64,210 +53,139 @@ export const ProductBrowser = () => {
 					{categories.map((category) => (
 						<button
 							key={category._id}
+							className={
+								'sidebar__btn' +
+								(selectedCategoryId === category._id ? ' sidebar__btn--active' : '')
+							}
 							onClick={() => setSelectedCategoryId(category._id)}
-							style={{
-								width: '100%',
-								padding: '8px',
-								marginBottom: '5px',
-								background:
-									selectedCategoryId === category._id ? '#007bff' : '#f8f9fa',
-								color: selectedCategoryId === category._id ? 'white' : 'black',
-								border: 'none',
-								borderRadius: '4px',
-								cursor: 'pointer',
-							}}
 						>
 							{category.name}
 						</button>
 					))}
 
-					<div
-						style={{
-							marginTop: '20px',
-							paddingTop: '15px',
-							borderTop: '1px solid #eee',
-						}}
-					>
-						<h4>Estadísticas</h4>
-						<p>Total categorías: {categories.length}</p>
-						<p>Total productos: {products.length}</p>
-						<p>Productos en vista: {filteredProducts.length}</p>
-						<p>
+					<div className="sidebar__stats">
+						<h4 className="sidebar__stats-title">Estadísticas</h4>
+						<p className="sidebar__stat">Total categorías: {categories.length}</p>
+						<p className="sidebar__stat">Total productos: {products.length}</p>
+						<p className="sidebar__stat">Productos en vista: {filteredProducts.length}</p>
+						<p className="sidebar__stat">
 							Productos sin costo:{' '}
 							{filteredProducts.filter((p) => p.purchaseCost === null).length}
 						</p>
 					</div>
 				</div>
 
-				{/* Main Content */}
-				<div style={{ flex: 1 }}>
+				<div className="product-browser__main">
 					{!selectedCategoryId ? (
-						<div
-							style={{ textAlign: 'center', padding: '40px', color: '#666' }}
-						>
+						<div className="placeholder">
 							<h3>Selecciona una categoría</h3>
 							<p>Para ver los productos disponibles</p>
 						</div>
 					) : filteredProducts.length === 0 ? (
-						<div
-							style={{ textAlign: 'center', padding: '40px', color: '#666' }}
-						>
+						<div className="placeholder">
 							<h3>No hay productos en esta categoría</h3>
 						</div>
 					) : (
 						<>
 							<h3>Productos</h3>
-							<div
-								style={{
-									maxHeight: '400px',
-									overflowY: 'auto',
-									border: '1px solid #ddd',
-									borderRadius: '4px',
-								}}
-							>
-								{filteredProducts.map((product) => (
-									<div
-										key={product._id}
-										onClick={() => setSelectedProductId(product._id)}
-										style={{
-											padding: '12px',
-											borderBottom: '1px solid #f0f0f0',
-											background:
-												selectedProductId === product._id ? '#e9f5ff' : 'white',
-											cursor: 'pointer',
-										}}
-									>
+							<div className="product-list">
+								{filteredProducts.map((product) => {
+									const presCount = presentations.filter(
+										(p) => p.productId === product._id
+									)
+									return (
 										<div
-											style={{
-												display: 'flex',
-												justifyContent: 'space-between',
-												alignItems: 'center',
-											}}
+											key={product._id}
+											className={
+												'product-list__item' +
+												(selectedProductId === product._id
+													? ' product-list__item--selected'
+													: '')
+											}
+											onClick={() => setSelectedProductId(product._id)}
 										>
 											<div>
-												<strong>{product.name}</strong>
-												<br />
-												<small style={{ color: '#666' }}>
-													Costo: $
-													{product.purchaseCost?.toLocaleString() ??
-														'Sin datos'}
-												</small>
+												<div className="product-list__item-name">{product.name}</div>
+												<div className="product-list__item-cost">
+													Costo: ${' '}
+													{product.purchaseCost?.toLocaleString() ?? 'Sin datos'}
+												</div>
 											</div>
-											<div style={{ textAlign: 'right', minWidth: '120px' }}>
-												{productPresentations.length > 0 ? (
+											<div className="product-list__item-meta">
+												{presCount.length > 0 ? (
 													<>
-														<strong>{productPresentations.length}</strong>{' '}
-														presentaciones
+														<strong>{presCount.length}</strong> presentaciones
 														<br />
-														<small style={{ color: '#666' }}>
-															{
-																productPresentations.filter(
-																	(p) => p.salePrice !== null,
-																).length
-															}{' '}
-															con precio
-														</small>
+														{
+															presCount.filter((p) => p.salePrice !== null).length
+														}{' '}
+														con precio
 													</>
 												) : (
-													<span style={{ color: '#999' }}>
-														Sin presentaciones
-													</span>
+													'Sin presentaciones'
 												)}
 											</div>
 										</div>
-									</div>
-								))}
+									)
+								})}
 							</div>
 
 							{selectedProduct && (
-								<div
-									style={{
-										marginTop: '25px',
-										padding: '20px',
-										border: '1px solid #ddd',
-										borderRadius: '4px',
-									}}
-								>
-									<h3>{selectedProduct.name}</h3>
-									<p>
+								<div className="detail">
+									<h3 className="detail__title">{selectedProduct.name}</h3>
+									<p className="detail__cost">
 										<strong>Costo de compra:</strong> $
-										{selectedProduct.purchaseCost?.toLocaleString() ??
-											'Sin datos'}
+										{selectedProduct.purchaseCost?.toLocaleString() ?? 'Sin datos'}
 									</p>
 
 									{productPresentations.length === 0 ? (
-										<p>No hay presentaciones para este producto</p>
+										<p className="empty">No hay presentaciones para este producto</p>
 									) : (
 										<>
-											<h4>Presentaciones:</h4>
-											<div
-												style={{
-													maxHeight: '300px',
-													overflowY: 'auto',
-													border: '1px solid #eee',
-													borderRadius: '4px',
-													padding: '10px',
-												}}
-											>
+											<h4 className="detail__pres-title">Presentaciones:</h4>
+											<div className="pres-list">
 												{productPresentations.map((pres) => {
 													const calc = calculate(selectedProduct, pres)
+													const diffClass =
+														calc.priceDifference !== null
+															? calc.priceDifference < 0
+																? 'pres-card__diff--negative'
+																: calc.priceDifference > 0
+																	? 'pres-card__diff--positive'
+																	: 'pres-card__diff--neutral'
+															: 'pres-card__diff--neutral'
 													return (
-														<div
-															key={pres._id}
-															style={{
-																padding: '10px',
-																marginBottom: '10px',
-																border: '1px solid #f0f0f0',
-																borderRadius: '4px',
-															}}
-														>
-															<div
-																style={{
-																	display: 'flex',
-																	justifyContent: 'space-between',
-																}}
-															>
+														<div key={pres._id} className="pres-card">
+															<div className="pres-card__content">
 																<div>
-																	<strong>{pres.label}</strong>
-																	{pres.grams !== null
-																		? `(${pres.grams}g)`
-																		: '(unidad completa)'}
+																	<div className="pres-card__label">
+																		{pres.label}
+																	</div>
+																	<div className="pres-card__unit">
+																		{pres.grams !== null
+																			? `(${pres.grams}g)`
+																			: '(unidad completa)'}
+																	</div>
 																</div>
-																<div
-																	style={{
-																		textAlign: 'right',
-																		minWidth: '150px',
-																	}}
-																>
-																	<div>Margen: {pres.margin ?? '—'}%</div>
-																	<div>
+																<div className="pres-card__details">
+																	<div className="pres-card__detail">
+																		Margen: {pres.margin ?? '—'}%
+																	</div>
+																	<div className="pres-card__detail">
 																		Costo pres.: $
 																		{calc.costPerPresentation?.toLocaleString() ??
 																			'—'}
 																	</div>
-																	<div>
+																	<div className="pres-card__detail">
 																		Precio lista: $
 																		{calc.listPrice?.toLocaleString() ?? '—'}
 																	</div>
-																	<div>
+																	<div className="pres-card__detail pres-card__sale">
 																		Precio venta: $
 																		{pres.salePrice?.toLocaleString() ??
 																			'Sin datos'}
 																	</div>
-																	<div
-																		style={{
-																			marginTop: '5px',
-																			fontSize: '0.9em',
-																			color:
-																				calc.priceDifference !== null &&
-																				calc.priceDifference < 0
-																					? '#d32f2f'
-																					: calc.priceDifference !== null &&
-																						  calc.priceDifference > 0
-																						? '#388e3c'
-																						: '#666',
-																		}}
-																	>
+																	<div className={'pres-card__diff ' + diffClass}>
 																		Diferencia:{' '}
 																		{calc.priceDifferencePercent !== null
 																			? `${calc.priceDifferencePercent.toFixed(2)}%`

@@ -1,0 +1,85 @@
+@use '../../theme/values/colors' as *;
+@use '../../theme/values/sizes' as *;
+
+.detail {
+  margin-top: 25px;
+  padding: 20px;
+  border: 1px solid $grey_dark;
+  border-radius: $smooth;
+}
+
+.detail__title {
+  color: $white;
+  margin: 0 0 8px;
+}
+
+.detail__cost {
+  margin: 0 0 12px;
+  color: $grey;
+}
+
+.pres-list {
+  max-height: 300px;
+  overflow-y: auto;
+  border: 1px solid $black_light;
+  border-radius: $smooth;
+  padding: 10px;
+}
+
+.pres-card {
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid $black_light;
+  border-radius: $smooth;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.pres-card__content {
+  display: flex;
+  justify-content: space-between;
+}
+
+.pres-card__label {
+  font-weight: 700;
+  color: $white;
+}
+
+.pres-card__unit {
+  color: $grey;
+  font-size: 0.85em;
+}
+
+.pres-card__details {
+  text-align: right;
+  min-width: 150px;
+  color: $grey;
+  font-size: 0.9em;
+}
+
+.pres-card__detail {
+  margin: 2px 0;
+}
+
+.pres-card__sale {
+  color: $grey_light;
+}
+
+.pres-card__diff {
+  margin-top: 5px;
+  font-size: 0.9em;
+}
+
+.pres-card__diff--positive {
+  color: $success;
+}
+
+.pres-card__diff--negative {
+  color: $error;
+}
+
+.pres-card__diff--neutral {
+  color: $grey;
+}
