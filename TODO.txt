@@ -1,0 +1,3 @@
+- agregar router
+- libreria o forma de ñadir ids unicos
+- uso de libreria propia (groker)

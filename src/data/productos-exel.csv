@@ -1,0 +1,246 @@
+Cat ID,Categoria,Producto,Costo Un.,Gr,Costo Pr.xUn.,Margen (%),Precio Lista,Equivalente x Kg,venta,Unidades por Kg,% diferencia,$ diferencia
+1,Aceites y Vinagres,aceite coco entrenuts 360,"$5.578,0",,"$5.578,0",30,"$7.251,4","$7.251,4",$7.990,0,"10,2",$739
+1,Aceites y Vinagres,aceite oliva oleovares,"$5.320,0",,"$5.320,0",50,"$7.980,0","$0,0",$8.800,,"10,3",$820
+1,Aceites y Vinagres,aceto basamico oleovares,"$3.915,0",,"$3.915,0",50,"$5.872,5","$0,0",$6.500,,"10,7",$628
+2,Condimentos y Especias,aji,"$6.077,0",50,"$303,9",80,"$546,9","$10.938,6",$790,20,"44,4",$243
+2,Condimentos y Especias,ajo en polvo,"$6.897,0",50,"$344,9",50,"$517,3","$10.345,5",$700,20,"35,3",$183
+7,Galletas / Alfajores / Dulces,alfajor abuela mecha,,,,70,"$0,0","$0,0",$950,,-,$950
+7,Galletas / Alfajores / Dulces,alfajor celi energy algarroba,"$1.278,0",,"$1.278,0",60,"$2.044,8","$0,0",$2.200,,"7,6",$155
+7,Galletas / Alfajores / Dulces,alfajor celi energy nuez,"$1.278,0",,"$1.278,0",60,"$2.044,8","$0,0",$2.200,,"7,6",$155
+7,Galletas / Alfajores / Dulces,alfajor ceral blanco,,,,50,"$0,0","$0,0",$1.500,,-,$1.500
+7,Galletas / Alfajores / Dulces,alfajor ceral negro,,,,50,"$0,0","$0,0",$1.500,,-,$1.500
+7,Galletas / Alfajores / Dulces,alfajor cerro azul dulce de leche,,,,50,"$0,0","$0,0",$2.300,,-,$2.300
+7,Galletas / Alfajores / Dulces,alfajor cerro azul moka,"$1.424,0",,"$1.424,0",50,"$2.136,0","$0,0",$2.300,,"7,7",$164
+7,Galletas / Alfajores / Dulces,alfajor lulemuu ddl,"$500,0",,"$500,0",70,"$850,0","$0,0",$990,,"16,5",$140
+7,Galletas / Alfajores / Dulces,alfajor lulemuu limon,"$500,0",,"$500,0",70,"$850,0","$0,0",$990,,"16,5",$140
+7,Galletas / Alfajores / Dulces,algas laminadas,"$7.009,0",,"$7.009,0",50,"$10.513,5","$10.513,5",,,"-100,0",-$10.514
+11,Productos funcionales / varios,algas nory argendiet,"$2.540,0",,"$2.540,0",50,"$3.810,0","$3.810,0",,,"-100,0",-$3.810
+3,Frutos Secos,almendras 25/27,"$20.000,0",100,"$2.000,0",60,"$3.200,0","$32.000,0",$3.700,10,"15,6",$500
+6,Snacks saludables,almohadita avellana,"$6.040,0",200,"$1.208,0",60,"$1.932,8","$9.664,0",$2.200,5,"13,8",$267
+6,Snacks saludables,almohadita chocolate,"$6.480,0",200,"$1.296,0",60,"$2.073,6","$10.368,0",$2.200,5,"6,1",$126
+6,Snacks saludables,almohadita frutilla,"$6.040,0",200,"$1.208,0",60,"$1.932,8","$9.664,0",$2.200,5,"13,8",$267
+6,Snacks saludables,almohadita salvado,"$4.133,0",200,"$826,6",60,"$1.322,6","$6.612,8",$1.500,5,"13,4",$177
+9,Infusiones y Hierbas,anis estrellado,"$33.716,0",30,"$1.011,5",50,"$1.517,2","$50.574,0",$1.700,33,"12,0",$183
+2,Condimentos y Especias,anis grano,"$11.732,0",50,"$586,6",50,"$879,9",,$1.000,20,"13,6",$120
+7,Galletas / Alfajores / Dulces,arrocitas dulces,"$1.100,0",,"$1.100,0",60,"$1.760,0","$0,0",$1.900,,"8,0",$140
+7,Galletas / Alfajores / Dulces,arrocitas saladas,"$1.100,0",,"$1.100,0",60,"$1.760,0","$0,0",$1.900,,"8,0",$140
+7,Galletas / Alfajores / Dulces,arrocitas sin sal,"$1.100,0",,"$1.100,0",60,"$1.760,0","$0,0",$1.900,,"8,0",$140
+7,Galletas / Alfajores / Dulces,arrocitas tres cereales,"$1.100,0",,"$1.100,0",60,"$1.760,0","$0,0",$1.900,,"8,0",$140
+7,Galletas / Alfajores / Dulces,arroz discos yela,"$877,0",,"$877,0",50,"$1.315,5","$1.315,5",$1.500,,"14,0",$185
+4,Cereales y Legumbres,arroz yamani,"$1.473,0",500,"$736,5",70,"$1.252,1","$2.504,1",$1.500,2,"19,8",$248
+4,Cereales y Legumbres,arroz yamani integral,"$2.084,0",500,"$1.042,0",70,"$1.771,4","$3.542,8",$2.050,2,"15,7",$279
+4,Cereales y Legumbres,arvejas enteras,"$1.292,0",,"$1.292,0",50,"$1.938,0","$0,0",,,"-100,0",-$1.938
+4,Cereales y Legumbres,avena instantanea,"$1.600,0",250,"$400,0",30,"$520,0","$2.080,0",$1.200,4,"130,8",$680
+2,Condimentos y Especias,azafran español,"$9.990,0",48,"$479,5",50,"$719,3","$14.985,0",$800,21,"11,2",$81
+5,Harinas y Azúcares,azucar impalpable,"$1.957,0",50,"$97,9",70,"$166,3","$3.326,9",$200,20,"20,2",$34
+5,Harinas y Azúcares,azucar mascabo x500,"$3.157,0",500,"$1.578,5",50,"$2.367,8","$4.735,5",$2.600,2,"9,8",$232
+8,Barras y Golosinas,barritas de ch. organico,"$400,0",,"$400,0",50,"$600,0","$0,0",$700,,"16,7",$100
+8,Barras y Golosinas,barritas lulemuu choco,"$400,0",,"$400,0",55,"$620,0","$0,0",$700,,"12,9",$80
+8,Barras y Golosinas,barritas lulemuu yogurt,"$400,0",,"$400,0",55,"$620,0","$0,0",$700,,"12,9",$80
+8,Barras y Golosinas,barritas zafran,"$800,0",,"$800,0",50,"$1.200,0","$0,0",$1.400,,"16,7",$200
+12,Sin clasificar (temporal),bastones de salvado,"$4.280,0",200,"$856,0",70,"$1.455,2","$7.276,0",,5,"-100,0",-$1.455
+2,Condimentos y Especias,bicarbonato de sodio x200,"$2.697,0",200,"$539,4",50,"$809,1","$4.045,5",,5,"-100,0",-$809
+2,Condimentos y Especias,bicarbonato de sodio x500,"$2.697,0",500,"$1.348,5",70,"$2.292,5","$4.584,9",$1.500,2,"-34,6",-$792
+8,Barras y Golosinas,bocaditos shih maiz,"$800,0",,"$800,0",40,"$1.120,0","$0,0",$1.300,,"16,1",$180
+8,Barras y Golosinas,bocaditos shih trigo,"$800,0",,"$800,0",40,"$1.120,0","$0,0",$1.300,,"16,1",$180
+9,Infusiones y Hierbas,boldo,"$12.211,0",50,"$610,6",60,"$976,9","$19.537,6",$1.100,20,"12,6",$123
+8,Barras y Golosinas,bombon fruta,"$180,0",,"$180,0",50,"$270,0","$0,0",$300,,"11,1",$30
+9,Infusiones y Hierbas,burrito,"$8.606,0",50,"$430,3",80,"$774,5","$15.490,8",$990,20,"27,8",$215
+10,Cacao y Repostería,cacao alcalino amargo sin tacc,"$38.502,0",,"$38.502,0",50,"$57.753,0","$0,0",,,"-100,0",-$57.753
+10,Cacao y Repostería,cacao en polvo x200,"$13.459,0",100,"$1.345,9",50,"$2.018,9","$20.188,5",$2.200,10,"9,0",$181
+3,Frutos Secos,caju w4 x100,"$15.730,0",100,"$1.573,0",50,"$2.359,5","$23.595,0",$2.790,10,"18,2",$431
+9,Infusiones y Hierbas,caldo con sal x 10 argendiet,"$1.075,0",,"$1.075,0",80,"$1.935,0","$0,0",,,"-100,0",-$1.935
+9,Infusiones y Hierbas,caldo con sal x30grs fram,"$1.834,0",,"$1.834,0",60,"$2.934,4","$0,0",,,"-100,0",-$2.934
+9,Infusiones y Hierbas,caldo sin sal x10 argendiet,"$1.075,0",,"$1.075,0",80,"$1.935,0","$0,0",,,"-100,0",-$1.935
+9,Infusiones y Hierbas,canela en rama sticks,"$32.120,0",50,"$1.606,0",50,"$2.409,0",,$2.700,20,"12,1",$291
+2,Condimentos y Especias,canela molida premium,"$13.351,0",,"$13.351,0",50,"$20.026,5",,,,"-100,0",-$20.027
+8,Barras y Golosinas,caramelo propoleo,"$8.311,0",60,"$498,7",50,"$748,0","$12.466,5",,17,"-100,0",-$748
+8,Barras y Golosinas,caramelos ddl sin azucar,"$217,0",,"$217,0",40,"$303,8","$0,0",$495,,"62,9",$191
+8,Barras y Golosinas,caramelos eucaliptus,"$7.866,0",60,"$472,0",50,"$707,9","$11.799,0",,17,"-100,0",-$708
+8,Barras y Golosinas,caramelos miel,"$7.866,0",60,"$472,0",50,"$707,9","$11.799,0",,17,"-100,0",-$708
+9,Infusiones y Hierbas,carqueja,"$9.225,0",50,"$461,3",50,"$691,9",,$800,20,"15,6",$108
+2,Condimentos y Especias,cebolla en escama,"$9.323,0",50,"$466,2",50,"$699,2","$13.984,5",$790,20,"13,0",$91
+9,Infusiones y Hierbas,cedron,"$21.570,0",50,"$1.078,5",50,"$1.617,8","$32.355,0",$1.900,20,"17,4",$282
+2,Condimentos y Especias,chimichurri,"$5.180,0",50,"$259,0",80,"$466,2","$9.324,0",$500,20,"7,3",$34
+6,Snacks saludables,chips de banana,"$11.400,0",100,"$1.140,0",50,"$1.710,0","$17.100,0",$1.900,10,"11,1",$190
+8,Barras y Golosinas,chocolatina semi amarga,"$190,0",,"$190,0",50,"$285,0","$0,0",$333,,"16,8",$48
+8,Barras y Golosinas,chocolatinas con leche sin azucar,"$190,0",,"$190,0",50,"$285,0","$0,0",$333,,"16,8",$48
+9,Infusiones y Hierbas,coco en escamas,"$16.975,0",50,"$848,8",50,"$1.273,1","$25.462,5",$1.500,20,"17,8",$227
+5,Harinas y Azúcares,coco en polvo,"$7.573,0",250,"$1.893,3",50,"$2.839,9","$11.359,5",$3.000,4,"5,6",$160
+10,Cacao y Repostería,coco rallado x200,"$8.000,0",200,"$1.600,0",50,"$2.400,0","$12.000,0",$2.700,5,"12,5",$300
+9,Infusiones y Hierbas,cola de caballo,"$5.654,0",50,"$282,7",80,"$508,9","$10.177,2",$690,20,"35,6",$181
+2,Condimentos y Especias,comino,"$7.245,0",50,"$362,3",70,"$615,8","$12.316,5",$750,20,"21,8",$134
+2,Condimentos y Especias,condimento p. empanadas,"$5.015,0",,"$5.015,0",50,"$7.522,5",,,,"-100,0",-$7.523
+2,Condimentos y Especias,condimento p. ravioles,"$5.015,0",,"$5.015,0",50,"$7.522,5",,,,"-100,0",-$7.523
+2,Condimentos y Especias,condimento para carne,"$4.793,0",50,"$239,7",80,"$431,4","$8.627,4",$550,20,"27,5",$119
+2,Condimentos y Especias,condimento para pizza,"$4.043,0",50,"$202,2",90,"$384,1","$7.681,7",$390,20,"1,5",$6
+4,Cereales y Legumbres,copos azucarados,"$4.325,0",200,"$865,0",50,"$1.297,5","$6.487,5",$1.400,5,"7,9",$103
+4,Cereales y Legumbres,copos naturales,"$3.914,0",200,"$782,8",50,"$1.174,2","$5.871,0",$1.400,5,"19,2",$226
+7,Galletas / Alfajores / Dulces,coquito anis,"$6.250,0",200,"$1.250,0",50,"$1.875,0","$9.375,0",$2.000,5,"6,7",$125
+2,Condimentos y Especias,curcuma,"$4.346,0",50,"$217,3",50,"$326,0","$6.519,0",,20,"-100,0",-$326
+2,Condimentos y Especias,curcuma india,"$8.092,0",50,"$404,6",90,"$768,7","$15.374,8",$900,20,"17,1",$131
+2,Condimentos y Especias,curri india,"$10.789,0",50,"$539,5",50,"$809,2",,$700,20,"-13,5",-$109
+6,Snacks saludables,datil c. carozo argelia,"$9.908,0",,"$9.908,0",50,"$14.862,0",,,,"-100,0",-$14.862
+2,Condimentos y Especias,especias surtidas,"$5.572,0",50,"$278,6",90,"$529,3","$10.586,8",$700,20,"32,2",$171
+5,Harinas y Azúcares,fecula de maiz,"$2.306,0",,"$2.306,0",50,"$3.459,0","$0,0",,,"-100,0",-$3.459
+5,Harinas y Azúcares,fecula de mandioca,"$1.928,0",,"$1.928,0",50,"$2.892,0","$0,0",,,"-100,0",-$2.892
+5,Harinas y Azúcares,fecula maiz,"$2.306,0",,"$2.306,0",50,"$3.459,0",,,,"-100,0",-$3.459
+5,Harinas y Azúcares,fecula mandioca,"$1.928,0",500,"$964,0",50,"$1.446,0",,$1.600,2,"10,7",$154
+11,Productos funcionales / varios,fideos blue patna,"$4.827,0",,"$4.827,0",50,"$7.240,5",,$7.300,,"0,8",$60
+11,Productos funcionales / varios,fideos ceral,"$2.322,0",,"$2.322,0",50,"$3.483,0",,$3.500,,"0,5",$17
+7,Galletas / Alfajores / Dulces,galletas arroz,,,,50,"$0,0","$0,0",,,-,$0
+7,Galletas / Alfajores / Dulces,galletas arroz snack lulemuu,"$1.200,0",,"$1.200,0",50,"$1.800,0","$0,0",$2.100,,"16,7",$300
+7,Galletas / Alfajores / Dulces,galletas arroz tostadas leiva,"$1.150,0",,"$1.150,0",40,"$1.610,0","$0,0",$1.800,,"11,8",$190
+7,Galletas / Alfajores / Dulces,galletas con sal,"$3.200,0",200,"$640,0",30,"$832,0","$4.160,0",,5,"-100,0",-$832
+7,Galletas / Alfajores / Dulces,galletas cookies delicel,"$1.981,0",,"$1.981,0",50,"$2.971,5","$2.971,5",$2.990,,"0,6",$19
+7,Galletas / Alfajores / Dulces,galletas integralia diabest,"$1.501,0",,"$1.501,0",50,"$2.251,5","$2.251,5",$2.500,,"11,0",$249
+7,Galletas / Alfajores / Dulces,galletas la zaranda,"$1.633,0",,"$1.633,0",50,"$2.449,5","$2.449,5",$2.500,,"2,1",$51
+7,Galletas / Alfajores / Dulces,galletas marinera,"$900,0",,"$900,0",50,"$1.350,0","$0,0",$1.500,,"11,1",$150
+7,Galletas / Alfajores / Dulces,galletas oreo sin tacc,"$2.195,0",,"$2.195,0",50,"$3.292,5","$0,0",,,"-100,0",-$3.293
+7,Galletas / Alfajores / Dulces,galletas salvado,"$3.200,0",,"$3.200,0",30,"$4.160,0","$0,0",,,"-100,0",-$4.160
+7,Galletas / Alfajores / Dulces,galletas santa maria,"$1.755,0",,"$1.755,0",50,"$2.632,5","$0,0",$2.900,,"10,2",$268
+4,Cereales y Legumbres,garbanzo,"$1.171,0",500,"$585,5",60,"$936,8","$1.873,6",$990,2,"5,7",$53
+11,Productos funcionales / varios,gelatina sin sabor,"$18.400,0",250,"$4.600,0",50,"$6.900,0","$27.600,0",$3.500,4,"-49,3",-$3.400
+8,Barras y Golosinas,gomitas de euca,"$5.850,0",100,"$585,0",50,"$877,5","$8.775,0",$900,10,"2,6",$23
+10,Cacao y Repostería,gotitas de chocolate,"$11.018,0",50,"$550,9",50,"$826,4","$16.527,0",$1.000,20,"21,0",$174
+4,Cereales y Legumbres,granola energetica,"$7.452,0",200,"$1.490,4",50,"$2.235,6","$11.178,0",$2.700,5,"20,8",$464
+4,Cereales y Legumbres,granola premium,"$7.852,0",200,"$1.570,4",50,"$2.355,6","$11.778,0",$2.900,5,"23,1",$544
+4,Cereales y Legumbres,granola tropical,"$7.452,0",200,"$1.490,4",50,"$2.235,6","$11.178,0",$2.700,5,"20,8",$464
+5,Harinas y Azúcares,harina almendras c. piel,"$5.093,0",,"$5.093,0",50,"$7.639,5",,,,"-100,0",-$7.640
+5,Harinas y Azúcares,harina almendras s. piel,"$27.448,0",,"$27.448,0",50,"$41.172,0",,,,"-100,0",-$41.172
+5,Harinas y Azúcares,harina de algarroba,"$4.487,0",500,"$2.243,5",50,"$3.365,3","$6.730,5",$3.700,2,"9,9",$335
+5,Harinas y Azúcares,harina de almendra,"$27.448,0",500,"$13.724,0",50,"$20.586,0","$41.172,0",$11.300,2,"-45,1",-$9.286
+5,Harinas y Azúcares,harina de arroz,"$1.631,0",1000,"$1.631,0",50,"$2.446,5","$2.446,5",$2.800,1,"14,4",$354
+5,Harinas y Azúcares,harina de avena,"$2.103,0",500,"$1.051,5",50,"$1.577,3","$3.154,5",$1.800,2,"14,1",$223
+5,Harinas y Azúcares,harina de carqueja,"$9.225,0",,"$9.225,0",50,"$13.837,5","$13.837,5",,,"-100,0",-$13.838
+5,Harinas y Azúcares,harina de centeno,"$1.500,0",500,"$750,0",50,"$1.125,0","$2.250,0",$1.250,2,"11,1",$125
+5,Harinas y Azúcares,harina de chia,"$2.590,0",250,"$647,5",50,"$971,3","$3.885,0",$1.100,4,"13,3",$129
+5,Harinas y Azúcares,harina de garbanzo,"$1.320,0",250,"$330,0",50,"$495,0","$1.980,0",$600,4,"21,2",$105
+5,Harinas y Azúcares,harina de lino,"$2.520,0",,"$2.520,0",50,"$3.780,0","$0,0",$2.100,,"-44,4",-$1.680
+5,Harinas y Azúcares,harina faina,"$2.572,0",250,"$643,0",50,"$964,5","$3.858,0",$1.100,4,"14,0",$136
+5,Harinas y Azúcares,harina integral fina,"$1.119,0",500,"$559,5",50,"$839,3","$1.678,5",$1.000,2,"19,2",$161
+9,Infusiones y Hierbas,hibiscus x50,"$16.576,0",50,"$828,8",50,"$1.243,2","$24.864,0",$1.600,20,"28,7",$357
+6,Snacks saludables,higos negros,"$10.800,0",250,"$2.700,0",50,"$4.050,0","$16.200,0",$4.500,4,"11,1",$450
+9,Infusiones y Hierbas,hongos pino,"$44.798,0",30,"$1.343,9",60,"$2.150,3","$71.676,8",,33,"-100,0",-$2.150
+11,Productos funcionales / varios,huevo en polvo,"$6.607,0",,"$6.607,0",50,"$9.910,5",,,,"-100,0",-$9.911
+11,Productos funcionales / varios,hummus aji/clasico/tomate,"$2.832,0",,"$2.832,0",50,"$4.248,0","$4.248,0",,,"-100,0",-$4.248
+11,Productos funcionales / varios,hummus pistacho,"$3.913,0",,"$3.913,0",50,"$5.869,5","$5.869,5",,,"-100,0",-$5.870
+7,Galletas / Alfajores / Dulces,integralia diabest,"$1.501,0",,"$1.501,0",50,"$2.251,5","$0,0",$2.500,,"11,0",$249
+2,Condimentos y Especias,jengibre molido,"$12.327,0",50,"$616,4",50,"$924,5","$18.490,5",$1.100,20,"19,0",$175
+9,Infusiones y Hierbas,jengibre raiz,"$14.565,0",50,"$728,3",50,"$1.092,4","$21.847,5",$1.200,20,"9,9",$108
+,,jugo los naranjos frutilla naranja,"$1.600,0",,"$1.600,0",50,"$2.400,0","$0,0",$2.800,,"16,7",$400
+,,jugo los naranjos limonada,"$1.600,0",,"$1.600,0",50,"$2.400,0","$0,0",$2.800,,"16,7",$400
+,,jugo los naranjos naranja,"$1.600,0",,"$1.600,0",50,"$2.400,0","$0,0",$2.800,,"16,7",$400
+,,jugo los naranjos pomelo rosado,"$1.600,0",,"$1.600,0",50,"$2.400,0","$0,0",$2.800,,"16,7",$400
+9,Infusiones y Hierbas,laurel nacional,"$12.103,0",25,"$302,6",50,"$453,9","$18.154,5",$600,40,"32,2",$146
+11,Productos funcionales / varios,leche de almendras,"$2.500,0",,"$2.500,0",50,"$3.750,0","$0,0",$4.300,,"14,7",$550
+,,leche de coco,"$2.500,0",,"$2.500,0",50,"$3.750,0","$0,0",$4.300,,"14,7",$550
+9,Infusiones y Hierbas,lemon gras,"$5.532,0",50,"$276,6",80,"$497,9","$9.957,6",$790,20,"58,7",$292
+4,Cereales y Legumbres,lenteja nacional,"$2.119,0",500,"$1.059,5",60,"$1.695,2","$3.390,4",$1.800,2,"6,2",$105
+4,Cereales y Legumbres,lenteja turca,"$3.249,0",500,"$1.624,5",50,"$2.436,8",,$2.700,2,"10,8",$263
+4,Cereales y Legumbres,lentejon,"$2.789,0",500,"$1.394,5",60,"$2.231,2","$4.462,4",$2.300,2,"3,1",$69
+4,Cereales y Legumbres,lentejon canadiense,"$3.457,0",500,"$1.728,5",50,"$2.592,8",,$2.700,2,"4,1",$107
+11,Productos funcionales / varios,levadura levex,"$650,0",,"$650,0",50,"$975,0","$975,0",$1.300,,"33,3",$325
+11,Productos funcionales / varios,maca,"$15.353,0",,"$15.353,0",50,"$23.029,5","$0,0",$5.800,,"-74,8",-$17.230
+11,Productos funcionales / varios,maca negra,"$1.400,0",,"$1.400,0",50,"$2.100,0","$0,0",$2.400,,"14,3",$300
+6,Snacks saludables,maiz frito,"$15.898,0",50,"$794,9",60,"$1.271,8","$25.436,8",$1.500,20,"17,9",$228
+6,Snacks saludables,maiz inflado,"$6.319,0",100,"$631,9",50,"$947,9","$9.478,5",$1.100,10,"16,1",$152
+9,Infusiones y Hierbas,malva,"$5.225,0",50,"$261,3",90,"$496,4","$9.927,5",$690,20,"39,0",$194
+6,Snacks saludables,mani con cascara,"$4.320,0",250,"$1.080,0",50,"$1.620,0","$6.480,0",$1.900,4,"17,3",$280
+6,Snacks saludables,mani tostado con sal,"$2.600,0",250,"$650,0",70,"$1.105,0","$4.420,0",$1.800,4,"62,9",$695
+6,Snacks saludables,mani tostado sin sal,"$2.600,0",250,"$650,0",70,"$1.105,0","$4.420,0",$1.800,4,"62,9",$695
+9,Infusiones y Hierbas,manzanilla,"$22.365,0",50,"$1.118,3",80,"$2.012,9","$40.257,0",$2.600,20,"29,2",$587
+7,Galletas / Alfajores / Dulces,mermelada light tranquilina arandano/durazno/frutilla/frutos del bosque/membrillo,"$4.468,0",,"$4.468,0",50,"$6.702,0","$0,0",$7.200,,"7,4",$498
+7,Galletas / Alfajores / Dulces,mermelada light tranquilina naranja/higo/ciruela,"$3.843,0",,"$3.843,0",50,"$5.764,5","$0,0",$6.400,,"11,0",$636
+7,Galletas / Alfajores / Dulces,mermelada natali,"$3.329,0",,"$3.329,0",40,"$4.660,6","$0,0",$5.990,,"28,5",$1.329
+7,Galletas / Alfajores / Dulces,mermelada natali durazno,"$3.393,0",,"$3.393,0",40,"$4.750,2","$0,0",$5.990,,"26,1",$1.240
+7,Galletas / Alfajores / Dulces,mermelada tranquilina organica,"$3.850,0",,"$3.850,0",50,"$5.775,0","$0,0",$6.400,,"10,8",$625
+,,mezcla anti stress,"$11.509,0",50,"$575,5",50,"$863,2","$17.263,5",,20,"-100,0",-$863
+9,Infusiones y Hierbas,mezcla digestiva,"$12.724,0",50,"$636,2",80,"$1.145,2","$22.903,2",$1.300,20,"13,5",$155
+7,Galletas / Alfajores / Dulces,miel,,,,50,"$0,0","$0,0",,,-,$0
+7,Galletas / Alfajores / Dulces,miel carpincho,"$1.680,0",,"$1.680,0",50,"$2.520,0","$0,0",,,"-100,0",-$2.520
+7,Galletas / Alfajores / Dulces,miel curcuma thank you bees,"$4.774,0",,"$4.774,0",50,"$7.161,0","$0,0",$5.100,,"-28,8",-$2.061
+7,Galletas / Alfajores / Dulces,miel jengibre thank you bees,"$4.774,0",,"$4.774,0",50,"$7.161,0","$0,0",$5.100,,"-28,8",-$2.061
+3,Frutos Secos,mix agridulce,"$10.012,0",200,"$2.002,4",50,"$3.003,6",,$3.300,5,"9,9",$296
+3,Frutos Secos,mix banana,"$8.237,0",200,"$1.647,4",50,"$2.471,1",,$2.800,5,"13,3",$329
+6,Snacks saludables,mix cervecero,"$14.214,0",200,"$2.842,8",50,"$4.264,2","$21.321,0",$2.700,5,"-36,7",-$1.564
+6,Snacks saludables,mix economico,"$7.303,0",200,"$1.460,6",50,"$2.190,9","$10.954,5",$3.200,5,"46,1",$1.009
+2,Condimentos y Especias,mix pimienta grano,"$23.460,0",50,"$1.173,0",90,"$2.228,7","$44.574,0",$2.500,20,"12,2",$271
+6,Snacks saludables,mix premium,"$14.214,0",200,"$2.842,8",50,"$4.264,2","$21.321,0",$5.000,5,"17,3",$736
+6,Snacks saludables,mix seco,"$20.675,0",200,"$4.135,0",50,"$6.202,5","$31.012,5",$6.900,5,"11,2",$698
+3,Frutos Secos,mix seco sin mani,"$26.082,0",200,"$5.216,4",50,"$7.824,6",,$5.700,5,"-27,2",-$2.125
+11,Productos funcionales / varios,mix semillas,"$3.773,0",50,"$188,7",90,"$358,4","$7.168,7",$700,20,"95,3",$342
+,,nuez chandler con cascara,"$8.418,0",,"$8.418,0",50,"$12.627,0","$0,0",,,"-100,0",-$12.627
+3,Frutos Secos,nuez mariposa,"$19.000,0",100,"$1.900,0",40,"$2.660,0","$26.600,0",$2.900,10,"9,0",$240
+2,Condimentos y Especias,nuez moscada molida,"$13.263,0",50,"$663,2",50,"$994,7","$19.894,5",,20,"-100,0",-$995
+2,Condimentos y Especias,oregano,"$4.012,0",20,"$80,2",100,"$160,5","$8.024,0",$990,50,"516,9",$830
+2,Condimentos y Especias,paprika,"$8.359,0",50,"$418,0",50,"$626,9","$12.538,5",,20,"-100,0",-$627
+6,Snacks saludables,pasas de uva flame,"$4.402,0",200,"$880,4",50,"$1.320,6","$6.603,0",$1.900,5,"43,9",$579
+7,Galletas / Alfajores / Dulces,pasta de mani entrenuts cacao,"$2.300,0",,"$2.300,0",20,"$2.760,0","$0,0",$3.200,,"15,9",$440
+7,Galletas / Alfajores / Dulces,pasta de mani entrenuts natural,"$2.300,0",,"$2.300,0",20,"$2.760,0","$0,0",$3.200,,"15,9",$440
+7,Galletas / Alfajores / Dulces,pasta de mani entrenuts proteica,"$3.300,0",,"$3.300,0",20,"$3.960,0","$0,0",$4.600,,"16,2",$640
+2,Condimentos y Especias,pesto,"$7.245,0",,"$7.245,0",50,"$10.867,5",,,,"-100,0",-$10.868
+2,Condimentos y Especias,pimenton,"$5.871,0",50,"$293,6",90,"$557,7","$11.154,9",$690,20,"23,7",$132
+2,Condimentos y Especias,pimenton ahumado,"$6.077,0",50,"$303,9",90,"$577,3","$11.546,3",$750,20,"29,9",$173
+2,Condimentos y Especias,pimienta blanca,"$24.950,0",,"$24.950,0",50,"$37.425,0",,,,"-100,0",-$37.425
+2,Condimentos y Especias,pimienta negra grano,"$17.809,0",50,"$890,5",90,"$1.691,9","$33.837,1",$1.900,20,"12,3",$208
+2,Condimentos y Especias,pimienta negra molida,"$4.222,0",50,"$211,1",90,"$401,1","$8.021,8",$790,20,"97,0",$389
+9,Infusiones y Hierbas,poleo,"$10.603,0",50,"$530,2",90,"$1.007,3","$20.145,7",$1.200,20,"19,1",$193
+5,Harinas y Azúcares,polvo para hornear,"$6.607,0",200,"$1.321,4",50,"$1.982,1","$9.910,5",$2.200,5,"11,0",$218
+5,Harinas y Azúcares,polvo para hornear dicomere,"$1.813,0",,"$1.813,0",50,"$2.719,5","$0,0",,,"-100,0",-$2.720
+4,Cereales y Legumbres,poroto aduki,"$2.313,0",500,"$1.156,5",60,"$1.850,4","$3.700,8",$1.990,2,"7,5",$140
+4,Cereales y Legumbres,poroto alubia,"$2.582,0",500,"$1.291,0",70,"$2.194,7","$4.389,4",$2.400,2,"9,4",$205
+4,Cereales y Legumbres,poroto manteca,"$3.286,0",500,"$1.643,0",70,"$2.793,1","$5.586,2",$3.000,2,"7,4",$207
+4,Cereales y Legumbres,poroto negro,"$1.570,0",500,"$785,0",60,"$1.256,0","$2.512,0",$1.400,2,"11,5",$144
+4,Cereales y Legumbres,porotos pallares,"$5.816,0",500,"$2.908,0",50,"$4.362,0","$8.724,0",$4.800,2,"10,0",$438
+4,Cereales y Legumbres,porotos soja,"$1.297,0",,"$1.297,0",50,"$1.945,5","$0,0",,,"-100,0",-$1.946
+5,Harinas y Azúcares,premezcla pan dicomere,"$1.643,0",,"$1.643,0",50,"$2.464,5","$0,0",$2.800,,"13,6",$336
+5,Harinas y Azúcares,premezcla para bizcochuelo delicel,"$2.716,0",,"$2.716,0",50,"$4.074,0","$0,0",$4.500,,"10,5",$426
+5,Harinas y Azúcares,premezcla para pizza delicel,"$2.716,0",,"$2.716,0",50,"$4.074,0","$0,0",$4.500,,"10,5",$426
+5,Harinas y Azúcares,premezcla pizza dicomere,"$1.690,0",,"$1.690,0",50,"$2.535,0","$0,0",$2.800,,"10,5",$265
+5,Harinas y Azúcares,premezcla universal delicel,"$2.516,0",,"$2.516,0",50,"$3.774,0",,$3.800,,"0,7",$26
+2,Condimentos y Especias,provenzal,"$7.802,0",50,"$390,1",100,"$780,2","$15.604,0",$600,20,"-23,1",-$180
+,,quinoa blanca,"$8.955,0",,"$8.955,0",50,"$13.432,5",,,,"-100,0",-$13.433
+7,Galletas / Alfajores / Dulces,quinoa pop,"$655,0",,"$655,0",50,"$982,5","$0,0",,,"-100,0",-$983
+2,Condimentos y Especias,romero egipto,"$10.251,0",,"$10.251,0",50,"$15.376,5",,,,"-100,0",-$15.377
+2,Condimentos y Especias,sal dharam 0 sodio,"$3.875,0",,"$3.875,0",30,"$5.037,5","$0,0",$5.900,,"17,1",$863
+2,Condimentos y Especias,sal himalaya fina,"$1.705,0",250,"$426,3",90,"$809,9","$3.239,5",$990,4,"22,2",$180
+2,Condimentos y Especias,sal marina,"$1.787,0",,"$1.787,0",50,"$2.680,5","$0,0",$3.000,,"11,9",$320
+9,Infusiones y Hierbas,salvia deshidratada,"$10.477,0",20,"$209,5",50,"$314,3","$15.715,5",$500,50,"59,1",$186
+11,Productos funcionales / varios,semilla chia,"$7.000,0",50,"$350,0",50,"$525,0","$10.500,0",$700,20,"33,3",$175
+6,Snacks saludables,semilla de girasol,"$3.500,0",100,"$350,0",60,"$560,0","$5.600,0",$690,10,"23,2",$130
+6,Snacks saludables,semilla de zapallo,"$15.190,0",50,"$759,5",70,"$1.291,2","$25.823,0",$1.500,20,"16,2",$209
+11,Productos funcionales / varios,semilla lino,"$2.184,0",50,"$109,2",90,"$207,5","$4.149,6",$700,20,"237,4",$493
+11,Productos funcionales / varios,semilla sesamo blanco,"$5.975,0",50,"$298,8",90,"$567,6","$11.352,5",$700,20,"23,3",$132
+5,Harinas y Azúcares,semolin,"$1.350,0",250,"$337,5",50,"$506,3","$2.025,0",$600,4,"18,5",$94
+6,Snacks saludables,snak crackers de arroz crisppino,"$675,0",,"$675,0",50,"$1.012,5","$0,0",$1.200,,"18,5",$188
+6,Snacks saludables,snak green crops,"$969,0",,"$969,0",50,"$1.453,5","$1.453,5",$1.500,,"3,2",$47
+11,Productos funcionales / varios,sopa x 50gr fram,"$2.248,0",,"$2.248,0",50,"$3.372,0","$0,0",$3.700,,"9,7",$328
+2,Condimentos y Especias,spirulina,"$24.154,0",50,"$1.207,7",50,"$1.811,6","$36.231,0",$2.000,20,"10,4",$188
+5,Harinas y Azúcares,stevia sobres jual,"$3.202,0",,"$3.202,0",50,"$4.803,0","$4.803,0",$5.300,,"10,3",$497
+5,Harinas y Azúcares,stevia x125cc jual,"$2.746,0",,"$2.746,0",50,"$4.119,0","$4.119,0",$4.500,,"9,2",$381
+5,Harinas y Azúcares,stevia x250cc jual,"$4.153,0",,"$4.153,0",50,"$6.229,5","$6.229,5",$6.900,,"10,8",$671
+9,Infusiones y Hierbas,te adisol heredia,"$3.318,0",,"$3.318,0",50,"$4.977,0","$4.977,0",,,"-100,0",-$4.977
+9,Infusiones y Hierbas,te bienestar surtido heredia,"$3.250,0",,"$3.250,0",50,"$4.875,0","$4.875,0",$4.990,,"2,4",$115
+9,Infusiones y Hierbas,te chai heredia,"$3.326,0",,"$3.326,0",50,"$4.989,0","$0,0",,,"-100,0",-$4.989
+9,Infusiones y Hierbas,te clasico surtido heredia,"$3.577,0",,"$3.577,0",50,"$5.365,5","$0,0",,,"-100,0",-$5.366
+9,Infusiones y Hierbas,te earl grey heredia,"$4.023,0",,"$4.023,0",50,"$6.034,5","$0,0",,,"-100,0",-$6.035
+9,Infusiones y Hierbas,te fem heredia,"$3.199,0",,"$3.199,0",50,"$4.798,5","$4.798,5",$4.990,,"4,0",$192
+9,Infusiones y Hierbas,te harmony,"$3.615,0",,"$3.615,0",50,"$5.422,5","$5.422,5",,,"-100,0",-$5.423
+9,Infusiones y Hierbas,te herby heredia,"$3.836,0",,"$3.836,0",50,"$5.754,0","$0,0",,,"-100,0",-$5.754
+9,Infusiones y Hierbas,te hib. ene. ver. heredia,"$3.529,0",,"$3.529,0",50,"$5.293,5","$5.293,5",$5.500,,"3,9",$207
+9,Infusiones y Hierbas,te manzanilla heredia,"$2.978,0",,"$2.978,0",50,"$4.467,0","$4.467,0",,,"-100,0",-$4.467
+9,Infusiones y Hierbas,te meditacion heredia,"$3.536,0",,"$3.536,0",50,"$5.304,0","$5.304,0",$5.500,,"3,7",$196
+9,Infusiones y Hierbas,te melena de leon heredia,"$8.932,0",,"$8.932,0",50,"$13.398,0","$0,0",$14.800,,"10,5",$1.402
+9,Infusiones y Hierbas,te monohierbas heredia,"$3.250,0",,"$3.250,0",50,"$4.875,0","$4.875,0",,,"-100,0",-$4.875
+9,Infusiones y Hierbas,te negro heredia,"$2.507,0",,"$2.507,0",50,"$3.760,5","$0,0",,,"-100,0",-$3.761
+9,Infusiones y Hierbas,te rojo heredia,"$3.154,0",,"$3.154,0",50,"$4.731,0","$0,0",,,"-100,0",-$4.731
+9,Infusiones y Hierbas,te rosa mosqueta heredia,"$5.072,0",,"$5.072,0",50,"$7.608,0","$0,0",,,"-100,0",-$7.608
+9,Infusiones y Hierbas,te sedan heredia,"$3.731,0",,"$3.731,0",50,"$5.596,5","$5.596,5",$5.600,,"0,1",$4
+9,Infusiones y Hierbas,te surtido magico heredia,"$4.063,0",,"$4.063,0",50,"$6.094,5","$6.094,5",,,"-100,0",-$6.095
+9,Infusiones y Hierbas,te verde heredia,"$2.940,0",,"$2.940,0",50,"$4.410,0","$4.410,0",$4.500,,"2,0",$90
+11,Productos funcionales / varios,texturizado soja,"$1.835,0",,"$1.835,0",50,"$2.752,5","$2.752,5",,,"-100,0",-$2.753
+2,Condimentos y Especias,tomillo,"$11.463,0",50,"$573,2",70,"$974,4","$19.487,1",$900,20,"-7,6",-$74
+6,Snacks saludables,trencitas cereal,"$1.961,0",,"$1.961,0",50,"$2.941,5","$0,0",,,"-100,0",-$2.942
+9,Infusiones y Hierbas,yerba kalena roja,"$3.513,0",,"$3.513,0",50,"$5.269,5","$0,0",$5.700,,"8,2",$431
+9,Infusiones y Hierbas,yerba kalena suave,"$4.312,0",,"$4.312,0",50,"$6.468,0","$0,0",$7.100,,"9,8",$632

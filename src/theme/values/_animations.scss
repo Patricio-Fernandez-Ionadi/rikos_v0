@@ -1,0 +1,35 @@
+@use './colors' as *;
+
+// highlight the background of a component
+@mixin useHighlight($color: $primary, $time: 2.5s, $mode: infinite) {
+  animation: lighting $time $mode;
+  @keyframes lighting {
+    0% {
+      background-color: $color;
+    }
+    50% {
+      background-color: lighten($color, 10);
+    }
+    100% {
+      background-color: $color;
+    }
+  }
+}
+
+// rotation
+@mixin useRotation($time: 1s, $mode: infinite) {
+  animation: rotation $time linear $mode;
+  @keyframes rotation {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+}
+
+$shadow: 0 0 3px 0 $black_light;
+$shadow-light: 0 0 5px 0 $white_dark;
+
+$fast: 0.2s ease;

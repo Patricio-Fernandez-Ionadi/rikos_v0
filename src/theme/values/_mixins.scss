@@ -1,0 +1,88 @@
+@use './colors' as *;
+@use './animations' as *;
+
+// Dark mode
+@mixin useThemeText($light: $black, $dark: $white) {
+  transition: color $fast;
+  &.light {
+    color: $light;
+    & a {
+      color: $light;
+    }
+  }
+  &.dark {
+    color: $dark;
+    & a {
+      color: $dark;
+    }
+  }
+}
+@mixin useThemeBg($light: transparent, $dark: transparent) {
+  transition: background $fast;
+  &.light {
+    background: $light;
+  }
+  &.dark {
+    background: $dark;
+  }
+}
+@mixin useThemeShadowInset(
+  $left: 0,
+  $top: 0,
+  $blur: 3px,
+  $size: 0,
+  $color: $black
+) {
+  box-shadow: $left $top $blur $size $color inset;
+}
+
+@mixin useThemeShadow(
+  $left: 0,
+  $top: 2px,
+  $blur: 6px,
+  $size: -1px,
+  $color: $shadow_color
+) {
+  box-shadow: $left $top $blur $size $color;
+}
+
+// Elevation Effect
+// prettier-ignore
+%elevation-1 {
+  box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%),
+              0px 1px 1px 0px rgb(0 0 0 / 14%), 
+              0px 1px 3px 0px rgb(0 0 0 / 12%);
+}
+// prettier-ignore
+%elevation-2 {
+  box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%),
+              0px 2px 2px 0px rgb(0 0 0 / 14%), 
+              0px 1px 5px 0px rgb(0 0 0 / 12%);
+}
+// prettier-ignore
+%elevation-3 {
+  box-shadow: 0px 3px 3px -2px rgb(0 0 0 / 20%),
+              0px 3px 4px 0px rgb(0 0 0 / 14%), 
+              0px 1px 8px 0px rgb(0 0 0 / 12%);
+}
+// prettier-ignore
+%elevation-4 {
+  box-shadow: 0px 2px 4px -1px rgb(0 0 0 / 20%),
+              0px 4px 5px 0px rgb(0 0 0 / 14%), 
+              0px 1px 10px 0px rgb(0 0 0 / 12%);
+}
+// prettier-ignore
+%elevation-6 {
+  box-shadow: 0px 3px 5px -1px rgb(0 0 0 / 20%),
+              0px 6px 10px 0px rgb(0 0 0 / 14%), 
+              0px 1px 18px 0px rgb(0 0 0 / 12%);
+}
+// prettier-ignore
+%elevation-8 {
+  box-shadow: 0px 5px 5px -3px rgb(0 0 0 / 20%),
+              0px 8px 10px 1px rgb(0 0 0 / 14%), 
+              0px 3px 14px 2px rgb(0 0 0 / 12%);
+}
+@mixin elevate($value) {
+  @extend %elevation-#{$value};
+}

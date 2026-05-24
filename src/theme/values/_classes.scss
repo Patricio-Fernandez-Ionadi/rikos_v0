@@ -1,0 +1,28 @@
+@use './sizes' as *;
+@use './mediaqueries' as *;
+
+.df {
+  display: flex;
+}
+.jcc {
+  justify-content: center;
+}
+
+.aic {
+  align-items: center;
+}
+
+.fc {
+  display: flex;
+  flex-direction: column;
+}
+
+.gap {
+  gap: $gap;
+}
+
+@media (max-width: $medium) {
+  .non-mobile {
+    display: none;
+  }
+}
