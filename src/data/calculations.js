@@ -50,7 +50,7 @@ export function calculate(product, presentation) {
 }
 
 export function calculateAll(products, presentations) {
-  const map = new Map(products.map((p) => [p.id, p]))
+  const map = new Map(products.map((p) => [p._id, p]))
   return presentations.map((pres) => {
     const product = map.get(pres.productId)
     if (!product) return { presentation: pres, product: null, calculations: null }

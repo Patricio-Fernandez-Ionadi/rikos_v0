@@ -1,0 +1,3444 @@
+{
+  "categories": [
+    {
+      "_id": "cat-1",
+      "name": "Aceites y Vinagres"
+    },
+    {
+      "_id": "cat-2",
+      "name": "Condimentos y Especias"
+    },
+    {
+      "_id": "cat-7",
+      "name": "Galletas / Alfajores / Dulces"
+    },
+    {
+      "_id": "cat-11",
+      "name": "Productos funcionales / varios"
+    },
+    {
+      "_id": "cat-3",
+      "name": "Frutos Secos"
+    },
+    {
+      "_id": "cat-6",
+      "name": "Snacks saludables"
+    },
+    {
+      "_id": "cat-9",
+      "name": "Infusiones y Hierbas"
+    },
+    {
+      "_id": "cat-4",
+      "name": "Cereales y Legumbres"
+    },
+    {
+      "_id": "cat-5",
+      "name": "Harinas y Azúcares"
+    },
+    {
+      "_id": "cat-8",
+      "name": "Barras y Golosinas"
+    },
+    {
+      "_id": "cat-12",
+      "name": "Sin clasificar (temporal)"
+    },
+    {
+      "_id": "cat-10",
+      "name": "Cacao y Repostería"
+    },
+    {
+      "_id": "cat-uncategorized-1",
+      "name": "Sin categoría"
+    }
+  ],
+  "products": [
+    {
+      "_id": "prod-1",
+      "categoryId": "cat-1",
+      "name": "aceite coco entrenuts 360",
+      "purchaseCost": 5578
+    },
+    {
+      "_id": "prod-3",
+      "categoryId": "cat-1",
+      "name": "aceite oliva oleovares",
+      "purchaseCost": 5320
+    },
+    {
+      "_id": "prod-5",
+      "categoryId": "cat-1",
+      "name": "aceto basamico oleovares",
+      "purchaseCost": 3915
+    },
+    {
+      "_id": "prod-7",
+      "categoryId": "cat-2",
+      "name": "aji",
+      "purchaseCost": 6077
+    },
+    {
+      "_id": "prod-9",
+      "categoryId": "cat-2",
+      "name": "ajo en polvo",
+      "purchaseCost": 6897
+    },
+    {
+      "_id": "prod-11",
+      "categoryId": "cat-7",
+      "name": "alfajor abuela mecha",
+      "purchaseCost": null
+    },
+    {
+      "_id": "prod-13",
+      "categoryId": "cat-7",
+      "name": "alfajor celi energy algarroba",
+      "purchaseCost": 1278
+    },
+    {
+      "_id": "prod-15",
+      "categoryId": "cat-7",
+      "name": "alfajor celi energy nuez",
+      "purchaseCost": 1278
+    },
+    {
+      "_id": "prod-17",
+      "categoryId": "cat-7",
+      "name": "alfajor ceral blanco",
+      "purchaseCost": null
+    },
+    {
+      "_id": "prod-19",
+      "categoryId": "cat-7",
+      "name": "alfajor ceral negro",
+      "purchaseCost": null
+    },
+    {
+      "_id": "prod-21",
+      "categoryId": "cat-7",
+      "name": "alfajor cerro azul dulce de leche",
+      "purchaseCost": null
+    },
+    {
+      "_id": "prod-23",
+      "categoryId": "cat-7",
+      "name": "alfajor cerro azul moka",
+      "purchaseCost": 1424
+    },
+    {
+      "_id": "prod-25",
+      "categoryId": "cat-7",
+      "name": "alfajor lulemuu ddl",
+      "purchaseCost": 500
+    },
+    {
+      "_id": "prod-27",
+      "categoryId": "cat-7",
+      "name": "alfajor lulemuu limon",
+      "purchaseCost": 500
+    },
+    {
+      "_id": "prod-29",
+      "categoryId": "cat-7",
+      "name": "algas laminadas",
+      "purchaseCost": 7009
+    },
+    {
+      "_id": "prod-31",
+      "categoryId": "cat-11",
+      "name": "algas nory argendiet",
+      "purchaseCost": 2540
+    },
+    {
+      "_id": "prod-33",
+      "categoryId": "cat-3",
+      "name": "almendras 25/27",
+      "purchaseCost": 20000
+    },
+    {
+      "_id": "prod-35",
+      "categoryId": "cat-6",
+      "name": "almohadita avellana",
+      "purchaseCost": 6040
+    },
+    {
+      "_id": "prod-37",
+      "categoryId": "cat-6",
+      "name": "almohadita chocolate",
+      "purchaseCost": 6480
+    },
+    {
+      "_id": "prod-39",
+      "categoryId": "cat-6",
+      "name": "almohadita frutilla",
+      "purchaseCost": 6040
+    },
+    {
+      "_id": "prod-41",
+      "categoryId": "cat-6",
+      "name": "almohadita salvado",
+      "purchaseCost": 4133
+    },
+    {
+      "_id": "prod-43",
+      "categoryId": "cat-9",
+      "name": "anis estrellado",
+      "purchaseCost": 33716
+    },
+    {
+      "_id": "prod-45",
+      "categoryId": "cat-2",
+      "name": "anis grano",
+      "purchaseCost": 11732
+    },
+    {
+      "_id": "prod-47",
+      "categoryId": "cat-7",
+      "name": "arrocitas dulces",
+      "purchaseCost": 1100
+    },
+    {
+      "_id": "prod-49",
+      "categoryId": "cat-7",
+      "name": "arrocitas saladas",
+      "purchaseCost": 1100
+    },
+    {
+      "_id": "prod-51",
+      "categoryId": "cat-7",
+      "name": "arrocitas sin sal",
+      "purchaseCost": 1100
+    },
+    {
+      "_id": "prod-53",
+      "categoryId": "cat-7",
+      "name": "arrocitas tres cereales",
+      "purchaseCost": 1100
+    },
+    {
+      "_id": "prod-55",
+      "categoryId": "cat-7",
+      "name": "arroz discos yela",
+      "purchaseCost": 877
+    },
+    {
+      "_id": "prod-57",
+      "categoryId": "cat-4",
+      "name": "arroz yamani",
+      "purchaseCost": 1473
+    },
+    {
+      "_id": "prod-59",
+      "categoryId": "cat-4",
+      "name": "arroz yamani integral",
+      "purchaseCost": 2084
+    },
+    {
+      "_id": "prod-61",
+      "categoryId": "cat-4",
+      "name": "arvejas enteras",
+      "purchaseCost": 1292
+    },
+    {
+      "_id": "prod-63",
+      "categoryId": "cat-4",
+      "name": "avena instantanea",
+      "purchaseCost": 1600
+    },
+    {
+      "_id": "prod-65",
+      "categoryId": "cat-2",
+      "name": "azafran español",
+      "purchaseCost": 9990
+    },
+    {
+      "_id": "prod-67",
+      "categoryId": "cat-5",
+      "name": "azucar impalpable",
+      "purchaseCost": 1957
+    },
+    {
+      "_id": "prod-69",
+      "categoryId": "cat-5",
+      "name": "azucar mascabo",
+      "purchaseCost": 3157
+    },
+    {
+      "_id": "prod-71",
+      "categoryId": "cat-8",
+      "name": "barritas de ch. organico",
+      "purchaseCost": 400
+    },
+    {
+      "_id": "prod-73",
+      "categoryId": "cat-8",
+      "name": "barritas lulemuu choco",
+      "purchaseCost": 400
+    },
+    {
+      "_id": "prod-75",
+      "categoryId": "cat-8",
+      "name": "barritas lulemuu yogurt",
+      "purchaseCost": 400
+    },
+    {
+      "_id": "prod-77",
+      "categoryId": "cat-8",
+      "name": "barritas zafran",
+      "purchaseCost": 800
+    },
+    {
+      "_id": "prod-79",
+      "categoryId": "cat-12",
+      "name": "bastones de salvado",
+      "purchaseCost": 4280
+    },
+    {
+      "_id": "prod-81",
+      "categoryId": "cat-2",
+      "name": "bicarbonato de sodio",
+      "purchaseCost": 2697
+    },
+    {
+      "_id": "prod-84",
+      "categoryId": "cat-8",
+      "name": "bocaditos shih maiz",
+      "purchaseCost": 800
+    },
+    {
+      "_id": "prod-86",
+      "categoryId": "cat-8",
+      "name": "bocaditos shih trigo",
+      "purchaseCost": 800
+    },
+    {
+      "_id": "prod-88",
+      "categoryId": "cat-9",
+      "name": "boldo",
+      "purchaseCost": 12211
+    },
+    {
+      "_id": "prod-90",
+      "categoryId": "cat-8",
+      "name": "bombon fruta",
+      "purchaseCost": 180
+    },
+    {
+      "_id": "prod-92",
+      "categoryId": "cat-9",
+      "name": "burrito",
+      "purchaseCost": 8606
+    },
+    {
+      "_id": "prod-94",
+      "categoryId": "cat-10",
+      "name": "cacao alcalino amargo sin tacc",
+      "purchaseCost": 38502
+    },
+    {
+      "_id": "prod-96",
+      "categoryId": "cat-10",
+      "name": "cacao en polvo",
+      "purchaseCost": 13459
+    },
+    {
+      "_id": "prod-98",
+      "categoryId": "cat-3",
+      "name": "caju w4",
+      "purchaseCost": 15730
+    },
+    {
+      "_id": "prod-100",
+      "categoryId": "cat-9",
+      "name": "caldo con sal x 10 argendiet",
+      "purchaseCost": 1075
+    },
+    {
+      "_id": "prod-102",
+      "categoryId": "cat-9",
+      "name": "caldo con sal x30grs fram",
+      "purchaseCost": 1834
+    },
+    {
+      "_id": "prod-104",
+      "categoryId": "cat-9",
+      "name": "caldo sin sal x10 argendiet",
+      "purchaseCost": 1075
+    },
+    {
+      "_id": "prod-106",
+      "categoryId": "cat-9",
+      "name": "canela en rama sticks",
+      "purchaseCost": 32120
+    },
+    {
+      "_id": "prod-108",
+      "categoryId": "cat-2",
+      "name": "canela molida premium",
+      "purchaseCost": 13351
+    },
+    {
+      "_id": "prod-110",
+      "categoryId": "cat-8",
+      "name": "caramelo propoleo",
+      "purchaseCost": 8311
+    },
+    {
+      "_id": "prod-112",
+      "categoryId": "cat-8",
+      "name": "caramelos ddl sin azucar",
+      "purchaseCost": 217
+    },
+    {
+      "_id": "prod-114",
+      "categoryId": "cat-8",
+      "name": "caramelos eucaliptus",
+      "purchaseCost": 7866
+    },
+    {
+      "_id": "prod-116",
+      "categoryId": "cat-8",
+      "name": "caramelos miel",
+      "purchaseCost": 7866
+    },
+    {
+      "_id": "prod-118",
+      "categoryId": "cat-9",
+      "name": "carqueja",
+      "purchaseCost": 9225
+    },
+    {
+      "_id": "prod-120",
+      "categoryId": "cat-2",
+      "name": "cebolla en escama",
+      "purchaseCost": 9323
+    },
+    {
+      "_id": "prod-122",
+      "categoryId": "cat-9",
+      "name": "cedron",
+      "purchaseCost": 21570
+    },
+    {
+      "_id": "prod-124",
+      "categoryId": "cat-2",
+      "name": "chimichurri",
+      "purchaseCost": 5180
+    },
+    {
+      "_id": "prod-126",
+      "categoryId": "cat-6",
+      "name": "chips de banana",
+      "purchaseCost": 11400
+    },
+    {
+      "_id": "prod-128",
+      "categoryId": "cat-8",
+      "name": "chocolatina semi amarga",
+      "purchaseCost": 190
+    },
+    {
+      "_id": "prod-130",
+      "categoryId": "cat-8",
+      "name": "chocolatinas con leche sin azucar",
+      "purchaseCost": 190
+    },
+    {
+      "_id": "prod-132",
+      "categoryId": "cat-9",
+      "name": "coco en escamas",
+      "purchaseCost": 16975
+    },
+    {
+      "_id": "prod-134",
+      "categoryId": "cat-5",
+      "name": "coco en polvo",
+      "purchaseCost": 7573
+    },
+    {
+      "_id": "prod-136",
+      "categoryId": "cat-10",
+      "name": "coco rallado",
+      "purchaseCost": 8000
+    },
+    {
+      "_id": "prod-138",
+      "categoryId": "cat-9",
+      "name": "cola de caballo",
+      "purchaseCost": 5654
+    },
+    {
+      "_id": "prod-140",
+      "categoryId": "cat-2",
+      "name": "comino",
+      "purchaseCost": 7245
+    },
+    {
+      "_id": "prod-142",
+      "categoryId": "cat-2",
+      "name": "condimento p. empanadas",
+      "purchaseCost": 5015
+    },
+    {
+      "_id": "prod-144",
+      "categoryId": "cat-2",
+      "name": "condimento p. ravioles",
+      "purchaseCost": 5015
+    },
+    {
+      "_id": "prod-146",
+      "categoryId": "cat-2",
+      "name": "condimento para carne",
+      "purchaseCost": 4793
+    },
+    {
+      "_id": "prod-148",
+      "categoryId": "cat-2",
+      "name": "condimento para pizza",
+      "purchaseCost": 4043
+    },
+    {
+      "_id": "prod-150",
+      "categoryId": "cat-4",
+      "name": "copos azucarados",
+      "purchaseCost": 4325
+    },
+    {
+      "_id": "prod-152",
+      "categoryId": "cat-4",
+      "name": "copos naturales",
+      "purchaseCost": 3914
+    },
+    {
+      "_id": "prod-154",
+      "categoryId": "cat-7",
+      "name": "coquito anis",
+      "purchaseCost": 6250
+    },
+    {
+      "_id": "prod-156",
+      "categoryId": "cat-2",
+      "name": "curcuma",
+      "purchaseCost": 4346
+    },
+    {
+      "_id": "prod-158",
+      "categoryId": "cat-2",
+      "name": "curcuma india",
+      "purchaseCost": 8092
+    },
+    {
+      "_id": "prod-160",
+      "categoryId": "cat-2",
+      "name": "curri india",
+      "purchaseCost": 10789
+    },
+    {
+      "_id": "prod-162",
+      "categoryId": "cat-6",
+      "name": "datil c. carozo argelia",
+      "purchaseCost": 9908
+    },
+    {
+      "_id": "prod-164",
+      "categoryId": "cat-2",
+      "name": "especias surtidas",
+      "purchaseCost": 5572
+    },
+    {
+      "_id": "prod-166",
+      "categoryId": "cat-5",
+      "name": "fecula de maiz",
+      "purchaseCost": 2306
+    },
+    {
+      "_id": "prod-168",
+      "categoryId": "cat-5",
+      "name": "fecula de mandioca",
+      "purchaseCost": 1928
+    },
+    {
+      "_id": "prod-172",
+      "categoryId": "cat-11",
+      "name": "fideos blue patna",
+      "purchaseCost": 4827
+    },
+    {
+      "_id": "prod-174",
+      "categoryId": "cat-11",
+      "name": "fideos ceral",
+      "purchaseCost": 2322
+    },
+    {
+      "_id": "prod-176",
+      "categoryId": "cat-7",
+      "name": "galletas arroz",
+      "purchaseCost": null
+    },
+    {
+      "_id": "prod-178",
+      "categoryId": "cat-7",
+      "name": "galletas arroz snack lulemuu",
+      "purchaseCost": 1200
+    },
+    {
+      "_id": "prod-180",
+      "categoryId": "cat-7",
+      "name": "galletas arroz tostadas leiva",
+      "purchaseCost": 1150
+    },
+    {
+      "_id": "prod-182",
+      "categoryId": "cat-7",
+      "name": "galletas con sal",
+      "purchaseCost": 3200
+    },
+    {
+      "_id": "prod-184",
+      "categoryId": "cat-7",
+      "name": "galletas cookies delicel",
+      "purchaseCost": 1981
+    },
+    {
+      "_id": "prod-186",
+      "categoryId": "cat-7",
+      "name": "galletas integralia diabest",
+      "purchaseCost": 1501
+    },
+    {
+      "_id": "prod-188",
+      "categoryId": "cat-7",
+      "name": "galletas la zaranda",
+      "purchaseCost": 1633
+    },
+    {
+      "_id": "prod-190",
+      "categoryId": "cat-7",
+      "name": "galletas marinera",
+      "purchaseCost": 900
+    },
+    {
+      "_id": "prod-192",
+      "categoryId": "cat-7",
+      "name": "galletas oreo sin tacc",
+      "purchaseCost": 2195
+    },
+    {
+      "_id": "prod-194",
+      "categoryId": "cat-7",
+      "name": "galletas salvado",
+      "purchaseCost": 3200
+    },
+    {
+      "_id": "prod-196",
+      "categoryId": "cat-7",
+      "name": "galletas santa maria",
+      "purchaseCost": 1755
+    },
+    {
+      "_id": "prod-198",
+      "categoryId": "cat-4",
+      "name": "garbanzo",
+      "purchaseCost": 1171
+    },
+    {
+      "_id": "prod-200",
+      "categoryId": "cat-11",
+      "name": "gelatina sin sabor",
+      "purchaseCost": 18400
+    },
+    {
+      "_id": "prod-202",
+      "categoryId": "cat-8",
+      "name": "gomitas de euca",
+      "purchaseCost": 5850
+    },
+    {
+      "_id": "prod-204",
+      "categoryId": "cat-10",
+      "name": "gotitas de chocolate",
+      "purchaseCost": 11018
+    },
+    {
+      "_id": "prod-206",
+      "categoryId": "cat-4",
+      "name": "granola energetica",
+      "purchaseCost": 7452
+    },
+    {
+      "_id": "prod-208",
+      "categoryId": "cat-4",
+      "name": "granola premium",
+      "purchaseCost": 7852
+    },
+    {
+      "_id": "prod-210",
+      "categoryId": "cat-4",
+      "name": "granola tropical",
+      "purchaseCost": 7452
+    },
+    {
+      "_id": "prod-212",
+      "categoryId": "cat-5",
+      "name": "harina almendras c. piel",
+      "purchaseCost": 5093
+    },
+    {
+      "_id": "prod-214",
+      "categoryId": "cat-5",
+      "name": "harina almendras s. piel",
+      "purchaseCost": 27448
+    },
+    {
+      "_id": "prod-216",
+      "categoryId": "cat-5",
+      "name": "harina de algarroba",
+      "purchaseCost": 4487
+    },
+    {
+      "_id": "prod-219",
+      "categoryId": "cat-5",
+      "name": "harina de arroz",
+      "purchaseCost": 1631
+    },
+    {
+      "_id": "prod-221",
+      "categoryId": "cat-5",
+      "name": "harina de avena",
+      "purchaseCost": 2103
+    },
+    {
+      "_id": "prod-223",
+      "categoryId": "cat-5",
+      "name": "harina de carqueja",
+      "purchaseCost": 9225
+    },
+    {
+      "_id": "prod-225",
+      "categoryId": "cat-5",
+      "name": "harina de centeno",
+      "purchaseCost": 1500
+    },
+    {
+      "_id": "prod-227",
+      "categoryId": "cat-5",
+      "name": "harina de chia",
+      "purchaseCost": 2590
+    },
+    {
+      "_id": "prod-229",
+      "categoryId": "cat-5",
+      "name": "harina de garbanzo",
+      "purchaseCost": 1320
+    },
+    {
+      "_id": "prod-231",
+      "categoryId": "cat-5",
+      "name": "harina de lino",
+      "purchaseCost": 2520
+    },
+    {
+      "_id": "prod-233",
+      "categoryId": "cat-5",
+      "name": "harina faina",
+      "purchaseCost": 2572
+    },
+    {
+      "_id": "prod-235",
+      "categoryId": "cat-5",
+      "name": "harina integral fina",
+      "purchaseCost": 1119
+    },
+    {
+      "_id": "prod-237",
+      "categoryId": "cat-9",
+      "name": "hibiscus",
+      "purchaseCost": 16576
+    },
+    {
+      "_id": "prod-239",
+      "categoryId": "cat-6",
+      "name": "higos negros",
+      "purchaseCost": 10800
+    },
+    {
+      "_id": "prod-241",
+      "categoryId": "cat-9",
+      "name": "hongos pino",
+      "purchaseCost": 44798
+    },
+    {
+      "_id": "prod-243",
+      "categoryId": "cat-11",
+      "name": "huevo en polvo",
+      "purchaseCost": 6607
+    },
+    {
+      "_id": "prod-245",
+      "categoryId": "cat-11",
+      "name": "hummus aji/clasico/tomate",
+      "purchaseCost": 2832
+    },
+    {
+      "_id": "prod-247",
+      "categoryId": "cat-11",
+      "name": "hummus pistacho",
+      "purchaseCost": 3913
+    },
+    {
+      "_id": "prod-250",
+      "categoryId": "cat-2",
+      "name": "jengibre molido",
+      "purchaseCost": 12327
+    },
+    {
+      "_id": "prod-252",
+      "categoryId": "cat-9",
+      "name": "jengibre raiz",
+      "purchaseCost": 14565
+    },
+    {
+      "_id": "prod-254",
+      "categoryId": "cat-uncategorized-1",
+      "name": "jugo los naranjos frutilla naranja",
+      "purchaseCost": 1600
+    },
+    {
+      "_id": "prod-256",
+      "categoryId": "cat-uncategorized-1",
+      "name": "jugo los naranjos limonada",
+      "purchaseCost": 1600
+    },
+    {
+      "_id": "prod-258",
+      "categoryId": "cat-uncategorized-1",
+      "name": "jugo los naranjos naranja",
+      "purchaseCost": 1600
+    },
+    {
+      "_id": "prod-260",
+      "categoryId": "cat-uncategorized-1",
+      "name": "jugo los naranjos pomelo rosado",
+      "purchaseCost": 1600
+    },
+    {
+      "_id": "prod-262",
+      "categoryId": "cat-9",
+      "name": "laurel nacional",
+      "purchaseCost": 12103
+    },
+    {
+      "_id": "prod-264",
+      "categoryId": "cat-11",
+      "name": "leche de almendras",
+      "purchaseCost": 2500
+    },
+    {
+      "_id": "prod-266",
+      "categoryId": "cat-uncategorized-1",
+      "name": "leche de coco",
+      "purchaseCost": 2500
+    },
+    {
+      "_id": "prod-268",
+      "categoryId": "cat-9",
+      "name": "lemon gras",
+      "purchaseCost": 5532
+    },
+    {
+      "_id": "prod-270",
+      "categoryId": "cat-4",
+      "name": "lenteja nacional",
+      "purchaseCost": 2119
+    },
+    {
+      "_id": "prod-272",
+      "categoryId": "cat-4",
+      "name": "lenteja turca",
+      "purchaseCost": 3249
+    },
+    {
+      "_id": "prod-274",
+      "categoryId": "cat-4",
+      "name": "lentejon",
+      "purchaseCost": 2789
+    },
+    {
+      "_id": "prod-276",
+      "categoryId": "cat-4",
+      "name": "lentejon canadiense",
+      "purchaseCost": 3457
+    },
+    {
+      "_id": "prod-278",
+      "categoryId": "cat-11",
+      "name": "levadura levex",
+      "purchaseCost": 650
+    },
+    {
+      "_id": "prod-280",
+      "categoryId": "cat-11",
+      "name": "maca",
+      "purchaseCost": 15353
+    },
+    {
+      "_id": "prod-282",
+      "categoryId": "cat-11",
+      "name": "maca negra",
+      "purchaseCost": 1400
+    },
+    {
+      "_id": "prod-284",
+      "categoryId": "cat-6",
+      "name": "maiz frito",
+      "purchaseCost": 15898
+    },
+    {
+      "_id": "prod-286",
+      "categoryId": "cat-6",
+      "name": "maiz inflado",
+      "purchaseCost": 6319
+    },
+    {
+      "_id": "prod-288",
+      "categoryId": "cat-9",
+      "name": "malva",
+      "purchaseCost": 5225
+    },
+    {
+      "_id": "prod-290",
+      "categoryId": "cat-6",
+      "name": "mani con cascara",
+      "purchaseCost": 4320
+    },
+    {
+      "_id": "prod-292",
+      "categoryId": "cat-6",
+      "name": "mani tostado con sal",
+      "purchaseCost": 2600
+    },
+    {
+      "_id": "prod-294",
+      "categoryId": "cat-6",
+      "name": "mani tostado sin sal",
+      "purchaseCost": 2600
+    },
+    {
+      "_id": "prod-296",
+      "categoryId": "cat-9",
+      "name": "manzanilla",
+      "purchaseCost": 22365
+    },
+    {
+      "_id": "prod-298",
+      "categoryId": "cat-7",
+      "name": "mermelada light tranquilina arandano/durazno/frutilla/frutos del bosque/membrillo",
+      "purchaseCost": 4468
+    },
+    {
+      "_id": "prod-300",
+      "categoryId": "cat-7",
+      "name": "mermelada light tranquilina naranja/higo/ciruela",
+      "purchaseCost": 3843
+    },
+    {
+      "_id": "prod-302",
+      "categoryId": "cat-7",
+      "name": "mermelada natali",
+      "purchaseCost": 3329
+    },
+    {
+      "_id": "prod-304",
+      "categoryId": "cat-7",
+      "name": "mermelada natali durazno",
+      "purchaseCost": 3393
+    },
+    {
+      "_id": "prod-306",
+      "categoryId": "cat-7",
+      "name": "mermelada tranquilina organica",
+      "purchaseCost": 3850
+    },
+    {
+      "_id": "prod-308",
+      "categoryId": "cat-uncategorized-1",
+      "name": "mezcla anti stress",
+      "purchaseCost": 11509
+    },
+    {
+      "_id": "prod-310",
+      "categoryId": "cat-9",
+      "name": "mezcla digestiva",
+      "purchaseCost": 12724
+    },
+    {
+      "_id": "prod-312",
+      "categoryId": "cat-7",
+      "name": "miel",
+      "purchaseCost": null
+    },
+    {
+      "_id": "prod-314",
+      "categoryId": "cat-7",
+      "name": "miel carpincho",
+      "purchaseCost": 1680
+    },
+    {
+      "_id": "prod-316",
+      "categoryId": "cat-7",
+      "name": "miel curcuma thank you bees",
+      "purchaseCost": 4774
+    },
+    {
+      "_id": "prod-318",
+      "categoryId": "cat-7",
+      "name": "miel jengibre thank you bees",
+      "purchaseCost": 4774
+    },
+    {
+      "_id": "prod-320",
+      "categoryId": "cat-3",
+      "name": "mix agridulce",
+      "purchaseCost": 10012
+    },
+    {
+      "_id": "prod-322",
+      "categoryId": "cat-3",
+      "name": "mix banana",
+      "purchaseCost": 8237
+    },
+    {
+      "_id": "prod-324",
+      "categoryId": "cat-6",
+      "name": "mix cervecero",
+      "purchaseCost": 14214
+    },
+    {
+      "_id": "prod-326",
+      "categoryId": "cat-6",
+      "name": "mix economico",
+      "purchaseCost": 7303
+    },
+    {
+      "_id": "prod-328",
+      "categoryId": "cat-2",
+      "name": "mix pimienta grano",
+      "purchaseCost": 23460
+    },
+    {
+      "_id": "prod-330",
+      "categoryId": "cat-6",
+      "name": "mix premium",
+      "purchaseCost": 14214
+    },
+    {
+      "_id": "prod-332",
+      "categoryId": "cat-6",
+      "name": "mix seco",
+      "purchaseCost": 20675
+    },
+    {
+      "_id": "prod-334",
+      "categoryId": "cat-3",
+      "name": "mix seco sin mani",
+      "purchaseCost": 26082
+    },
+    {
+      "_id": "prod-336",
+      "categoryId": "cat-11",
+      "name": "mix semillas",
+      "purchaseCost": 3773
+    },
+    {
+      "_id": "prod-338",
+      "categoryId": "cat-uncategorized-1",
+      "name": "nuez chandler con cascara",
+      "purchaseCost": 8418
+    },
+    {
+      "_id": "prod-340",
+      "categoryId": "cat-3",
+      "name": "nuez mariposa",
+      "purchaseCost": 19000
+    },
+    {
+      "_id": "prod-342",
+      "categoryId": "cat-2",
+      "name": "nuez moscada molida",
+      "purchaseCost": 13263
+    },
+    {
+      "_id": "prod-344",
+      "categoryId": "cat-2",
+      "name": "oregano",
+      "purchaseCost": 4012
+    },
+    {
+      "_id": "prod-346",
+      "categoryId": "cat-2",
+      "name": "paprika",
+      "purchaseCost": 8359
+    },
+    {
+      "_id": "prod-348",
+      "categoryId": "cat-6",
+      "name": "pasas de uva flame",
+      "purchaseCost": 4402
+    },
+    {
+      "_id": "prod-350",
+      "categoryId": "cat-7",
+      "name": "pasta de mani entrenuts cacao",
+      "purchaseCost": 2300
+    },
+    {
+      "_id": "prod-352",
+      "categoryId": "cat-7",
+      "name": "pasta de mani entrenuts natural",
+      "purchaseCost": 2300
+    },
+    {
+      "_id": "prod-354",
+      "categoryId": "cat-7",
+      "name": "pasta de mani entrenuts proteica",
+      "purchaseCost": 3300
+    },
+    {
+      "_id": "prod-356",
+      "categoryId": "cat-2",
+      "name": "pesto",
+      "purchaseCost": 7245
+    },
+    {
+      "_id": "prod-358",
+      "categoryId": "cat-2",
+      "name": "pimenton",
+      "purchaseCost": 5871
+    },
+    {
+      "_id": "prod-360",
+      "categoryId": "cat-2",
+      "name": "pimenton ahumado",
+      "purchaseCost": 6077
+    },
+    {
+      "_id": "prod-362",
+      "categoryId": "cat-2",
+      "name": "pimienta blanca",
+      "purchaseCost": 24950
+    },
+    {
+      "_id": "prod-364",
+      "categoryId": "cat-2",
+      "name": "pimienta negra grano",
+      "purchaseCost": 17809
+    },
+    {
+      "_id": "prod-366",
+      "categoryId": "cat-2",
+      "name": "pimienta negra molida",
+      "purchaseCost": 4222
+    },
+    {
+      "_id": "prod-368",
+      "categoryId": "cat-9",
+      "name": "poleo",
+      "purchaseCost": 10603
+    },
+    {
+      "_id": "prod-370",
+      "categoryId": "cat-5",
+      "name": "polvo para hornear",
+      "purchaseCost": 6607
+    },
+    {
+      "_id": "prod-372",
+      "categoryId": "cat-5",
+      "name": "polvo para hornear dicomere",
+      "purchaseCost": 1813
+    },
+    {
+      "_id": "prod-374",
+      "categoryId": "cat-4",
+      "name": "poroto aduki",
+      "purchaseCost": 2313
+    },
+    {
+      "_id": "prod-376",
+      "categoryId": "cat-4",
+      "name": "poroto alubia",
+      "purchaseCost": 2582
+    },
+    {
+      "_id": "prod-378",
+      "categoryId": "cat-4",
+      "name": "poroto manteca",
+      "purchaseCost": 3286
+    },
+    {
+      "_id": "prod-380",
+      "categoryId": "cat-4",
+      "name": "poroto negro",
+      "purchaseCost": 1570
+    },
+    {
+      "_id": "prod-382",
+      "categoryId": "cat-4",
+      "name": "porotos pallares",
+      "purchaseCost": 5816
+    },
+    {
+      "_id": "prod-384",
+      "categoryId": "cat-4",
+      "name": "porotos soja",
+      "purchaseCost": 1297
+    },
+    {
+      "_id": "prod-386",
+      "categoryId": "cat-5",
+      "name": "premezcla pan dicomere",
+      "purchaseCost": 1643
+    },
+    {
+      "_id": "prod-388",
+      "categoryId": "cat-5",
+      "name": "premezcla para bizcochuelo delicel",
+      "purchaseCost": 2716
+    },
+    {
+      "_id": "prod-390",
+      "categoryId": "cat-5",
+      "name": "premezcla para pizza delicel",
+      "purchaseCost": 2716
+    },
+    {
+      "_id": "prod-392",
+      "categoryId": "cat-5",
+      "name": "premezcla pizza dicomere",
+      "purchaseCost": 1690
+    },
+    {
+      "_id": "prod-394",
+      "categoryId": "cat-5",
+      "name": "premezcla universal delicel",
+      "purchaseCost": 2516
+    },
+    {
+      "_id": "prod-396",
+      "categoryId": "cat-2",
+      "name": "provenzal",
+      "purchaseCost": 7802
+    },
+    {
+      "_id": "prod-398",
+      "categoryId": "cat-uncategorized-1",
+      "name": "quinoa blanca",
+      "purchaseCost": 8955
+    },
+    {
+      "_id": "prod-400",
+      "categoryId": "cat-7",
+      "name": "quinoa pop",
+      "purchaseCost": 655
+    },
+    {
+      "_id": "prod-402",
+      "categoryId": "cat-2",
+      "name": "romero egipto",
+      "purchaseCost": 10251
+    },
+    {
+      "_id": "prod-404",
+      "categoryId": "cat-2",
+      "name": "sal dharam 0 sodio",
+      "purchaseCost": 3875
+    },
+    {
+      "_id": "prod-406",
+      "categoryId": "cat-2",
+      "name": "sal himalaya fina",
+      "purchaseCost": 1705
+    },
+    {
+      "_id": "prod-408",
+      "categoryId": "cat-2",
+      "name": "sal marina",
+      "purchaseCost": 1787
+    },
+    {
+      "_id": "prod-410",
+      "categoryId": "cat-9",
+      "name": "salvia deshidratada",
+      "purchaseCost": 10477
+    },
+    {
+      "_id": "prod-412",
+      "categoryId": "cat-11",
+      "name": "semilla chia",
+      "purchaseCost": 7000
+    },
+    {
+      "_id": "prod-414",
+      "categoryId": "cat-6",
+      "name": "semilla de girasol",
+      "purchaseCost": 3500
+    },
+    {
+      "_id": "prod-416",
+      "categoryId": "cat-6",
+      "name": "semilla de zapallo",
+      "purchaseCost": 15190
+    },
+    {
+      "_id": "prod-418",
+      "categoryId": "cat-11",
+      "name": "semilla lino",
+      "purchaseCost": 2184
+    },
+    {
+      "_id": "prod-420",
+      "categoryId": "cat-11",
+      "name": "semilla sesamo blanco",
+      "purchaseCost": 5975
+    },
+    {
+      "_id": "prod-422",
+      "categoryId": "cat-5",
+      "name": "semolin",
+      "purchaseCost": 1350
+    },
+    {
+      "_id": "prod-424",
+      "categoryId": "cat-6",
+      "name": "snak crackers de arroz crisppino",
+      "purchaseCost": 675
+    },
+    {
+      "_id": "prod-426",
+      "categoryId": "cat-6",
+      "name": "snak green crops",
+      "purchaseCost": 969
+    },
+    {
+      "_id": "prod-428",
+      "categoryId": "cat-11",
+      "name": "sopa x 50gr fram",
+      "purchaseCost": 2248
+    },
+    {
+      "_id": "prod-430",
+      "categoryId": "cat-2",
+      "name": "spirulina",
+      "purchaseCost": 24154
+    },
+    {
+      "_id": "prod-432",
+      "categoryId": "cat-5",
+      "name": "stevia sobres jual",
+      "purchaseCost": 3202
+    },
+    {
+      "_id": "prod-434",
+      "categoryId": "cat-5",
+      "name": "stevia x125cc jual",
+      "purchaseCost": 2746
+    },
+    {
+      "_id": "prod-436",
+      "categoryId": "cat-5",
+      "name": "stevia x250cc jual",
+      "purchaseCost": 4153
+    },
+    {
+      "_id": "prod-438",
+      "categoryId": "cat-9",
+      "name": "te adisol heredia",
+      "purchaseCost": 3318
+    },
+    {
+      "_id": "prod-440",
+      "categoryId": "cat-9",
+      "name": "te bienestar surtido heredia",
+      "purchaseCost": 3250
+    },
+    {
+      "_id": "prod-442",
+      "categoryId": "cat-9",
+      "name": "te chai heredia",
+      "purchaseCost": 3326
+    },
+    {
+      "_id": "prod-444",
+      "categoryId": "cat-9",
+      "name": "te clasico surtido heredia",
+      "purchaseCost": 3577
+    },
+    {
+      "_id": "prod-446",
+      "categoryId": "cat-9",
+      "name": "te earl grey heredia",
+      "purchaseCost": 4023
+    },
+    {
+      "_id": "prod-448",
+      "categoryId": "cat-9",
+      "name": "te fem heredia",
+      "purchaseCost": 3199
+    },
+    {
+      "_id": "prod-450",
+      "categoryId": "cat-9",
+      "name": "te harmony",
+      "purchaseCost": 3615
+    },
+    {
+      "_id": "prod-452",
+      "categoryId": "cat-9",
+      "name": "te herby heredia",
+      "purchaseCost": 3836
+    },
+    {
+      "_id": "prod-454",
+      "categoryId": "cat-9",
+      "name": "te hib. ene. ver. heredia",
+      "purchaseCost": 3529
+    },
+    {
+      "_id": "prod-456",
+      "categoryId": "cat-9",
+      "name": "te manzanilla heredia",
+      "purchaseCost": 2978
+    },
+    {
+      "_id": "prod-458",
+      "categoryId": "cat-9",
+      "name": "te meditacion heredia",
+      "purchaseCost": 3536
+    },
+    {
+      "_id": "prod-460",
+      "categoryId": "cat-9",
+      "name": "te melena de leon heredia",
+      "purchaseCost": 8932
+    },
+    {
+      "_id": "prod-462",
+      "categoryId": "cat-9",
+      "name": "te monohierbas heredia",
+      "purchaseCost": 3250
+    },
+    {
+      "_id": "prod-464",
+      "categoryId": "cat-9",
+      "name": "te negro heredia",
+      "purchaseCost": 2507
+    },
+    {
+      "_id": "prod-466",
+      "categoryId": "cat-9",
+      "name": "te rojo heredia",
+      "purchaseCost": 3154
+    },
+    {
+      "_id": "prod-468",
+      "categoryId": "cat-9",
+      "name": "te rosa mosqueta heredia",
+      "purchaseCost": 5072
+    },
+    {
+      "_id": "prod-470",
+      "categoryId": "cat-9",
+      "name": "te sedan heredia",
+      "purchaseCost": 3731
+    },
+    {
+      "_id": "prod-472",
+      "categoryId": "cat-9",
+      "name": "te surtido magico heredia",
+      "purchaseCost": 4063
+    },
+    {
+      "_id": "prod-474",
+      "categoryId": "cat-9",
+      "name": "te verde heredia",
+      "purchaseCost": 2940
+    },
+    {
+      "_id": "prod-476",
+      "categoryId": "cat-11",
+      "name": "texturizado soja",
+      "purchaseCost": 1835
+    },
+    {
+      "_id": "prod-478",
+      "categoryId": "cat-2",
+      "name": "tomillo",
+      "purchaseCost": 11463
+    },
+    {
+      "_id": "prod-480",
+      "categoryId": "cat-6",
+      "name": "trencitas cereal",
+      "purchaseCost": 1961
+    },
+    {
+      "_id": "prod-482",
+      "categoryId": "cat-9",
+      "name": "yerba kalena roja",
+      "purchaseCost": 3513
+    },
+    {
+      "_id": "prod-484",
+      "categoryId": "cat-9",
+      "name": "yerba kalena suave",
+      "purchaseCost": 4312
+    }
+  ],
+  "presentations": [
+    {
+      "_id": "pres-2",
+      "productId": "prod-1",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 30,
+      "salePrice": 7990
+    },
+    {
+      "_id": "pres-4",
+      "productId": "prod-3",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": 8800
+    },
+    {
+      "_id": "pres-6",
+      "productId": "prod-5",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": 6500
+    },
+    {
+      "_id": "pres-8",
+      "productId": "prod-7",
+      "label": "50g",
+      "grams": 50,
+      "margin": 80,
+      "salePrice": 790
+    },
+    {
+      "_id": "pres-10",
+      "productId": "prod-9",
+      "label": "50g",
+      "grams": 50,
+      "margin": 50,
+      "salePrice": 700
+    },
+    {
+      "_id": "pres-12",
+      "productId": "prod-11",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 70,
+      "salePrice": 950
+    },
+    {
+      "_id": "pres-14",
+      "productId": "prod-13",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 60,
+      "salePrice": 2200
+    },
+    {
+      "_id": "pres-16",
+      "productId": "prod-15",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 60,
+      "salePrice": 2200
+    },
+    {
+      "_id": "pres-18",
+      "productId": "prod-17",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": 1500
+    },
+    {
+      "_id": "pres-20",
+      "productId": "prod-19",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": 1500
+    },
+    {
+      "_id": "pres-22",
+      "productId": "prod-21",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": 2300
+    },
+    {
+      "_id": "pres-24",
+      "productId": "prod-23",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": 2300
+    },
+    {
+      "_id": "pres-26",
+      "productId": "prod-25",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 70,
+      "salePrice": 990
+    },
+    {
+      "_id": "pres-28",
+      "productId": "prod-27",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 70,
+      "salePrice": 990
+    },
+    {
+      "_id": "pres-30",
+      "productId": "prod-29",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": null
+    },
+    {
+      "_id": "pres-32",
+      "productId": "prod-31",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": null
+    },
+    {
+      "_id": "pres-34",
+      "productId": "prod-33",
+      "label": "100g",
+      "grams": 100,
+      "margin": 60,
+      "salePrice": 3700
+    },
+    {
+      "_id": "pres-36",
+      "productId": "prod-35",
+      "label": "200g",
+      "grams": 200,
+      "margin": 60,
+      "salePrice": 2200
+    },
+    {
+      "_id": "pres-38",
+      "productId": "prod-37",
+      "label": "200g",
+      "grams": 200,
+      "margin": 60,
+      "salePrice": 2200
+    },
+    {
+      "_id": "pres-40",
+      "productId": "prod-39",
+      "label": "200g",
+      "grams": 200,
+      "margin": 60,
+      "salePrice": 2200
+    },
+    {
+      "_id": "pres-42",
+      "productId": "prod-41",
+      "label": "200g",
+      "grams": 200,
+      "margin": 60,
+      "salePrice": 1500
+    },
+    {
+      "_id": "pres-44",
+      "productId": "prod-43",
+      "label": "30g",
+      "grams": 30,
+      "margin": 50,
+      "salePrice": 1700
+    },
+    {
+      "_id": "pres-46",
+      "productId": "prod-45",
+      "label": "50g",
+      "grams": 50,
+      "margin": 50,
+      "salePrice": 1000
+    },
+    {
+      "_id": "pres-48",
+      "productId": "prod-47",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 60,
+      "salePrice": 1900
+    },
+    {
+      "_id": "pres-50",
+      "productId": "prod-49",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 60,
+      "salePrice": 1900
+    },
+    {
+      "_id": "pres-52",
+      "productId": "prod-51",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 60,
+      "salePrice": 1900
+    },
+    {
+      "_id": "pres-54",
+      "productId": "prod-53",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 60,
+      "salePrice": 1900
+    },
+    {
+      "_id": "pres-56",
+      "productId": "prod-55",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": 1500
+    },
+    {
+      "_id": "pres-58",
+      "productId": "prod-57",
+      "label": "500g",
+      "grams": 500,
+      "margin": 70,
+      "salePrice": 1500
+    },
+    {
+      "_id": "pres-60",
+      "productId": "prod-59",
+      "label": "500g",
+      "grams": 500,
+      "margin": 70,
+      "salePrice": 2050
+    },
+    {
+      "_id": "pres-62",
+      "productId": "prod-61",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": null
+    },
+    {
+      "_id": "pres-64",
+      "productId": "prod-63",
+      "label": "250g",
+      "grams": 250,
+      "margin": 30,
+      "salePrice": 1200
+    },
+    {
+      "_id": "pres-66",
+      "productId": "prod-65",
+      "label": "48g",
+      "grams": 48,
+      "margin": 50,
+      "salePrice": 800
+    },
+    {
+      "_id": "pres-68",
+      "productId": "prod-67",
+      "label": "50g",
+      "grams": 50,
+      "margin": 70,
+      "salePrice": 200
+    },
+    {
+      "_id": "pres-70",
+      "productId": "prod-69",
+      "label": "x500",
+      "grams": 500,
+      "margin": 50,
+      "salePrice": 2600
+    },
+    {
+      "_id": "pres-72",
+      "productId": "prod-71",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": 700
+    },
+    {
+      "_id": "pres-74",
+      "productId": "prod-73",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 55,
+      "salePrice": 700
+    },
+    {
+      "_id": "pres-76",
+      "productId": "prod-75",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 55,
+      "salePrice": 700
+    },
+    {
+      "_id": "pres-78",
+      "productId": "prod-77",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": 1400
+    },
+    {
+      "_id": "pres-80",
+      "productId": "prod-79",
+      "label": "200g",
+      "grams": 200,
+      "margin": 70,
+      "salePrice": null
+    },
+    {
+      "_id": "pres-82",
+      "productId": "prod-81",
+      "label": "x200",
+      "grams": 200,
+      "margin": 50,
+      "salePrice": null
+    },
+    {
+      "_id": "pres-83",
+      "productId": "prod-81",
+      "label": "x500",
+      "grams": 500,
+      "margin": 70,
+      "salePrice": 1500
+    },
+    {
+      "_id": "pres-85",
+      "productId": "prod-84",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 40,
+      "salePrice": 1300
+    },
+    {
+      "_id": "pres-87",
+      "productId": "prod-86",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 40,
+      "salePrice": 1300
+    },
+    {
+      "_id": "pres-89",
+      "productId": "prod-88",
+      "label": "50g",
+      "grams": 50,
+      "margin": 60,
+      "salePrice": 1100
+    },
+    {
+      "_id": "pres-91",
+      "productId": "prod-90",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": 300
+    },
+    {
+      "_id": "pres-93",
+      "productId": "prod-92",
+      "label": "50g",
+      "grams": 50,
+      "margin": 80,
+      "salePrice": 990
+    },
+    {
+      "_id": "pres-95",
+      "productId": "prod-94",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": null
+    },
+    {
+      "_id": "pres-97",
+      "productId": "prod-96",
+      "label": "x200",
+      "grams": 100,
+      "margin": 50,
+      "salePrice": 2200
+    },
+    {
+      "_id": "pres-99",
+      "productId": "prod-98",
+      "label": "x100",
+      "grams": 100,
+      "margin": 50,
+      "salePrice": 2790
+    },
+    {
+      "_id": "pres-101",
+      "productId": "prod-100",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 80,
+      "salePrice": null
+    },
+    {
+      "_id": "pres-103",
+      "productId": "prod-102",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 60,
+      "salePrice": null
+    },
+    {
+      "_id": "pres-105",
+      "productId": "prod-104",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 80,
+      "salePrice": null
+    },
+    {
+      "_id": "pres-107",
+      "productId": "prod-106",
+      "label": "50g",
+      "grams": 50,
+      "margin": 50,
+      "salePrice": 2700
+    },
+    {
+      "_id": "pres-109",
+      "productId": "prod-108",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": null
+    },
+    {
+      "_id": "pres-111",
+      "productId": "prod-110",
+      "label": "60g",
+      "grams": 60,
+      "margin": 50,
+      "salePrice": null
+    },
+    {
+      "_id": "pres-113",
+      "productId": "prod-112",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 40,
+      "salePrice": 495
+    },
+    {
+      "_id": "pres-115",
+      "productId": "prod-114",
+      "label": "60g",
+      "grams": 60,
+      "margin": 50,
+      "salePrice": null
+    },
+    {
+      "_id": "pres-117",
+      "productId": "prod-116",
+      "label": "60g",
+      "grams": 60,
+      "margin": 50,
+      "salePrice": null
+    },
+    {
+      "_id": "pres-119",
+      "productId": "prod-118",
+      "label": "50g",
+      "grams": 50,
+      "margin": 50,
+      "salePrice": 800
+    },
+    {
+      "_id": "pres-121",
+      "productId": "prod-120",
+      "label": "50g",
+      "grams": 50,
+      "margin": 50,
+      "salePrice": 790
+    },
+    {
+      "_id": "pres-123",
+      "productId": "prod-122",
+      "label": "50g",
+      "grams": 50,
+      "margin": 50,
+      "salePrice": 1900
+    },
+    {
+      "_id": "pres-125",
+      "productId": "prod-124",
+      "label": "50g",
+      "grams": 50,
+      "margin": 80,
+      "salePrice": 500
+    },
+    {
+      "_id": "pres-127",
+      "productId": "prod-126",
+      "label": "100g",
+      "grams": 100,
+      "margin": 50,
+      "salePrice": 1900
+    },
+    {
+      "_id": "pres-129",
+      "productId": "prod-128",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": 333
+    },
+    {
+      "_id": "pres-131",
+      "productId": "prod-130",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": 333
+    },
+    {
+      "_id": "pres-133",
+      "productId": "prod-132",
+      "label": "50g",
+      "grams": 50,
+      "margin": 50,
+      "salePrice": 1500
+    },
+    {
+      "_id": "pres-135",
+      "productId": "prod-134",
+      "label": "250g",
+      "grams": 250,
+      "margin": 50,
+      "salePrice": 3000
+    },
+    {
+      "_id": "pres-137",
+      "productId": "prod-136",
+      "label": "x200",
+      "grams": 200,
+      "margin": 50,
+      "salePrice": 2700
+    },
+    {
+      "_id": "pres-139",
+      "productId": "prod-138",
+      "label": "50g",
+      "grams": 50,
+      "margin": 80,
+      "salePrice": 690
+    },
+    {
+      "_id": "pres-141",
+      "productId": "prod-140",
+      "label": "50g",
+      "grams": 50,
+      "margin": 70,
+      "salePrice": 750
+    },
+    {
+      "_id": "pres-143",
+      "productId": "prod-142",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": null
+    },
+    {
+      "_id": "pres-145",
+      "productId": "prod-144",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": null
+    },
+    {
+      "_id": "pres-147",
+      "productId": "prod-146",
+      "label": "50g",
+      "grams": 50,
+      "margin": 80,
+      "salePrice": 550
+    },
+    {
+      "_id": "pres-149",
+      "productId": "prod-148",
+      "label": "50g",
+      "grams": 50,
+      "margin": 90,
+      "salePrice": 390
+    },
+    {
+      "_id": "pres-151",
+      "productId": "prod-150",
+      "label": "200g",
+      "grams": 200,
+      "margin": 50,
+      "salePrice": 1400
+    },
+    {
+      "_id": "pres-153",
+      "productId": "prod-152",
+      "label": "200g",
+      "grams": 200,
+      "margin": 50,
+      "salePrice": 1400
+    },
+    {
+      "_id": "pres-155",
+      "productId": "prod-154",
+      "label": "200g",
+      "grams": 200,
+      "margin": 50,
+      "salePrice": 2000
+    },
+    {
+      "_id": "pres-157",
+      "productId": "prod-156",
+      "label": "50g",
+      "grams": 50,
+      "margin": 50,
+      "salePrice": null
+    },
+    {
+      "_id": "pres-159",
+      "productId": "prod-158",
+      "label": "50g",
+      "grams": 50,
+      "margin": 90,
+      "salePrice": 900
+    },
+    {
+      "_id": "pres-161",
+      "productId": "prod-160",
+      "label": "50g",
+      "grams": 50,
+      "margin": 50,
+      "salePrice": 700
+    },
+    {
+      "_id": "pres-163",
+      "productId": "prod-162",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": null
+    },
+    {
+      "_id": "pres-165",
+      "productId": "prod-164",
+      "label": "50g",
+      "grams": 50,
+      "margin": 90,
+      "salePrice": 700
+    },
+    {
+      "_id": "pres-167",
+      "productId": "prod-166",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": null
+    },
+    {
+      "_id": "pres-169",
+      "productId": "prod-168",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": null
+    },
+    {
+      "_id": "pres-171",
+      "productId": "prod-168",
+      "label": "500g",
+      "grams": 500,
+      "margin": 50,
+      "salePrice": 1600
+    },
+    {
+      "_id": "pres-173",
+      "productId": "prod-172",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": 7300
+    },
+    {
+      "_id": "pres-175",
+      "productId": "prod-174",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": 3500
+    },
+    {
+      "_id": "pres-177",
+      "productId": "prod-176",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": null
+    },
+    {
+      "_id": "pres-179",
+      "productId": "prod-178",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": 2100
+    },
+    {
+      "_id": "pres-181",
+      "productId": "prod-180",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 40,
+      "salePrice": 1800
+    },
+    {
+      "_id": "pres-183",
+      "productId": "prod-182",
+      "label": "200g",
+      "grams": 200,
+      "margin": 30,
+      "salePrice": null
+    },
+    {
+      "_id": "pres-185",
+      "productId": "prod-184",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": 2990
+    },
+    {
+      "_id": "pres-187",
+      "productId": "prod-186",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": 2500
+    },
+    {
+      "_id": "pres-189",
+      "productId": "prod-188",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": 2500
+    },
+    {
+      "_id": "pres-191",
+      "productId": "prod-190",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": 1500
+    },
+    {
+      "_id": "pres-193",
+      "productId": "prod-192",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": null
+    },
+    {
+      "_id": "pres-195",
+      "productId": "prod-194",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 30,
+      "salePrice": null
+    },
+    {
+      "_id": "pres-197",
+      "productId": "prod-196",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": 2900
+    },
+    {
+      "_id": "pres-199",
+      "productId": "prod-198",
+      "label": "500g",
+      "grams": 500,
+      "margin": 60,
+      "salePrice": 990
+    },
+    {
+      "_id": "pres-201",
+      "productId": "prod-200",
+      "label": "250g",
+      "grams": 250,
+      "margin": 50,
+      "salePrice": 3500
+    },
+    {
+      "_id": "pres-203",
+      "productId": "prod-202",
+      "label": "100g",
+      "grams": 100,
+      "margin": 50,
+      "salePrice": 900
+    },
+    {
+      "_id": "pres-205",
+      "productId": "prod-204",
+      "label": "50g",
+      "grams": 50,
+      "margin": 50,
+      "salePrice": 1000
+    },
+    {
+      "_id": "pres-207",
+      "productId": "prod-206",
+      "label": "200g",
+      "grams": 200,
+      "margin": 50,
+      "salePrice": 2700
+    },
+    {
+      "_id": "pres-209",
+      "productId": "prod-208",
+      "label": "200g",
+      "grams": 200,
+      "margin": 50,
+      "salePrice": 2900
+    },
+    {
+      "_id": "pres-211",
+      "productId": "prod-210",
+      "label": "200g",
+      "grams": 200,
+      "margin": 50,
+      "salePrice": 2700
+    },
+    {
+      "_id": "pres-213",
+      "productId": "prod-212",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": null
+    },
+    {
+      "_id": "pres-215",
+      "productId": "prod-214",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": null
+    },
+    {
+      "_id": "pres-217",
+      "productId": "prod-216",
+      "label": "500g",
+      "grams": 500,
+      "margin": 50,
+      "salePrice": 3700
+    },
+    {
+      "_id": "pres-218",
+      "productId": "prod-214",
+      "label": "500g",
+      "grams": 500,
+      "margin": 50,
+      "salePrice": 11300
+    },
+    {
+      "_id": "pres-220",
+      "productId": "prod-219",
+      "label": "1000g",
+      "grams": 1000,
+      "margin": 50,
+      "salePrice": 2800
+    },
+    {
+      "_id": "pres-222",
+      "productId": "prod-221",
+      "label": "500g",
+      "grams": 500,
+      "margin": 50,
+      "salePrice": 1800
+    },
+    {
+      "_id": "pres-224",
+      "productId": "prod-223",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": null
+    },
+    {
+      "_id": "pres-226",
+      "productId": "prod-225",
+      "label": "500g",
+      "grams": 500,
+      "margin": 50,
+      "salePrice": 1250
+    },
+    {
+      "_id": "pres-228",
+      "productId": "prod-227",
+      "label": "250g",
+      "grams": 250,
+      "margin": 50,
+      "salePrice": 1100
+    },
+    {
+      "_id": "pres-230",
+      "productId": "prod-229",
+      "label": "250g",
+      "grams": 250,
+      "margin": 50,
+      "salePrice": 600
+    },
+    {
+      "_id": "pres-232",
+      "productId": "prod-231",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": 2100
+    },
+    {
+      "_id": "pres-234",
+      "productId": "prod-233",
+      "label": "250g",
+      "grams": 250,
+      "margin": 50,
+      "salePrice": 1100
+    },
+    {
+      "_id": "pres-236",
+      "productId": "prod-235",
+      "label": "500g",
+      "grams": 500,
+      "margin": 50,
+      "salePrice": 1000
+    },
+    {
+      "_id": "pres-238",
+      "productId": "prod-237",
+      "label": "x50",
+      "grams": 50,
+      "margin": 50,
+      "salePrice": 1600
+    },
+    {
+      "_id": "pres-240",
+      "productId": "prod-239",
+      "label": "250g",
+      "grams": 250,
+      "margin": 50,
+      "salePrice": 4500
+    },
+    {
+      "_id": "pres-242",
+      "productId": "prod-241",
+      "label": "30g",
+      "grams": 30,
+      "margin": 60,
+      "salePrice": null
+    },
+    {
+      "_id": "pres-244",
+      "productId": "prod-243",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": null
+    },
+    {
+      "_id": "pres-246",
+      "productId": "prod-245",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": null
+    },
+    {
+      "_id": "pres-248",
+      "productId": "prod-247",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": null
+    },
+    {
+      "_id": "pres-251",
+      "productId": "prod-250",
+      "label": "50g",
+      "grams": 50,
+      "margin": 50,
+      "salePrice": 1100
+    },
+    {
+      "_id": "pres-253",
+      "productId": "prod-252",
+      "label": "50g",
+      "grams": 50,
+      "margin": 50,
+      "salePrice": 1200
+    },
+    {
+      "_id": "pres-255",
+      "productId": "prod-254",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": 2800
+    },
+    {
+      "_id": "pres-257",
+      "productId": "prod-256",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": 2800
+    },
+    {
+      "_id": "pres-259",
+      "productId": "prod-258",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": 2800
+    },
+    {
+      "_id": "pres-261",
+      "productId": "prod-260",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": 2800
+    },
+    {
+      "_id": "pres-263",
+      "productId": "prod-262",
+      "label": "25g",
+      "grams": 25,
+      "margin": 50,
+      "salePrice": 600
+    },
+    {
+      "_id": "pres-265",
+      "productId": "prod-264",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": 4300
+    },
+    {
+      "_id": "pres-267",
+      "productId": "prod-266",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": 4300
+    },
+    {
+      "_id": "pres-269",
+      "productId": "prod-268",
+      "label": "50g",
+      "grams": 50,
+      "margin": 80,
+      "salePrice": 790
+    },
+    {
+      "_id": "pres-271",
+      "productId": "prod-270",
+      "label": "500g",
+      "grams": 500,
+      "margin": 60,
+      "salePrice": 1800
+    },
+    {
+      "_id": "pres-273",
+      "productId": "prod-272",
+      "label": "500g",
+      "grams": 500,
+      "margin": 50,
+      "salePrice": 2700
+    },
+    {
+      "_id": "pres-275",
+      "productId": "prod-274",
+      "label": "500g",
+      "grams": 500,
+      "margin": 60,
+      "salePrice": 2300
+    },
+    {
+      "_id": "pres-277",
+      "productId": "prod-276",
+      "label": "500g",
+      "grams": 500,
+      "margin": 50,
+      "salePrice": 2700
+    },
+    {
+      "_id": "pres-279",
+      "productId": "prod-278",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": 1300
+    },
+    {
+      "_id": "pres-281",
+      "productId": "prod-280",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": 5800
+    },
+    {
+      "_id": "pres-283",
+      "productId": "prod-282",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": 2400
+    },
+    {
+      "_id": "pres-285",
+      "productId": "prod-284",
+      "label": "50g",
+      "grams": 50,
+      "margin": 60,
+      "salePrice": 1500
+    },
+    {
+      "_id": "pres-287",
+      "productId": "prod-286",
+      "label": "100g",
+      "grams": 100,
+      "margin": 50,
+      "salePrice": 1100
+    },
+    {
+      "_id": "pres-289",
+      "productId": "prod-288",
+      "label": "50g",
+      "grams": 50,
+      "margin": 90,
+      "salePrice": 690
+    },
+    {
+      "_id": "pres-291",
+      "productId": "prod-290",
+      "label": "250g",
+      "grams": 250,
+      "margin": 50,
+      "salePrice": 1900
+    },
+    {
+      "_id": "pres-293",
+      "productId": "prod-292",
+      "label": "250g",
+      "grams": 250,
+      "margin": 70,
+      "salePrice": 1800
+    },
+    {
+      "_id": "pres-295",
+      "productId": "prod-294",
+      "label": "250g",
+      "grams": 250,
+      "margin": 70,
+      "salePrice": 1800
+    },
+    {
+      "_id": "pres-297",
+      "productId": "prod-296",
+      "label": "50g",
+      "grams": 50,
+      "margin": 80,
+      "salePrice": 2600
+    },
+    {
+      "_id": "pres-299",
+      "productId": "prod-298",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": 7200
+    },
+    {
+      "_id": "pres-301",
+      "productId": "prod-300",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": 6400
+    },
+    {
+      "_id": "pres-303",
+      "productId": "prod-302",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 40,
+      "salePrice": 5990
+    },
+    {
+      "_id": "pres-305",
+      "productId": "prod-304",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 40,
+      "salePrice": 5990
+    },
+    {
+      "_id": "pres-307",
+      "productId": "prod-306",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": 6400
+    },
+    {
+      "_id": "pres-309",
+      "productId": "prod-308",
+      "label": "50g",
+      "grams": 50,
+      "margin": 50,
+      "salePrice": null
+    },
+    {
+      "_id": "pres-311",
+      "productId": "prod-310",
+      "label": "50g",
+      "grams": 50,
+      "margin": 80,
+      "salePrice": 1300
+    },
+    {
+      "_id": "pres-313",
+      "productId": "prod-312",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": null
+    },
+    {
+      "_id": "pres-315",
+      "productId": "prod-314",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": null
+    },
+    {
+      "_id": "pres-317",
+      "productId": "prod-316",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": 5100
+    },
+    {
+      "_id": "pres-319",
+      "productId": "prod-318",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": 5100
+    },
+    {
+      "_id": "pres-321",
+      "productId": "prod-320",
+      "label": "200g",
+      "grams": 200,
+      "margin": 50,
+      "salePrice": 3300
+    },
+    {
+      "_id": "pres-323",
+      "productId": "prod-322",
+      "label": "200g",
+      "grams": 200,
+      "margin": 50,
+      "salePrice": 2800
+    },
+    {
+      "_id": "pres-325",
+      "productId": "prod-324",
+      "label": "200g",
+      "grams": 200,
+      "margin": 50,
+      "salePrice": 2700
+    },
+    {
+      "_id": "pres-327",
+      "productId": "prod-326",
+      "label": "200g",
+      "grams": 200,
+      "margin": 50,
+      "salePrice": 3200
+    },
+    {
+      "_id": "pres-329",
+      "productId": "prod-328",
+      "label": "50g",
+      "grams": 50,
+      "margin": 90,
+      "salePrice": 2500
+    },
+    {
+      "_id": "pres-331",
+      "productId": "prod-330",
+      "label": "200g",
+      "grams": 200,
+      "margin": 50,
+      "salePrice": 5000
+    },
+    {
+      "_id": "pres-333",
+      "productId": "prod-332",
+      "label": "200g",
+      "grams": 200,
+      "margin": 50,
+      "salePrice": 6900
+    },
+    {
+      "_id": "pres-335",
+      "productId": "prod-334",
+      "label": "200g",
+      "grams": 200,
+      "margin": 50,
+      "salePrice": 5700
+    },
+    {
+      "_id": "pres-337",
+      "productId": "prod-336",
+      "label": "50g",
+      "grams": 50,
+      "margin": 90,
+      "salePrice": 700
+    },
+    {
+      "_id": "pres-339",
+      "productId": "prod-338",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": null
+    },
+    {
+      "_id": "pres-341",
+      "productId": "prod-340",
+      "label": "100g",
+      "grams": 100,
+      "margin": 40,
+      "salePrice": 2900
+    },
+    {
+      "_id": "pres-343",
+      "productId": "prod-342",
+      "label": "50g",
+      "grams": 50,
+      "margin": 50,
+      "salePrice": null
+    },
+    {
+      "_id": "pres-345",
+      "productId": "prod-344",
+      "label": "20g",
+      "grams": 20,
+      "margin": 100,
+      "salePrice": 990
+    },
+    {
+      "_id": "pres-347",
+      "productId": "prod-346",
+      "label": "50g",
+      "grams": 50,
+      "margin": 50,
+      "salePrice": null
+    },
+    {
+      "_id": "pres-349",
+      "productId": "prod-348",
+      "label": "200g",
+      "grams": 200,
+      "margin": 50,
+      "salePrice": 1900
+    },
+    {
+      "_id": "pres-351",
+      "productId": "prod-350",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 20,
+      "salePrice": 3200
+    },
+    {
+      "_id": "pres-353",
+      "productId": "prod-352",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 20,
+      "salePrice": 3200
+    },
+    {
+      "_id": "pres-355",
+      "productId": "prod-354",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 20,
+      "salePrice": 4600
+    },
+    {
+      "_id": "pres-357",
+      "productId": "prod-356",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": null
+    },
+    {
+      "_id": "pres-359",
+      "productId": "prod-358",
+      "label": "50g",
+      "grams": 50,
+      "margin": 90,
+      "salePrice": 690
+    },
+    {
+      "_id": "pres-361",
+      "productId": "prod-360",
+      "label": "50g",
+      "grams": 50,
+      "margin": 90,
+      "salePrice": 750
+    },
+    {
+      "_id": "pres-363",
+      "productId": "prod-362",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": null
+    },
+    {
+      "_id": "pres-365",
+      "productId": "prod-364",
+      "label": "50g",
+      "grams": 50,
+      "margin": 90,
+      "salePrice": 1900
+    },
+    {
+      "_id": "pres-367",
+      "productId": "prod-366",
+      "label": "50g",
+      "grams": 50,
+      "margin": 90,
+      "salePrice": 790
+    },
+    {
+      "_id": "pres-369",
+      "productId": "prod-368",
+      "label": "50g",
+      "grams": 50,
+      "margin": 90,
+      "salePrice": 1200
+    },
+    {
+      "_id": "pres-371",
+      "productId": "prod-370",
+      "label": "200g",
+      "grams": 200,
+      "margin": 50,
+      "salePrice": 2200
+    },
+    {
+      "_id": "pres-373",
+      "productId": "prod-372",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": null
+    },
+    {
+      "_id": "pres-375",
+      "productId": "prod-374",
+      "label": "500g",
+      "grams": 500,
+      "margin": 60,
+      "salePrice": 1990
+    },
+    {
+      "_id": "pres-377",
+      "productId": "prod-376",
+      "label": "500g",
+      "grams": 500,
+      "margin": 70,
+      "salePrice": 2400
+    },
+    {
+      "_id": "pres-379",
+      "productId": "prod-378",
+      "label": "500g",
+      "grams": 500,
+      "margin": 70,
+      "salePrice": 3000
+    },
+    {
+      "_id": "pres-381",
+      "productId": "prod-380",
+      "label": "500g",
+      "grams": 500,
+      "margin": 60,
+      "salePrice": 1400
+    },
+    {
+      "_id": "pres-383",
+      "productId": "prod-382",
+      "label": "500g",
+      "grams": 500,
+      "margin": 50,
+      "salePrice": 4800
+    },
+    {
+      "_id": "pres-385",
+      "productId": "prod-384",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": null
+    },
+    {
+      "_id": "pres-387",
+      "productId": "prod-386",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": 2800
+    },
+    {
+      "_id": "pres-389",
+      "productId": "prod-388",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": 4500
+    },
+    {
+      "_id": "pres-391",
+      "productId": "prod-390",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": 4500
+    },
+    {
+      "_id": "pres-393",
+      "productId": "prod-392",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": 2800
+    },
+    {
+      "_id": "pres-395",
+      "productId": "prod-394",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": 3800
+    },
+    {
+      "_id": "pres-397",
+      "productId": "prod-396",
+      "label": "50g",
+      "grams": 50,
+      "margin": 100,
+      "salePrice": 600
+    },
+    {
+      "_id": "pres-399",
+      "productId": "prod-398",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": null
+    },
+    {
+      "_id": "pres-401",
+      "productId": "prod-400",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": null
+    },
+    {
+      "_id": "pres-403",
+      "productId": "prod-402",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": null
+    },
+    {
+      "_id": "pres-405",
+      "productId": "prod-404",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 30,
+      "salePrice": 5900
+    },
+    {
+      "_id": "pres-407",
+      "productId": "prod-406",
+      "label": "250g",
+      "grams": 250,
+      "margin": 90,
+      "salePrice": 990
+    },
+    {
+      "_id": "pres-409",
+      "productId": "prod-408",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": 3000
+    },
+    {
+      "_id": "pres-411",
+      "productId": "prod-410",
+      "label": "20g",
+      "grams": 20,
+      "margin": 50,
+      "salePrice": 500
+    },
+    {
+      "_id": "pres-413",
+      "productId": "prod-412",
+      "label": "50g",
+      "grams": 50,
+      "margin": 50,
+      "salePrice": 700
+    },
+    {
+      "_id": "pres-415",
+      "productId": "prod-414",
+      "label": "100g",
+      "grams": 100,
+      "margin": 60,
+      "salePrice": 690
+    },
+    {
+      "_id": "pres-417",
+      "productId": "prod-416",
+      "label": "50g",
+      "grams": 50,
+      "margin": 70,
+      "salePrice": 1500
+    },
+    {
+      "_id": "pres-419",
+      "productId": "prod-418",
+      "label": "50g",
+      "grams": 50,
+      "margin": 90,
+      "salePrice": 700
+    },
+    {
+      "_id": "pres-421",
+      "productId": "prod-420",
+      "label": "50g",
+      "grams": 50,
+      "margin": 90,
+      "salePrice": 700
+    },
+    {
+      "_id": "pres-423",
+      "productId": "prod-422",
+      "label": "250g",
+      "grams": 250,
+      "margin": 50,
+      "salePrice": 600
+    },
+    {
+      "_id": "pres-425",
+      "productId": "prod-424",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": 1200
+    },
+    {
+      "_id": "pres-427",
+      "productId": "prod-426",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": 1500
+    },
+    {
+      "_id": "pres-429",
+      "productId": "prod-428",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": 3700
+    },
+    {
+      "_id": "pres-431",
+      "productId": "prod-430",
+      "label": "50g",
+      "grams": 50,
+      "margin": 50,
+      "salePrice": 2000
+    },
+    {
+      "_id": "pres-433",
+      "productId": "prod-432",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": 5300
+    },
+    {
+      "_id": "pres-435",
+      "productId": "prod-434",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": 4500
+    },
+    {
+      "_id": "pres-437",
+      "productId": "prod-436",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": 6900
+    },
+    {
+      "_id": "pres-439",
+      "productId": "prod-438",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": null
+    },
+    {
+      "_id": "pres-441",
+      "productId": "prod-440",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": 4990
+    },
+    {
+      "_id": "pres-443",
+      "productId": "prod-442",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": null
+    },
+    {
+      "_id": "pres-445",
+      "productId": "prod-444",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": null
+    },
+    {
+      "_id": "pres-447",
+      "productId": "prod-446",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": null
+    },
+    {
+      "_id": "pres-449",
+      "productId": "prod-448",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": 4990
+    },
+    {
+      "_id": "pres-451",
+      "productId": "prod-450",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": null
+    },
+    {
+      "_id": "pres-453",
+      "productId": "prod-452",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": null
+    },
+    {
+      "_id": "pres-455",
+      "productId": "prod-454",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": 5500
+    },
+    {
+      "_id": "pres-457",
+      "productId": "prod-456",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": null
+    },
+    {
+      "_id": "pres-459",
+      "productId": "prod-458",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": 5500
+    },
+    {
+      "_id": "pres-461",
+      "productId": "prod-460",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": 14800
+    },
+    {
+      "_id": "pres-463",
+      "productId": "prod-462",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": null
+    },
+    {
+      "_id": "pres-465",
+      "productId": "prod-464",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": null
+    },
+    {
+      "_id": "pres-467",
+      "productId": "prod-466",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": null
+    },
+    {
+      "_id": "pres-469",
+      "productId": "prod-468",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": null
+    },
+    {
+      "_id": "pres-471",
+      "productId": "prod-470",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": 5600
+    },
+    {
+      "_id": "pres-473",
+      "productId": "prod-472",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": null
+    },
+    {
+      "_id": "pres-475",
+      "productId": "prod-474",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": 4500
+    },
+    {
+      "_id": "pres-477",
+      "productId": "prod-476",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": null
+    },
+    {
+      "_id": "pres-479",
+      "productId": "prod-478",
+      "label": "50g",
+      "grams": 50,
+      "margin": 70,
+      "salePrice": 900
+    },
+    {
+      "_id": "pres-481",
+      "productId": "prod-480",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": null
+    },
+    {
+      "_id": "pres-483",
+      "productId": "prod-482",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": 5700
+    },
+    {
+      "_id": "pres-485",
+      "productId": "prod-484",
+      "label": "Unidad",
+      "grams": null,
+      "margin": 50,
+      "salePrice": 7100
+    }
+  ]
+}
