@@ -1,0 +1,98 @@
+@use '../../theme/values/colors' as *;
+@use '../../theme/values/sizes' as *;
+
+.shift-bar {
+  padding: 10px 20px;
+  border-bottom: 1px solid $grey_dark;
+  margin-bottom: 16px;
+}
+
+.shift-bar__idle,
+.shift-bar__active {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.shift-bar__active {
+  flex-wrap: wrap;
+}
+
+.shift-bar__label {
+  color: $grey_light;
+  margin-right: 12px;
+}
+
+.shift-bar__info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.shift-bar__actions {
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.shift-bar__stat {
+  color: $grey;
+  font-size: 0.85em;
+}
+
+.shift-bar__badge {
+  padding: 2px 8px;
+  border-radius: $thin;
+  font-size: 0.8em;
+  font-weight: 700;
+}
+
+.shift-bar__badge--open {
+  background: $primary_darken;
+  color: $white_light;
+}
+
+.shift-bar__badge--warn {
+  background: $degree_tonica_bg;
+  color: $black_dark;
+}
+
+.shift-bar__btn {
+  padding: 6px 12px;
+  border-radius: $thin;
+  border: 1px solid $grey_dark;
+  background: $black;
+  color: $white;
+  cursor: pointer;
+  font-size: 0.85em;
+
+  &:hover {
+    background: $black_light;
+  }
+}
+
+.shift-bar__btn--primary {
+  background: $primary;
+  border-color: $primary;
+  color: $white_light;
+
+  &:hover {
+    background: $primary_light;
+  }
+}
+
+.shift-bar__btn--danger {
+  background: $error;
+  border-color: $error;
+  color: $white;
+
+  &:hover {
+    background: #d32f2f;
+  }
+}
+
+.shift-bar__btn--sm {
+  padding: 4px 8px;
+  font-size: 0.8em;
+}

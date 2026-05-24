@@ -1,0 +1,11 @@
+@use '../../theme/values/colors' as *;
+@use '../../theme/values/sizes' as *;
+
+.product-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.product-form select.field-input {
+  appearance: auto;
+}

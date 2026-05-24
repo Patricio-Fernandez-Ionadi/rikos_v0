@@ -1,0 +1,67 @@
+@use '../../theme/values/colors' as *;
+@use '../../theme/values/sizes' as *;
+
+.sale-form {
+  margin-top: 8px;
+  padding: 8px;
+  border: 1px solid $primary_darken;
+  border-radius: $smooth;
+  background: $black_dark;
+}
+
+.sale-form__row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.sale-form__total {
+  color: $white;
+  font-weight: 700;
+  margin: 6px 0;
+}
+
+.sale-form__actions {
+  display: flex;
+  gap: 6px;
+  justify-content: flex-end;
+}
+
+.field-label {
+  display: block;
+  color: $grey_light;
+  font-size: 0.85em;
+  margin: 8px 0 4px;
+}
+
+.field-input {
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid $grey_dark;
+  border-radius: $thin;
+  background: $black_dark;
+  color: $white;
+  font-size: 0.9em;
+
+  &:focus {
+    outline: none;
+    border-color: $primary;
+  }
+}
+
+.field-input--sm {
+  width: 80px;
+}
+
+.field-input--xs {
+  width: 60px;
+  padding: 2px 4px;
+  font-size: 0.8em;
+}
+
+.field-error {
+  color: $error;
+  font-size: 0.85em;
+  margin: 4px 0;
+}

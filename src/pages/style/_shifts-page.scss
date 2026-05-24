@@ -1,0 +1,85 @@
+@use '../../theme/values/colors' as *;
+@use '../../theme/values/sizes' as *;
+
+.shifts-page {
+  padding: 20px;
+}
+
+.shifts-page__title {
+  color: $white;
+  margin: 0 0 16px;
+}
+
+.shifts-page__card {
+  background: $black;
+  border: 1px solid $grey_dark;
+  border-radius: $smooth;
+  padding: 16px;
+  margin-bottom: 12px;
+}
+
+.shifts-page__card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.shifts-page__card-date {
+  color: $grey_light;
+  font-size: 0.85em;
+}
+
+.shifts-page__stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.shifts-page__stat {
+  color: $grey;
+  font-size: 0.85em;
+}
+
+.shifts-page__stat-value {
+  color: $white;
+  font-weight: 700;
+}
+
+.shifts-page__diff--positive {
+  color: $success;
+}
+
+.shifts-page__diff--negative {
+  color: $error;
+}
+
+.shifts-page__toggle {
+  cursor: pointer;
+  color: $primary;
+  font-size: 0.85em;
+  margin-top: 8px;
+  display: inline-block;
+}
+
+.shifts-page__sales-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 8px;
+
+  th, td {
+    text-align: left;
+    padding: 6px 10px;
+    border-bottom: 1px solid $black_light;
+    font-size: 0.85em;
+  }
+
+  th {
+    color: $grey_light;
+  }
+
+  td {
+    color: $grey;
+  }
+}
