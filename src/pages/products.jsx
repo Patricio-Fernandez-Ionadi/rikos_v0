@@ -209,7 +209,6 @@ export const ProductsPage = () => {
 
 				<div className='product-browser__main'>
 					<ProductList
-						selectedCat={selectedCategoryId}
 						onEvent={setSelectedProductId}
 						filteredProducts={filteredProducts}
 						selectedProd={selectedProductId}

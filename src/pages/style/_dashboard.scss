@@ -1,8 +1,13 @@
 @use '../../theme/values/colors' as *;
 @use '../../theme/values/sizes' as *;
+@use '../../theme/values/mediaqueries' as *;
 
 .dashboard {
-  padding: 20px;
+  padding: 16px;
+
+  @media (min-width: $medium) {
+    padding: 20px;
+  }
 }
 
 .dashboard__title {

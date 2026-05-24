@@ -1,8 +1,13 @@
 @use '../../theme/values/colors' as *;
 @use '../../theme/values/sizes' as *;
+@use '../../theme/values/mediaqueries' as *;
 
 .product-browser {
-  padding: 20px;
+  padding: 16px;
+
+  @media (min-width: $medium) {
+    padding: 20px;
+  }
 }
 
 .product-browser__title {
@@ -13,18 +18,31 @@
 
 .product-browser__layout {
   display: flex;
-  gap: 20px;
+  flex-direction: column;
+  gap: 16px;
   margin-bottom: 30px;
+
+  @media (min-width: $medium) {
+    flex-direction: row;
+    gap: 20px;
+  }
 }
 
 .product-browser__main {
   flex: 1;
+  min-width: 0;
 }
 
 .sidebar {
-  width: 250px;
-  border-right: 1px solid $grey_dark;
-  padding-right: 20px;
+  width: 100%;
+  border-right: none;
+  padding-right: 0;
+
+  @media (min-width: $medium) {
+    width: 250px;
+    border-right: 1px solid $grey_dark;
+    padding-right: 20px;
+  }
 }
 
 .sidebar__title {
@@ -164,7 +182,14 @@
 
 .pres-card__content {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 8px;
+
+  @media (min-width: $medium) {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 0;
+  }
 }
 
 .pres-card__label {
@@ -238,6 +263,7 @@
   display: flex;
   gap: 4px;
   align-items: flex-start;
+  flex-wrap: wrap;
 }
 
 .sidebar__btn--small {

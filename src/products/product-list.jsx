@@ -3,14 +3,12 @@
  * Clicking a product triggers the onEvent callback with the product ID.
  *
  * @param {Object}        props
- * @param {Object|null}   props.selectedCat       Selected category object (falsy means "all")
  * @param {Function}      props.onEvent           Callback when a product is clicked (receives product ID)
  * @param {Array}         props.filteredProducts  Products to display
  * @param {string|null}   props.selectedProd      Currently selected product ID
  * @param {Array}         props.presentations     All presentations (used to compute per-product counts)
  */
 export const ProductList = ({
-	selectedCat,
 	onEvent,
 	filteredProducts,
 	selectedProd,
@@ -18,14 +16,9 @@ export const ProductList = ({
 }) => {
 	return (
 		<>
-			{!selectedCat ? (
+			{filteredProducts.length === 0 ? (
 				<div className="placeholder">
-					<h3>Selecciona una categoría</h3>
-					<p>Para ver los productos disponibles</p>
-				</div>
-			) : filteredProducts.length === 0 ? (
-				<div className="placeholder">
-					<h3>No hay productos en esta categoría</h3>
+					<h3>No hay productos</h3>
 				</div>
 			) : (
 				<>

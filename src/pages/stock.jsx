@@ -72,6 +72,7 @@ export const StockPage = () => {
         ))}
       </div>
 
+      <div className="stock-page__table-wrap">
       <table className="stock-page__table">
         <thead>
           <tr>
@@ -134,6 +135,7 @@ export const StockPage = () => {
           ))}
         </tbody>
       </table>
+      </div>
 
       {items.length === 0 && (
         <p className="placeholder" style={{ textAlign: 'center', padding: '40px', color: '#616161' }}>

@@ -1,8 +1,13 @@
 @use '../../theme/values/colors' as *;
 @use '../../theme/values/sizes' as *;
+@use '../../theme/values/mediaqueries' as *;
 
 .shifts-page {
-  padding: 20px;
+  padding: 16px;
+
+  @media (min-width: $medium) {
+    padding: 20px;
+  }
 }
 
 .shifts-page__title {
@@ -63,10 +68,16 @@
   display: inline-block;
 }
 
+.shifts-page__sales-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-top: 8px;
+}
+
 .shifts-page__sales-table {
   width: 100%;
+  min-width: 400px;
   border-collapse: collapse;
-  margin-top: 8px;
 
   th, td {
     text-align: left;

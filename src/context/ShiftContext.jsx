@@ -206,6 +206,37 @@ export function ShiftProvider({ children }) {
     return closed
   }, [])
 
+  /**
+   * Remove a sale from the shift by its _tempId.
+   */
+  const removeSale = useCallback(async (tempId) => {
+    const current = shiftRef.current
+    if (!current || current.status !== 'open') return
+
+    const updated = {
+      ...current,
+      sales: current.sales.filter((s) => s._tempId !== tempId),
+    }
+    setShift(updated)
+  }, [])
+
+  /**
+   * Edit a sale's fields (quantity, unitPrice, total) by _tempId.
+   */
+  const editSale = useCallback(async (tempId, fields) => {
+    const current = shiftRef.current
+    if (!current || current.status !== 'open') return
+
+    const updated = {
+      ...current,
+      sales: current.sales.map((s) =>
+        s._tempId === tempId ? { ...s, ...fields } : s,
+      ),
+    }
+    setShift(updated)
+    setSynced(false)
+  }, [])
+
   const cancelShift = useCallback(() => {
     clearLocal()
     setShift(null)
@@ -216,7 +247,7 @@ export function ShiftProvider({ children }) {
   return (
     <ShiftContext.Provider value={{
       shift, dbId, synced,
-      openShift, addSale, syncToDb, closeShift, cancelShift,
+      openShift, addSale, editSale, removeSale, syncToDb, closeShift, cancelShift,
     }}>
       {children}
     </ShiftContext.Provider>

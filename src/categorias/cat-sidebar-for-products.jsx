@@ -20,15 +20,16 @@ export const CategoriesSidebar = ({
 	return (
 		<div className="cat-sidebar">
 			<h3 className="cat-sidebar__title">Categorías</h3>
-			<button
-				className={
-					'cat-sidebar__btn cat-sidebar__btn--all' +
-					(selected === null ? ' cat-sidebar__btn--active' : '')
-				}
-				onClick={() => onEvent(null)}
-			>
-				Todas las categorías
-			</button>
+			<div className="cat-sidebar__buttons">
+				<button
+					className={
+						'cat-sidebar__btn cat-sidebar__btn--all' +
+						(selected === null ? ' cat-sidebar__btn--active' : '')
+					}
+					onClick={() => onEvent(null)}
+				>
+					Todas las categorías
+				</button>
 
 			{categories?.map((category) => (
 				<button
@@ -42,6 +43,7 @@ export const CategoriesSidebar = ({
 					{category.name}
 				</button>
 			))}
+			</div>
 
 			<div className="cat-sidebar__stats">
 				<h4 className="cat-sidebar__stats-title">Estadísticas</h4>

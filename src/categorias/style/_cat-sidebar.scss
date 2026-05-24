@@ -1,10 +1,17 @@
 @use '../../theme/values/colors' as *;
 @use '../../theme/values/sizes' as *;
+@use '../../theme/values/mediaqueries' as *;
 
 .cat-sidebar {
-  width: 250px;
-  border-right: 1px solid $grey_dark;
-  padding-right: 20px;
+  width: 100%;
+  border-right: none;
+  padding-right: 0;
+
+  @media (min-width: $medium) {
+    width: 250px;
+    border-right: 1px solid $grey_dark;
+    padding-right: 20px;
+  }
 }
 
 .cat-sidebar__title {
@@ -12,25 +19,51 @@
   margin: 0 0 8px;
 }
 
+.cat-sidebar__buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 8px;
+
+  @media (min-width: $medium) {
+    display: block;
+    gap: 0;
+    margin-bottom: 0;
+  }
+}
+
 .cat-sidebar__btn {
-  width: 100%;
-  padding: 8px;
-  margin-bottom: 5px;
+  width: auto;
+  padding: 4px 10px;
+  margin-bottom: 0;
   background: $black;
   color: $white;
   border-radius: $smooth;
   cursor: pointer;
   border: none;
   text-align: left;
+  font-size: 0.8em;
+  white-space: nowrap;
 
   &:hover {
     background: $primary_dark;
     color: $white_light;
   }
+
+  @media (min-width: $medium) {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 5px;
+    font-size: 0.9em;
+  }
 }
 
 .cat-sidebar__btn--all {
-  margin-bottom: 10px;
+  margin-bottom: 0;
+
+  @media (min-width: $medium) {
+    margin-bottom: 10px;
+  }
 }
 
 .cat-sidebar__btn--active {

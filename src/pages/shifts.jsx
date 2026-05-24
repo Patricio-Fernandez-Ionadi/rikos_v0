@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useData } from '../context/DataContext.jsx'
 import { useShift } from '../context/ShiftContext.jsx'
+import { ShiftSalesList } from '../modules/shift/ShiftSalesList.jsx'
 import * as api from '../data/api.js'
 
 /**
@@ -59,6 +60,7 @@ export const ShiftsPage = () => {
               </span>
             </div>
           </div>
+          <ShiftSalesList />
         </div>
       )}
 
@@ -119,6 +121,7 @@ export const ShiftsPage = () => {
             )}
 
             {isOpen && (
+              <div className="shifts-page__sales-wrap">
               <table className="shifts-page__sales-table">
                 <thead>
                   <tr><th>Producto</th><th>Cant.</th><th>P. Unit.</th><th>Total</th></tr>
@@ -134,6 +137,7 @@ export const ShiftsPage = () => {
                   ))}
                 </tbody>
               </table>
+              </div>
             )}
           </div>
         )

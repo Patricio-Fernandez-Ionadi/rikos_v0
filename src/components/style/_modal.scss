@@ -1,5 +1,6 @@
 @use '../../theme/values/colors' as *;
 @use '../../theme/values/sizes' as *;
+@use '../../theme/values/mediaqueries' as *;
 
 .modal-overlay {
   position: fixed;
@@ -9,17 +10,24 @@
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  padding: 16px;
 }
 
 .modal-panel {
   background: $black;
   border: 1px solid $grey_dark;
   border-radius: $smooth;
-  padding: 24px;
-  min-width: 360px;
+  padding: 20px;
+  width: 100%;
   max-width: 500px;
   max-height: 80vh;
   overflow-y: auto;
+
+  @media (min-width: $medium) {
+    padding: 24px;
+    min-width: 360px;
+    width: auto;
+  }
 }
 
 .modal-title {

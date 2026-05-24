@@ -1,0 +1,99 @@
+@use '../../../theme/values/colors' as *;
+@use '../../../theme/values/sizes' as *;
+
+.shift-sales {
+  margin-top: 16px;
+  padding: 12px;
+  border: 1px solid $grey_dark;
+  border-radius: $smooth;
+}
+
+.shift-sales__title {
+  color: $white;
+  margin: 0 0 12px;
+}
+
+.shift-sales__empty {
+  color: $grey;
+  text-align: center;
+  padding: 20px;
+}
+
+.shift-sales__list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.shift-sales__item {
+  border: 1px solid $black_light;
+  border-radius: $thin;
+  padding: 8px;
+}
+
+.shift-sales__display {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.shift-sales__product {
+  flex: 1;
+  min-width: 120px;
+  color: $white;
+  font-weight: 600;
+  font-size: 0.85em;
+}
+
+.shift-sales__qty {
+  color: $grey_light;
+  font-size: 0.85em;
+}
+
+.shift-sales__price {
+  color: $grey;
+  font-size: 0.85em;
+}
+
+.shift-sales__total {
+  color: $white;
+  font-weight: 700;
+  font-size: 0.9em;
+  min-width: 60px;
+  text-align: right;
+}
+
+.shift-sales__actions {
+  display: flex;
+  gap: 4px;
+}
+
+.shift-sales__edit {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.shift-sales__edit-field {
+  color: $grey;
+  font-size: 0.8em;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.shift-sales__edit-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.shift-sales__footer {
+  margin-top: 12px;
+  padding-top: 8px;
+  border-top: 1px solid $grey_dark;
+  color: $white;
+  text-align: right;
+  font-size: 0.95em;
+}

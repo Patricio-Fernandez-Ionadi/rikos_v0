@@ -1,8 +1,13 @@
 @use '../../theme/values/colors' as *;
 @use '../../theme/values/sizes' as *;
+@use '../../theme/values/mediaqueries' as *;
 
 .stock-page {
-  padding: 20px;
+  padding: 16px;
+
+  @media (min-width: $medium) {
+    padding: 20px;
+  }
 }
 
 .stock-page__title {
@@ -12,13 +17,24 @@
 
 .stock-page__toolbar {
   display: flex;
-  gap: 12px;
+  gap: 8px;
   align-items: center;
   margin-bottom: 16px;
+  flex-wrap: wrap;
+
+  @media (min-width: $medium) {
+    gap: 12px;
+  }
+}
+
+.stock-page__table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .stock-page__table {
   width: 100%;
+  min-width: 500px;
   border-collapse: collapse;
 
   th, td {
