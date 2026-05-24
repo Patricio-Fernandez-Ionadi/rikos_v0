@@ -20,16 +20,15 @@ app.use('/api/presentations', presentationsRouter)
 app.use('/api/shifts', shiftsRouter)
 
 app.use((err, _req, res, _next) => {
-  console.error(err)
-  res.status(500).json({ error: err.message })
+	console.error(err)
+	res.status(500).json({ error: err.message })
 })
 
-mongoose.connect(process.env.MONGODB_URI)
-  .then(() => {
-    console.log('Connected to MongoDB')
-    app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`))
-  })
-  .catch((err) => {
-    console.error('MongoDB connection error:', err.message)
-    process.exit(1)
-  })
+app.listen(PORT, () => {
+	console.log(`Server running on http://localhost:${PORT}`)
+	console.log(process.env.MONGODB_URI)
+	mongoose
+		.connect(process.env.MONGODB_URI)
+		.then(() => console.log('Connected to MongoDB'))
+		.catch((err) => console.error('MongoDB connection error:', err.message))
+})

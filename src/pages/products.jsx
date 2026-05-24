@@ -196,14 +196,6 @@ export const ProductsPage = () => {
 				>
 					+ Nuevo producto
 				</button>
-				{online && (
-					<span
-						className='sidebar__stat'
-						style={{ marginLeft: 'auto', color: '#66bb6a' }}
-					>
-						● Online
-					</span>
-				)}
 			</div>
 
 			<div className='product-browser__layout'>

@@ -62,7 +62,7 @@ export const ShiftBar = () => {
               Esperado: ${(shift.openingCash + totalSales).toLocaleString()}
             </span>
             {!synced && (
-              <span className="shift-bar__badge shift-bar__badge--warn">Sin conexión</span>
+              <span className="shift-bar__badge shift-bar__badge--warn">Ventas sin sincronizar</span>
             )}
           </div>
           <div className="shift-bar__actions">

@@ -17,9 +17,9 @@ function loadLocal() {
   }
 }
 
-function saveLocal(categories, products, presentations) {
+function saveLocal(categories, products, presentations, dirty) {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({ categories, products, presentations }))
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ categories, products, presentations, dirty }))
   } catch {
     /* quota exceeded */
   }
@@ -59,9 +59,9 @@ export function DataProvider({ children }) {
   // Persist to localStorage on every state change after initial load
   useEffect(() => {
     if (loaded.current) {
-      saveLocal(categories, products, presentations)
+      saveLocal(categories, products, presentations, dirty)
     }
-  }, [categories, products, presentations])
+  }, [categories, products, presentations, dirty])
 
   const loadFromApi = useCallback(async () => {
     const [cats, prods, pres] = await Promise.all([
@@ -81,6 +81,7 @@ export function DataProvider({ children }) {
       setCategoriesRaw(saved.categories)
       setProductsRaw(saved.products)
       setPresentationsRaw(saved.presentations)
+      if (saved.dirty) setDirty(true)
     } else {
       setCategoriesRaw(seed.categories)
       setProductsRaw(seed.products)

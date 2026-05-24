@@ -2,6 +2,7 @@ import { createContext, useContext, useState, useCallback, useEffect, useRef } f
 import * as api from '../data/api.js'
 
 const STORAGE_KEY = 'rikos_active_shift'
+const CLOSED_KEY = 'rikos_closed_shifts'
 const ShiftContext = createContext(null)
 
 function loadLocal() {
@@ -144,44 +145,60 @@ export function ShiftProvider({ children }) {
   }, [])
 
   /**
-   * Close the shift: sync to DB first, then record closing on DB, then clear local.
+   * Close the shift locally and optionally sync to the server if reachable.
+   * Never blocks the close on server availability.
    */
   const closeShift = useCallback(async (closingCash, notes = '') => {
     const current = shiftRef.current
-    if (!current) return
-
-    // Ensure shift exists in DB before closing
-    let currentDbId = current._dbId
-    if (!currentDbId) {
-      try {
-        const dbShift = await api.openShift(current.openingCash)
-        currentDbId = dbShift._id
-      } catch {
-        return { error: 'No hay conexión con el servidor. No se puede cerrar el turno.' }
-      }
-    }
-
-    try {
-      if (current.sales.length > 0) {
-        await api.syncSales(currentDbId, current.sales)
-      }
-      await api.closeShift(currentDbId, closingCash, notes)
-    } catch {
-      return { error: 'Error al sincronizar con el servidor. Intente de nuevo.' }
-    }
+    if (!current) return null
 
     const now = new Date().toISOString()
     const totalSales = current.sales.reduce((sum, s) => sum + s.total, 0)
-    const expectedBalance = current.openingCash + totalSales
+    const expectedBalance = +(current.openingCash + totalSales).toFixed(2)
+    const difference = +(closingCash - expectedBalance).toFixed(2)
+
     const closed = {
       ...current,
       closingTime: now,
       closingCash,
       expectedBalance,
-      difference: +(closingCash - expectedBalance).toFixed(2),
+      difference,
       status: 'closed',
       notes,
     }
+
+    // Try to sync to server if reachable, but don't block close
+    let currentDbId = current._dbId
+    if (!currentDbId) {
+      try {
+        const dbShift = await api.openShift(current.openingCash)
+        currentDbId = dbShift._id
+        closed._dbId = currentDbId
+      } catch {
+        // Server unavailable — stay local-only
+      }
+    }
+
+    if (currentDbId) {
+      try {
+        if (current.sales.length > 0) {
+          await api.syncSales(currentDbId, current.sales)
+        }
+        await api.closeShift(currentDbId, closingCash, notes)
+      } catch {
+        // Synced what we could, close remains valid locally
+      }
+    }
+
+    // Save to closed-shifts history so data isn't lost
+    const history = JSON.parse(localStorage.getItem(CLOSED_KEY) || '[]')
+    history.push(closed)
+    try {
+      localStorage.setItem(CLOSED_KEY, JSON.stringify(history))
+    } catch {
+      /* quota exceeded */
+    }
+
     clearLocal()
     setShift(null)
     setDbId(null)
