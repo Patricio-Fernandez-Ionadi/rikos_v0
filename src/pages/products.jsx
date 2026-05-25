@@ -39,11 +39,26 @@ export const ProductsPage = () => {
 	const [salePresId, setSalePresId] = useState(null)
 	const [stockEdit, setStockEdit] = useState(null)
 	const [stockValue, setStockValue] = useState('')
+	const [searchTerm, setSearchTerm] = useState('')
 
-	const filteredProducts =
-		selectedCategoryIds.length > 0
-			? products.filter((p) => selectedCategoryIds.includes(p.categoryId))
-			: products
+	const filteredProducts = (() => {
+		let result = products
+
+		if (selectedCategoryIds.length > 0) {
+			result = result.filter((p) =>
+				selectedCategoryIds.includes(p.categoryId)
+			)
+		}
+
+		if (searchTerm.trim()) {
+			const term = searchTerm.trim().toLowerCase()
+			result = result.filter((p) =>
+				p.name.toLowerCase().includes(term)
+			)
+		}
+
+		return result
+	})()
 
 	const selectedProduct = selectedProductId
 		? products.find((p) => p._id === selectedProductId)
@@ -191,9 +206,8 @@ export const ProductsPage = () => {
 	// ─── Render ─────────────────────────────────────────────
 	return (
 		<div className='product-browser'>
-			<h2 className='product-browser__title'>Productos</h2>
-
-			<div className='product-browser__toolbar'>
+			<div className='product-browser__header'>
+				<h2 className='product-browser__title'>Productos</h2>
 				<ButtonNewProduct
 					className='sidebar__btn'
 					onEvent={setShowProductForm}
@@ -207,6 +221,8 @@ export const ProductsPage = () => {
 					categories={categories}
 					products={products}
 					filteredProducts={filteredProducts}
+					searchTerm={searchTerm}
+					onSearchChange={setSearchTerm}
 				/>
 
 				<div className='product-browser__main'>

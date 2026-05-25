@@ -11,7 +11,6 @@
   border-right: none;
   border-bottom: 1px solid $grey_dark;
 
-  // Transición suave a layout desktop
   @media (min-width: $medium) {
     width: 250px;
     border-right: 1px solid $grey_dark;
@@ -68,20 +67,119 @@
   }
 }
 
-// ─── TÍTULO DE CATEGORÍAS ────────────────────────────────────
+// ─── BUSCADOR ─────────────────────────────────────────────────
+
+.cat-sidebar__search {
+  margin-bottom: 12px;
+
+  @media (min-width: $medium) {
+    margin-bottom: 16px;
+  }
+}
+
+.cat-sidebar__search-input {
+  width: 100%;
+  padding: 8px 10px;
+  background: rgba($black, 0.4);
+  border: 1px solid $grey_dark;
+  border-radius: $smooth;
+  color: $white;
+  font-size: 0.85em;
+  transition: border-color 0.2s ease;
+
+  &::placeholder {
+    color: $grey;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: $primary;
+  }
+
+  @media (min-width: $medium) {
+    padding: 8px 12px;
+    font-size: 0.9em;
+  }
+}
+
+// ─── SECCIÓN DE CATEGORÍAS COLAPSABLE ────────────────────────
+
+.cat-sidebar__categories {
+  border: 1px solid $grey_dark;
+  border-radius: $smooth;
+  overflow: hidden;
+}
+
+.cat-sidebar__categories-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px 12px;
+  background: rgba($black, 0.4);
+  border: none;
+  cursor: pointer;
+  color: $white;
+  text-align: left;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background: rgba($primary, 0.1);
+  }
+
+  @media (min-width: $medium) {
+    padding: 10px 14px;
+  }
+}
 
 .cat-sidebar__title {
-  color: $white;
+  display: flex;
+  align-items: center;
+  gap: 6px;
   font-size: 0.9em;
   font-weight: 700;
-  margin: 0 0 10px;
   text-transform: uppercase;
   letter-spacing: 0.4px;
-  padding: 0 4px;
+  color: $white;
 
   @media (min-width: $medium) {
     font-size: 1em;
-    margin-bottom: 12px;
+  }
+}
+
+.cat-sidebar__arrow {
+  font-size: 0.75em;
+  color: $grey;
+  transition: transform 0.25s ease;
+  display: inline-block;
+
+  &--open {
+    transform: rotate(90deg);
+  }
+}
+
+.cat-sidebar__new-btn {
+  padding: 4px 10px;
+  background: rgba($primary, 0.2);
+  color: $primary;
+  border: 1px solid rgba($primary, 0.3);
+  border-radius: $smooth;
+  cursor: pointer;
+  font-size: 0.8em;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+
+  &:hover {
+    background: rgba($primary, 0.35);
+    border-color: $primary;
+  }
+
+  @media (min-width: $medium) {
+    padding: 4px 12px;
+    font-size: 0.85em;
   }
 }
 
@@ -92,6 +190,18 @@
   flex-wrap: wrap;
   gap: 6px;
   align-items: flex-start;
+  padding: 10px;
+  transition: max-height 0.3s ease, padding 0.3s ease, opacity 0.2s ease;
+  max-height: 1000px;
+  opacity: 1;
+  overflow: hidden;
+
+  &--collapsed {
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    opacity: 0;
+  }
 
   @media (min-width: $medium) {
     display: flex;
@@ -104,7 +214,6 @@
 // ─── BOTONES DE CATEGORÍAS ───────────────────────────────────
 
 .cat-sidebar__btn {
-  // Base styles (mobile first)
   flex: 1 1 calc(50% - 3px);
   min-width: 80px;
   min-height: 36px;
@@ -125,7 +234,6 @@
   align-items: center;
   justify-content: center;
 
-  // Hover state
   &:hover {
     background: $primary_dark;
     color: $white;
@@ -134,7 +242,6 @@
     box-shadow: 0 2px 8px rgba($primary, 0.2);
   }
 
-  // Desktop adjustments
   @media (min-width: $medium) {
     flex: 1 1 100%;
     min-width: unset;
@@ -157,7 +264,6 @@
 // ─── BOTÓN "TODAS LAS CATEGORÍAS" ────────────────────────────
 
 .cat-sidebar__btn--all {
-  // Mobile: full width
   flex: 1 1 100%;
 
   @media (min-width: $medium) {
@@ -178,7 +284,6 @@
 // ─── ESTADO ACTIVO ───────────────────────────────────────────
 
 .cat-sidebar__btn--active {
-  // Mobile active
   background: $primary;
   color: $white;
   border-color: $primary;
@@ -188,7 +293,6 @@
     background: $primary_dark;
   }
 
-  // Desktop active
   @media (min-width: $medium) {
     background: transparent;
     color: $primary;

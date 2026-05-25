@@ -3,25 +3,33 @@
 @use '../../theme/values/mediaqueries' as *;
 
 .product-browser {
-	padding: 16px;
-	max-width: 100%;
-	overflow-x: hidden;
+  padding: 16px;
+  max-width: 100%;
+  overflow-x: hidden;
 
-	@media (min-width: $medium) {
-		padding: 20px;
-	}
+  @media (min-width: $medium) {
+    padding: 20px;
+  }
 }
 
-.product-browser__main {
-	flex: 1;
-	min-width: 0;
-	overflow-x: hidden;
+.product-browser__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
 }
 
 .product-browser__title {
-	color: $white;
-	font-size: 24px;
-	margin: 0 0 8px;
+  color: $white;
+  font-size: 24px;
+  margin: 0;
+}
+
+.product-browser__main {
+  flex: 1;
+  min-width: 0;
+  overflow-x: hidden;
 }
 
 .product-browser__layout {
@@ -257,13 +265,6 @@
 	color: $grey;
 	padding: 40px;
 	text-align: center;
-}
-
-.product-browser__toolbar {
-	display: flex;
-	align-items: center;
-	gap: 8px;
-	margin-bottom: 12px;
 }
 
 .detail__header {

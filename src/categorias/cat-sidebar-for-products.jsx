@@ -1,8 +1,9 @@
+import { useState } from 'react'
+
 /**
  * Sidebar that lists product categories with multi-select support.
- * Displays a "Todas las categorías" option and individual category buttons.
- * Users can select multiple categories to filter products across them.
- * Displays basic statistics about products.
+ * Includes a search input to filter products by name.
+ * Categories section is collapsible to maximize space for results.
  *
  * @param {Object}        props
  * @param {Array}         props.selected            Array of selected category IDs (empty = all)
@@ -10,6 +11,8 @@
  * @param {Array}         props.categories          Full list of categories
  * @param {Array}         props.products            Full list of products
  * @param {Array}         props.filteredProducts    Products currently visible in the view
+ * @param {string}        props.searchTerm         Current search term
+ * @param {Function}      props.onSearchChange     Callback when search term changes
  */
 export const CategoriesSidebar = ({
 	selected,
@@ -17,7 +20,10 @@ export const CategoriesSidebar = ({
 	categories,
 	products,
 	filteredProducts,
+	searchTerm,
+	onSearchChange,
 }) => {
+	const [categoriesOpen, setCategoriesOpen] = useState(false)
 	/**
 	 * Handle category selection/deselection.
 	 * If clicking "all" when any are selected, clears selection.
@@ -55,32 +61,62 @@ export const CategoriesSidebar = ({
 					{filteredProducts.filter((p) => p.purchaseCost === null).length}
 				</p>
 			</div>
-			<h3 className='cat-sidebar__title'>Categorías</h3>
-			<div className='cat-sidebar__buttons'>
+
+			<div className='cat-sidebar__search'>
+				<input
+					className='cat-sidebar__search-input'
+					type='text'
+					placeholder='Buscar producto…'
+					value={searchTerm}
+					onChange={(e) => onSearchChange(e.target.value)}
+				/>
+			</div>
+
+			<div className='cat-sidebar__categories'>
 				<button
-					className={
-						'cat-sidebar__btn cat-sidebar__btn--all' +
-						(showingAllCategories ? ' cat-sidebar__btn--active' : '')
-					}
-					onClick={() => handleSelectCategory(null)}
+					className='cat-sidebar__categories-header'
+					onClick={() => setCategoriesOpen((prev) => !prev)}
+					type='button'
+					aria-expanded={categoriesOpen}
 				>
-					Todas las categorías
+					<span className='cat-sidebar__title'>
+						<span
+							className={`cat-sidebar__arrow${categoriesOpen ? ' cat-sidebar__arrow--open' : ''}`}
+						>
+							▸
+						</span>
+						Categorías
+					</span>
 				</button>
 
-				{categories?.map((category) => (
+				<div
+					className={`cat-sidebar__buttons${!categoriesOpen ? ' cat-sidebar__buttons--collapsed' : ''}`}
+				>
 					<button
-						key={category._id}
 						className={
-							'cat-sidebar__btn' +
-							(selected.includes(category._id)
-								? ' cat-sidebar__btn--active'
-								: '')
+							'cat-sidebar__btn cat-sidebar__btn--all' +
+							(showingAllCategories ? ' cat-sidebar__btn--active' : '')
 						}
-						onClick={() => handleSelectCategory(category._id)}
+						onClick={() => handleSelectCategory(null)}
 					>
-						{category.name}
+						Todas las categorías
 					</button>
-				))}
+
+					{categories?.map((category) => (
+						<button
+							key={category._id}
+							className={
+								'cat-sidebar__btn' +
+								(selected.includes(category._id)
+									? ' cat-sidebar__btn--active'
+									: '')
+							}
+							onClick={() => handleSelectCategory(category._id)}
+						>
+							{category.name}
+						</button>
+					))}
+				</div>
 			</div>
 		</div>
 	)
