@@ -1,0 +1,17 @@
+@use '../../theme/values/colors' as *;
+@use '../../theme/values/mediaqueries' as *;
+
+.products-sidebar {
+	width: 100%;
+	background: transparent;
+	padding: 10px 0;
+	border-right: none;
+	border-bottom: 1px solid $grey_dark;
+
+	@media (min-width: $medium) {
+		width: 250px;
+		border-right: 1px solid $grey_dark;
+		border-bottom: none;
+		padding: 0;
+	}
+}

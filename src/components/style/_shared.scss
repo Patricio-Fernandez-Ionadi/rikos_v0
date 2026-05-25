@@ -1,0 +1,66 @@
+@use '../../theme/values/colors' as *;
+@use '../../theme/values/sizes' as *;
+
+// ─── BOTONES COMPARTIDOS ──────────────────────────────────────
+
+.sidebar__btn {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 5px;
+  background: $black;
+  color: $white;
+  border-radius: $smooth;
+  cursor: pointer;
+  border: none;
+  text-align: left;
+
+  &:hover {
+    background: $primary_dark;
+    color: $white_light;
+  }
+}
+
+.sidebar__btn--active {
+  background: $primary;
+  color: $white_light;
+}
+
+.sidebar__btn--xs {
+  width: auto;
+  padding: 2px 6px;
+  font-size: 0.75em;
+}
+
+.sidebar__btn--danger {
+  background: $error;
+  color: $white;
+
+  &:hover {
+    background: #d32f2f;
+  }
+}
+
+// ─── SHIFT BAR BUTTON EXTENSIONS ──────────────────────────────
+
+.shift-bar__btn--sm {
+  padding: 4px 8px;
+  font-size: 0.8em;
+}
+
+.shift-bar__btn--danger {
+  background: $error;
+  border-color: $error;
+  color: $white;
+
+  &:hover {
+    background: #d32f2f;
+  }
+}
+
+// ─── UTILIDADES ───────────────────────────────────────────────
+
+.placeholder {
+  text-align: center;
+  padding: 40px;
+  color: $grey;
+}

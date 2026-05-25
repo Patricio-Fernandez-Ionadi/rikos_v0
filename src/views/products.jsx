@@ -3,7 +3,7 @@ import { useData } from '../context/DataContext.jsx'
 import { useShift } from '../context/ShiftContext.jsx'
 import { calculate } from '../data/index.js'
 import * as api from '../data/api.js'
-import { CategoriesSidebar } from '../modules/categorias/cat-sidebar-for-products.jsx'
+import { CategoriesSidebar } from '../modules/categorias/categories-button-group.jsx'
 import { ProductList } from '../modules/products/product-list.jsx'
 import { ProductPresentation } from '../modules/products/product-presentation.jsx'
 import { Modal } from '../components/Modal.jsx'
@@ -12,6 +12,8 @@ import { PresentationForm } from '../modules/products/presentation-form.jsx'
 import { SaleForm } from '../components/SaleForm.jsx'
 import { ButtonNewProduct } from '../modules/products/button-new-product.jsx'
 import { ProductDetail } from '../modules/products/product-detail.jsx'
+import { ProductStatics } from '../modules/products/statics.jsx'
+import { SearchProduct } from '../modules/products/product-search-input.jsx'
 
 /**
  * Main product browsing interface.
@@ -211,15 +213,19 @@ export const ProductsPage = () => {
 			</div>
 
 			<div className='product-browser__layout'>
-				<CategoriesSidebar
-					selected={selectedCategoryIds}
-					onEvent={setSelectedCategoryIds}
-					categories={categories}
-					products={products}
-					filteredProducts={filteredProducts}
-					searchTerm={searchTerm}
-					onSearchChange={setSearchTerm}
-				/>
+				<div className='products-sidebar'>
+					<ProductStatics
+						categories={categories}
+						filteredProducts={filteredProducts}
+						products={products}
+					/>
+					<SearchProduct changeEvent={setSearchTerm} value={searchTerm} />
+					<CategoriesSidebar
+						selected={selectedCategoryIds}
+						onEvent={setSelectedCategoryIds}
+						categories={categories}
+					/>
+				</div>
 
 				<div className='product-browser__main'>
 					<ProductList

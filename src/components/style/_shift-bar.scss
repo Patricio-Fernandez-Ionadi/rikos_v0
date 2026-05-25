@@ -3,47 +3,20 @@
 @use '../../theme/values/mediaqueries' as *;
 
 .shift-bar {
-  padding: 10px 16px;
+  padding: 8px 16px;
   border-bottom: 1px solid $grey_dark;
   margin-bottom: 16px;
 
   @media (min-width: $medium) {
-    padding: 10px 20px;
+    padding: 8px 20px;
   }
 }
 
-.shift-bar__idle,
 .shift-bar__active {
   display: flex;
   align-items: center;
-  gap: 12px;
-}
-
-.shift-bar__active {
+  gap: 10px;
   flex-wrap: wrap;
-}
-
-.shift-bar__label {
-  color: $grey_light;
-  margin-right: 12px;
-}
-
-.shift-bar__info {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.shift-bar__actions {
-  display: flex;
-  gap: 8px;
-  width: 100%;
-
-  @media (min-width: $medium) {
-    width: auto;
-    margin-left: auto;
-  }
 }
 
 .shift-bar__stat {
@@ -76,6 +49,9 @@
   color: $white;
   cursor: pointer;
   font-size: 0.85em;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
 
   &:hover {
     background: $black_light;
@@ -90,19 +66,4 @@
   &:hover {
     background: $primary_light;
   }
-}
-
-.shift-bar__btn--danger {
-  background: $error;
-  border-color: $error;
-  color: $white;
-
-  &:hover {
-    background: #d32f2f;
-  }
-}
-
-.shift-bar__btn--sm {
-  padding: 4px 8px;
-  font-size: 0.8em;
 }

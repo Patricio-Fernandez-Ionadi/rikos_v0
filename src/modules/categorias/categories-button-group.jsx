@@ -2,26 +2,17 @@ import { useState } from 'react'
 
 /**
  * Sidebar that lists product categories with multi-select support.
- * Includes a search input to filter products by name.
- * Categories section is collapsible to maximize space for results.
+ * Categories section is collapsible to maximize space.
  *
  * @param {Object}        props
- * @param {Array}         props.selected            Array of selected category IDs (empty = all)
- * @param {Function}      props.onEvent            Callback when categories are selected/deselected
- * @param {Array}         props.categories          Full list of categories
- * @param {Array}         props.products            Full list of products
- * @param {Array}         props.filteredProducts    Products currently visible in the view
- * @param {string}        props.searchTerm         Current search term
- * @param {Function}      props.onSearchChange     Callback when search term changes
+ * @param {Array}         props.selected     Array of selected category IDs (empty = all)
+ * @param {Function}      props.onEvent      Callback when categories are selected/deselected
+ * @param {Array}         props.categories   Full list of categories
  */
 export const CategoriesSidebar = ({
 	selected,
 	onEvent,
 	categories,
-	products,
-	filteredProducts,
-	searchTerm,
-	onSearchChange,
 }) => {
 	const [categoriesOpen, setCategoriesOpen] = useState(false)
 	/**
@@ -46,32 +37,7 @@ export const CategoriesSidebar = ({
 	const showingAllCategories = selected.length === 0
 
 	return (
-		<div className='cat-sidebar'>
-			<div className='cat-sidebar__stats'>
-				<h4 className='cat-sidebar__stats-title'>Estadísticas</h4>
-				<p className='cat-sidebar__stat'>
-					Total categorías: {categories?.length}
-				</p>
-				<p className='cat-sidebar__stat'>Total productos: {products.length}</p>
-				<p className='cat-sidebar__stat'>
-					Productos en vista: {filteredProducts.length}
-				</p>
-				<p className='cat-sidebar__stat'>
-					Productos sin costo:{' '}
-					{filteredProducts.filter((p) => p.purchaseCost === null).length}
-				</p>
-			</div>
-
-			<div className='cat-sidebar__search'>
-				<input
-					className='cat-sidebar__search-input'
-					type='text'
-					placeholder='Buscar producto…'
-					value={searchTerm}
-					onChange={(e) => onSearchChange(e.target.value)}
-				/>
-			</div>
-
+		<>
 			<div className='cat-sidebar__categories'>
 				<button
 					className='cat-sidebar__categories-header'
@@ -118,6 +84,6 @@ export const CategoriesSidebar = ({
 					))}
 				</div>
 			</div>
-		</div>
+		</>
 	)
 }

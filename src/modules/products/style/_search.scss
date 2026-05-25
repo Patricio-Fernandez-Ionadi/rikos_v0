@@ -1,0 +1,36 @@
+@use '../../../theme/values/colors' as *;
+@use '../../../theme/values/sizes' as *;
+@use '../../../theme/values/mediaqueries' as *;
+
+.sidebar__search {
+	margin-bottom: 12px;
+
+	@media (min-width: $medium) {
+		margin-bottom: 16px;
+	}
+}
+
+.sidebar__search-input {
+	width: 100%;
+	padding: 8px 10px;
+	background: rgba($black, 0.4);
+	border: 1px solid $grey_dark;
+	border-radius: $smooth;
+	color: $white;
+	font-size: 0.85em;
+	transition: border-color 0.2s ease;
+
+	&::placeholder {
+		color: $grey;
+	}
+
+	&:focus {
+		outline: none;
+		border-color: $primary;
+	}
+
+	@media (min-width: $medium) {
+		padding: 8px 12px;
+		font-size: 0.9em;
+	}
+}

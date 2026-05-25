@@ -1,5 +1,7 @@
-@use '../../theme/values/colors' as *;
-@use '../../theme/values/sizes' as *;
+@use '../../../theme/values/colors' as *;
+@use '../../../theme/values/sizes' as *;
+
+// ─── DETALLE DE PRODUCTO EN LISTA ─────────────────────────────
 
 .detail {
   margin-top: 25px;
@@ -18,9 +20,19 @@
   color: $grey;
 }
 
+.detail__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+// ─── PRESENTACIONES EN LISTA DE STOCK ─────────────────────────
+
 .pres-list {
   max-height: 300px;
   overflow-y: auto;
+  overflow-x: hidden;
   border: 1px solid $black_light;
   border-radius: $smooth;
   padding: 10px;
@@ -31,6 +43,7 @@
   margin-bottom: 10px;
   border: 1px solid $black_light;
   border-radius: $smooth;
+  overflow-x: hidden;
 
   &:last-child {
     margin-bottom: 0;
@@ -39,7 +52,15 @@
 
 .pres-card__content {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 8px;
+  overflow-x: hidden;
+
+  @media (min-width: 769px) {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 0;
+  }
 }
 
 .pres-card__label {
@@ -52,39 +73,23 @@
   font-size: 0.85em;
 }
 
-.pres-card__details {
-  text-align: right;
-  min-width: 150px;
-  color: $grey;
-  font-size: 0.9em;
+.pres-card__actions {
+  display: flex;
+  gap: 4px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  overflow-x: hidden;
 }
 
-.pres-card__detail {
-  margin: 2px 0;
+.stock-edit-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: 6px;
+  overflow-x: hidden;
 }
 
-.pres-card__sale {
-  color: $grey_light;
-}
-
-.pres-card__diff {
-  margin-top: 5px;
-  font-size: 0.9em;
-}
-
-.pres-card__diff--positive {
-  color: $success;
-}
-
-.pres-card__diff--negative {
-  color: $error;
-}
-
-.pres-card__diff--neutral {
-  color: $grey;
-}
-
-// ─── NUEVA PRESENTACIÓN PARA MODAL ──────────────────────────────
+// ─── MODAL DE PRESENTACIONES ──────────────────────────────────
 
 .pres-detail {
   padding: 12px 0;
@@ -165,8 +170,6 @@
   background: rgba($primary, 0.15);
   border-color: $primary;
   border-left: 3px solid $primary;
-  border-width: 1px;
-  border-left-width: 3px;
 }
 
 .pres-row__cell--value {

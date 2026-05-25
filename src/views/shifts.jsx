@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useData } from '../context/DataContext.jsx'
 import { useShift } from '../context/ShiftContext.jsx'
 import { ShiftSalesList } from '../modules/shift/ShiftSalesList.jsx'
+import { Modal } from '../components/Modal.jsx'
 import * as api from '../data/api.js'
 
 /**
@@ -9,9 +10,15 @@ import * as api from '../data/api.js'
  */
 export const ShiftsPage = () => {
   const { products, online } = useData()
-  const { shift, synced, syncToDb } = useShift()
+  const { shift, synced, syncToDb, openShift, closeShift } = useShift()
   const [pastShifts, setPastShifts] = useState([])
   const [expanded, setExpanded] = useState(null)
+  const [showOpen, setShowOpen] = useState(false)
+  const [showClose, setShowClose] = useState(false)
+  const [openingCash, setOpeningCash] = useState('')
+  const [closingCash, setClosingCash] = useState('')
+  const [closingNotes, setClosingNotes] = useState('')
+  const [closeError, setCloseError] = useState('')
 
   useEffect(() => {
     if (!online) return
@@ -22,46 +29,128 @@ export const ShiftsPage = () => {
 
   const getProductName = (id) => products.find((p) => p._id === id)?.name ?? '—'
 
+  const handleOpen = async () => {
+    const cash = parseFloat(openingCash)
+    if (isNaN(cash) || cash < 0) return
+    await openShift(cash)
+    setShowOpen(false)
+    setOpeningCash('')
+  }
+
+  const handleClose = async () => {
+    const cash = parseFloat(closingCash)
+    if (isNaN(cash) || cash < 0) return
+    setCloseError('')
+    const result = await closeShift(cash, closingNotes)
+    if (result?.error) {
+      setCloseError(result.error)
+      return
+    }
+    setShowClose(false)
+    setClosingCash('')
+    setClosingNotes('')
+  }
+
   return (
     <div className="shifts-page">
       <h2 className="shifts-page__title">Turnos</h2>
 
-      {/* Active shift */}
-      {shift && (
-        <div className="shifts-page__card">
-          <div className="shifts-page__card-header">
-            <span className="dashboard__badge dashboard__badge--open">Turno activo</span>
-            <div style={{ display: 'flex', gap: '6px' }}>
-              {!synced && (
-                <button className="shift-bar__btn" onClick={() => syncToDb()}>
-                  Sincronizar
-                </button>
-              )}
-            </div>
-          </div>
-          <div className="shifts-page__stats">
-            <div className="shifts-page__stat">
-              Apertura: <span className="shifts-page__stat-value">{new Date(shift.openingTime).toLocaleString()}</span>
-            </div>
-            <div className="shifts-page__stat">
-              Efectivo inicial: <span className="shifts-page__stat-value">${shift.openingCash.toLocaleString()}</span>
-            </div>
-            <div className="shifts-page__stat">
-              Ventas: <span className="shifts-page__stat-value">{shift.sales.length}</span>
-            </div>
-            <div className="shifts-page__stat">
-              Total: <span className="shifts-page__stat-value">
-                ${shift.sales.reduce((s, x) => s + x.total, 0).toLocaleString()}
-              </span>
-            </div>
-            <div className="shifts-page__stat">
-              Esperado: <span className="shifts-page__stat-value">
-                ${(shift.openingCash + shift.sales.reduce((s, x) => s + x.total, 0)).toLocaleString()}
-              </span>
-            </div>
-          </div>
-          <ShiftSalesList />
+      {!shift ? (
+        <div className="shifts-page__card shifts-page__card--empty">
+          <p className="shifts-page__empty-text">No hay turno activo</p>
+          <button className="shift-bar__btn shift-bar__btn--primary" onClick={() => setShowOpen(true)}>
+            Abrir Turno
+          </button>
         </div>
+      ) : (
+        <>
+          {/* Active shift info */}
+          <div className="shifts-page__card">
+            <div className="shifts-page__card-header">
+              <span className="dashboard__badge dashboard__badge--open">Turno activo</span>
+              <div style={{ display: 'flex', gap: '6px' }}>
+                {!synced && (
+                  <button className="shift-bar__btn" onClick={() => syncToDb()}>
+                    Sincronizar
+                  </button>
+                )}
+                <button className="shift-bar__btn shift-bar__btn--danger" onClick={() => setShowClose(true)}>
+                  Cerrar Turno
+                </button>
+              </div>
+            </div>
+            <div className="shifts-page__stats">
+              <div className="shifts-page__stat">
+                Apertura: <span className="shifts-page__stat-value">{new Date(shift.openingTime).toLocaleString()}</span>
+              </div>
+              <div className="shifts-page__stat">
+                Efectivo inicial: <span className="shifts-page__stat-value">${shift.openingCash.toLocaleString()}</span>
+              </div>
+              <div className="shifts-page__stat">
+                Ventas: <span className="shifts-page__stat-value">{shift.sales.length}</span>
+              </div>
+              <div className="shifts-page__stat">
+                Total: <span className="shifts-page__stat-value">
+                  ${shift.sales.reduce((s, x) => s + x.total, 0).toLocaleString()}
+                </span>
+              </div>
+              <div className="shifts-page__stat">
+                Esperado: <span className="shifts-page__stat-value">
+                  ${(shift.openingCash + shift.sales.reduce((s, x) => s + x.total, 0)).toLocaleString()}
+                </span>
+              </div>
+            </div>
+            <ShiftSalesList />
+          </div>
+
+          {/* Close shift modal */}
+          {showClose && (
+            <Modal open={showClose} onClose={() => setShowClose(false)} title="Cerrar Turno">
+              {closeError && <p className="field-error">{closeError}</p>}
+              <label className="field-label">Efectivo final ($)</label>
+              <input
+                className="field-input"
+                type="number"
+                value={closingCash}
+                onChange={(e) => setClosingCash(e.target.value)}
+                autoFocus
+              />
+              <label className="field-label">Notas (opcional)</label>
+              <textarea
+                className="field-input"
+                value={closingNotes}
+                onChange={(e) => setClosingNotes(e.target.value)}
+                rows={2}
+              />
+              <div className="modal-actions">
+                <button className="shift-bar__btn" onClick={() => setShowClose(false)}>Cancelar</button>
+                <button className="shift-bar__btn shift-bar__btn--danger" onClick={handleClose}>
+                  Cerrar
+                </button>
+              </div>
+            </Modal>
+          )}
+        </>
+      )}
+
+      {/* Open shift modal */}
+      {showOpen && (
+        <Modal open={showOpen} onClose={() => setShowOpen(false)} title="Abrir Turno">
+          <label className="field-label">Efectivo inicial ($)</label>
+          <input
+            className="field-input"
+            type="number"
+            value={openingCash}
+            onChange={(e) => setOpeningCash(e.target.value)}
+            autoFocus
+          />
+          <div className="modal-actions">
+            <button className="shift-bar__btn" onClick={() => setShowOpen(false)}>Cancelar</button>
+            <button className="shift-bar__btn shift-bar__btn--primary" onClick={handleOpen}>
+              Abrir
+            </button>
+          </div>
+        </Modal>
       )}
 
       {/* Past shifts */}
