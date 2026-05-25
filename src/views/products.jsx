@@ -3,15 +3,15 @@ import { useData } from '../context/DataContext.jsx'
 import { useShift } from '../context/ShiftContext.jsx'
 import { calculate } from '../data/index.js'
 import * as api from '../data/api.js'
-import { CategoriesSidebar } from '../categorias/cat-sidebar-for-products.jsx'
-import { ProductList } from '../products/product-list.jsx'
-import { ProductPresentation } from '../products/product-presentation.jsx'
+import { CategoriesSidebar } from '../modules/categorias/cat-sidebar-for-products.jsx'
+import { ProductList } from '../modules/products/product-list.jsx'
+import { ProductPresentation } from '../modules/products/product-presentation.jsx'
 import { Modal } from '../components/Modal.jsx'
-import { ProductForm } from '../products/product-form.jsx'
-import { PresentationForm } from '../products/presentation-form.jsx'
+import { ProductForm } from '../modules/products/product-form.jsx'
+import { PresentationForm } from '../modules/products/presentation-form.jsx'
 import { SaleForm } from '../components/SaleForm.jsx'
-import { ButtonNewProduct } from '../products/button-new-product.jsx'
-import { ProductDetail } from '../products/product-detail.jsx'
+import { ButtonNewProduct } from '../modules/products/button-new-product.jsx'
+import { ProductDetail } from '../modules/products/product-detail.jsx'
 
 /**
  * Main product browsing interface.
@@ -45,16 +45,12 @@ export const ProductsPage = () => {
 		let result = products
 
 		if (selectedCategoryIds.length > 0) {
-			result = result.filter((p) =>
-				selectedCategoryIds.includes(p.categoryId)
-			)
+			result = result.filter((p) => selectedCategoryIds.includes(p.categoryId))
 		}
 
 		if (searchTerm.trim()) {
 			const term = searchTerm.trim().toLowerCase()
-			result = result.filter((p) =>
-				p.name.toLowerCase().includes(term)
-			)
+			result = result.filter((p) => p.name.toLowerCase().includes(term))
 		}
 
 		return result

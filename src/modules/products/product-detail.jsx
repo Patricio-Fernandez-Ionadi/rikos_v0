@@ -1,4 +1,4 @@
-import { DottedMenu } from '../components/DottedMenu.jsx'
+import { DottedMenu } from '../../components/DottedMenu.jsx'
 
 export const ProductDetail = ({
 	onSetEdit,
@@ -11,7 +11,11 @@ export const ProductDetail = ({
 		{ label: 'Editar producto', onClick: () => onSetEdit(product) },
 		{ label: 'Ver presentaciones', onClick: () => showModal(true) },
 		{ label: '+ Presentación', onClick: () => showForm(true) },
-		{ label: 'Eliminar producto', onClick: () => onDelete(product._id), danger: true },
+		{
+			label: 'Eliminar producto',
+			onClick: () => onDelete(product._id),
+			danger: true,
+		},
 	]
 
 	return (

@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { DataProvider } from './context/DataContext.jsx'
 import { ShiftProvider } from './context/ShiftContext.jsx'
 import { App } from './app/App'
-import './theme/index.scss'
+import './theme/index.css'
 
 createRoot(document.getElementById('root')).render(
 	<StrictMode>

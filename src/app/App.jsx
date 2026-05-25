@@ -1,9 +1,6 @@
 import { Routes, Route } from 'react-router-dom'
 import { Layout } from './Layout.jsx'
-import { Dashboard } from '../pages/dashboard.jsx'
-import { StockPage } from '../pages/stock.jsx'
-import { ShiftsPage } from '../pages/shifts.jsx'
-import { ProductsPage } from '../pages/products.jsx'
+import { Dashboard, StockPage, ShiftsPage, ProductsPage } from '../views'
 
 /**
  * Root application component — sets up all routes.
