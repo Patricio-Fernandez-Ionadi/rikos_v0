@@ -7,8 +7,8 @@ import { CategoriesSidebar } from '../categorias/cat-sidebar-for-products.jsx'
 import { ProductList } from '../products/product-list.jsx'
 import { ProductPresentation } from '../products/product-presentation.jsx'
 import { Modal } from '../components/Modal.jsx'
-import { ProductForm } from '../products/ProductForm.jsx'
-import { PresentationForm } from '../products/PresentationForm.jsx'
+import { ProductForm } from '../products/product-form.jsx'
+import { PresentationForm } from '../products/presentation-form.jsx'
 import { SaleForm } from '../components/SaleForm.jsx'
 
 /**
@@ -27,7 +27,7 @@ export const ProductsPage = () => {
 	} = useData()
 	const { shift, addSale } = useShift()
 
-	const [selectedCategoryId, setSelectedCategoryId] = useState(null)
+	const [selectedCategoryIds, setSelectedCategoryIds] = useState([])
 	const [selectedProductId, setSelectedProductId] = useState(null)
 	const [showProductForm, setShowProductForm] = useState(false)
 	const [showPresForm, setShowPresForm] = useState(false)
@@ -37,9 +37,10 @@ export const ProductsPage = () => {
 	const [stockEdit, setStockEdit] = useState(null)
 	const [stockValue, setStockValue] = useState('')
 
-	const filteredProducts = selectedCategoryId
-		? products.filter((p) => p.categoryId === selectedCategoryId)
-		: products
+	const filteredProducts =
+		selectedCategoryIds.length > 0
+			? products.filter((p) => selectedCategoryIds.includes(p.categoryId))
+			: products
 
 	const selectedProduct = selectedProductId
 		? products.find((p) => p._id === selectedProductId)
@@ -200,8 +201,8 @@ export const ProductsPage = () => {
 
 			<div className='product-browser__layout'>
 				<CategoriesSidebar
-					selected={selectedCategoryId}
-					onEvent={setSelectedCategoryId}
+					selected={selectedCategoryIds}
+					onEvent={setSelectedCategoryIds}
 					categories={categories}
 					products={products}
 					filteredProducts={filteredProducts}

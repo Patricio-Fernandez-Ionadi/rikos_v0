@@ -2,10 +2,18 @@
 @use '../../theme/values/sizes' as *;
 
 .product-list {
-  max-height: 400px;
+  max-height: 600px;
   overflow-y: auto;
   border: 1px solid $grey_dark;
   border-radius: $smooth;
+
+  @media (max-width: 768px) {
+    max-height: 500px;
+  }
+
+  @media (max-width: 480px) {
+    max-height: 400px;
+  }
 }
 
 .product-list__item {
@@ -15,9 +23,22 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 8px;
+  transition: background-color 0.2s ease;
 
   &:last-child {
     border-bottom: none;
+  }
+
+  &:hover {
+    background-color: rgba($primary, 0.05);
+  }
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    padding: 10px;
   }
 }
 
@@ -25,19 +46,81 @@
   background: $primary_darken_light;
 }
 
+.product-list__item-left {
+  flex: 1;
+  min-width: 0;
+}
+
+.product-list__item-right {
+  flex-shrink: 0;
+
+  @media (max-width: 480px) {
+    width: 100%;
+  }
+}
+
 .product-list__item-name {
   color: $white;
   font-weight: 700;
-}
+  font-size: 1em;
+  word-break: break-word;
+  margin-bottom: 2px;
 
-.product-list__item-cost {
-  color: $grey;
-  font-size: 0.85em;
+  @media (max-width: 480px) {
+    font-size: 0.95em;
+  }
 }
 
 .product-list__item-meta {
   text-align: right;
-  min-width: 120px;
   color: $grey_light;
   font-size: 0.85em;
+  line-height: 1.4;
+
+  @media (max-width: 480px) {
+    text-align: left;
+    width: 100%;
+    padding-left: 4px;
+    border-left: 2px solid $grey_dark;
+    padding-left: 8px;
+  }
+}
+
+.product-list__item-price {
+  color: $white;
+  font-weight: 700;
+  font-size: 1em;
+  margin-bottom: 4px;
+
+  @media (max-width: 480px) {
+    font-size: 0.95em;
+  }
+}
+
+.product-list__item-presentations {
+  color: $grey_light;
+  margin-bottom: 4px;
+
+  @media (max-width: 480px) {
+    font-size: 0.85em;
+  }
+}
+
+.product-list__item-stock {
+  color: $grey;
+  font-size: 0.85em;
+
+  strong {
+    color: $white;
+    font-weight: 700;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 0.8em;
+  }
+}
+
+.product-list__item-error {
+  color: $grey;
+  font-style: italic;
 }
