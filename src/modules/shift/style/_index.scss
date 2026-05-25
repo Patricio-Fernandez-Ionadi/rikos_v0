@@ -1,3 +1,3 @@
-@use '../../../theme/values/colors' as *;
-@use '../../../theme/values/sizes' as *;
-@forward '_shift-sales-list';
+@forward 'shift-sales-list';
+@forward 'card-shared';
+@forward 'past-shift-card';

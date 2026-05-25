@@ -1,0 +1,48 @@
+@use '../../../theme/values/colors' as *;
+@use '../../../theme/values/sizes' as *;
+
+.shifts-page__card {
+	background: $black;
+	border: 1px solid $grey_dark;
+	border-radius: $smooth;
+	padding: 16px;
+	margin-bottom: 12px;
+}
+
+.shifts-page__card--empty {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 16px;
+	padding: 40px 16px;
+}
+
+.shifts-page__empty-text {
+	color: $grey;
+	font-size: 1em;
+	margin: 0;
+}
+
+.shifts-page__card-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 8px;
+}
+
+.shifts-page__stats {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+	gap: 8px;
+	margin-top: 8px;
+}
+
+.shifts-page__stat {
+	color: $grey;
+	font-size: 0.85em;
+}
+
+.shifts-page__stat-value {
+	color: $white;
+	font-weight: 700;
+}

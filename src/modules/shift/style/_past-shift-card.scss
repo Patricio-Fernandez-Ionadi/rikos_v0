@@ -1,0 +1,50 @@
+@use '../../../theme/values/colors' as *;
+
+.shifts-page__card-date {
+	color: $grey_light;
+	font-size: 0.85em;
+}
+
+.shifts-page__diff--positive {
+	color: $success;
+}
+
+.shifts-page__diff--negative {
+	color: $error;
+}
+
+.shifts-page__toggle {
+	cursor: pointer;
+	color: $primary;
+	font-size: 0.85em;
+	margin-top: 8px;
+	display: inline-block;
+}
+
+.shifts-page__sales-wrap {
+	overflow-x: auto;
+	-webkit-overflow-scrolling: touch;
+	margin-top: 8px;
+}
+
+.shifts-page__sales-table {
+	width: 100%;
+	min-width: 400px;
+	border-collapse: collapse;
+
+	th,
+	td {
+		text-align: left;
+		padding: 6px 10px;
+		border-bottom: 1px solid $black_light;
+		font-size: 0.85em;
+	}
+
+	th {
+		color: $grey_light;
+	}
+
+	td {
+		color: $grey;
+	}
+}
