@@ -10,6 +10,8 @@ import { Modal } from '../components/Modal.jsx'
 import { ProductForm } from '../products/product-form.jsx'
 import { PresentationForm } from '../products/presentation-form.jsx'
 import { SaleForm } from '../components/SaleForm.jsx'
+import { ButtonNewProduct } from '../products/button-new-product.jsx'
+import { ProductDetail } from '../products/product-detail.jsx'
 
 /**
  * Main product browsing interface.
@@ -31,6 +33,7 @@ export const ProductsPage = () => {
 	const [selectedProductId, setSelectedProductId] = useState(null)
 	const [showProductForm, setShowProductForm] = useState(false)
 	const [showPresForm, setShowPresForm] = useState(false)
+	const [showPresentationsModal, setShowPresentationsModal] = useState(false)
 	const [editingProduct, setEditingProduct] = useState(null)
 	const [editingPres, setEditingPres] = useState(null)
 	const [salePresId, setSalePresId] = useState(null)
@@ -188,15 +191,13 @@ export const ProductsPage = () => {
 	// ─── Render ─────────────────────────────────────────────
 	return (
 		<div className='product-browser'>
-			<h2 className='product-browser__title'>RIKOS - Navegador de Productos</h2>
+			<h2 className='product-browser__title'>Productos</h2>
 
 			<div className='product-browser__toolbar'>
-				<button
+				<ButtonNewProduct
 					className='sidebar__btn'
-					onClick={() => setShowProductForm(true)}
-				>
-					+ Nuevo producto
-				</button>
+					onEvent={setShowProductForm}
+				/>
 			</div>
 
 			<div className='product-browser__layout'>
@@ -218,38 +219,12 @@ export const ProductsPage = () => {
 
 					{selectedProduct && (
 						<div className='detail'>
-							<div className='detail__header'>
-								<h3 className='detail__title'>{selectedProduct.name}</h3>
-								<div className='detail__actions'>
-									<button
-										className='sidebar__btn sidebar__btn--small'
-										onClick={() => setEditingProduct(selectedProduct)}
-									>
-										Editar
-									</button>
-									<button
-										className='sidebar__btn sidebar__btn--small sidebar__btn--danger'
-										onClick={() => handleDeleteProduct(selectedProduct._id)}
-									>
-										Eliminar
-									</button>
-									<button
-										className='sidebar__btn sidebar__btn--small'
-										onClick={() => setShowPresForm(true)}
-									>
-										+ Presentación
-									</button>
-								</div>
-							</div>
-							<p className='detail__cost'>
-								<strong>Costo de compra:</strong> $
-								{selectedProduct.purchaseCost?.toLocaleString() ?? 'Sin datos'}
-							</p>
-
-							<ProductPresentation
-								selectedProd={selectedProduct}
-								presentations={productPresentations}
-								calculate={calculate}
+							<ProductDetail
+								onSetEdit={setEditingProduct}
+								product={selectedProduct}
+								onDelete={handleDeleteProduct}
+								showModal={setShowPresentationsModal}
+								showForm={setShowPresForm}
 							/>
 
 							{/* Stock & Sale per presentation */}
@@ -388,6 +363,23 @@ export const ProductsPage = () => {
 					initial={editingPres}
 					onSubmit={handleEditPres}
 					onCancel={() => setEditingPres(null)}
+				/>
+			</Modal>
+
+			<Modal
+				open={showPresentationsModal && !!selectedProduct}
+				onClose={() => setShowPresentationsModal(false)}
+				title={`${selectedProduct?.name} - Presentaciones`}
+			>
+				<ProductPresentation
+					selectedProd={selectedProduct}
+					presentations={productPresentations}
+					calculate={calculate}
+					onEdit={(pres) => {
+						setEditingPres(pres)
+						setShowPresentationsModal(false)
+					}}
+					onDelete={(presId) => handleDeletePres(presId)}
 				/>
 			</Modal>
 		</div>

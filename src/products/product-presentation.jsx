@@ -1,90 +1,125 @@
 /**
- * Displays pricing details and calculated fields for a product's presentations.
+ * Displays pricing details for a product's presentations with action buttons.
+ * Shows name + presentation, grams/unit + sale price, cost + list price, and difference.
+ * Optimized for mobile viewing within a modal.
  *
  * @param {Object}   props
- * @param {Object|null}   props.selectedProd       Selected product object
- * @param {Array}         props.presentations      Presentations belonging to the selected product
- * @param {Function}      props.calculate          Calculation function (product, presentation) => derived fields
+ * @param {Object}   props.selectedProd       Selected product object
+ * @param {Array}    props.presentations      Presentations belonging to the selected product
+ * @param {Function} props.calculate          Calculation function (product, presentation) => derived fields
+ * @param {Function} props.onEdit            Callback when edit button is clicked (receives presentation)
+ * @param {Function} props.onDelete          Callback when delete button is clicked (receives presentation ID)
  */
 export const ProductPresentation = ({
 	selectedProd,
 	presentations,
 	calculate,
+	onEdit,
+	onDelete,
 }) => {
-	return (
-		<>
-			{selectedProd && (
-				<div className="detail">
-					<h3 className="detail__title">{selectedProd.name}</h3>
-					<p className="detail__cost">
-						<strong>Costo de compra:</strong> $
-						{selectedProd.purchaseCost?.toLocaleString() ?? 'Sin datos'}
-					</p>
+	if (!selectedProd) return null
 
-					{presentations.length === 0 ? (
-						<p className="empty">No hay presentaciones para este producto</p>
-					) : (
-						<>
-							<h4 className="detail__pres-title">Presentaciones:</h4>
-							<div className="pres-list">
-								{presentations.map((pres) => {
-									const calc = calculate(selectedProd, pres)
-									const diffClass =
-										calc.priceDifference !== null
-											? calc.priceDifference < 0
-												? 'pres-card__diff--negative'
-												: calc.priceDifference > 0
-													? 'pres-card__diff--positive'
-													: 'pres-card__diff--neutral'
-											: 'pres-card__diff--neutral'
-									return (
-										<div key={pres._id} className="pres-card">
-											<div className="pres-card__content">
-												<div>
-													<div className="pres-card__label">{pres.label}</div>
-													<div className="pres-card__unit">
-														{pres.grams !== null
-															? `(${pres.grams}g)`
-															: '(unidad completa)'}
-													</div>
-												</div>
-												<div className="pres-card__details">
-													<div className="pres-card__detail">
-														Margen: {pres.margin ?? '—'}%
-													</div>
-													<div className="pres-card__detail">
-														Costo pres.: $
-														{calc.costPerPresentation?.toLocaleString() ?? '—'}
-													</div>
-													<div className="pres-card__detail">
-														Precio lista: $
-														{calc.listPrice?.toLocaleString() ?? '—'}
-													</div>
-													<div className="pres-card__detail pres-card__sale">
-														Precio venta: $
-														{pres.salePrice?.toLocaleString() ?? 'Sin datos'}
-													</div>
-													<div className={'pres-card__diff ' + diffClass}>
-														Diferencia:{' '}
-														{calc.priceDifferencePercent !== null
-															? `${calc.priceDifferencePercent.toFixed(2)}%`
-															: '—'}
-														($
-														{calc.priceDifference !== null
-															? calc.priceDifference.toLocaleString()
-															: '—'}
-														)
-													</div>
-												</div>
-											</div>
+	return (
+		<div className='pres-detail'>
+			{presentations.length === 0 ? (
+				<p className='pres-detail__empty'>No hay presentaciones para este producto</p>
+			) : (
+				<div className='pres-grid'>
+					{presentations.map((pres) => {
+						const calc = calculate(selectedProd, pres)
+						const diffClass =
+							calc.priceDifference !== null
+								? calc.priceDifference < 0
+									? 'pres-row__diff--negative'
+									: calc.priceDifference > 0
+										? 'pres-row__diff--positive'
+										: 'pres-row__diff--neutral'
+								: 'pres-row__diff--neutral'
+
+						return (
+							<div key={pres._id} className='pres-row'>
+								<div className='pres-row__main'>
+									{/* Row 1: Presentation label + Sale price */}
+									<div className='pres-row__row'>
+										<div className='pres-row__cell pres-row__cell--label'>
+											<span className='pres-row__name'>{pres.label}</span>
 										</div>
-									)
-								})}
+										<div className='pres-row__cell pres-row__cell--value'>
+											<span className='pres-row__label-small'>Venta</span>
+											<span className='pres-row__value pres-row__value--sale'>
+												${pres.salePrice?.toLocaleString() ?? 'Sin precio'}
+											</span>
+										</div>
+									</div>
+
+									{/* Row 2: Grams + List price */}
+									<div className='pres-row__row'>
+										<div className='pres-row__cell pres-row__cell--secondary'>
+											<span className='pres-row__label-small'>Cantidad</span>
+											<span className='pres-row__value pres-row__value--secondary'>
+												{pres.grams !== null ? `${pres.grams}g` : 'Unidad'}
+											</span>
+										</div>
+										<div className='pres-row__cell pres-row__cell--value'>
+											<span className='pres-row__label-small'>Lista</span>
+											<span className='pres-row__value pres-row__value--secondary'>
+												${calc.listPrice?.toLocaleString() ?? '—'}
+											</span>
+										</div>
+									</div>
+
+									{/* Row 3: Cost + Difference */}
+									<div className='pres-row__row'>
+										<div className='pres-row__cell pres-row__cell--secondary'>
+											<span className='pres-row__label-small'>Costo</span>
+											<span className='pres-row__value pres-row__value--secondary'>
+												${calc.costPerPresentation?.toLocaleString() ?? '—'}
+											</span>
+										</div>
+										<div className={`pres-row__cell pres-row__cell--diff ${diffClass}`}>
+											<span className='pres-row__label-small'>Diferencia</span>
+											<span className='pres-row__value pres-row__diff-text'>
+												{calc.priceDifferencePercent !== null
+													? `${calc.priceDifferencePercent.toFixed(2)}%`
+													: '—'}{' '}
+												($
+												{calc.priceDifference !== null
+													? calc.priceDifference.toLocaleString()
+													: '—'}
+												)
+											</span>
+										</div>
+									</div>
+								</div>
+
+								{/* Action buttons */}
+								{(onEdit || onDelete) && (
+									<div className='pres-row__actions'>
+										{onEdit && (
+											<button
+												className='pres-row__btn pres-row__btn--edit'
+												onClick={() => onEdit(pres)}
+												title='Editar presentación'
+											>
+												✎
+											</button>
+										)}
+										{onDelete && (
+											<button
+												className='pres-row__btn pres-row__btn--delete'
+												onClick={() => onDelete(pres._id)}
+												title='Eliminar presentación'
+											>
+												🗑
+											</button>
+										)}
+									</div>
+								)}
 							</div>
-						</>
-					)}
+						)
+					})}
 				</div>
 			)}
-		</>
+		</div>
 	)
 }

@@ -14,6 +14,7 @@
 }
 
 .modal-panel {
+  position: relative;
   background: $black;
   border: 1px solid $grey_dark;
   border-radius: $smooth;
@@ -30,10 +31,57 @@
   }
 }
 
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
 .modal-title {
   color: $white;
-  margin: 0 0 16px;
+  margin: 0;
   font-size: 20px;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.modal-close {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba($black, 0.4);
+  border: 1px solid $grey_dark;
+  border-radius: $smooth;
+  color: $grey_light;
+  font-size: 1em;
+  cursor: pointer;
+  transition: all 0.15s ease;
+
+  &:hover {
+    background: rgba($error, 0.2);
+    border-color: $error;
+    color: $error;
+  }
+}
+
+.modal-close--absolute {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+
+  @media (min-width: $medium) {
+    top: 16px;
+    right: 16px;
+  }
 }
 
 .modal-actions {

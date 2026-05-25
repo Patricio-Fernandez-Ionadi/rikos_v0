@@ -1,6 +1,6 @@
 /**
  * Simple modal overlay. Renders children inside a centered panel.
- * Clicking the overlay background closes the modal.
+ * Clicking the overlay background or the close button closes the modal.
  *
  * @param {Object}   props
  * @param {boolean}  props.open
@@ -13,7 +13,19 @@ export const Modal = ({ open, onClose, title, children }) => {
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-panel" onClick={(e) => e.stopPropagation()}>
-        {title && <h3 className="modal-title">{title}</h3>}
+        {title && (
+          <div className="modal-header">
+            <h3 className="modal-title">{title}</h3>
+            <button className="modal-close" onClick={onClose} type="button" aria-label="Cerrar">
+              ✕
+            </button>
+          </div>
+        )}
+        {!title && (
+          <button className="modal-close modal-close--absolute" onClick={onClose} type="button" aria-label="Cerrar">
+            ✕
+          </button>
+        )}
         {children}
       </div>
     </div>

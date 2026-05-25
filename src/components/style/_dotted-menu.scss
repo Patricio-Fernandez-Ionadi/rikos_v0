@@ -1,0 +1,96 @@
+@use '../../theme/values/colors' as *;
+@use '../../theme/values/sizes' as *;
+
+// ─── DOTTED MENU (⋮) ─────────────────────────────────────────
+
+.dotted-menu {
+  position: relative;
+  display: inline-flex;
+}
+
+.dotted-menu__trigger {
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba($black, 0.3);
+  color: $grey_light;
+  border: 1px solid $grey_dark;
+  border-radius: $smooth;
+  cursor: pointer;
+  font-size: 1.3em;
+  line-height: 1;
+  letter-spacing: 2px;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: rgba($primary, 0.15);
+    color: $primary;
+    border-color: $primary;
+  }
+}
+
+.dotted-menu--open .dotted-menu__trigger {
+  background: rgba($primary, 0.2);
+  color: $primary;
+  border-color: $primary;
+}
+
+.dotted-menu__dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  min-width: 180px;
+  background: lighten($black, 8%);
+  border: 1px solid $grey_dark;
+  border-radius: $smooth;
+  z-index: 100;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  animation: dotted-menu-fade-in 0.15s ease;
+}
+
+@keyframes dotted-menu-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dotted-menu__item {
+  width: 100%;
+  padding: 10px 14px;
+  background: transparent;
+  color: $grey_light;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font-size: 0.85em;
+  font-weight: 500;
+  transition: all 0.15s ease;
+
+  &:hover {
+    background: rgba($primary, 0.15);
+    color: $white;
+  }
+
+  &:not(:last-child) {
+    border-bottom: 1px solid rgba($grey_dark, 0.3);
+  }
+}
+
+.dotted-menu__item--danger {
+  color: $error;
+
+  &:hover {
+    background: rgba($error, 0.15);
+    color: $error;
+  }
+}
