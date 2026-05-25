@@ -1,4 +1,4 @@
-export const ProductStatics = ({ categories, filteredProducts, products }) => {
+export const ProductStats = ({ categories, filteredProducts, products }) => {
 	return (
 		<div className='sidebar__stats'>
 			<h4 className='sidebar__stats-title'>Estadísticas</h4>

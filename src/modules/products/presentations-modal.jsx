@@ -10,19 +10,21 @@
  * @param {Function} props.onEdit            Callback when edit button is clicked (receives presentation)
  * @param {Function} props.onDelete          Callback when delete button is clicked (receives presentation ID)
  */
-export const ProductPresentation = ({
+export const PresentationsModal = ({
 	selectedProd,
 	presentations,
-	calculate,
 	onEdit,
 	onDelete,
+	calculate,
 }) => {
-	if (!selectedProd) return null
+	if (!selectedProd) return
 
 	return (
 		<div className='pres-detail'>
 			{presentations.length === 0 ? (
-				<p className='pres-detail__empty'>No hay presentaciones para este producto</p>
+				<p className='pres-detail__empty'>
+					No hay presentaciones para este producto
+				</p>
 			) : (
 				<div className='pres-grid'>
 					{presentations.map((pres) => {
@@ -39,7 +41,6 @@ export const ProductPresentation = ({
 						return (
 							<div key={pres._id} className='pres-row'>
 								<div className='pres-row__main'>
-									{/* Row 1: Presentation label + Sale price */}
 									<div className='pres-row__row'>
 										<div className='pres-row__cell pres-row__cell--label'>
 											<span className='pres-row__name'>{pres.label}</span>
@@ -52,7 +53,6 @@ export const ProductPresentation = ({
 										</div>
 									</div>
 
-									{/* Row 2: Grams + List price */}
 									<div className='pres-row__row'>
 										<div className='pres-row__cell pres-row__cell--secondary'>
 											<span className='pres-row__label-small'>Cantidad</span>
@@ -68,7 +68,6 @@ export const ProductPresentation = ({
 										</div>
 									</div>
 
-									{/* Row 3: Cost + Difference */}
 									<div className='pres-row__row'>
 										<div className='pres-row__cell pres-row__cell--secondary'>
 											<span className='pres-row__label-small'>Costo</span>
@@ -76,7 +75,9 @@ export const ProductPresentation = ({
 												${calc.costPerPresentation?.toLocaleString() ?? '—'}
 											</span>
 										</div>
-										<div className={`pres-row__cell pres-row__cell--diff ${diffClass}`}>
+										<div
+											className={`pres-row__cell pres-row__cell--diff ${diffClass}`}
+										>
 											<span className='pres-row__label-small'>Diferencia</span>
 											<span className='pres-row__value pres-row__diff-text'>
 												{calc.priceDifferencePercent !== null
@@ -92,7 +93,6 @@ export const ProductPresentation = ({
 									</div>
 								</div>
 
-								{/* Action buttons */}
 								{(onEdit || onDelete) && (
 									<div className='pres-row__actions'>
 										{onEdit && (
