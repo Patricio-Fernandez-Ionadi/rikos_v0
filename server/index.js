@@ -27,8 +27,13 @@ app.use((err, _req, res, _next) => {
 app.listen(PORT, () => {
 	console.log(`Server running on http://localhost:${PORT}`)
 	console.log(process.env.MONGODB_URI)
+	const uri = process.env.MONGODB_URI
+	if (!uri) {
+		console.warn('MONGODB_URI not set — skipping DB connection')
+		return
+	}
 	mongoose
-		.connect(process.env.MONGODB_URI)
+		.connect(uri)
 		.then(() => console.log('Connected to MongoDB'))
 		.catch((err) => console.error('MongoDB connection error:', err.message))
 })

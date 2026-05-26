@@ -2,9 +2,7 @@ services:
   - type: web
     name: rikos-api
     runtime: node
-    rootDir: server
-    startCommand: node index.js
-    buildCommand: npm install
+    startCommand: node server/index.js
     envVars:
       - key: MONGODB_URI
         sync: false
