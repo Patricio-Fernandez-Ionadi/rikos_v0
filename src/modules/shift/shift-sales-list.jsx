@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { useShift } from '../../context/ShiftContext.jsx'
-import { useData } from '../../context/DataContext.jsx'
+import { useShift } from '../../modules/shift/shift-context.jsx'
+import { useData } from '../../app/data-context.jsx'
 
 /**
  * Displays the current shift's sales with inline edit and delete.

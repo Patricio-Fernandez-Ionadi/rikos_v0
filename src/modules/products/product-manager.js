@@ -1,287 +1,207 @@
 import { useReducer, useMemo, useCallback } from 'react'
-import { useData } from '../../context/DataContext.jsx'
-import { useShift } from '../../context/ShiftContext.jsx'
-import * as api from '../../data/api.js'
+import { useData } from '../../app/data-context.jsx'
+import { useShift } from '../../modules/shift/shift-context.jsx'
+import { productReducer, INITIAL_PRODUCT_STATE } from './reducer/product-reducer.js'
+import * as actions from './reducer/product-actions.js'
+import * as productService from './services/product-services.js'
+import * as presService from '../presentations/services/presentation-services.js'
+import * as stockService from '../stock/services/stock-services.js'
 
 /** @import { useProductManager } from './product-manager' */
 
-const INITIAL = {
-  selectedCategoryIds: [],
-  selectedProductId: null,
-  searchTerm: '',
-  showProductForm: false,
-  editingProduct: null,
-  showPresForm: false,
-  editingPres: null,
-  showPresentationsModal: false,
-  salePresId: null,
-  stockEdit: null,
-  stockValue: '',
-}
-
-function reducer(state, action) {
-  switch (action.type) {
-    case 'SELECT_CATEGORIES':
-      return { ...state, selectedCategoryIds: action.ids }
-    case 'SELECT_PRODUCT':
-      return { ...state, selectedProductId: action.id }
-    case 'SET_SEARCH':
-      return { ...state, searchTerm: action.term }
-    case 'OPEN_PRODUCT_FORM':
-      return { ...state, showProductForm: true }
-    case 'CLOSE_PRODUCT_FORM':
-      return { ...state, showProductForm: false }
-    case 'OPEN_EDIT_PRODUCT':
-      return { ...state, editingProduct: action.product }
-    case 'CLOSE_EDIT_PRODUCT':
-      return { ...state, editingProduct: null }
-    case 'OPEN_PRES_FORM':
-      return { ...state, showPresForm: true, showPresentationsModal: false }
-    case 'CLOSE_PRES_FORM':
-      return { ...state, showPresForm: false }
-    case 'OPEN_EDIT_PRES':
-      return { ...state, editingPres: action.pres }
-    case 'CLOSE_EDIT_PRES':
-      return { ...state, editingPres: null }
-    case 'OPEN_PRESENTATIONS_MODAL':
-      return { ...state, showPresentationsModal: true }
-    case 'CLOSE_PRESENTATIONS_MODAL':
-      return { ...state, showPresentationsModal: false }
-    case 'START_SALE':
-      return { ...state, salePresId: action.presId }
-    case 'CANCEL_SALE':
-      return { ...state, salePresId: null }
-    case 'START_STOCK_EDIT':
-      return { ...state, stockEdit: action.presId, stockValue: String(action.currentStock ?? 0) }
-    case 'CANCEL_STOCK_EDIT':
-      return { ...state, stockEdit: null, stockValue: '' }
-    case 'SET_STOCK_VALUE':
-      return { ...state, stockValue: action.value }
-    default:
-      return state
-  }
-}
-
 /**
  * Encapsulates all state and CRUD logic for the products page.
- * Uses useReducer for UI state management and async handlers for API calls.
  */
 export function useProductManager() {
-  const [state, dispatch] = useReducer(reducer, INITIAL)
-  const { categories, products, presentations, online, setProducts, setPresentations } = useData()
-  const { shift, addSale } = useShift()
+	const [state, dispatch] = useReducer(productReducer, INITIAL_PRODUCT_STATE)
+	const { categories, products, presentations, online, setProducts, setPresentations } = useData()
+	const { shift, addSale } = useShift()
 
-  // ── Derived data ────────────────────────────────────────
+	// ── Derived data ────────────────────────────────────────
 
-  const filteredProducts = useMemo(() => {
-    let result = products
-    if (state.selectedCategoryIds.length > 0) {
-      result = result.filter((p) => state.selectedCategoryIds.includes(p.categoryId))
-    }
-    if (state.searchTerm.trim()) {
-      const term = state.searchTerm.trim().toLowerCase()
-      result = result.filter((p) => p.name.toLowerCase().includes(term))
-    }
-    return result
-  }, [products, state.selectedCategoryIds, state.searchTerm])
+	const filteredProducts = useMemo(() => {
+		let result = products
+		if (state.selectedCategoryIds.length > 0) {
+			result = result.filter((p) => state.selectedCategoryIds.includes(p.categoryId))
+		}
+		if (state.searchTerm.trim()) {
+			const term = state.searchTerm.trim().toLowerCase()
+			result = result.filter((p) => p.name.toLowerCase().includes(term))
+		}
+		return result
+	}, [products, state.selectedCategoryIds, state.searchTerm])
 
-  const selectedProduct = useMemo(
-    () => products.find((p) => p._id === state.selectedProductId) ?? null,
-    [products, state.selectedProductId],
-  )
+	const selectedProduct = useMemo(
+		() => products.find((p) => p._id === state.selectedProductId) ?? null,
+		[products, state.selectedProductId],
+	)
 
-  const productPresentations = useMemo(
-    () => presentations.filter((p) => p.productId === selectedProduct?._id),
-    [presentations, selectedProduct],
-  )
+	const productPresentations = useMemo(
+		() => presentations.filter((p) => p.productId === selectedProduct?._id),
+		[presentations, selectedProduct],
+	)
 
-  // ── UI actions ──────────────────────────────────────────
+	// ── UI actions (dispatch is stable, no useCallback needed) ──
 
-  const handleSelectCategories = useCallback((ids) => {
-    dispatch({ type: 'SELECT_CATEGORIES', ids })
-  }, [])
+	const handleSelectCategories = actions.selectCategories(dispatch)
+	const handleSelectProduct = actions.selectProduct(dispatch)
+	const handleSearch = actions.searchProducts(dispatch)
+	const openProductFormFn = actions.openProductForm(dispatch)
+	const closeProductFormFn = actions.closeProductForm(dispatch)
+	const openEditProductFn = actions.editProduct(dispatch)
+	const closeEditProductFn = actions.closeEditProduct(dispatch)
+	const openPresFormFn = actions.openPresForm(dispatch)
+	const closePresFormFn = actions.closePresForm(dispatch)
+	const openEditPresFn = actions.editPres(dispatch)
+	const closeEditPresFn = actions.closeEditPres(dispatch)
+	const openPresentationsModalFn = actions.openPresentationsModal(dispatch)
+	const closePresentationsModalFn = actions.closePresentationsModal(dispatch)
+	const startSaleFn = actions.startSale(dispatch)
+	const cancelSaleFn = actions.cancelSale(dispatch)
+	const startStockEditFn = actions.startStockEdit(dispatch)
+	const cancelStockEditFn = actions.cancelStockEdit(dispatch)
+	const changeStockValueFn = actions.changeStockValue(dispatch)
 
-  const handleSelectProduct = useCallback((id) => {
-    dispatch({ type: 'SELECT_PRODUCT', id })
-  }, [])
+	// ── Product CRUD ─────────────────────────────────────────
 
-  const handleSearch = useCallback((term) => {
-    dispatch({ type: 'SET_SEARCH', term })
-  }, [])
+	const createProductFn = useCallback(async (data) => {
+		try {
+			const created = await productService.createProduct(data, { online })
+			setProducts((prev) => [...prev, created])
+		} catch (e) {
+			console.error(e)
+		}
+		dispatch({ type: 'CLOSE_PRODUCT_FORM' })
+	}, [online, setProducts])
 
-  const openProductForm = useCallback(() => dispatch({ type: 'OPEN_PRODUCT_FORM' }), [])
-  const closeProductForm = useCallback(() => dispatch({ type: 'CLOSE_PRODUCT_FORM' }), [])
-  const openEditProduct = useCallback((product) => dispatch({ type: 'OPEN_EDIT_PRODUCT', product }), [])
-  const closeEditProduct = useCallback(() => dispatch({ type: 'CLOSE_EDIT_PRODUCT' }), [])
+	const editProductFn = useCallback(async (data) => {
+		const id = state.editingProduct?._id
+		if (!id) return
+		try {
+			const updated = await productService.updateProduct(id, data, { online })
+			if (updated) {
+				setProducts((prev) => prev.map((p) => (p._id === updated._id ? updated : p)))
+			} else {
+				setProducts((prev) => prev.map((p) => (p._id === id ? { ...p, ...data } : p)))
+			}
+		} catch (e) {
+			console.error(e)
+		}
+		dispatch({ type: 'CLOSE_EDIT_PRODUCT' })
+	}, [online, state.editingProduct, setProducts])
 
-  const openPresForm = useCallback(() => dispatch({ type: 'OPEN_PRES_FORM' }), [])
-  const closePresForm = useCallback(() => dispatch({ type: 'CLOSE_PRES_FORM' }), [])
-  const openEditPres = useCallback((pres) => dispatch({ type: 'OPEN_EDIT_PRES', pres }), [])
-  const closeEditPres = useCallback(() => dispatch({ type: 'CLOSE_EDIT_PRES' }), [])
+	const deleteProductFn = useCallback(async (id) => {
+		if (!window.confirm('¿Eliminar este producto y todas sus presentaciones?')) return
+		try {
+			await productService.deleteProduct(id, { online })
+			setProducts((prev) => prev.filter((p) => p._id !== id))
+			setPresentations((prev) => prev.filter((p) => p.productId !== id))
+			dispatch({ type: 'SELECT_PRODUCT', id: null })
+		} catch (e) {
+			console.error(e)
+		}
+	}, [online, setProducts, setPresentations])
 
-  const openPresentationsModal = useCallback(
-    () => dispatch({ type: 'OPEN_PRESENTATIONS_MODAL' }),
-    [],
-  )
-  const closePresentationsModal = useCallback(
-    () => dispatch({ type: 'CLOSE_PRESENTATIONS_MODAL' }),
-    [],
-  )
+	// ── Presentation CRUD ────────────────────────────────────
 
-  const startSale = useCallback(
-    (presId) => dispatch({ type: 'START_SALE', presId }),
-    [],
-  )
-  const cancelSale = useCallback(() => dispatch({ type: 'CANCEL_SALE' }), [])
+	const createPresFn = useCallback(async (data) => {
+		if (!selectedProduct) return
+		try {
+			const payload = { productId: selectedProduct._id, ...data }
+			const created = await presService.createPresentation(payload, { online })
+			setPresentations((prev) => [...prev, created])
+		} catch (e) {
+			console.error(e)
+		}
+		dispatch({ type: 'CLOSE_PRES_FORM' })
+	}, [online, selectedProduct, setPresentations])
 
-  const startStockEdit = useCallback(
-    (presId, currentStock) => dispatch({ type: 'START_STOCK_EDIT', presId, currentStock }),
-    [],
-  )
-  const cancelStockEdit = useCallback(() => dispatch({ type: 'CANCEL_STOCK_EDIT' }), [])
+	const editPresFn = useCallback(async (data) => {
+		const id = state.editingPres?._id
+		if (!id) return
+		try {
+			const updated = await presService.updatePresentation(id, data, { online })
+			if (updated) {
+				setPresentations((prev) => prev.map((p) => (p._id === updated._id ? updated : p)))
+			} else {
+				setPresentations((prev) => prev.map((p) => (p._id === id ? { ...p, ...data } : p)))
+			}
+		} catch (e) {
+			console.error(e)
+		}
+		dispatch({ type: 'CLOSE_EDIT_PRES' })
+	}, [online, state.editingPres, setPresentations])
 
-  const changeStockValue = useCallback(
-    (value) => dispatch({ type: 'SET_STOCK_VALUE', value }),
-    [],
-  )
+	const deletePresFn = useCallback(async (id) => {
+		if (!window.confirm('¿Eliminar esta presentación?')) return
+		try {
+			await presService.deletePresentation(id, { online })
+			setPresentations((prev) => prev.filter((p) => p._id !== id))
+		} catch (e) {
+			console.error(e)
+		}
+	}, [online, setPresentations])
 
-  // ── Product CRUD ────────────────────────────────────────
+	// ── Stock & Sale ─────────────────────────────────────────
 
-  const createProduct = useCallback(async (data) => {
-    try {
-      if (online) {
-        const created = await api.createProduct(data)
-        setProducts((prev) => [...prev, created])
-      } else {
-        const { createProduct: makeProd } = await import('../../data/entities.js')
-        setProducts((prev) => [...prev, makeProd(data)])
-      }
-    } catch (e) {
-      console.error(e)
-    }
-    dispatch({ type: 'CLOSE_PRODUCT_FORM' })
-  }, [online, setProducts])
+	const updateStockFn = useCallback(async (presId) => {
+		const val = parseInt(state.stockValue, 10)
+		if (isNaN(val) || val < 0) return
+		try {
+			const updated = await stockService.updateStock(presId, val, { online })
+			if (updated) {
+				setPresentations((prev) => prev.map((p) => (p._id === updated._id ? updated : p)))
+			} else {
+				setPresentations((prev) => prev.map((p) => (p._id === presId ? { ...p, stock: val } : p)))
+			}
+		} catch (e) {
+			console.error(e)
+		}
+		dispatch({ type: 'CANCEL_STOCK_EDIT' })
+	}, [online, state.stockValue, setPresentations])
 
-  const editProduct = useCallback(async (data) => {
-    const id = state.editingProduct?._id
-    if (!id) return
-    try {
-      if (online) {
-        const updated = await api.updateProduct(id, data)
-        setProducts((prev) => prev.map((p) => (p._id === updated._id ? updated : p)))
-      } else {
-        setProducts((prev) => prev.map((p) => (p._id === id ? { ...p, ...data } : p)))
-      }
-    } catch (e) {
-      console.error(e)
-    }
-    dispatch({ type: 'CLOSE_EDIT_PRODUCT' })
-  }, [online, state.editingProduct, setProducts])
+	const handleSaleFn = useCallback(async (sale) => {
+		await addSale(sale)
+		setPresentations((prev) =>
+			prev.map((p) =>
+				p._id === sale.presentationId
+					? { ...p, stock: p.stock - sale.quantity }
+					: p,
+			),
+		)
+		dispatch({ type: 'CANCEL_SALE' })
+	}, [addSale, setPresentations])
 
-  const deleteProduct = useCallback(async (id) => {
-    if (!window.confirm('¿Eliminar este producto y todas sus presentaciones?')) return
-    try {
-      if (online) await api.deleteProduct(id)
-      setProducts((prev) => prev.filter((p) => p._id !== id))
-      setPresentations((prev) => prev.filter((p) => p.productId !== id))
-      if (state.selectedProductId === id) dispatch({ type: 'SELECT_PRODUCT', id: null })
-    } catch (e) {
-      console.error(e)
-    }
-  }, [online, state.selectedProductId, setProducts, setPresentations])
-
-  // ── Presentation CRUD ───────────────────────────────────
-
-  const createPres = useCallback(async (data) => {
-    if (!selectedProduct) return
-    try {
-      const payload = { productId: selectedProduct._id, ...data }
-      if (online) {
-        const created = await api.createPresentation(payload)
-        setPresentations((prev) => [...prev, created])
-      } else {
-        const { createPresentation: makePres } = await import('../../data/entities.js')
-        setPresentations((prev) => [...prev, makePres(payload)])
-      }
-    } catch (e) {
-      console.error(e)
-    }
-    dispatch({ type: 'CLOSE_PRES_FORM' })
-  }, [online, selectedProduct, setPresentations])
-
-  const editPres = useCallback(async (data) => {
-    const id = state.editingPres?._id
-    if (!id) return
-    try {
-      if (online) {
-        const updated = await api.updatePresentation(id, data)
-        setPresentations((prev) => prev.map((p) => (p._id === updated._id ? updated : p)))
-      } else {
-        setPresentations((prev) => prev.map((p) => (p._id === id ? { ...p, ...data } : p)))
-      }
-    } catch (e) {
-      console.error(e)
-    }
-    dispatch({ type: 'CLOSE_EDIT_PRES' })
-  }, [online, state.editingPres, setPresentations])
-
-  const deletePres = useCallback(async (id) => {
-    if (!window.confirm('¿Eliminar esta presentación?')) return
-    try {
-      if (online) await api.deletePresentation(id)
-      setPresentations((prev) => prev.filter((p) => p._id !== id))
-    } catch (e) {
-      console.error(e)
-    }
-  }, [online, setPresentations])
-
-  // ── Stock & Sale ────────────────────────────────────────
-
-  const updateStock = useCallback(async (presId) => {
-    const val = parseInt(state.stockValue, 10)
-    if (isNaN(val) || val < 0) return
-    try {
-      if (online) {
-        const updated = await api.updateStock(presId, val)
-        setPresentations((prev) => prev.map((p) => (p._id === updated._id ? updated : p)))
-      } else {
-        setPresentations((prev) => prev.map((p) => (p._id === presId ? { ...p, stock: val } : p)))
-      }
-    } catch (e) {
-      console.error(e)
-    }
-    dispatch({ type: 'CANCEL_STOCK_EDIT' })
-  }, [online, state.stockValue, setPresentations])
-
-  const handleSale = useCallback(async (sale) => {
-    await addSale(sale)
-    setPresentations((prev) =>
-      prev.map((p) =>
-        p._id === sale.presentationId
-          ? { ...p, stock: p.stock - sale.quantity }
-          : p,
-      ),
-    )
-    dispatch({ type: 'CANCEL_SALE' })
-  }, [addSale, setPresentations])
-
-  return {
-    categories, products, presentations, online,
-    filteredProducts, selectedProduct, productPresentations,
-    shift,
-    ...state,
-    handleSelectCategories,
-    handleSelectProduct,
-    handleSearch,
-    openProductForm, closeProductForm,
-    openEditProduct, closeEditProduct,
-    openPresForm, closePresForm,
-    openEditPres, closeEditPres,
-    openPresentationsModal, closePresentationsModal,
-    startSale, cancelSale,
-    startStockEdit, cancelStockEdit, changeStockValue,
-    createProduct, editProduct, deleteProduct,
-    createPres, editPres, deletePres,
-    updateStock, handleSale,
-  }
+	return {
+		categories, products, presentations, online,
+		filteredProducts, selectedProduct, productPresentations,
+		shift,
+		...state,
+		handleSelectCategories,
+		handleSelectProduct,
+		handleSearch,
+		openProductForm: openProductFormFn,
+		closeProductForm: closeProductFormFn,
+		openEditProduct: openEditProductFn,
+		closeEditProduct: closeEditProductFn,
+		openPresForm: openPresFormFn,
+		closePresForm: closePresFormFn,
+		openEditPres: openEditPresFn,
+		closeEditPres: closeEditPresFn,
+		openPresentationsModal: openPresentationsModalFn,
+		closePresentationsModal: closePresentationsModalFn,
+		startSale: startSaleFn,
+		cancelSale: cancelSaleFn,
+		startStockEdit: startStockEditFn,
+		cancelStockEdit: cancelStockEditFn,
+		changeStockValue: changeStockValueFn,
+		createProduct: createProductFn,
+		editProduct: editProductFn,
+		deleteProduct: deleteProductFn,
+		createPres: createPresFn,
+		editPres: editPresFn,
+		deletePres: deletePresFn,
+		updateStock: updateStockFn,
+		handleSale: handleSaleFn,
+	}
 }

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Modal } from '../../components/Modal.jsx'
-import { useShift } from '../../context/ShiftContext.jsx'
+import { useShift } from '../../modules/shift/shift-context.jsx'
 
 /**
  * Modal form to open a new shift. Manages its own cash input state

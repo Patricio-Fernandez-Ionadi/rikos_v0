@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
-import { useData } from '../context/DataContext.jsx'
-import { useShift } from '../context/ShiftContext.jsx'
+import { useData } from '../app/data-context.jsx'
+import { useShift } from '../modules/shift/shift-context.jsx'
 import { ActiveShiftCard } from '../modules/shift/active-shift-card.jsx'
 import { PastShiftCard } from '../modules/shift/past-shift-card.jsx'
 import { OpenShiftForm } from '../modules/shift/open-shift-form.jsx'

@@ -1,14 +1,6 @@
 import { SaleForm } from '../../components/SaleForm.jsx'
 import { useProductManager } from '../../modules/products/product-manager.js'
 
-/**
- * Displays a single presentation card with stock display/inline editing,
- * sale action (when shift is open), and edit/delete controls.
- * Consumes useProductManager directly to avoid prop drilling.
- *
- * @param {Object}   props
- * @param {Object}   props.pres  Presentation data
- */
 export const PresentationCard = ({ pres }) => {
 	const {
 		stockEdit,

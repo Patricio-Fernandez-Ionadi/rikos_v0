@@ -1,0 +1,26 @@
+@use '../../../theme/values/colors' as *;
+@use '../../../theme/values/sizes' as *;
+
+.detail {
+	margin-top: 25px;
+	padding: 20px;
+	border: 1px solid $grey_dark;
+	border-radius: $smooth;
+}
+
+.detail__title {
+	color: $white;
+	margin: 0 0 8px;
+}
+
+.detail__cost {
+	margin: 0 0 12px;
+	color: $grey;
+}
+
+.detail__header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 8px;
+}

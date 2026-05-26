@@ -1,4 +1,4 @@
-import { useShift } from '../../context/ShiftContext.jsx'
+import { useShift } from '../../modules/shift/shift-context.jsx'
 import { ShiftSalesList } from './shift-sales-list.jsx'
 
 /**

@@ -1,4 +1,4 @@
-import { useData } from '../../context/DataContext.jsx'
+import { useData } from '../../app/data-context.jsx'
 
 /**
  * Card for a single closed shift showing date range, stats (sales count,

@@ -1,15 +1,3 @@
-/**
- * Displays pricing details for a product's presentations with action buttons.
- * Shows name + presentation, grams/unit + sale price, cost + list price, and difference.
- * Optimized for mobile viewing within a modal.
- *
- * @param {Object}   props
- * @param {Object}   props.selectedProd       Selected product object
- * @param {Array}    props.presentations      Presentations belonging to the selected product
- * @param {Function} props.calculate          Calculation function (product, presentation) => derived fields
- * @param {Function} props.onEdit            Callback when edit button is clicked (receives presentation)
- * @param {Function} props.onDelete          Callback when delete button is clicked (receives presentation ID)
- */
 export const PresentationsModal = ({
 	selectedProd,
 	presentations,

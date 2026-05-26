@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { useShift } from '../context/ShiftContext.jsx'
+import { useShift } from '../modules/shift/shift-context.jsx'
 
 /**
  * Minimal top bar for the active shift.

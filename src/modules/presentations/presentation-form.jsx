@@ -1,13 +1,5 @@
 import { useState } from 'react'
 
-/**
- * Form for creating or editing a presentation.
- *
- * @param {Object}   props
- * @param {Object}   [props.initial]     Existing presentation to edit (undefined = create mode)
- * @param {Function} props.onSubmit      Called with { label, grams, margin, salePrice, stock }
- * @param {Function} props.onCancel
- */
 export const PresentationForm = ({ initial, onSubmit, onCancel }) => {
 	const [label, setLabel] = useState(initial?.label ?? '')
 	const [grams, setGrams] = useState(initial?.grams ?? '')
@@ -28,7 +20,7 @@ export const PresentationForm = ({ initial, onSubmit, onCancel }) => {
 
 	return (
 		<form className='product-form' onSubmit={handleSubmit}>
-			<label className='field-label'>Etiqueta (ej: "200g", "Unidad")</label>
+			<label className='field-label'>Etiqueta (ej: &quot;200g&quot;, &quot;Unidad&quot;)</label>
 			<input
 				className='field-input'
 				type='text'

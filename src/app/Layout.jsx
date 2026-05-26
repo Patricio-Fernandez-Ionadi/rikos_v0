@@ -1,6 +1,6 @@
 import { Outlet, Link } from 'react-router-dom'
-import { useData } from '../context/DataContext.jsx'
-import { useShift } from '../context/ShiftContext.jsx'
+import { useData } from '../app/data-context.jsx'
+import { useShift } from '../modules/shift/shift-context.jsx'
 import { ShiftBar } from '../components/ShiftBar.jsx'
 
 /**

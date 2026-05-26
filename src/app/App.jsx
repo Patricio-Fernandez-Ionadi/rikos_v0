@@ -1,19 +1,19 @@
-import { Routes, Route } from 'react-router-dom'
-import { Layout } from './Layout.jsx'
-import { Dashboard, StockPage, ShiftsPage, ProductsPage } from '../views'
+import { BrowserRouter } from 'react-router-dom'
+import { Router } from './app-router.jsx'
+import { DataProvider } from './data-context.jsx'
+import { ShiftProvider } from '../modules/shift/shift-context.jsx'
+import '../theme/index.scss'
 
-/**
- * Root application component — sets up all routes.
- */
 export const App = () => {
 	return (
-		<Routes>
-			<Route element={<Layout />}>
-				<Route index element={<Dashboard />} />
-				<Route path='products' element={<ProductsPage />} />
-				<Route path='stock' element={<StockPage />} />
-				<Route path='shifts' element={<ShiftsPage />} />
-			</Route>
-		</Routes>
+		<>
+			<BrowserRouter>
+				<DataProvider>
+					<ShiftProvider>
+						<Router />
+					</ShiftProvider>
+				</DataProvider>
+			</BrowserRouter>
+		</>
 	)
 }

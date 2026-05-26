@@ -1,14 +1,14 @@
 import { useProductManager } from '../modules/products/product-manager.js'
 import { calculate } from '../data/index.js'
 import { ProductList } from '../modules/products/product-list.jsx'
-import { PresentationsModal } from '../modules/products/presentations-modal.jsx'
+import { PresentationsModal } from '../modules/presentations/presentations-modal.jsx'
 import { Modal } from '../components/Modal.jsx'
 import { ProductForm } from '../modules/products/product-form.jsx'
-import { PresentationForm } from '../modules/products/presentation-form.jsx'
+import { PresentationForm } from '../modules/presentations/presentation-form.jsx'
 import { NewProductButton } from '../modules/products/new-product-button.jsx'
 import { ProductDetail } from '../modules/products/product-detail.jsx'
 import { Sidebar } from '../modules/products/sidebar.jsx'
-import { PresentationCard } from '../modules/products/presentation-card.jsx'
+import { PresentationCard } from '../modules/presentations/presentation-card.jsx'
 
 export const ProductsPage = () => {
 	const {
