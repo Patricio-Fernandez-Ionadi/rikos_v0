@@ -17,6 +17,14 @@ export function shiftReducer(state, action) {
 					sales: [...(state.shift?.sales ?? []), action.sale],
 				},
 			}
+		case 'BATCH_ADD_SALES':
+			return {
+				...state,
+				shift: {
+					...state.shift,
+					sales: [...(state.shift?.sales ?? []), ...action.sales],
+				},
+			}
 		case 'REMOVE_SALE':
 			return {
 				...state,

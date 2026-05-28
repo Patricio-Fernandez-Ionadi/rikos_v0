@@ -1,5 +1,6 @@
 @use '../../../theme/values/colors' as *;
 @use '../../../theme/values/sizes' as *;
+@use '../../../theme/values/mediaqueries' as *;
 
 .shifts-page__card {
 	background: $black;
@@ -26,8 +27,19 @@
 .shifts-page__card-header {
 	display: flex;
 	justify-content: space-between;
-	align-items: center;
+	align-items: flex-start;
 	margin-bottom: 8px;
+	gap: 8px;
+
+	@media (max-width: $medium - 1px) {
+		flex-direction: column;
+	}
+}
+
+.shifts-page__card-actions {
+	display: flex;
+	gap: 6px;
+	flex-wrap: wrap;
 }
 
 .shifts-page__stats {

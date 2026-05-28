@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom'
 import { useShift } from '../../modules/shift/shift-context.jsx'
 import { ShiftSalesList } from './shift-sales-list.jsx'
 
@@ -11,6 +12,7 @@ import { ShiftSalesList } from './shift-sales-list.jsx'
  */
 export const ActiveShiftCard = ({ onRequestClose }) => {
 	const { shift, synced, syncToDb } = useShift()
+	const navigate = useNavigate()
 
 	return (
 		<div className='shifts-page__card'>
@@ -18,7 +20,13 @@ export const ActiveShiftCard = ({ onRequestClose }) => {
 				<span className='dashboard__badge dashboard__badge--open'>
 					Turno activo
 				</span>
-				<div style={{ display: 'flex', gap: '6px' }}>
+				<div className='shifts-page__card-actions'>
+					<button
+						className='shift-bar__btn shift-bar__btn--primary'
+						onClick={() => navigate('/shifts/sale')}
+					>
+						+ Registrar Venta
+					</button>
 					{!synced && (
 						<button className='shift-bar__btn' onClick={() => syncToDb()}>
 							Sincronizar
@@ -46,30 +54,54 @@ export const ActiveShiftCard = ({ onRequestClose }) => {
 					</span>
 				</div>
 				<div className='shifts-page__stat'>
-					Ventas:{' '}
+					Items:{' '}
 					<span className='shifts-page__stat-value'>
 						{shift.sales.length}
 					</span>
 				</div>
 				<div className='shifts-page__stat'>
-					Total:{' '}
+					Clientes:{' '}
 					<span className='shifts-page__stat-value'>
-						$
-						{shift.sales
-							.reduce((s, x) => s + x.total, 0)
-							.toLocaleString()}
+						{new Set(shift.sales.map(s => s.ticketId || s._tempId)).size}
 					</span>
 				</div>
-				<div className='shifts-page__stat'>
-					Esperado:{' '}
-					<span className='shifts-page__stat-value'>
-						$
-						{(
-							shift.openingCash +
-							shift.sales.reduce((s, x) => s + x.total, 0)
-						).toLocaleString()}
-					</span>
-				</div>
+				{(() => {
+					const cashTotal = shift.sales
+						.filter((s) => !s.paymentMethod || s.paymentMethod === 'cash')
+						.reduce((s, x) => s + x.total, 0)
+					const electronicTotal = shift.sales
+						.filter((s) => s.paymentMethod === 'electronic')
+						.reduce((s, x) => s + x.total, 0)
+					const totalSales = cashTotal + electronicTotal
+					return (
+						<>
+							<div className='shifts-page__stat'>
+								Total efectivo:{' '}
+								<span className='shifts-page__stat-value'>
+									${cashTotal.toLocaleString()}
+								</span>
+							</div>
+							<div className='shifts-page__stat'>
+								Total electrónico:{' '}
+								<span className='shifts-page__stat-value'>
+									${electronicTotal.toLocaleString()}
+								</span>
+							</div>
+							<div className='shifts-page__stat'>
+								Total ventas:{' '}
+								<span className='shifts-page__stat-value'>
+									${totalSales.toLocaleString()}
+								</span>
+							</div>
+							<div className='shifts-page__stat'>
+								Esperado en caja:{' '}
+								<span className='shifts-page__stat-value'>
+									${(shift.openingCash + cashTotal).toLocaleString()}
+								</span>
+							</div>
+						</>
+					)
+				})()}
 			</div>
 			<ShiftSalesList />
 		</div>

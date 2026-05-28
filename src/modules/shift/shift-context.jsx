@@ -1,5 +1,5 @@
 import { createContext, useContext, useReducer, useCallback, useEffect, useRef } from 'react'
-import * as api from '../../data/api.js'
+import * as shiftService from './services/shift-services.js'
 import { shiftReducer, INITIAL_SHIFT_STATE } from './reducer/shift-reducer.js'
 
 const STORAGE_KEY = 'rikos_active_shift'
@@ -49,7 +49,7 @@ export function ShiftProvider({ children }) {
 		}
 
 		try {
-			const active = await api.getActiveShift()
+			const active = await shiftService.getActiveShift()
 			if (active) {
 				s._dbId = active._id
 				s.openingTime = active.openingTime
@@ -57,7 +57,7 @@ export function ShiftProvider({ children }) {
 				s.sales = active.sales ?? []
 				dispatch({ type: 'SET_SYNCED', synced: true })
 			} else {
-				const dbShift = await api.openShift(openingCash)
+				const dbShift = await shiftService.openShift(openingCash)
 				s._dbId = dbShift._id
 				dispatch({ type: 'SET_SYNCED', synced: true })
 			}
@@ -86,12 +86,52 @@ export function ShiftProvider({ children }) {
 
 		if (current._dbId) {
 			try {
-				await api.addSale(current._dbId, {
+				await shiftService.addSale(current._dbId, {
 					productId: sale.productId,
 					presentationId: sale.presentationId,
 					quantity: sale.quantity,
 					unitPrice: sale.unitPrice,
 					total: sale.total,
+				})
+				dispatch({ type: 'SET_SYNCED', synced: true })
+			} catch {
+				dispatch({ type: 'SET_SYNCED', synced: false })
+			}
+		} else {
+			dispatch({ type: 'SET_SYNCED', synced: false })
+		}
+	}, [])
+
+	const recordTicket = useCallback(async (ticketId, paymentMethod, items) => {
+		const current = shiftRef.current
+		if (!current || current.status !== 'open') return
+
+		const saleItems = items.map((item) => ({
+			_tempId: `${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
+			productId: item.productId,
+			presentationId: item.presentationId,
+			quantity: item.quantity,
+			unitPrice: item.unitPrice,
+			total: item.total,
+			paymentMethod,
+			ticketId,
+			timestamp: new Date().toISOString(),
+		}))
+
+		dispatch({ type: 'BATCH_ADD_SALES', sales: saleItems })
+
+		if (current._dbId) {
+			try {
+				await shiftService.recordTicket(current._dbId, {
+					items: items.map((item) => ({
+						productId: item.productId,
+						presentationId: item.presentationId,
+						quantity: item.quantity,
+						unitPrice: item.unitPrice,
+						total: item.total,
+					})),
+					paymentMethod,
+					ticketId,
 				})
 				dispatch({ type: 'SET_SYNCED', synced: true })
 			} catch {
@@ -110,10 +150,10 @@ export function ShiftProvider({ children }) {
 
 		if (!currentDbId) {
 			try {
-				const active = await api.getActiveShift()
+				const active = await shiftService.getActiveShift()
 				currentDbId = active?._id
 				if (!currentDbId) {
-					const dbShift = await api.openShift(current.openingCash)
+					const dbShift = await shiftService.openShift(current.openingCash)
 					currentDbId = dbShift._id
 				}
 				dispatch({ type: 'UPDATE_DB_ID', dbId: currentDbId })
@@ -124,7 +164,7 @@ export function ShiftProvider({ children }) {
 
 		try {
 			if (current.sales.length > 0) {
-				await api.syncSales(currentDbId, current.sales)
+				await shiftService.syncSales(currentDbId, current.sales)
 			}
 			dispatch({ type: 'SET_SYNCED', synced: true })
 			return true
@@ -138,8 +178,10 @@ export function ShiftProvider({ children }) {
 		if (!current) return null
 
 		const now = new Date().toISOString()
-		const totalSales = current.sales.reduce((sum, s) => sum + s.total, 0)
-		const expectedBalance = +(current.openingCash + totalSales).toFixed(2)
+		const cashSalesTotal = current.sales
+			.filter((s) => !s.paymentMethod || s.paymentMethod === 'cash')
+			.reduce((sum, s) => sum + s.total, 0)
+		const expectedBalance = +(current.openingCash + cashSalesTotal).toFixed(2)
 		const difference = +(closingCash - expectedBalance).toFixed(2)
 
 		const closed = {
@@ -155,10 +197,10 @@ export function ShiftProvider({ children }) {
 		let currentDbId = current._dbId
 		if (!currentDbId) {
 			try {
-				const active = await api.getActiveShift()
+				const active = await shiftService.getActiveShift()
 				currentDbId = active?._id
 				if (!currentDbId) {
-					const dbShift = await api.openShift(current.openingCash)
+					const dbShift = await shiftService.openShift(current.openingCash)
 					currentDbId = dbShift._id
 				}
 				closed._dbId = currentDbId
@@ -168,9 +210,9 @@ export function ShiftProvider({ children }) {
 		if (currentDbId) {
 			try {
 				if (current.sales.length > 0) {
-					await api.syncSales(currentDbId, current.sales)
+					await shiftService.syncSales(currentDbId, current.sales)
 				}
-				await api.closeShift(currentDbId, closingCash, notes)
+				await shiftService.closeShift(currentDbId, closingCash, notes)
 			} catch { /* close valid locally */ }
 		}
 
@@ -208,6 +250,7 @@ export function ShiftProvider({ children }) {
 			synced: state.synced,
 			openShift,
 			addSale,
+			recordTicket,
 			editSale,
 			removeSale,
 			syncToDb,

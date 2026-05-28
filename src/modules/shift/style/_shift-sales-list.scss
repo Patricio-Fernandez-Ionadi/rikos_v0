@@ -2,98 +2,100 @@
 @use '../../../theme/values/sizes' as *;
 
 .shift-sales {
-  margin-top: 16px;
-  padding: 12px;
+  margin-top: 12px;
+  padding: 10px 12px;
   border: 1px solid $grey_dark;
   border-radius: $smooth;
 }
 
 .shift-sales__title {
   color: $white;
-  margin: 0 0 12px;
+  margin: 0 0 8px;
+  font-size: 0.9em;
 }
 
 .shift-sales__empty {
   color: $grey;
   text-align: center;
-  padding: 20px;
+  padding: 12px;
+  font-size: 0.85em;
 }
 
 .shift-sales__list {
   display: flex;
   flex-direction: column;
-  gap: 6px;
 }
 
 .shift-sales__item {
-  border: 1px solid $black_light;
-  border-radius: $thin;
-  padding: 8px;
+  padding: 3px 0;
+  border-bottom: 1px solid rgba($grey_dark, 0.3);
+
+  &:last-child {
+    border-bottom: none;
+  }
 }
 
 .shift-sales__display {
   display: flex;
   align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
+  gap: 6px;
 }
 
 .shift-sales__product {
   flex: 1;
-  min-width: 120px;
+  min-width: 80px;
   color: $white;
   font-weight: 600;
-  font-size: 0.85em;
+  font-size: 0.8em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .shift-sales__qty {
   color: $grey_light;
-  font-size: 0.85em;
+  font-size: 0.8em;
+  white-space: nowrap;
 }
 
 .shift-sales__price {
   color: $grey;
-  font-size: 0.85em;
+  font-size: 0.8em;
+  white-space: nowrap;
 }
 
 .shift-sales__total {
   color: $white;
   font-weight: 700;
-  font-size: 0.9em;
-  min-width: 60px;
+  font-size: 0.85em;
+  min-width: 55px;
   text-align: right;
+  white-space: nowrap;
 }
 
-.shift-sales__actions {
-  display: flex;
-  gap: 4px;
-}
+.shift-sales__payment {
+  font-size: 0.65em;
+  padding: 1px 5px;
+  border-radius: $thin;
+  font-weight: 600;
+  white-space: nowrap;
 
-.shift-sales__edit {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  flex-wrap: wrap;
-}
+  &--cash {
+    background: rgba($success, 0.15);
+    color: $success;
+  }
 
-.shift-sales__edit-field {
-  color: $grey;
-  font-size: 0.8em;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.shift-sales__edit-actions {
-  display: flex;
-  gap: 4px;
+  &--electronic {
+    background: rgba($info, 0.15);
+    color: $info;
+  }
 }
 
 .shift-sales__footer {
-  margin-top: 12px;
-  padding-top: 8px;
+  margin-top: 8px;
+  padding-top: 6px;
   border-top: 1px solid $grey_dark;
   color: $white;
   text-align: right;
-  font-size: 0.95em;
+  font-size: 0.85em;
 }

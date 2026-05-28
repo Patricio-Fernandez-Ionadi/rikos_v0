@@ -1,0 +1,101 @@
+@use '../../../../theme/values/colors' as *;
+@use '../../../../theme/values/sizes' as *;
+
+.shift-sales__group {
+	border: 1px solid $black_light;
+	border-radius: $thin;
+	margin-bottom: 4px;
+	overflow: hidden;
+}
+
+.shift-sales__group-header {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 8px 10px;
+	cursor: pointer;
+	user-select: none;
+	transition: background 0.15s;
+
+	&:hover {
+		background: rgba($primary, 0.06);
+	}
+}
+
+.shift-sales__group-time {
+	color: $grey;
+	font-size: 0.8em;
+	min-width: 60px;
+}
+
+.shift-sales__group-count {
+	color: $grey;
+	font-size: 0.75em;
+}
+
+.shift-sales__group-total {
+	color: $primary_light;
+	font-weight: 700;
+	font-size: 0.85em;
+	margin-left: auto;
+}
+
+.shift-sales__expand-icon {
+	color: $grey;
+	font-size: 0.45em;
+	transition: transform 0.2s;
+
+	&--open {
+		transform: rotate(90deg);
+	}
+}
+
+.shift-sales__group-detail {
+	border-top: 1px solid $black_light;
+	padding: 4px 0;
+}
+
+.shift-sales__item-display,
+.shift-sales__edit-row {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	padding: 4px 10px 4px 20px;
+}
+
+.shift-sales__item-name {
+	flex: 1;
+	color: $white;
+	font-size: 0.8em;
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.shift-sales__qty {
+	color: $grey_light;
+	font-size: 0.75em;
+	min-width: 28px;
+}
+
+.shift-sales__item-price {
+	color: $grey;
+	font-size: 0.75em;
+	min-width: 50px;
+	text-align: right;
+}
+
+.shift-sales__item-subtotal {
+	color: $primary_light;
+	font-weight: 600;
+	font-size: 0.8em;
+	min-width: 60px;
+	text-align: right;
+}
+
+.shift-sales__edit-controls {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+}

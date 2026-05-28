@@ -47,8 +47,14 @@ export const getActiveShift = () => request('/shifts/active')
 export const openShift = (openingCash) => request('/shifts', { method: 'POST', body: JSON.stringify({ openingCash }) })
 export const addSale = (shiftId, sale) => request(`/shifts/${shiftId}/sales`, { method: 'POST', body: JSON.stringify(sale) })
 export const syncSales = (shiftId, sales) => request(`/shifts/${shiftId}/sync`, { method: 'POST', body: JSON.stringify({ sales }) })
+export const recordTicket = (shiftId, data) =>
+  request(`/shifts/${shiftId}/ticket`, { method: 'POST', body: JSON.stringify(data) })
 export const closeShift = (shiftId, closingCash, notes = '') =>
   request(`/shifts/${shiftId}/close`, { method: 'POST', body: JSON.stringify({ closingCash, notes }) })
+export const updateSale = (shiftId, saleId, data) =>
+  request(`/shifts/${shiftId}/sales/${saleId}`, { method: 'PATCH', body: JSON.stringify(data) })
+export const deleteSale = (shiftId, saleId) =>
+  request(`/shifts/${shiftId}/sales/${saleId}`, { method: 'DELETE' })
 
 // ─── Notes ─────────────────────────────────────────────────
 export const getNotes = () => request('/notes')

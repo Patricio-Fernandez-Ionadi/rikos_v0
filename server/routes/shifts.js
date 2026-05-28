@@ -69,6 +69,72 @@ router.post('/:id/sales', async (req, res, next) => {
   } catch (e) { next(e) }
 })
 
+/**
+ * Record a multi-item ticket on the active shift (batch sale).
+ * Validates stock for all items upfront, then deducts and records atomically.
+ */
+router.post('/:id/ticket', async (req, res, next) => {
+  try {
+    const shift = await Shift.findById(req.params.id)
+    if (!shift) return res.status(404).json({ error: 'Shift not found' })
+    if (shift.status !== 'open') return res.status(400).json({ error: 'Shift is already closed' })
+
+    const { items, paymentMethod, ticketId } = req.body
+    if (!Array.isArray(items) || items.length === 0) {
+      return res.status(400).json({ error: 'items must be a non-empty array' })
+    }
+
+    // 1. Validate stock for every item upfront
+    for (const item of items) {
+      const pres = await Presentation.findById(item.presentationId)
+      if (!pres) return res.status(404).json({ error: `Presentation not found: ${item.presentationId}` })
+
+      const product = await Product.findById(pres.productId)
+      if (!product) return res.status(404).json({ error: `Product not found: ${pres.productId}` })
+
+      if (product.saleType === 'fraction') {
+        const deduction = item.quantity * (pres.grams ?? 0)
+        if ((product.stockGrams ?? 0) < deduction) {
+          return res.status(400).json({ error: `Stock insuficiente para ${product.name}` })
+        }
+      } else {
+        if ((pres.stock ?? 0) < item.quantity) {
+          return res.status(400).json({ error: `Stock insuficiente para ${pres.label}` })
+        }
+      }
+    }
+
+    // 2. Deduct stock and push sales
+    for (const item of items) {
+      const pres = await Presentation.findById(item.presentationId)
+      const product = await Product.findById(pres.productId)
+
+      if (product.saleType === 'fraction') {
+        const deduction = item.quantity * (pres.grams ?? 0)
+        product.stockGrams -= deduction
+        await product.save()
+      } else {
+        pres.stock -= item.quantity
+        await pres.save()
+      }
+
+      shift.sales.push({
+        productId: pres.productId,
+        presentationId: item.presentationId,
+        quantity: item.quantity,
+        unitPrice: item.unitPrice,
+        total: item.total,
+        paymentMethod,
+        ticketId: ticketId || null,
+        timestamp: new Date(),
+      })
+    }
+
+    await shift.save()
+    res.status(201).json(shift)
+  } catch (e) { next(e) }
+})
+
 /** Sync sales from localStorage to the DB mid-shift (no stock deduction, already applied locally). */
 router.post('/:id/sync', async (req, res, next) => {
   try {
@@ -93,6 +159,87 @@ router.post('/:id/sync', async (req, res, next) => {
   } catch (e) { next(e) }
 })
 
+/**
+ * PATCH /:id/sales/:saleId — Update a sale item (quantity).
+ * Restores old stock and deducts new stock.
+ */
+router.patch('/:id/sales/:saleId', async (req, res, next) => {
+  try {
+    const shift = await Shift.findById(req.params.id)
+    if (!shift) return res.status(404).json({ error: 'Shift not found' })
+    if (shift.status !== 'open') return res.status(400).json({ error: 'Shift is already closed' })
+
+    const sale = shift.sales.id(req.params.saleId)
+    if (!sale) return res.status(404).json({ error: 'Sale not found' })
+
+    const { quantity } = req.body
+    if (quantity == null || quantity < 1) return res.status(400).json({ error: 'quantity must be >= 1' })
+
+    const oldQty = sale.quantity
+    const diff = quantity - oldQty
+
+    const pres = await Presentation.findById(sale.presentationId)
+    if (!pres) return res.status(404).json({ error: 'Presentation not found' })
+    const product = await Product.findById(pres.productId)
+    if (!product) return res.status(404).json({ error: 'Product not found' })
+
+    if (product.saleType === 'fraction') {
+      const deduction = diff * (pres.grams ?? 0)
+      if (deduction > 0 && (product.stockGrams ?? 0) < deduction) {
+        return res.status(400).json({ error: 'Insufficient stock (grams)' })
+      }
+      product.stockGrams -= deduction
+      await product.save()
+    } else {
+      if (diff > 0 && (pres.stock ?? 0) < diff) {
+        return res.status(400).json({ error: 'Insufficient stock' })
+      }
+      pres.stock -= diff
+      await pres.save()
+    }
+
+    sale.quantity = quantity
+    sale.total = +(quantity * sale.unitPrice).toFixed(2)
+    await shift.save()
+
+    res.json(shift)
+  } catch (e) { next(e) }
+})
+
+/**
+ * DELETE /:id/sales/:saleId — Remove a sale item.
+ * Restores stock.
+ */
+router.delete('/:id/sales/:saleId', async (req, res, next) => {
+  try {
+    const shift = await Shift.findById(req.params.id)
+    if (!shift) return res.status(404).json({ error: 'Shift not found' })
+    if (shift.status !== 'open') return res.status(400).json({ error: 'Shift is already closed' })
+
+    const sale = shift.sales.id(req.params.saleId)
+    if (!sale) return res.status(404).json({ error: 'Sale not found' })
+
+    const pres = await Presentation.findById(sale.presentationId)
+    if (!pres) return res.status(404).json({ error: 'Presentation not found' })
+    const product = await Product.findById(pres.productId)
+    if (!product) return res.status(404).json({ error: 'Product not found' })
+
+    if (product.saleType === 'fraction') {
+      const restore = sale.quantity * (pres.grams ?? 0)
+      product.stockGrams += restore
+      await product.save()
+    } else {
+      pres.stock += sale.quantity
+      await pres.save()
+    }
+
+    sale.deleteOne()
+    await shift.save()
+
+    res.json(shift)
+  } catch (e) { next(e) }
+})
+
 /** Close the shift: record closing cash, compute expected balance and difference. */
 router.post('/:id/close', async (req, res, next) => {
   try {
@@ -103,7 +250,10 @@ router.post('/:id/close', async (req, res, next) => {
     const closingCash = req.body.closingCash
     if (closingCash == null) return res.status(400).json({ error: 'closingCash is required' })
 
-    const totalSales = shift.sales.reduce((sum, s) => sum + s.total, 0)
+    const cashSales = shift.sales.filter(
+      (s) => !s.paymentMethod || s.paymentMethod === 'cash',
+    )
+    const totalSales = cashSales.reduce((sum, s) => sum + s.total, 0)
     const expectedBalance = shift.openingCash + totalSales
 
     shift.closingCash = closingCash

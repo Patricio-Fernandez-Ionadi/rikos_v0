@@ -6,6 +6,8 @@ const saleItemSchema = new mongoose.Schema({
   quantity: { type: Number, required: true, min: 1 },
   unitPrice: { type: Number, required: true },
   total: { type: Number, required: true },
+  paymentMethod: { type: String, enum: ['cash', 'electronic'], default: 'cash' },
+  ticketId: { type: String, default: null },
   timestamp: { type: Date, default: Date.now },
 })
 
