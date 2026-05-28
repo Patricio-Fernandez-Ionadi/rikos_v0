@@ -49,3 +49,8 @@ export const addSale = (shiftId, sale) => request(`/shifts/${shiftId}/sales`, { 
 export const syncSales = (shiftId, sales) => request(`/shifts/${shiftId}/sync`, { method: 'POST', body: JSON.stringify({ sales }) })
 export const closeShift = (shiftId, closingCash, notes = '') =>
   request(`/shifts/${shiftId}/close`, { method: 'POST', body: JSON.stringify({ closingCash, notes }) })
+
+// ─── Notes ─────────────────────────────────────────────────
+export const getNotes = () => request('/notes')
+export const createNote = (data) => request('/notes', { method: 'POST', body: JSON.stringify(data) })
+export const deleteNote = (id) => request(`/notes/${id}`, { method: 'DELETE' })

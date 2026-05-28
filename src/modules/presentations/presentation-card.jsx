@@ -1,4 +1,4 @@
-import { SaleForm } from '../../components/SaleForm.jsx'
+import { SaleForm } from '../../components/sale-form.jsx'
 import { useProductManager } from '../../modules/products/product-manager.js'
 
 export const PresentationCard = ({ pres }) => {
@@ -61,9 +61,7 @@ export const PresentationCard = ({ pres }) => {
 						<button
 							className='shift-bar__btn shift-bar__btn--primary shift-bar__btn--sm'
 							onClick={() =>
-								salePresId === pres._id
-									? cancelSale()
-									: startSale(pres._id)
+								salePresId === pres._id ? cancelSale() : startSale(pres._id)
 							}
 						>
 							Vender

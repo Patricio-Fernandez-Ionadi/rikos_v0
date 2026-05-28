@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useData } from '../../app/data-context.jsx'
 import { useShift } from '../../modules/shift/shift-context.jsx'
-import { SaleForm } from '../../components/SaleForm.jsx'
+import { SaleForm } from '../../components/sale-form.jsx'
 import * as stockService from './services/stock-services.js'
 
 export const StockRow = ({ pres, product, categoryName }) => {
@@ -23,9 +23,7 @@ export const StockRow = ({ pres, product, categoryName }) => {
 				)
 			} else {
 				setPresentations((prev) =>
-					prev.map((p) =>
-						p._id === presId ? { ...p, stock: val } : p,
-					),
+					prev.map((p) => (p._id === presId ? { ...p, stock: val } : p)),
 				)
 			}
 		} catch (e) {
@@ -97,11 +95,7 @@ export const StockRow = ({ pres, product, categoryName }) => {
 									<button
 										className='shift-bar__btn shift-bar__btn--primary shift-bar__btn--sm'
 										onClick={() =>
-											setSalePresId(
-												salePresId === pres._id
-													? null
-													: pres._id,
-											)
+											setSalePresId(salePresId === pres._id ? null : pres._id)
 										}
 									>
 										Vender

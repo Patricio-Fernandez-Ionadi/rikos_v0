@@ -1,4 +1,11 @@
-import 'dotenv/config'
+import dotenv from 'dotenv'
+import path from 'path'
+import { fileURLToPath } from 'url'
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
+const envFile = process.env.NODE_ENV === 'production' ? '.env' : '.env.development'
+dotenv.config({ path: path.resolve(__dirname, envFile) })
+
 import express from 'express'
 import cors from 'cors'
 import mongoose from 'mongoose'
@@ -7,6 +14,7 @@ import categoriesRouter from './routes/categories.js'
 import productsRouter from './routes/products.js'
 import presentationsRouter from './routes/presentations.js'
 import shiftsRouter from './routes/shifts.js'
+import notesRouter from './routes/notes.js'
 
 const app = express()
 const PORT = process.env.PORT || 3001
@@ -18,6 +26,7 @@ app.use('/api/categories', categoriesRouter)
 app.use('/api/products', productsRouter)
 app.use('/api/presentations', presentationsRouter)
 app.use('/api/shifts', shiftsRouter)
+app.use('/api/notes', notesRouter)
 
 app.use((err, _req, res, _next) => {
 	console.error(err)

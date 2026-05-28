@@ -13,11 +13,16 @@ import { PresentationCard } from '../modules/presentations/presentation-card.jsx
 export const ProductsPage = () => {
 	const {
 		categories,
+		products,
 		presentations,
 		filteredProducts,
 		selectedProduct,
 		productPresentations,
 		selectedProductId,
+		searchTerm,
+		handleSearch,
+		selectedCategoryIds,
+		handleSelectCategories,
 		showProductForm,
 		editingProduct,
 		showPresForm,
@@ -53,7 +58,15 @@ export const ProductsPage = () => {
 			</div>
 
 			<div className='product-browser__layout'>
-				<Sidebar />
+				<Sidebar
+					categories={categories}
+					filteredProducts={filteredProducts}
+					products={products}
+					searchTerm={searchTerm}
+					onSearch={handleSearch}
+					selectedCategoryIds={selectedCategoryIds}
+					onSelectCategories={handleSelectCategories}
+				/>
 
 				<div className='product-browser__main'>
 					<ProductList

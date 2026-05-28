@@ -1,4 +1,4 @@
-import { DottedMenu } from '../../components/DottedMenu.jsx'
+import { DottedMenu } from '../../components/dotted-menu.jsx'
 
 export const ProductDetail = ({
 	onSetEdit,
