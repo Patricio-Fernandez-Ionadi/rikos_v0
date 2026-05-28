@@ -30,7 +30,10 @@ export const ProductList = ({
 									onClick={() => onEvent(product._id)}
 								>
 									<div className="product-list__item-left">
-										<div className="product-list__item-name">{product.name}</div>
+										<div className="product-list__item-name">
+											{product.name}
+											{product.marca && <span className="product-list__item-marca"> — {product.marca}</span>}
+										</div>
 										<div className="product-list__item-type">
 											{isFraction ? 'Fraccionable' : 'Unidad'}
 										</div>

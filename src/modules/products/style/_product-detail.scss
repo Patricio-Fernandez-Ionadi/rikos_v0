@@ -1,6 +1,209 @@
 @use '../../../theme/values/colors' as *;
 @use '../../../theme/values/sizes' as *;
 
+.detail-page {
+	padding: 16px;
+	max-width: 900px;
+	margin: 0 auto;
+
+	@media (min-width: 769px) {
+		padding: 20px;
+	}
+}
+
+.detail-page__header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: 16px;
+}
+
+.detail-page__header-right {
+	display: flex;
+	gap: 8px;
+}
+
+.detail-page__title {
+	color: $white;
+	font-size: 1.6em;
+	margin: 0 0 16px;
+}
+
+.detail-page__info {
+	background: #1e1e1e;
+	border-radius: 8px;
+	padding: 16px;
+	margin-bottom: 24px;
+}
+
+.detail-page__info-row {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 8px 0;
+	color: #e0e0e0;
+	border-bottom: 1px solid rgba(55, 55, 55, 0.3);
+
+	&:last-child {
+		border-bottom: none;
+	}
+}
+
+.detail-page__info-label {
+	color: $grey;
+	font-weight: 600;
+	font-size: 0.9em;
+	text-transform: uppercase;
+	letter-spacing: 0.3px;
+}
+
+.detail-page__section {
+	margin-bottom: 24px;
+}
+
+.detail-page__section-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: 12px;
+
+	h3 {
+		color: $white;
+		margin: 0;
+	}
+}
+
+.detail-page__pres-grid {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.detail-page__pres-card {
+	background: #1e1e1e;
+	border-radius: 8px;
+	padding: 16px;
+	border: 1px solid rgba(55, 55, 55, 0.3);
+}
+
+.detail-page__pres-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: 12px;
+	padding-bottom: 8px;
+	border-bottom: 1px solid rgba(55, 55, 55, 0.2);
+}
+
+.detail-page__pres-label {
+	color: $primary;
+	font-size: 1.1em;
+	font-weight: 700;
+}
+
+.detail-page__pres-actions {
+	display: flex;
+	gap: 6px;
+	align-items: center;
+}
+
+.detail-page__pres-details {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 6px 16px;
+	margin-top: 8px;
+
+	@media (max-width: 480px) {
+		grid-template-columns: 1fr;
+	}
+}
+
+.detail-page__pres-row {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 4px 0;
+	color: #e0e0e0;
+	font-size: 0.9em;
+
+	span:first-child {
+		color: $grey;
+	}
+}
+
+.detail-page__pres-value {
+	color: $primary;
+	font-weight: 700;
+}
+
+.detail-page__diff--positive {
+	color: #66bb6a;
+}
+
+.detail-page__diff--negative {
+	color: #f44336;
+}
+
+.detail-page__diff--neutral {
+	color: $grey;
+}
+
+.detail-page__suppliers {
+	background: #1e1e1e;
+	border-radius: 8px;
+	padding: 12px 16px;
+}
+
+.detail-page__supplier-row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 8px 0;
+	border-bottom: 1px solid rgba(55, 55, 55, 0.2);
+	gap: 8px;
+
+	&:last-child {
+		border-bottom: none;
+	}
+
+	&--active {
+		background: rgba(76, 175, 80, 0.08);
+		border-radius: 4px;
+		padding: 8px 4px;
+		cursor: default;
+	}
+
+	&:not(&--active) {
+		cursor: pointer;
+
+		&:hover {
+			background: rgba(255, 255, 255, 0.04);
+			border-radius: 4px;
+			padding: 8px 4px;
+		}
+	}
+}
+
+.detail-page__supplier-name {
+	color: $white;
+	font-weight: 600;
+	flex: 1;
+}
+
+.detail-page__supplier-cost {
+	color: #e0e0e0;
+	min-width: 80px;
+	text-align: right;
+}
+
+.detail-page__supplier-add {
+	margin-top: 8px;
+	padding-top: 8px;
+	border-top: 1px solid rgba(55, 55, 55, 0.2);
+}
+
+// ── Old .detail classes (keep for backward compat) ─
+
 .detail {
 	margin-top: 25px;
 	padding: 20px;

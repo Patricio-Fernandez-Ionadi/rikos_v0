@@ -10,7 +10,7 @@ import * as supplierService from '../suppliers/services/supplier-services.js'
 
 export function useProductManager() {
 	const [state, dispatch] = useReducer(productReducer, INITIAL_PRODUCT_STATE)
-	const { categories, products, presentations, suppliers, online, setProducts, setPresentations, setSuppliers } = useData()
+	const { categories, products, presentations, suppliers, setProducts, setPresentations, setSuppliers } = useData()
 	const { shift, addSale } = useShift()
 
 	// ── Derived data ────────────────────────────────────────
@@ -64,41 +64,37 @@ export function useProductManager() {
 
 	const createProductFn = useCallback(async (data) => {
 		try {
-			const created = await productService.createProduct(data, { online })
+			const created = await productService.createProduct(data)
 			setProducts((prev) => [...prev, created])
 		} catch (e) {
 			console.error(e)
 		}
 		dispatch({ type: 'CLOSE_PRODUCT_FORM' })
-	}, [online, setProducts])
+	}, [setProducts])
 
 	const editProductFn = useCallback(async (data) => {
 		const id = state.editingProduct?._id
 		if (!id) return
 		try {
-			const updated = await productService.updateProduct(id, data, { online })
-			if (updated) {
-				setProducts((prev) => prev.map((p) => (p._id === updated._id ? updated : p)))
-			} else {
-				setProducts((prev) => prev.map((p) => (p._id === id ? { ...p, ...data } : p)))
-			}
+			const updated = await productService.updateProduct(id, data)
+			setProducts((prev) => prev.map((p) => (p._id === updated._id ? updated : p)))
 		} catch (e) {
 			console.error(e)
 		}
 		dispatch({ type: 'CLOSE_EDIT_PRODUCT' })
-	}, [online, state.editingProduct, setProducts])
+	}, [state.editingProduct, setProducts])
 
 	const deleteProductFn = useCallback(async (id) => {
 		if (!window.confirm('¿Eliminar este producto y todas sus presentaciones?')) return
 		try {
-			await productService.deleteProduct(id, { online })
+			await productService.deleteProduct(id)
 			setProducts((prev) => prev.filter((p) => p._id !== id))
 			setPresentations((prev) => prev.filter((p) => p.productId !== id))
 			dispatch({ type: 'SELECT_PRODUCT', id: null })
 		} catch (e) {
 			console.error(e)
 		}
-	}, [online, setProducts, setPresentations])
+	}, [setProducts, setPresentations])
 
 	// ── Presentation CRUD ────────────────────────────────────
 
@@ -106,39 +102,35 @@ export function useProductManager() {
 		if (!selectedProduct) return
 		try {
 			const payload = { productId: selectedProduct._id, ...data }
-			const created = await presService.createPresentation(payload, { online })
+			const created = await presService.createPresentation(payload)
 			setPresentations((prev) => [...prev, created])
 		} catch (e) {
 			console.error(e)
 		}
 		dispatch({ type: 'CLOSE_PRES_FORM' })
-	}, [online, selectedProduct, setPresentations])
+	}, [selectedProduct, setPresentations])
 
 	const editPresFn = useCallback(async (data) => {
 		const id = state.editingPres?._id
 		if (!id) return
 		try {
-			const updated = await presService.updatePresentation(id, data, { online })
-			if (updated) {
-				setPresentations((prev) => prev.map((p) => (p._id === updated._id ? updated : p)))
-			} else {
-				setPresentations((prev) => prev.map((p) => (p._id === id ? { ...p, ...data } : p)))
-			}
+			const updated = await presService.updatePresentation(id, data)
+			setPresentations((prev) => prev.map((p) => (p._id === updated._id ? updated : p)))
 		} catch (e) {
 			console.error(e)
 		}
 		dispatch({ type: 'CLOSE_EDIT_PRES' })
-	}, [online, state.editingPres, setPresentations])
+	}, [state.editingPres, setPresentations])
 
 	const deletePresFn = useCallback(async (id) => {
 		if (!window.confirm('¿Eliminar esta presentación?')) return
 		try {
-			await presService.deletePresentation(id, { online })
+			await presService.deletePresentation(id)
 			setPresentations((prev) => prev.filter((p) => p._id !== id))
 		} catch (e) {
 			console.error(e)
 		}
-	}, [online, setPresentations])
+	}, [setPresentations])
 
 	// ── Stock & Sale ─────────────────────────────────────────
 
@@ -146,30 +138,22 @@ export function useProductManager() {
 		const val = parseInt(state.stockValue, 10)
 		if (isNaN(val) || val < 0) return
 		try {
-			const updated = await stockService.updateStock(presId, val, { online })
-			if (updated) {
-				setPresentations((prev) => prev.map((p) => (p._id === updated._id ? updated : p)))
-			} else {
-				setPresentations((prev) => prev.map((p) => (p._id === presId ? { ...p, stock: val } : p)))
-			}
+			const updated = await stockService.updateStock(presId, val)
+			setPresentations((prev) => prev.map((p) => (p._id === updated._id ? updated : p)))
 		} catch (e) {
 			console.error(e)
 		}
 		dispatch({ type: 'CANCEL_STOCK_EDIT' })
-	}, [online, state.stockValue, setPresentations])
+	}, [state.stockValue, setPresentations])
 
 	const updateStockGramsFn = useCallback(async (productId, stockGrams) => {
 		try {
-			const updated = await stockService.updateStockGrams(productId, stockGrams, { online })
-			if (updated) {
-				setProducts((prev) => prev.map((p) => (p._id === updated._id ? updated : p)))
-			} else {
-				setProducts((prev) => prev.map((p) => (p._id === productId ? { ...p, stockGrams } : p)))
-			}
+			const updated = await stockService.updateStockGrams(productId, stockGrams)
+			setProducts((prev) => prev.map((p) => (p._id === updated._id ? updated : p)))
 		} catch (e) {
 			console.error(e)
 		}
-	}, [online, setProducts])
+	}, [setProducts])
 
 	const handleSaleFn = useCallback(async (sale) => {
 		await addSale(sale)
@@ -201,34 +185,31 @@ export function useProductManager() {
 	// ── Supplier management ─────────────────────────────────
 
 	const loadProductSuppliersFn = useCallback(async (productId) => {
-		if (!online) return
 		try {
 			const pss = await supplierService.getProductSuppliers(productId)
 			setProductSuppliersFn(pss)
 		} catch (e) {
 			console.error(e)
 		}
-	}, [online, setProductSuppliersFn])
+	}, [setProductSuppliersFn])
 
 	const addProductSupplierFn = useCallback(async (productId, supplierId, purchaseCost) => {
 		try {
-			const ps = await supplierService.createProductSupplier({ productId, supplierId, purchaseCost }, { online })
-			if (ps) {
-				setProductSuppliersFn([...state.productSuppliers, ps])
-			}
+			const ps = await supplierService.createProductSupplier({ productId, supplierId, purchaseCost })
+			setProductSuppliersFn([...state.productSuppliers, ps])
 		} catch (e) {
 			console.error(e)
 		}
-	}, [online, state.productSuppliers, setProductSuppliersFn])
+	}, [state.productSuppliers, setProductSuppliersFn])
 
 	const removeProductSupplierFn = useCallback(async (psId) => {
 		try {
-			await supplierService.deleteProductSupplier(psId, { online })
+			await supplierService.deleteProductSupplier(psId)
 			setProductSuppliersFn(state.productSuppliers.filter((ps) => ps._id !== psId))
 		} catch (e) {
 			console.error(e)
 		}
-	}, [online, state.productSuppliers, setProductSuppliersFn])
+	}, [state.productSuppliers, setProductSuppliersFn])
 
 	const setProductCostFromSupplierFn = useCallback(async (cost) => {
 		if (!selectedProduct) return
@@ -239,39 +220,35 @@ export function useProductManager() {
 
 	const createSupplierFn = useCallback(async (data) => {
 		try {
-			const created = await supplierService.createSupplier(data, { online })
+			const created = await supplierService.createSupplier(data)
 			setSuppliers((prev) => [...prev, created])
 			return created
 		} catch (e) {
 			console.error(e)
 		}
-	}, [online, setSuppliers])
+	}, [setSuppliers])
 
 	const updateSupplierFn = useCallback(async (id, data) => {
 		try {
-			const updated = await supplierService.updateSupplier(id, data, { online })
-			if (updated) {
-				setSuppliers((prev) => prev.map((s) => (s._id === updated._id ? updated : s)))
-			} else {
-				setSuppliers((prev) => prev.map((s) => (s._id === id ? { ...s, ...data } : s)))
-			}
+			const updated = await supplierService.updateSupplier(id, data)
+			setSuppliers((prev) => prev.map((s) => (s._id === updated._id ? updated : s)))
 		} catch (e) {
 			console.error(e)
 		}
-	}, [online, setSuppliers])
+	}, [setSuppliers])
 
 	const deleteSupplierFn = useCallback(async (id) => {
 		if (!window.confirm('¿Eliminar este proveedor?')) return
 		try {
-			await supplierService.deleteSupplier(id, { online })
+			await supplierService.deleteSupplier(id)
 			setSuppliers((prev) => prev.filter((s) => s._id !== id))
 		} catch (e) {
 			console.error(e)
 		}
-	}, [online, setSuppliers])
+	}, [setSuppliers])
 
 	return {
-		categories, products, presentations, suppliers, online,
+		categories, products, presentations, suppliers,
 		filteredProducts, selectedProduct, productPresentations,
 		shift,
 		...state,

@@ -1,89 +1,53 @@
-import { createContext, useContext, useReducer, useEffect, useCallback, useRef } from 'react'
+import { createContext, useContext, useReducer, useEffect, useCallback } from 'react'
 import * as api from '../data/api.js'
-import seed from '../data/seed.json' with { type: 'json' }
 import { dataReducer, INITIAL_DATA_STATE } from './reducer/data-reducer.js'
 
-const STORAGE_KEY = 'rikos_data'
 const DataContext = createContext(null)
-
-function loadLocal() {
-	try {
-		const raw = localStorage.getItem(STORAGE_KEY)
-		if (!raw) return null
-		const data = JSON.parse(raw)
-		if (data.categories && data.products && data.presentations) return data
-		return null
-	} catch {
-		return null
-	}
-}
-
-function saveLocal(categories, products, presentations, suppliers, dirty) {
-	try {
-		localStorage.setItem(STORAGE_KEY, JSON.stringify({ categories, products, presentations, suppliers, dirty }))
-	} catch { /* quota exceeded */ }
-}
 
 export function DataProvider({ children }) {
 	const [state, dispatch] = useReducer(dataReducer, INITIAL_DATA_STATE)
-	const loaded = useRef(false)
 
 	const setCategories = useCallback((value) => {
 		const fn = typeof value === 'function' ? value : () => value
-		dispatch({ type: 'SET_CATEGORIES', categories: fn(state.categories), markDirty: loaded.current && !state.online })
-	}, [state.categories, state.online])
+		dispatch({ type: 'SET_CATEGORIES', categories: fn(state.categories) })
+	}, [state.categories])
 
 	const setProducts = useCallback((value) => {
 		const fn = typeof value === 'function' ? value : () => value
-		dispatch({ type: 'SET_PRODUCTS', products: fn(state.products), markDirty: loaded.current && !state.online })
-	}, [state.products, state.online])
+		dispatch({ type: 'SET_PRODUCTS', products: fn(state.products) })
+	}, [state.products])
 
 	const setPresentations = useCallback((value) => {
 		const fn = typeof value === 'function' ? value : () => value
-		dispatch({ type: 'SET_PRESENTATIONS', presentations: fn(state.presentations), markDirty: loaded.current && !state.online })
-	}, [state.presentations, state.online])
+		dispatch({ type: 'SET_PRESENTATIONS', presentations: fn(state.presentations) })
+	}, [state.presentations])
 
 	const setSuppliers = useCallback((value) => {
 		const fn = typeof value === 'function' ? value : () => value
-		dispatch({ type: 'SET_SUPPLIERS', suppliers: fn(state.suppliers), markDirty: loaded.current && !state.online })
-	}, [state.suppliers, state.online])
+		dispatch({ type: 'SET_SUPPLIERS', suppliers: fn(state.suppliers) })
+	}, [state.suppliers])
 
-	useEffect(() => {
-		if (loaded.current) {
-			saveLocal(state.categories, state.products, state.presentations, state.suppliers, state.dirty)
-		}
-	}, [state.categories, state.products, state.presentations, state.suppliers, state.dirty])
-
-	const loadFromApi = useCallback(async () => {
-		const [cats, prods, pres, sups] = await Promise.all([
-			api.getCategories(),
-			api.getProducts(),
-			api.getPresentations(),
-			api.getSuppliers().catch(() => []),
-		])
-		dispatch({ type: 'LOAD_API', categories: cats, products: prods, presentations: pres, suppliers: sups })
-	}, [])
-
-	const loadFromLocal = useCallback(() => {
-		const saved = loadLocal()
-		if (saved) {
-			dispatch({ type: 'LOAD_LOCAL', ...saved })
-		} else {
-			dispatch({ type: 'LOAD_LOCAL', categories: seed.categories, products: seed.products, presentations: seed.presentations, suppliers: seed.suppliers ?? [] })
-		}
-	}, [])
+	const setProductSuppliers = useCallback((value) => {
+		const fn = typeof value === 'function' ? value : () => value
+		dispatch({ type: 'SET_PRODUCT_SUPPLIERS', productSuppliers: fn(state.productSuppliers) })
+	}, [state.productSuppliers])
 
 	useEffect(() => {
 		;(async () => {
 			try {
-				await loadFromApi()
-			} catch {
-				loadFromLocal()
+				const [cats, prods, pres, sups] = await Promise.all([
+					api.getCategories(),
+					api.getProducts(),
+					api.getPresentations(),
+					api.getSuppliers().catch(() => []),
+				])
+				dispatch({ type: 'LOAD_API', categories: cats, products: prods, presentations: pres, suppliers: sups })
+			} catch (e) {
+				console.error('Failed to load data:', e)
+				dispatch({ type: 'SET_LOADING', loading: false })
 			}
-			loaded.current = true
-			dispatch({ type: 'SET_LOADING', loading: false })
 		})()
-	}, [loadFromApi, loadFromLocal])
+	}, [])
 
 	const refresh = useCallback(async () => {
 		try {
@@ -97,60 +61,10 @@ export function DataProvider({ children }) {
 		} catch { /* stay with stale data */ }
 	}, [state.suppliers])
 
-	const syncData = useCallback(async () => {
-		if (!state.online) return false
-
-		try {
-			const [, serverProds, serverPres] = await Promise.all([
-				api.getCategories(),
-				api.getProducts(),
-				api.getPresentations(),
-			])
-
-			const prodByKey = new Map()
-			serverProds.forEach((p) => prodByKey.set(`${p.categoryId}::${p.name}`, p))
-
-			const idMap = new Map()
-			for (const p of state.products) {
-				const key = `${p.categoryId}::${p.name}`
-				const existing = prodByKey.get(key)
-				if (existing) {
-					await api.updateProduct(existing._id, { name: p.name, purchaseCost: p.purchaseCost, categoryId: p.categoryId, saleType: p.saleType, stockGrams: p.stockGrams })
-					idMap.set(p._id, existing._id)
-				} else {
-					const created = await api.createProduct({ name: p.name, purchaseCost: p.purchaseCost, categoryId: p.categoryId, saleType: p.saleType, stockGrams: p.stockGrams })
-					idMap.set(p._id, created._id)
-				}
-			}
-
-			for (const p of state.presentations) {
-				const serverProductId = idMap.get(p.productId) || p.productId
-				const key = `${serverProductId}::${p.label}`
-				const existing = serverPres.find((sp) => `${sp.productId}::${sp.label}` === key)
-				if (existing) {
-					await api.updatePresentation(existing._id, { label: p.label, grams: p.grams, margin: p.margin, salePrice: p.salePrice })
-					await api.updateStock(existing._id, p.stock ?? 0)
-				} else {
-					await api.createPresentation({
-						productId: serverProductId, label: p.label, grams: p.grams,
-						margin: p.margin, salePrice: p.salePrice, stock: p.stock ?? 0,
-					})
-				}
-			}
-
-			await refresh()
-			dispatch({ type: 'SET_DIRTY', dirty: false })
-			return true
-		} catch (e) {
-			console.error('Data sync failed:', e)
-			return false
-		}
-	}, [state.products, state.presentations, state.online, refresh])
-
 	return (
 		<DataContext.Provider value={{
 			...state,
-			refresh, syncData, setCategories, setProducts, setPresentations, setSuppliers,
+			refresh, setCategories, setProducts, setPresentations, setSuppliers, setProductSuppliers,
 		}}>
 			{children}
 		</DataContext.Provider>

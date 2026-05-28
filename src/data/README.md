@@ -29,6 +29,7 @@
 | `id`           | `string` (UUID) | Identificador único                         |
 | `categoryId`   | `string` (UUID) | `→ Category.id`                             |
 | `name`         | `string`        | Nombre del producto base (sin presentación) |
+| `marca`        | `string`        | Marca del producto (opcional, para filtrar) |
 | `purchaseCost` | `number│null`   | Costo de compra del producto base (ARS)     |
 
 ### ProductPresentation

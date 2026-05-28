@@ -6,6 +6,7 @@ const productSchema = new mongoose.Schema({
   purchaseCost: { type: Number, default: null },
   saleType: { type: String, enum: ['unit', 'fraction'], default: 'unit' },
   stockGrams: { type: Number, default: null },
+  marca: { type: String, default: '' },
 })
 
 productSchema.index({ categoryId: 1 })

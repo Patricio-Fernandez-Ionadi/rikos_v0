@@ -1,8 +1,10 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useProductManager } from '../modules/products/product-manager.js'
 import { Modal } from '../components/Modal.jsx'
 
 export const SuppliersPage = () => {
+	const navigate = useNavigate()
 	const {
 		suppliers,
 		createSupplier,
@@ -84,6 +86,9 @@ export const SuppliersPage = () => {
 									<td>{s.email ?? '—'}</td>
 									<td>{s.notes ?? ''}</td>
 									<td>
+										<button className='sidebar__btn sidebar__btn--xs' onClick={() => navigate(`/suppliers/${s._id}`)}>
+											Productos
+										</button>
 										<button className='sidebar__btn sidebar__btn--xs' onClick={() => openEdit(s)}>
 											Editar
 										</button>

@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import { useData } from '../app/data-context.jsx'
 import { useShift } from '../modules/shift/shift-context.jsx'
 import { ActiveShiftCard } from '../modules/shift/active-shift-card.jsx'
 import { PastShiftCard } from '../modules/shift/past-shift-card.jsx'
@@ -11,7 +10,6 @@ import * as api from '../data/api.js'
  * Shifts page — shows the active shift and past shift history.
  */
 export const ShiftsPage = () => {
-  const { online } = useData()
   const { shift } = useShift()
   const [pastShifts, setPastShifts] = useState([])
   const [expanded, setExpanded] = useState(null)
@@ -19,11 +17,10 @@ export const ShiftsPage = () => {
   const [showClose, setShowClose] = useState(false)
 
   useEffect(() => {
-    if (!online) return
     api.getShifts().then((list) => {
       setPastShifts(list.filter((s) => s.status === 'closed'))
     }).catch(() => {})
-  }, [online])
+  }, [])
 
   return (
     <div className="shifts-page">
@@ -47,9 +44,9 @@ export const ShiftsPage = () => {
 
       <h3 style={{ color: '#f5f5f5', margin: '24px 0 12px' }}>Turnos anteriores</h3>
 
-      {pastShifts.length === 0 && !online && (
+      {pastShifts.length === 0 && (
         <p className="placeholder" style={{ color: '#616161', textAlign: 'center', padding: '40px' }}>
-          {shift ? 'No hay turnos anteriores registrados' : 'Conectá el servidor para ver el historial de turnos'}
+          No hay turnos anteriores registrados
         </p>
       )}
 

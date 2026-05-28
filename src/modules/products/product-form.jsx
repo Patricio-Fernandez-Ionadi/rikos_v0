@@ -3,6 +3,7 @@ import { useState } from 'react'
 export const ProductForm = ({ initial, categories, onSubmit, onCancel }) => {
   const [categoryId, setCategoryId] = useState(initial?.categoryId ?? categories[0]?._id ?? '')
   const [name, setName] = useState(initial?.name ?? '')
+  const [marca, setMarca] = useState(initial?.marca ?? '')
   const [cost, setCost] = useState(initial?.purchaseCost ?? '')
   const [saleType, setSaleType] = useState(initial?.saleType ?? 'unit')
   const [stockGrams, setStockGrams] = useState(initial?.stockGrams ?? '')
@@ -13,6 +14,7 @@ export const ProductForm = ({ initial, categories, onSubmit, onCancel }) => {
     onSubmit({
       categoryId,
       name: name.trim(),
+      marca: marca.trim(),
       purchaseCost: cost === '' ? null : parseFloat(cost),
       saleType,
       stockGrams: saleType === 'fraction' ? (stockGrams === '' ? 0 : parseInt(stockGrams)) : null,
@@ -28,6 +30,9 @@ export const ProductForm = ({ initial, categories, onSubmit, onCancel }) => {
 
       <label className="field-label">Nombre del producto</label>
       <input className="field-input" type="text" value={name} onChange={(e) => setName(e.target.value)} autoFocus />
+
+      <label className="field-label">Marca</label>
+      <input className="field-input" type="text" value={marca} onChange={(e) => setMarca(e.target.value)} />
 
       <label className="field-label">Tipo de venta</label>
       <select className="field-input" value={saleType} onChange={(e) => setSaleType(e.target.value)}>

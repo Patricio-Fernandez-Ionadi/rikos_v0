@@ -28,6 +28,7 @@ router.post('/', async (req, res, next) => {
       purchaseCost: req.body.purchaseCost ?? null,
       saleType: req.body.saleType ?? 'unit',
       stockGrams: req.body.saleType === 'fraction' ? (req.body.stockGrams ?? 0) : null,
+      marca: req.body.marca ?? '',
     })
     res.status(201).json(prod)
   } catch (e) { next(e) }
@@ -42,6 +43,7 @@ router.put('/:id', async (req, res, next) => {
         purchaseCost: req.body.purchaseCost,
         saleType: req.body.saleType,
         stockGrams: req.body.stockGrams,
+        marca: req.body.marca ?? '',
       },
       { new: true },
     )

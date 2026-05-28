@@ -5,7 +5,9 @@ const router = Router()
 
 router.get('/', async (req, res, next) => {
   try {
-    const filter = req.query.productId ? { productId: req.query.productId } : {}
+    const filter = {}
+    if (req.query.productId) filter.productId = req.query.productId
+    if (req.query.supplierId) filter.supplierId = req.query.supplierId
     const pss = await ProductSupplier.find(filter).sort({ purchaseCost: 1 })
     res.json(pss)
   } catch (e) { next(e) }

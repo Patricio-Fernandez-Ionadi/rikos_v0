@@ -1,18 +1,14 @@
 import { useState, useEffect, useCallback } from 'react'
-import { useData } from '../../app/data-context.jsx'
 import * as supportService from './services/support-services.js'
 
 export function useSupport() {
-	const { online } = useData()
 	const [notes, setNotes] = useState([])
 	const [text, setText] = useState('')
 	const [type, setType] = useState('sugerencia')
 
 	useEffect(() => {
-		if (online) {
-			supportService.getNotes().then(setNotes)
-		}
-	}, [online])
+		supportService.getNotes().then(setNotes)
+	}, [])
 
 	const handleSubmit = useCallback(async (e) => {
 		e.preventDefault()

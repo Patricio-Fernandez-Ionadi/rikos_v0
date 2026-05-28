@@ -57,12 +57,14 @@ export const deleteNote = (id) => request(`/notes/${id}`, { method: 'DELETE' })
 
 // ─── Suppliers ─────────────────────────────────────────────
 export const getSuppliers = () => request('/suppliers')
+export const getSupplier = (id) => request(`/suppliers/${id}`)
 export const createSupplier = (data) => request('/suppliers', { method: 'POST', body: JSON.stringify(data) })
 export const updateSupplier = (id, data) => request(`/suppliers/${id}`, { method: 'PUT', body: JSON.stringify(data) })
 export const deleteSupplier = (id) => request(`/suppliers/${id}`, { method: 'DELETE' })
 
 // ─── Product-Supplier links ────────────────────────────────
 export const getProductSuppliers = (productId) => request(`/product-suppliers${productId ? `?productId=${productId}` : ''}`)
+export const getProductSuppliersBySupplier = (supplierId) => request(`/product-suppliers?supplierId=${supplierId}`)
 export const createProductSupplier = (data) => request('/product-suppliers', { method: 'POST', body: JSON.stringify(data) })
 export const updateProductSupplier = (id, data) => request(`/product-suppliers/${id}`, { method: 'PUT', body: JSON.stringify(data) })
 export const deleteProductSupplier = (id) => request(`/product-suppliers/${id}`, { method: 'DELETE' })

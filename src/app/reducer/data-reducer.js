@@ -3,9 +3,8 @@ export const INITIAL_DATA_STATE = {
 	products: [],
 	presentations: [],
 	suppliers: [],
+	productSuppliers: [],
 	loading: true,
-	online: false,
-	dirty: false,
 }
 
 export function dataReducer(state, action) {
@@ -17,32 +16,21 @@ export function dataReducer(state, action) {
 				products: action.products,
 				presentations: action.presentations,
 				suppliers: action.suppliers ?? [],
-				online: true,
-			}
-		case 'LOAD_LOCAL':
-			return {
-				...state,
-				categories: action.categories,
-				products: action.products,
-				presentations: action.presentations,
-				suppliers: action.suppliers ?? [],
-				online: false,
-				dirty: action.dirty || false,
+				productSuppliers: action.productSuppliers ?? [],
+				loading: false,
 			}
 		case 'SET_LOADING':
 			return { ...state, loading: action.loading }
-		case 'SET_ONLINE':
-			return { ...state, online: action.online }
-		case 'SET_DIRTY':
-			return { ...state, dirty: action.dirty }
 		case 'SET_CATEGORIES':
-			return { ...state, categories: action.categories, dirty: action.markDirty || state.dirty }
+			return { ...state, categories: action.categories }
 		case 'SET_PRODUCTS':
-			return { ...state, products: action.products, dirty: action.markDirty || state.dirty }
+			return { ...state, products: action.products }
 		case 'SET_PRESENTATIONS':
-			return { ...state, presentations: action.presentations, dirty: action.markDirty || state.dirty }
+			return { ...state, presentations: action.presentations }
 		case 'SET_SUPPLIERS':
-			return { ...state, suppliers: action.suppliers, dirty: action.markDirty || state.dirty }
+			return { ...state, suppliers: action.suppliers }
+		case 'SET_PRODUCT_SUPPLIERS':
+			return { ...state, productSuppliers: action.productSuppliers }
 		default:
 			return state
 	}

@@ -3,7 +3,3 @@ export {
   getUnitsPerKg, getCostPerPresentation, getListPrice,
   getEquivalentPerKg, getPriceDifferencePercent, getPriceDifference,
 } from './calculations.js'
-
-export {
-  categories, products, presentations, suppliers, productSuppliers,
-} from './mock.js'

@@ -71,6 +71,12 @@
 	}
 }
 
+.product-list__item-marca {
+	color: $grey_light;
+	font-size: 0.85em;
+	font-weight: 400;
+}
+
 .product-list__item-meta {
 	text-align: right;
 	color: $grey_light;
@@ -123,4 +129,26 @@
 .product-list__item-error {
 	color: $grey;
 	font-style: italic;
+}
+
+.product-list__item-prices {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+	font-size: 0.85em;
+	color: #e0e0e0;
+}
+
+.product-list__item-prices-sep {
+	color: $grey;
+}
+
+.product-list__item-price-label {
+	color: $grey_light;
+	margin-right: 2px;
+}
+
+.product-list__item-price-value {
+	color: $primary;
+	font-weight: 600;
 }

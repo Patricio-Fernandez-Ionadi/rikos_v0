@@ -5,7 +5,7 @@ import { SaleForm } from '../../components/sale-form.jsx'
 import * as stockService from './services/stock-services.js'
 
 export const StockRow = ({ pres, product, categoryName }) => {
-	const { online, setPresentations, setProducts } = useData()
+	const { setPresentations, setProducts } = useData()
 	const { shift, addSale } = useShift()
 
 	const isFraction = product?.saleType === 'fraction'
@@ -18,16 +18,10 @@ export const StockRow = ({ pres, product, categoryName }) => {
 		const val = parseInt(stockValue)
 		if (isNaN(val) || val < 0) return
 		try {
-			const updated = await stockService.updateStock(presId, val, { online })
-			if (updated) {
-				setPresentations((prev) =>
-					prev.map((p) => (p._id === updated._id ? updated : p)),
-				)
-			} else {
-				setPresentations((prev) =>
-					prev.map((p) => (p._id === presId ? { ...p, stock: val } : p)),
-				)
-			}
+			const updated = await stockService.updateStock(presId, val)
+			setPresentations((prev) =>
+				prev.map((p) => (p._id === updated._id ? updated : p)),
+			)
 		} catch (e) {
 			console.error(e)
 		}
@@ -38,12 +32,8 @@ export const StockRow = ({ pres, product, categoryName }) => {
 		const val = parseInt(stockValue)
 		if (isNaN(val) || val < 0) return
 		try {
-			const updated = await stockService.updateStockGrams(productId, val, { online })
-			if (updated) {
-				setProducts((prev) => prev.map((p) => (p._id === updated._id ? updated : p)))
-			} else {
-				setProducts((prev) => prev.map((p) => (p._id === productId ? { ...p, stockGrams: val } : p)))
-			}
+			const updated = await stockService.updateStockGrams(productId, val)
+			setProducts((prev) => prev.map((p) => (p._id === updated._id ? updated : p)))
 		} catch (e) {
 			console.error(e)
 		}
@@ -81,7 +71,7 @@ export const StockRow = ({ pres, product, categoryName }) => {
 	return (
 		<>
 			<tr key={pres._id}>
-				<td style={{ color: '#f5f5f5' }}>{product.name}</td>
+				<td style={{ color: '#f5f5f5' }}>{product.name}{product.marca ? <span className='stock-page__marca'> — {product.marca}</span> : ''}</td>
 				<td>{categoryName}</td>
 				<td>{pres.label ?? '—'} {isFraction && pres.grams ? `(${pres.grams}g)` : ''}</td>
 				<td>

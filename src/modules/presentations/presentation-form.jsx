@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
+import { getCostPerPresentation, getListPrice } from '../../data/calculations.js'
 
 export const PresentationForm = ({ initial, onSubmit, onCancel, product }) => {
 	const isFraction = product?.saleType === 'fraction'
@@ -7,6 +8,17 @@ export const PresentationForm = ({ initial, onSubmit, onCancel, product }) => {
 	const [margin, setMargin] = useState(initial?.margin ?? '')
 	const [salePrice, setSalePrice] = useState(initial?.salePrice ?? '')
 	const [stock, setStock] = useState(initial?.stock ?? 0)
+
+	const listPrice = useMemo(() => {
+		const g = isFraction ? (grams === '' ? null : parseInt(grams)) : null
+		const m = margin === '' ? null : parseInt(margin)
+		if (product?.purchaseCost == null) return null
+		if (isFraction && g == null) return null
+		const cost = isFraction
+			? getCostPerPresentation(product.purchaseCost, g)
+			: product.purchaseCost
+		return getListPrice(cost, m)
+	}, [product?.purchaseCost, isFraction, grams, margin])
 
 	const handleSubmit = (e) => {
 		e.preventDefault()
@@ -30,13 +42,17 @@ export const PresentationForm = ({ initial, onSubmit, onCancel, product }) => {
 				autoFocus
 			/>
 
-			<label className='field-label'>Gramos {isFraction ? '(requerido)' : ''}</label>
-			<input
-				className='field-input'
-				type='number'
-				value={grams}
-				onChange={(e) => setGrams(e.target.value)}
-			/>
+			{isFraction && (
+				<>
+					<label className='field-label'>Gramos (requerido)</label>
+					<input
+						className='field-input'
+						type='number'
+						value={grams}
+						onChange={(e) => setGrams(e.target.value)}
+					/>
+				</>
+			)}
 
 			<label className='field-label'>Margen (%)</label>
 			<input
@@ -53,6 +69,12 @@ export const PresentationForm = ({ initial, onSubmit, onCancel, product }) => {
 				value={salePrice}
 				onChange={(e) => setSalePrice(e.target.value)}
 			/>
+
+			{listPrice != null && (
+				<p style={{ color: '#9db683', fontSize: '0.9em', marginTop: '8px' }}>
+					Precio de lista sugerido: ${listPrice.toLocaleString()}
+				</p>
+			)}
 
 			{!isFraction && (
 				<>
