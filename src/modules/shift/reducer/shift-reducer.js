@@ -42,10 +42,7 @@ export function shiftReducer(state, action) {
 				shift: { ...state.shift, _dbId: action.dbId },
 			}
 		case 'CLOSE':
-			return {
-				shift: action.closedShift,
-				synced: false,
-			}
+			return INITIAL_SHIFT_STATE
 		case 'CLEAR':
 			return INITIAL_SHIFT_STATE
 		default:

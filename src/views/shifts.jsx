@@ -20,7 +20,7 @@ export const ShiftsPage = () => {
     api.getShifts().then((list) => {
       setPastShifts(list.filter((s) => s.status === 'closed'))
     }).catch(() => {})
-  }, [])
+  }, [shift])
 
   return (
     <div className="shifts-page">

@@ -1,4 +1,4 @@
-import * as api from '../../../data/api.js'
+import * as api from '../../../../data/api.js'
 
 export async function createPresentation(data) {
 	return await api.createPresentation(data)

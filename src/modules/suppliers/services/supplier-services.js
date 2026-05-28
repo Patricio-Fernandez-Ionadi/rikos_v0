@@ -24,6 +24,10 @@ export async function createProductSupplier(data) {
 	return await api.createProductSupplier(data)
 }
 
+export async function updateProductSupplier(id, data) {
+	return await api.updateProductSupplier(id, data)
+}
+
 export async function deleteProductSupplier(id) {
 	await api.deleteProductSupplier(id)
 }

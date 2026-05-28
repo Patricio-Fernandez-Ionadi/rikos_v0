@@ -1,5 +1,8 @@
 import { useState, useMemo } from 'react'
-import { getCostPerPresentation, getListPrice } from '../../data/calculations.js'
+import {
+	getCostPerPresentation,
+	getListPrice,
+} from '../../../data/calculations.js'
 
 export const PresentationForm = ({ initial, onSubmit, onCancel, product }) => {
 	const isFraction = product?.saleType === 'fraction'
@@ -7,7 +10,6 @@ export const PresentationForm = ({ initial, onSubmit, onCancel, product }) => {
 	const [grams, setGrams] = useState(initial?.grams ?? '')
 	const [margin, setMargin] = useState(initial?.margin ?? '')
 	const [salePrice, setSalePrice] = useState(initial?.salePrice ?? '')
-	const [stock, setStock] = useState(initial?.stock ?? 0)
 
 	const listPrice = useMemo(() => {
 		const g = isFraction ? (grams === '' ? null : parseInt(grams)) : null
@@ -27,13 +29,14 @@ export const PresentationForm = ({ initial, onSubmit, onCancel, product }) => {
 			grams: grams === '' ? null : parseInt(grams),
 			margin: margin === '' ? null : parseInt(margin),
 			salePrice: salePrice === '' ? null : parseFloat(salePrice),
-			stock: isFraction ? 0 : (parseInt(stock) || 0),
 		})
 	}
 
 	return (
 		<form className='product-form' onSubmit={handleSubmit}>
-			<label className='field-label'>Etiqueta (ej: &quot;200g&quot;, &quot;Unidad&quot;)</label>
+			<label className='field-label'>
+				Etiqueta (ej: &quot;200g&quot;, &quot;Unidad&quot;)
+			</label>
 			<input
 				className='field-input'
 				type='text'
@@ -74,18 +77,6 @@ export const PresentationForm = ({ initial, onSubmit, onCancel, product }) => {
 				<p style={{ color: '#9db683', fontSize: '0.9em', marginTop: '8px' }}>
 					Precio de lista sugerido: ${listPrice.toLocaleString()}
 				</p>
-			)}
-
-			{!isFraction && (
-				<>
-					<label className='field-label'>Stock inicial</label>
-					<input
-						className='field-input'
-						type='number'
-						value={stock}
-						onChange={(e) => setStock(e.target.value)}
-					/>
-				</>
 			)}
 
 			<div className='modal-actions'>

@@ -4,7 +4,7 @@ import { useShift } from '../../modules/shift/shift-context.jsx'
 import { productReducer, INITIAL_PRODUCT_STATE } from './reducer/product-reducer.js'
 import * as actions from './reducer/product-actions.js'
 import * as productService from './services/product-services.js'
-import * as presService from '../presentations/services/presentation-services.js'
+import * as presService from './product/services/presentation-services.js'
 import * as stockService from '../stock/services/stock-services.js'
 import * as supplierService from '../suppliers/services/supplier-services.js'
 
@@ -50,8 +50,6 @@ export function useProductManager() {
 	const closePresFormFn = actions.closePresForm(dispatch)
 	const openEditPresFn = actions.editPres(dispatch)
 	const closeEditPresFn = actions.closeEditPres(dispatch)
-	const openPresentationsModalFn = actions.openPresentationsModal(dispatch)
-	const closePresentationsModalFn = actions.closePresentationsModal(dispatch)
 	const startSaleFn = actions.startSale(dispatch)
 	const cancelSaleFn = actions.cancelSale(dispatch)
 	const startStockEditFn = actions.startStockEdit(dispatch)
@@ -63,9 +61,15 @@ export function useProductManager() {
 	// ── Product CRUD ─────────────────────────────────────────
 
 	const createProductFn = useCallback(async (data) => {
+		const { supplierId, ...productData } = data
 		try {
-			const created = await productService.createProduct(data)
+			const created = await productService.createProduct(productData)
 			setProducts((prev) => [...prev, created])
+			if (supplierId) {
+				await supplierService.createProductSupplier({
+					productId: created._id, supplierId, purchaseCost: productData.purchaseCost,
+				})
+			}
 		} catch (e) {
 			console.error(e)
 		}
@@ -73,11 +77,17 @@ export function useProductManager() {
 	}, [setProducts])
 
 	const editProductFn = useCallback(async (data) => {
+		const { supplierId, ...productData } = data
 		const id = state.editingProduct?._id
 		if (!id) return
 		try {
-			const updated = await productService.updateProduct(id, data)
+			const updated = await productService.updateProduct(id, productData)
 			setProducts((prev) => prev.map((p) => (p._id === updated._id ? updated : p)))
+			if (supplierId) {
+				await supplierService.createProductSupplier({
+					productId: id, supplierId, purchaseCost: productData.purchaseCost,
+				})
+			}
 		} catch (e) {
 			console.error(e)
 		}
@@ -263,8 +273,6 @@ export function useProductManager() {
 		closePresForm: closePresFormFn,
 		openEditPres: openEditPresFn,
 		closeEditPres: closeEditPresFn,
-		openPresentationsModal: openPresentationsModalFn,
-		closePresentationsModal: closePresentationsModalFn,
 		startSale: startSaleFn,
 		cancelSale: cancelSaleFn,
 		startStockEdit: startStockEditFn,

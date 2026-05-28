@@ -6,7 +6,6 @@ export const INITIAL_PRODUCT_STATE = {
 	editingProduct: null,
 	showPresForm: false,
 	editingPres: null,
-	showPresentationsModal: false,
 	salePresId: null,
 	stockEdit: null,
 	stockValue: '',
@@ -31,17 +30,13 @@ export function productReducer(state, action) {
 		case 'CLOSE_EDIT_PRODUCT':
 			return { ...state, editingProduct: null }
 		case 'OPEN_PRES_FORM':
-			return { ...state, showPresForm: true, showPresentationsModal: false }
+			return { ...state, showPresForm: true }
 		case 'CLOSE_PRES_FORM':
 			return { ...state, showPresForm: false }
 		case 'OPEN_EDIT_PRES':
 			return { ...state, editingPres: action.pres }
 		case 'CLOSE_EDIT_PRES':
 			return { ...state, editingPres: null }
-		case 'OPEN_PRESENTATIONS_MODAL':
-			return { ...state, showPresentationsModal: true }
-		case 'CLOSE_PRESENTATIONS_MODAL':
-			return { ...state, showPresentationsModal: false }
 		case 'START_SALE':
 			return { ...state, salePresId: action.presId }
 		case 'CANCEL_SALE':

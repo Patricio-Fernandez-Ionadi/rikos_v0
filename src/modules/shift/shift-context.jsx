@@ -9,7 +9,9 @@ const ShiftContext = createContext(null)
 function loadLocal() {
 	try {
 		const raw = localStorage.getItem(STORAGE_KEY)
-		return raw ? JSON.parse(raw) : null
+		const shift = raw ? JSON.parse(raw) : null
+		if (shift?.status === 'closed') return null
+		return shift
 	} catch {
 		return null
 	}
@@ -47,9 +49,18 @@ export function ShiftProvider({ children }) {
 		}
 
 		try {
-			const dbShift = await api.openShift(openingCash)
-			s._dbId = dbShift._id
-			dispatch({ type: 'SET_SYNCED', synced: true })
+			const active = await api.getActiveShift()
+			if (active) {
+				s._dbId = active._id
+				s.openingTime = active.openingTime
+				s.openingCash = active.openingCash
+				s.sales = active.sales ?? []
+				dispatch({ type: 'SET_SYNCED', synced: true })
+			} else {
+				const dbShift = await api.openShift(openingCash)
+				s._dbId = dbShift._id
+				dispatch({ type: 'SET_SYNCED', synced: true })
+			}
 		} catch {
 			dispatch({ type: 'SET_SYNCED', synced: false })
 		}
@@ -99,8 +110,12 @@ export function ShiftProvider({ children }) {
 
 		if (!currentDbId) {
 			try {
-				const dbShift = await api.openShift(current.openingCash)
-				currentDbId = dbShift._id
+				const active = await api.getActiveShift()
+				currentDbId = active?._id
+				if (!currentDbId) {
+					const dbShift = await api.openShift(current.openingCash)
+					currentDbId = dbShift._id
+				}
 				dispatch({ type: 'UPDATE_DB_ID', dbId: currentDbId })
 			} catch {
 				return false
@@ -140,8 +155,12 @@ export function ShiftProvider({ children }) {
 		let currentDbId = current._dbId
 		if (!currentDbId) {
 			try {
-				const dbShift = await api.openShift(current.openingCash)
-				currentDbId = dbShift._id
+				const active = await api.getActiveShift()
+				currentDbId = active?._id
+				if (!currentDbId) {
+					const dbShift = await api.openShift(current.openingCash)
+					currentDbId = dbShift._id
+				}
 				closed._dbId = currentDbId
 			} catch { /* stay local-only */ }
 		}

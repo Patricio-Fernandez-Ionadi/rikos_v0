@@ -20,10 +20,6 @@ export const editPres = (dispatch) => (pres) => dispatch({ type: 'OPEN_EDIT_PRES
 
 export const closeEditPres = (dispatch) => () => dispatch({ type: 'CLOSE_EDIT_PRES' })
 
-export const openPresentationsModal = (dispatch) => () => dispatch({ type: 'OPEN_PRESENTATIONS_MODAL' })
-
-export const closePresentationsModal = (dispatch) => () => dispatch({ type: 'CLOSE_PRESENTATIONS_MODAL' })
-
 export const startSale = (dispatch) => (presId) => dispatch({ type: 'START_SALE', presId })
 
 export const cancelSale = (dispatch) => () => dispatch({ type: 'CANCEL_SALE' })
