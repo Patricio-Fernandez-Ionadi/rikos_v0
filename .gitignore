@@ -11,6 +11,9 @@ node_modules
 dist
 dist-ssr
 *.local
+*.txt
+
+package-lock.json
 
 # Editor directories and files
 .vscode/*
@@ -27,3 +30,7 @@ AGENTS.md
 
 # Environment
 .env
+.env.development
+.env.example
+.env.production
+TODO.txt
