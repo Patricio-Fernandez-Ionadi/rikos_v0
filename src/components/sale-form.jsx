@@ -1,14 +1,11 @@
 import { useState } from 'react'
 
-/**
- * Inline form to record a sale of a product presentation.
- *
- * @param {Object}   props
- * @param {Object}   props.presentation
- * @param {Function} props.onSubmit   Called with { productId, presentationId, quantity, unitPrice, total }
- * @param {Function} props.onCancel
- */
-export const SaleForm = ({ presentation, onSubmit, onCancel }) => {
+export const SaleForm = ({ presentation, product, onSubmit, onCancel }) => {
+  const isFraction = product?.saleType === 'fraction'
+  const maxQty = isFraction
+    ? Math.floor((product?.stockGrams ?? 0) / (presentation.grams || 1))
+    : (presentation.stock ?? 0)
+
   const [qty, setQty] = useState(1)
   const [price, setPrice] = useState(presentation.salePrice ?? '')
 
@@ -34,11 +31,16 @@ export const SaleForm = ({ presentation, onSubmit, onCancel }) => {
           className="field-input field-input--sm"
           type="number"
           min="1"
-          max={presentation.stock}
+          max={maxQty || 1}
           value={qty}
           onChange={(e) => setQty(e.target.value)}
         />
       </div>
+      {isFraction && presentation.grams && (
+        <div className="sale-form__info">
+          {qty} × {presentation.grams}g = {parseInt(qty || 0) * presentation.grams}g
+        </div>
+      )}
       <div className="sale-form__row">
         <label className="field-label">Precio unitario ($)</label>
         <input

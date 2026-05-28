@@ -26,6 +26,8 @@ router.post('/', async (req, res, next) => {
       categoryId: req.body.categoryId,
       name: req.body.name,
       purchaseCost: req.body.purchaseCost ?? null,
+      saleType: req.body.saleType ?? 'unit',
+      stockGrams: req.body.saleType === 'fraction' ? (req.body.stockGrams ?? 0) : null,
     })
     res.status(201).json(prod)
   } catch (e) { next(e) }
@@ -35,7 +37,24 @@ router.put('/:id', async (req, res, next) => {
   try {
     const prod = await Product.findByIdAndUpdate(
       req.params.id,
-      { name: req.body.name, purchaseCost: req.body.purchaseCost },
+      {
+        name: req.body.name,
+        purchaseCost: req.body.purchaseCost,
+        saleType: req.body.saleType,
+        stockGrams: req.body.stockGrams,
+      },
+      { new: true },
+    )
+    if (!prod) return res.status(404).json({ error: 'Not found' })
+    res.json(prod)
+  } catch (e) { next(e) }
+})
+
+router.patch('/:id/stock-grams', async (req, res, next) => {
+  try {
+    const prod = await Product.findByIdAndUpdate(
+      req.params.id,
+      { stockGrams: req.body.stockGrams },
       { new: true },
     )
     if (!prod) return res.status(404).json({ error: 'Not found' })

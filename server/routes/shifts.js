@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import Shift from '../models/Shift.js'
+import Product from '../models/Product.js'
 import Presentation from '../models/Presentation.js'
 
 const router = Router()
@@ -46,13 +47,23 @@ router.post('/:id/sales', async (req, res, next) => {
 
     const pres = await Presentation.findById(presentationId)
     if (!pres) return res.status(404).json({ error: 'Presentation not found' })
-    if (pres.stock < quantity) return res.status(400).json({ error: 'Insufficient stock' })
+
+    const product = await Product.findById(pres.productId)
+    if (!product) return res.status(404).json({ error: 'Product not found' })
+
+    if (product.saleType === 'fraction') {
+      const deduction = quantity * (pres.grams ?? 0)
+      if ((product.stockGrams ?? 0) < deduction) return res.status(400).json({ error: 'Insufficient stock (grams)' })
+      product.stockGrams -= deduction
+      await product.save()
+    } else {
+      if ((pres.stock ?? 0) < quantity) return res.status(400).json({ error: 'Insufficient stock' })
+      pres.stock -= quantity
+      await pres.save()
+    }
 
     shift.sales.push({ productId, presentationId, quantity, unitPrice, total, timestamp: new Date() })
     await shift.save()
-
-    pres.stock -= quantity
-    await pres.save()
 
     res.status(201).json(shift)
   } catch (e) { next(e) }

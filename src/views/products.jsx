@@ -1,50 +1,29 @@
+import { useNavigate } from 'react-router-dom'
 import { useProductManager } from '../modules/products/product-manager.js'
-import { calculate } from '../data/index.js'
 import { ProductList } from '../modules/products/product-list.jsx'
-import { PresentationsModal } from '../modules/presentations/presentations-modal.jsx'
 import { Modal } from '../components/Modal.jsx'
 import { ProductForm } from '../modules/products/product-form.jsx'
-import { PresentationForm } from '../modules/presentations/presentation-form.jsx'
 import { NewProductButton } from '../modules/products/new-product-button.jsx'
-import { ProductDetail } from '../modules/products/product-detail.jsx'
 import { Sidebar } from '../modules/products/sidebar.jsx'
-import { PresentationCard } from '../modules/presentations/presentation-card.jsx'
 
 export const ProductsPage = () => {
+	const navigate = useNavigate()
 	const {
 		categories,
 		products,
 		presentations,
 		filteredProducts,
-		selectedProduct,
-		productPresentations,
-		selectedProductId,
 		searchTerm,
 		handleSearch,
 		selectedCategoryIds,
 		handleSelectCategories,
-		showProductForm,
-		editingProduct,
-		showPresForm,
-		editingPres,
-		showPresentationsModal,
-		handleSelectProduct,
-		openProductForm,
-		closeProductForm,
-		openEditProduct,
-		closeEditProduct,
-		openPresForm,
-		closePresForm,
-		openEditPres,
-		closeEditPres,
-		openPresentationsModal,
-		closePresentationsModal,
-		createProduct,
-		editProduct,
-		deleteProduct,
-		createPres,
-		editPres,
-		deletePres,
+    showProductForm,
+    editingProduct,
+    openProductForm,
+    closeProductForm,
+    closeEditProduct,
+    createProduct,
+    editProduct,
 	} = useProductManager()
 
 	return (
@@ -70,31 +49,10 @@ export const ProductsPage = () => {
 
 				<div className='product-browser__main'>
 					<ProductList
-						onEvent={handleSelectProduct}
+						onEvent={(id) => navigate(`/products/${id}`)}
 						filteredProducts={filteredProducts}
-						selectedProd={selectedProductId}
 						presentations={presentations}
 					/>
-
-					{selectedProduct && (
-						<div className='detail'>
-							<ProductDetail
-								onSetEdit={openEditProduct}
-								product={selectedProduct}
-								onDelete={deleteProduct}
-								showModal={openPresentationsModal}
-								showForm={openPresForm}
-							/>
-
-							{productPresentations.length > 0 && (
-								<div className='pres-list'>
-									{productPresentations.map((pres) => (
-										<PresentationCard key={pres._id} pres={pres} />
-									))}
-								</div>
-							)}
-						</div>
-					)}
 				</div>
 			</div>
 
@@ -120,46 +78,6 @@ export const ProductsPage = () => {
 					categories={categories}
 					onSubmit={editProduct}
 					onCancel={() => closeEditProduct()}
-				/>
-			</Modal>
-
-			<Modal
-				open={showPresForm}
-				onClose={() => closePresForm()}
-				title='Nueva presentación'
-			>
-				<PresentationForm
-					onSubmit={createPres}
-					onCancel={() => closePresForm()}
-				/>
-			</Modal>
-
-			<Modal
-				open={!!editingPres}
-				onClose={() => closeEditPres()}
-				title='Editar presentación'
-			>
-				<PresentationForm
-					initial={editingPres}
-					onSubmit={editPres}
-					onCancel={() => closeEditPres()}
-				/>
-			</Modal>
-
-			<Modal
-				open={showPresentationsModal && !!selectedProduct}
-				onClose={() => closePresentationsModal()}
-				title={`${selectedProduct?.name} — Presentaciones`}
-			>
-				<PresentationsModal
-					selectedProd={selectedProduct}
-					presentations={productPresentations}
-					calculate={calculate}
-					onEdit={(pres) => {
-						openEditPres(pres)
-						closePresentationsModal()
-					}}
-					onDelete={(presId) => deletePres(presId)}
 				/>
 			</Modal>
 		</div>

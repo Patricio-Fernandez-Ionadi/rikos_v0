@@ -1,5 +1,3 @@
-// ── UI actions (dispatch only) ─────────────────────────────
-
 export const selectCategories = (dispatch) => (ids) => dispatch({ type: 'SELECT_CATEGORIES', ids })
 
 export const selectProduct = (dispatch) => (id) => dispatch({ type: 'SELECT_PRODUCT', id })
@@ -36,3 +34,7 @@ export const startStockEdit = (dispatch) => (presId, currentStock) =>
 export const cancelStockEdit = (dispatch) => () => dispatch({ type: 'CANCEL_STOCK_EDIT' })
 
 export const changeStockValue = (dispatch) => (value) => dispatch({ type: 'SET_STOCK_VALUE', value })
+
+export const toggleSupplierPanel = (dispatch) => () => dispatch({ type: 'TOGGLE_SUPPLIER_PANEL' })
+
+export const setProductSuppliers = (dispatch) => (suppliers) => dispatch({ type: 'SET_PRODUCT_SUPPLIERS', suppliers })

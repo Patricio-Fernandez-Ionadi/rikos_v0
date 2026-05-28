@@ -3440,5 +3440,45 @@
       "margin": 50,
       "salePrice": 7100
     }
+  ],
+  "suppliers": [
+    {
+      "_id": "sup-1",
+      "name": "Distribuidora Salud S.A.",
+      "contactName": "Carlos López",
+      "phone": "011-4567-8901",
+      "email": "carlos@distrisalud.com",
+      "notes": "Entrega los martes"
+    },
+    {
+      "_id": "sup-2",
+      "name": "Alimentos Naturales Srl",
+      "contactName": "María García",
+      "phone": "011-4567-8902",
+      "email": "maria@alimentosnat.com",
+      "notes": ""
+    },
+    {
+      "_id": "sup-3",
+      "name": "Proveedora de Especias",
+      "contactName": null,
+      "phone": null,
+      "email": null,
+      "notes": "Especias orgánicas"
+    }
+  ],
+  "productSuppliers": [
+    {
+      "_id": "ps-1",
+      "productId": "prod-1",
+      "supplierId": "sup-1",
+      "purchaseCost": 5578
+    },
+    {
+      "_id": "ps-2",
+      "productId": "prod-1",
+      "supplierId": "sup-2",
+      "purchaseCost": 5300
+    }
   ]
 }

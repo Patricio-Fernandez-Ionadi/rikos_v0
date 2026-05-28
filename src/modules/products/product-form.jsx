@@ -1,18 +1,11 @@
 import { useState } from 'react'
 
-/**
- * Form for creating or editing a product.
- *
- * @param {Object}   props
- * @param {Object}   [props.initial]     Existing product to edit (undefined = create mode)
- * @param {Array}    props.categories    List of categories
- * @param {Function} props.onSubmit      Called with { categoryId, name, purchaseCost }
- * @param {Function} props.onCancel
- */
 export const ProductForm = ({ initial, categories, onSubmit, onCancel }) => {
   const [categoryId, setCategoryId] = useState(initial?.categoryId ?? categories[0]?._id ?? '')
   const [name, setName] = useState(initial?.name ?? '')
   const [cost, setCost] = useState(initial?.purchaseCost ?? '')
+  const [saleType, setSaleType] = useState(initial?.saleType ?? 'unit')
+  const [stockGrams, setStockGrams] = useState(initial?.stockGrams ?? '')
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -21,6 +14,8 @@ export const ProductForm = ({ initial, categories, onSubmit, onCancel }) => {
       categoryId,
       name: name.trim(),
       purchaseCost: cost === '' ? null : parseFloat(cost),
+      saleType,
+      stockGrams: saleType === 'fraction' ? (stockGrams === '' ? 0 : parseInt(stockGrams)) : null,
     })
   }
 
@@ -33,6 +28,19 @@ export const ProductForm = ({ initial, categories, onSubmit, onCancel }) => {
 
       <label className="field-label">Nombre del producto</label>
       <input className="field-input" type="text" value={name} onChange={(e) => setName(e.target.value)} autoFocus />
+
+      <label className="field-label">Tipo de venta</label>
+      <select className="field-input" value={saleType} onChange={(e) => setSaleType(e.target.value)}>
+        <option value="unit">Por unidad</option>
+        <option value="fraction">Fraccionable (por gramos)</option>
+      </select>
+
+      {saleType === 'fraction' && (
+        <>
+          <label className="field-label">Stock total (gramos)</label>
+          <input className="field-input" type="number" value={stockGrams} onChange={(e) => setStockGrams(e.target.value)} />
+        </>
+      )}
 
       <label className="field-label">Costo de compra ($)</label>
       <input className="field-input" type="number" value={cost} onChange={(e) => setCost(e.target.value)} />

@@ -1,19 +1,3 @@
-/**
- * @typedef {Object} ProductManagerState
- * @property {string[]} selectedCategoryIds
- * @property {string|null} selectedProductId
- * @property {string} searchTerm
- * @property {boolean} showProductForm
- * @property {Object|null} editingProduct
- * @property {boolean} showPresForm
- * @property {Object|null} editingPres
- * @property {boolean} showPresentationsModal
- * @property {string|null} salePresId
- * @property {string|null} stockEdit
- * @property {string} stockValue
- */
-
-/** @type {ProductManagerState} */
 export const INITIAL_PRODUCT_STATE = {
 	selectedCategoryIds: [],
 	selectedProductId: null,
@@ -26,23 +10,16 @@ export const INITIAL_PRODUCT_STATE = {
 	salePresId: null,
 	stockEdit: null,
 	stockValue: '',
+	showSupplierPanel: false,
+	productSuppliers: [],
 }
 
-/**
- * Reducer for the product page UI state.
- * Handles category selection, product selection, search, modals,
- * sale/stock editing UI toggles.
- *
- * @param {ProductManagerState} state
- * @param {{ type: string, [key: string]: any }} action
- * @returns {ProductManagerState}
- */
 export function productReducer(state, action) {
 	switch (action.type) {
 		case 'SELECT_CATEGORIES':
 			return { ...state, selectedCategoryIds: action.ids }
 		case 'SELECT_PRODUCT':
-			return { ...state, selectedProductId: action.id }
+			return { ...state, selectedProductId: action.id, showSupplierPanel: false, productSuppliers: [] }
 		case 'SET_SEARCH':
 			return { ...state, searchTerm: action.term }
 		case 'OPEN_PRODUCT_FORM':
@@ -70,15 +47,15 @@ export function productReducer(state, action) {
 		case 'CANCEL_SALE':
 			return { ...state, salePresId: null }
 		case 'START_STOCK_EDIT':
-			return {
-				...state,
-				stockEdit: action.presId,
-				stockValue: String(action.currentStock ?? 0),
-			}
+			return { ...state, stockEdit: action.presId, stockValue: String(action.currentStock ?? 0) }
 		case 'CANCEL_STOCK_EDIT':
 			return { ...state, stockEdit: null, stockValue: '' }
 		case 'SET_STOCK_VALUE':
 			return { ...state, stockValue: action.value }
+		case 'TOGGLE_SUPPLIER_PANEL':
+			return { ...state, showSupplierPanel: !state.showSupplierPanel }
+		case 'SET_PRODUCT_SUPPLIERS':
+			return { ...state, productSuppliers: action.suppliers }
 		default:
 			return state
 	}

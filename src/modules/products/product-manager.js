@@ -6,15 +6,11 @@ import * as actions from './reducer/product-actions.js'
 import * as productService from './services/product-services.js'
 import * as presService from '../presentations/services/presentation-services.js'
 import * as stockService from '../stock/services/stock-services.js'
+import * as supplierService from '../suppliers/services/supplier-services.js'
 
-/** @import { useProductManager } from './product-manager' */
-
-/**
- * Encapsulates all state and CRUD logic for the products page.
- */
 export function useProductManager() {
 	const [state, dispatch] = useReducer(productReducer, INITIAL_PRODUCT_STATE)
-	const { categories, products, presentations, online, setProducts, setPresentations } = useData()
+	const { categories, products, presentations, suppliers, online, setProducts, setPresentations, setSuppliers } = useData()
 	const { shift, addSale } = useShift()
 
 	// ── Derived data ────────────────────────────────────────
@@ -41,7 +37,7 @@ export function useProductManager() {
 		[presentations, selectedProduct],
 	)
 
-	// ── UI actions (dispatch is stable, no useCallback needed) ──
+	// ── UI actions (dispatch is stable) ─────────────────────
 
 	const handleSelectCategories = actions.selectCategories(dispatch)
 	const handleSelectProduct = actions.selectProduct(dispatch)
@@ -61,6 +57,8 @@ export function useProductManager() {
 	const startStockEditFn = actions.startStockEdit(dispatch)
 	const cancelStockEditFn = actions.cancelStockEdit(dispatch)
 	const changeStockValueFn = actions.changeStockValue(dispatch)
+	const toggleSupplierPanelFn = actions.toggleSupplierPanel(dispatch)
+	const setProductSuppliersFn = actions.setProductSuppliers(dispatch)
 
 	// ── Product CRUD ─────────────────────────────────────────
 
@@ -160,20 +158,120 @@ export function useProductManager() {
 		dispatch({ type: 'CANCEL_STOCK_EDIT' })
 	}, [online, state.stockValue, setPresentations])
 
+	const updateStockGramsFn = useCallback(async (productId, stockGrams) => {
+		try {
+			const updated = await stockService.updateStockGrams(productId, stockGrams, { online })
+			if (updated) {
+				setProducts((prev) => prev.map((p) => (p._id === updated._id ? updated : p)))
+			} else {
+				setProducts((prev) => prev.map((p) => (p._id === productId ? { ...p, stockGrams } : p)))
+			}
+		} catch (e) {
+			console.error(e)
+		}
+	}, [online, setProducts])
+
 	const handleSaleFn = useCallback(async (sale) => {
 		await addSale(sale)
-		setPresentations((prev) =>
-			prev.map((p) =>
-				p._id === sale.presentationId
-					? { ...p, stock: p.stock - sale.quantity }
-					: p,
-			),
-		)
+		const pres = presentations.find((p) => p._id === sale.presentationId)
+		if (pres) {
+			const prod = products.find((p) => p._id === pres.productId)
+			if (prod?.saleType === 'fraction') {
+				const deduction = sale.quantity * (pres.grams ?? 0)
+				setProducts((prev) =>
+					prev.map((p) =>
+						p._id === prod._id
+							? { ...p, stockGrams: Math.max(0, (p.stockGrams ?? 0) - deduction) }
+							: p,
+					),
+				)
+			} else {
+				setPresentations((prev) =>
+					prev.map((p) =>
+						p._id === sale.presentationId
+							? { ...p, stock: Math.max(0, (p.stock ?? 0) - sale.quantity) }
+							: p,
+					),
+				)
+			}
+		}
 		dispatch({ type: 'CANCEL_SALE' })
-	}, [addSale, setPresentations])
+	}, [addSale, presentations, products, setProducts, setPresentations])
+
+	// ── Supplier management ─────────────────────────────────
+
+	const loadProductSuppliersFn = useCallback(async (productId) => {
+		if (!online) return
+		try {
+			const pss = await supplierService.getProductSuppliers(productId)
+			setProductSuppliersFn(pss)
+		} catch (e) {
+			console.error(e)
+		}
+	}, [online, setProductSuppliersFn])
+
+	const addProductSupplierFn = useCallback(async (productId, supplierId, purchaseCost) => {
+		try {
+			const ps = await supplierService.createProductSupplier({ productId, supplierId, purchaseCost }, { online })
+			if (ps) {
+				setProductSuppliersFn([...state.productSuppliers, ps])
+			}
+		} catch (e) {
+			console.error(e)
+		}
+	}, [online, state.productSuppliers, setProductSuppliersFn])
+
+	const removeProductSupplierFn = useCallback(async (psId) => {
+		try {
+			await supplierService.deleteProductSupplier(psId, { online })
+			setProductSuppliersFn(state.productSuppliers.filter((ps) => ps._id !== psId))
+		} catch (e) {
+			console.error(e)
+		}
+	}, [online, state.productSuppliers, setProductSuppliersFn])
+
+	const setProductCostFromSupplierFn = useCallback(async (cost) => {
+		if (!selectedProduct) return
+		await editProductFn({ ...selectedProduct, purchaseCost: cost })
+	}, [selectedProduct, editProductFn])
+
+	// ── Supplier CRUD (global) ──────────────────────────────
+
+	const createSupplierFn = useCallback(async (data) => {
+		try {
+			const created = await supplierService.createSupplier(data, { online })
+			setSuppliers((prev) => [...prev, created])
+			return created
+		} catch (e) {
+			console.error(e)
+		}
+	}, [online, setSuppliers])
+
+	const updateSupplierFn = useCallback(async (id, data) => {
+		try {
+			const updated = await supplierService.updateSupplier(id, data, { online })
+			if (updated) {
+				setSuppliers((prev) => prev.map((s) => (s._id === updated._id ? updated : s)))
+			} else {
+				setSuppliers((prev) => prev.map((s) => (s._id === id ? { ...s, ...data } : s)))
+			}
+		} catch (e) {
+			console.error(e)
+		}
+	}, [online, setSuppliers])
+
+	const deleteSupplierFn = useCallback(async (id) => {
+		if (!window.confirm('¿Eliminar este proveedor?')) return
+		try {
+			await supplierService.deleteSupplier(id, { online })
+			setSuppliers((prev) => prev.filter((s) => s._id !== id))
+		} catch (e) {
+			console.error(e)
+		}
+	}, [online, setSuppliers])
 
 	return {
-		categories, products, presentations, online,
+		categories, products, presentations, suppliers, online,
 		filteredProducts, selectedProduct, productPresentations,
 		shift,
 		...state,
@@ -202,6 +300,16 @@ export function useProductManager() {
 		editPres: editPresFn,
 		deletePres: deletePresFn,
 		updateStock: updateStockFn,
+		updateStockGrams: updateStockGramsFn,
 		handleSale: handleSaleFn,
+		toggleSupplierPanel: toggleSupplierPanelFn,
+		productSuppliers: state.productSuppliers,
+		loadProductSuppliers: loadProductSuppliersFn,
+		addProductSupplier: addProductSupplierFn,
+		removeProductSupplier: removeProductSupplierFn,
+		setProductCostFromSupplier: setProductCostFromSupplierFn,
+		createSupplier: createSupplierFn,
+		updateSupplier: updateSupplierFn,
+		deleteSupplier: deleteSupplierFn,
 	}
 }

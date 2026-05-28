@@ -5,5 +5,5 @@ export {
 } from './calculations.js'
 
 export {
-  categories, products, presentations,
+  categories, products, presentations, suppliers, productSuppliers,
 } from './mock.js'

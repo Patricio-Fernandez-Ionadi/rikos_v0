@@ -11,7 +11,6 @@ async function request(path, options = {}) {
   return data
 }
 
-/** Check whether the API server is reachable. */
 export async function ping() {
   try {
     await request('/categories', { method: 'HEAD' })
@@ -33,6 +32,7 @@ export const getProduct = (id) => request(`/products/${id}`)
 export const createProduct = (data) => request('/products', { method: 'POST', body: JSON.stringify(data) })
 export const updateProduct = (id, data) => request(`/products/${id}`, { method: 'PUT', body: JSON.stringify(data) })
 export const deleteProduct = (id) => request(`/products/${id}`, { method: 'DELETE' })
+export const updateStockGrams = (id, stockGrams) => request(`/products/${id}/stock-grams`, { method: 'PATCH', body: JSON.stringify({ stockGrams }) })
 
 // ─── Presentations ─────────────────────────────────────────
 export const getPresentations = (productId) => request(`/presentations${productId ? `?productId=${productId}` : ''}`)
@@ -54,3 +54,15 @@ export const closeShift = (shiftId, closingCash, notes = '') =>
 export const getNotes = () => request('/notes')
 export const createNote = (data) => request('/notes', { method: 'POST', body: JSON.stringify(data) })
 export const deleteNote = (id) => request(`/notes/${id}`, { method: 'DELETE' })
+
+// ─── Suppliers ─────────────────────────────────────────────
+export const getSuppliers = () => request('/suppliers')
+export const createSupplier = (data) => request('/suppliers', { method: 'POST', body: JSON.stringify(data) })
+export const updateSupplier = (id, data) => request(`/suppliers/${id}`, { method: 'PUT', body: JSON.stringify(data) })
+export const deleteSupplier = (id) => request(`/suppliers/${id}`, { method: 'DELETE' })
+
+// ─── Product-Supplier links ────────────────────────────────
+export const getProductSuppliers = (productId) => request(`/product-suppliers${productId ? `?productId=${productId}` : ''}`)
+export const createProductSupplier = (data) => request('/product-suppliers', { method: 'POST', body: JSON.stringify(data) })
+export const updateProductSupplier = (id, data) => request(`/product-suppliers/${id}`, { method: 'PUT', body: JSON.stringify(data) })
+export const deleteProductSupplier = (id) => request(`/product-suppliers/${id}`, { method: 'DELETE' })

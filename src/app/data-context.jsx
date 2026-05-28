@@ -18,9 +18,9 @@ function loadLocal() {
 	}
 }
 
-function saveLocal(categories, products, presentations, dirty) {
+function saveLocal(categories, products, presentations, suppliers, dirty) {
 	try {
-		localStorage.setItem(STORAGE_KEY, JSON.stringify({ categories, products, presentations, dirty }))
+		localStorage.setItem(STORAGE_KEY, JSON.stringify({ categories, products, presentations, suppliers, dirty }))
 	} catch { /* quota exceeded */ }
 }
 
@@ -28,7 +28,6 @@ export function DataProvider({ children }) {
 	const [state, dispatch] = useReducer(dataReducer, INITIAL_DATA_STATE)
 	const loaded = useRef(false)
 
-	// Wrapped setters that also mark dirty when changed offline
 	const setCategories = useCallback((value) => {
 		const fn = typeof value === 'function' ? value : () => value
 		dispatch({ type: 'SET_CATEGORIES', categories: fn(state.categories), markDirty: loaded.current && !state.online })
@@ -44,20 +43,25 @@ export function DataProvider({ children }) {
 		dispatch({ type: 'SET_PRESENTATIONS', presentations: fn(state.presentations), markDirty: loaded.current && !state.online })
 	}, [state.presentations, state.online])
 
-	// Persist to localStorage on every state change after initial load
+	const setSuppliers = useCallback((value) => {
+		const fn = typeof value === 'function' ? value : () => value
+		dispatch({ type: 'SET_SUPPLIERS', suppliers: fn(state.suppliers), markDirty: loaded.current && !state.online })
+	}, [state.suppliers, state.online])
+
 	useEffect(() => {
 		if (loaded.current) {
-			saveLocal(state.categories, state.products, state.presentations, state.dirty)
+			saveLocal(state.categories, state.products, state.presentations, state.suppliers, state.dirty)
 		}
-	}, [state.categories, state.products, state.presentations, state.dirty])
+	}, [state.categories, state.products, state.presentations, state.suppliers, state.dirty])
 
 	const loadFromApi = useCallback(async () => {
-		const [cats, prods, pres] = await Promise.all([
+		const [cats, prods, pres, sups] = await Promise.all([
 			api.getCategories(),
 			api.getProducts(),
 			api.getPresentations(),
+			api.getSuppliers().catch(() => []),
 		])
-		dispatch({ type: 'LOAD_API', categories: cats, products: prods, presentations: pres })
+		dispatch({ type: 'LOAD_API', categories: cats, products: prods, presentations: pres, suppliers: sups })
 	}, [])
 
 	const loadFromLocal = useCallback(() => {
@@ -65,7 +69,7 @@ export function DataProvider({ children }) {
 		if (saved) {
 			dispatch({ type: 'LOAD_LOCAL', ...saved })
 		} else {
-			dispatch({ type: 'LOAD_LOCAL', categories: seed.categories, products: seed.products, presentations: seed.presentations })
+			dispatch({ type: 'LOAD_LOCAL', categories: seed.categories, products: seed.products, presentations: seed.presentations, suppliers: seed.suppliers ?? [] })
 		}
 	}, [])
 
@@ -83,14 +87,15 @@ export function DataProvider({ children }) {
 
 	const refresh = useCallback(async () => {
 		try {
-			const [cats, prods, pres] = await Promise.all([
+			const [cats, prods, pres, sups] = await Promise.all([
 				api.getCategories(),
 				api.getProducts(),
 				api.getPresentations(),
+				api.getSuppliers().catch(() => state.suppliers),
 			])
-			dispatch({ type: 'LOAD_API', categories: cats, products: prods, presentations: pres })
+			dispatch({ type: 'LOAD_API', categories: cats, products: prods, presentations: pres, suppliers: sups })
 		} catch { /* stay with stale data */ }
-	}, [])
+	}, [state.suppliers])
 
 	const syncData = useCallback(async () => {
 		if (!state.online) return false
@@ -110,10 +115,10 @@ export function DataProvider({ children }) {
 				const key = `${p.categoryId}::${p.name}`
 				const existing = prodByKey.get(key)
 				if (existing) {
-					await api.updateProduct(existing._id, { name: p.name, purchaseCost: p.purchaseCost, categoryId: p.categoryId })
+					await api.updateProduct(existing._id, { name: p.name, purchaseCost: p.purchaseCost, categoryId: p.categoryId, saleType: p.saleType, stockGrams: p.stockGrams })
 					idMap.set(p._id, existing._id)
 				} else {
-					const created = await api.createProduct({ name: p.name, purchaseCost: p.purchaseCost, categoryId: p.categoryId })
+					const created = await api.createProduct({ name: p.name, purchaseCost: p.purchaseCost, categoryId: p.categoryId, saleType: p.saleType, stockGrams: p.stockGrams })
 					idMap.set(p._id, created._id)
 				}
 			}
@@ -145,7 +150,7 @@ export function DataProvider({ children }) {
 	return (
 		<DataContext.Provider value={{
 			...state,
-			refresh, syncData, setCategories, setProducts, setPresentations,
+			refresh, syncData, setCategories, setProducts, setPresentations, setSuppliers,
 		}}>
 			{children}
 		</DataContext.Provider>

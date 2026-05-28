@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
-export const PresentationForm = ({ initial, onSubmit, onCancel }) => {
+export const PresentationForm = ({ initial, onSubmit, onCancel, product }) => {
+	const isFraction = product?.saleType === 'fraction'
 	const [label, setLabel] = useState(initial?.label ?? '')
 	const [grams, setGrams] = useState(initial?.grams ?? '')
 	const [margin, setMargin] = useState(initial?.margin ?? '')
@@ -14,7 +15,7 @@ export const PresentationForm = ({ initial, onSubmit, onCancel }) => {
 			grams: grams === '' ? null : parseInt(grams),
 			margin: margin === '' ? null : parseInt(margin),
 			salePrice: salePrice === '' ? null : parseFloat(salePrice),
-			stock: parseInt(stock) || 0,
+			stock: isFraction ? 0 : (parseInt(stock) || 0),
 		})
 	}
 
@@ -29,7 +30,7 @@ export const PresentationForm = ({ initial, onSubmit, onCancel }) => {
 				autoFocus
 			/>
 
-			<label className='field-label'>Gramos</label>
+			<label className='field-label'>Gramos {isFraction ? '(requerido)' : ''}</label>
 			<input
 				className='field-input'
 				type='number'
@@ -53,13 +54,17 @@ export const PresentationForm = ({ initial, onSubmit, onCancel }) => {
 				onChange={(e) => setSalePrice(e.target.value)}
 			/>
 
-			<label className='field-label'>Stock inicial</label>
-			<input
-				className='field-input'
-				type='number'
-				value={stock}
-				onChange={(e) => setStock(e.target.value)}
-			/>
+			{!isFraction && (
+				<>
+					<label className='field-label'>Stock inicial</label>
+					<input
+						className='field-input'
+						type='number'
+						value={stock}
+						onChange={(e) => setStock(e.target.value)}
+					/>
+				</>
+			)}
 
 			<div className='modal-actions'>
 				<button type='button' className='shift-bar__btn' onClick={onCancel}>
