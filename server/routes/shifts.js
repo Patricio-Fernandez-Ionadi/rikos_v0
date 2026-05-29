@@ -43,7 +43,7 @@ router.post('/:id/sales', async (req, res, next) => {
     if (!shift) return res.status(404).json({ error: 'Shift not found' })
     if (shift.status !== 'open') return res.status(400).json({ error: 'Shift is already closed' })
 
-    const { productId, presentationId, quantity, unitPrice, total } = req.body
+    const { productId, presentationId, quantity, unitPrice, total, collectedAmount } = req.body
 
     const pres = await Presentation.findById(presentationId)
     if (!pres) return res.status(404).json({ error: 'Presentation not found' })
@@ -62,7 +62,7 @@ router.post('/:id/sales', async (req, res, next) => {
     }
 
     await pres.save()
-    shift.sales.push({ productId, presentationId, quantity, unitPrice, total, timestamp: new Date() })
+    shift.sales.push({ productId, presentationId, quantity, unitPrice, total, collectedAmount, timestamp: new Date() })
     await shift.save()
 
     res.status(201).json(shift)
@@ -79,10 +79,13 @@ router.post('/:id/ticket', async (req, res, next) => {
     if (!shift) return res.status(404).json({ error: 'Shift not found' })
     if (shift.status !== 'open') return res.status(400).json({ error: 'Shift is already closed' })
 
-    const { items, paymentMethod, ticketId } = req.body
+    const { items, paymentMethod, ticketId, collectedTotal } = req.body
     if (!Array.isArray(items) || items.length === 0) {
       return res.status(400).json({ error: 'items must be a non-empty array' })
     }
+
+    const itemsTotal = items.reduce((s, i) => s + (i.total ?? 0), 0)
+    const diff = collectedTotal != null ? +(collectedTotal - itemsTotal).toFixed(2) : 0
 
     // 1. Validate stock for every item upfront
     for (const item of items) {
@@ -119,12 +122,19 @@ router.post('/:id/ticket', async (req, res, next) => {
 
       await pres.save()
 
+      // Distribute collectedTotal difference proportionally
+      const ratio = itemsTotal > 0 ? (item.total ?? 0) / itemsTotal : 0
+      const itemCollected = diff !== 0 && ratio > 0
+        ? +(item.total + diff * ratio).toFixed(2)
+        : null
+
       shift.sales.push({
         productId: pres.productId,
         presentationId: item.presentationId,
         quantity: item.quantity,
         unitPrice: item.unitPrice,
         total: item.total,
+        collectedAmount: itemCollected,
         paymentMethod,
         ticketId: ticketId || null,
         timestamp: new Date(),
@@ -152,6 +162,9 @@ router.post('/:id/sync', async (req, res, next) => {
         quantity: s.quantity,
         unitPrice: s.unitPrice,
         total: s.total,
+        collectedAmount: s.collectedAmount ?? null,
+        paymentMethod: s.paymentMethod ?? 'cash',
+        ticketId: s.ticketId ?? null,
         timestamp: s.timestamp ? new Date(s.timestamp) : new Date(),
       })
     }
@@ -256,7 +269,7 @@ router.post('/:id/close', async (req, res, next) => {
     const cashSales = shift.sales.filter(
       (s) => !s.paymentMethod || s.paymentMethod === 'cash',
     )
-    const totalSales = cashSales.reduce((sum, s) => sum + s.total, 0)
+    const totalSales = cashSales.reduce((sum, s) => sum + (s.collectedAmount ?? s.total), 0)
     const expectedBalance = shift.openingCash + totalSales
 
     shift.closingCash = closingCash

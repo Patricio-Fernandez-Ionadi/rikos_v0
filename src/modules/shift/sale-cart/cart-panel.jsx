@@ -1,15 +1,22 @@
+import { useState } from 'react'
+
 export const CartPanel = ({
 	cartItems,
 	paymentMethod,
 	setPaymentMethod,
 	subtotal,
 	discount,
-	total,
+	calcTotal,
+	finalTotal,
+	collectedTotal,
+	setCollectedTotal,
 	onRemoveItem,
 	onSubmit,
 	onClose,
 }) => {
 	const hasItems = cartItems.length > 0
+	const [editingTotal, setEditingTotal] = useState(false)
+	const [totalInput, setTotalInput] = useState('')
 
 	return (
 		<div className='sale-cart__cart'>
@@ -88,8 +95,55 @@ export const CartPanel = ({
 						)}
 						<div className='sale-cart__total-row sale-cart__total-row--final'>
 							<span>Total</span>
-							<span>${total.toLocaleString()}</span>
+							{editingTotal ? (
+								<input
+									className='field-input'
+									type='number'
+									value={totalInput}
+									onChange={(e) => setTotalInput(e.target.value)}
+								onBlur={() => {
+									const v = parseFloat(totalInput)
+									if (!isNaN(v) && v >= 0 && Math.abs(v - calcTotal) > 0.01) {
+										setCollectedTotal(v)
+									} else {
+										setCollectedTotal(null)
+									}
+									setEditingTotal(false)
+								}}
+									onKeyDown={(e) => {
+										if (e.key === 'Enter') e.target.blur()
+										if (e.key === 'Escape') {
+											setCollectedTotal(null)
+											setEditingTotal(false)
+										}
+									}}
+									autoFocus
+									style={{ width: '120px', textAlign: 'right' }}
+								/>
+							) : (
+								<span
+									style={{ cursor: 'pointer' }}
+									onClick={() => {
+										setTotalInput(String(finalTotal))
+										setEditingTotal(true)
+									}}
+									title='Click para editar el monto cobrado'
+								>
+									${finalTotal.toLocaleString()}
+									{collectedTotal != null && (
+										<span style={{ fontSize: '0.75rem', color: '#999', marginLeft: '6px' }}>
+											(manual)
+										</span>
+									)}
+								</span>
+							)}
 						</div>
+						{collectedTotal != null && Math.abs(collectedTotal - calcTotal) > 0.01 && (
+							<div className='sale-cart__total-row' style={{ fontSize: '0.85rem', color: '#ffa726' }}>
+								<span>Ajuste</span>
+								<span>${(collectedTotal - calcTotal) > 0 ? '+' : ''}{(collectedTotal - calcTotal).toLocaleString()}</span>
+							</div>
+						)}
 					</div>
 
 					<button

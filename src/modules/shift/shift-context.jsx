@@ -102,21 +102,31 @@ export function ShiftProvider({ children }) {
 		}
 	}, [])
 
-	const recordTicket = useCallback(async (ticketId, paymentMethod, items) => {
+	const recordTicket = useCallback(async (ticketId, paymentMethod, items, collectedTotal) => {
 		const current = shiftRef.current
 		if (!current || current.status !== 'open') return
 
-		const saleItems = items.map((item) => ({
-			_tempId: `${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
-			productId: item.productId,
-			presentationId: item.presentationId,
-			quantity: item.quantity,
-			unitPrice: item.unitPrice,
-			total: item.total,
-			paymentMethod,
-			ticketId,
-			timestamp: new Date().toISOString(),
-		}))
+		const itemsTotal = items.reduce((s, i) => s + (i.total ?? 0), 0)
+		const diff = collectedTotal != null ? +(collectedTotal - itemsTotal).toFixed(2) : 0
+
+		const saleItems = items.map((item) => {
+			const ratio = itemsTotal > 0 ? (item.total ?? 0) / itemsTotal : 0
+			const itemCollected = diff !== 0 && ratio > 0
+				? +(item.total + diff * ratio).toFixed(2)
+				: null
+			return {
+				_tempId: `${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
+				productId: item.productId,
+				presentationId: item.presentationId,
+				quantity: item.quantity,
+				unitPrice: item.unitPrice,
+				total: item.total,
+				collectedAmount: itemCollected,
+				paymentMethod,
+				ticketId,
+				timestamp: new Date().toISOString(),
+			}
+		})
 
 		dispatch({ type: 'BATCH_ADD_SALES', sales: saleItems })
 
@@ -132,6 +142,7 @@ export function ShiftProvider({ children }) {
 					})),
 					paymentMethod,
 					ticketId,
+					collectedTotal,
 				})
 				dispatch({ type: 'SET_SYNCED', synced: true })
 			} catch {
@@ -180,7 +191,7 @@ export function ShiftProvider({ children }) {
 		const now = new Date().toISOString()
 		const cashSalesTotal = current.sales
 			.filter((s) => !s.paymentMethod || s.paymentMethod === 'cash')
-			.reduce((sum, s) => sum + s.total, 0)
+			.reduce((sum, s) => sum + (s.collectedAmount ?? s.total), 0)
 		const expectedBalance = +(current.openingCash + cashSalesTotal).toFixed(2)
 		const difference = +(closingCash - expectedBalance).toFixed(2)
 

@@ -12,6 +12,7 @@ export function useSaleCart() {
 	const [selectedPresId, setSelectedPresId] = useState(null)
 	const [quantity, setQuantity] = useState(1)
 	const [paymentMethod, setPaymentMethod] = useState('electronic')
+	const [collectedTotal, setCollectedTotal] = useState(null)
 
 	const searchRef = useRef(null)
 
@@ -74,7 +75,13 @@ export function useSaleCart() {
 
 	const subtotal = cartItems.reduce((s, i) => s + i.total, 0)
 	const discount = paymentMethod === 'cash' ? subtotal * 0.1 : 0
-	const total = subtotal - discount
+	const calcTotal = subtotal - discount
+	const finalTotal = collectedTotal != null ? collectedTotal : calcTotal
+
+	// Reset collectedTotal when payment method or cart changes
+	useEffect(() => {
+		setCollectedTotal(null)
+	}, [paymentMethod, cartItems.length])
 
 	const handleSubmit = async (onClose) => {
 		if (cartItems.length === 0) return
@@ -88,7 +95,7 @@ export function useSaleCart() {
 			total: i.total,
 		}))
 
-		await recordTicket(ticketId, paymentMethod, items)
+		await recordTicket(ticketId, paymentMethod, items, finalTotal)
 
 		for (const item of cartItems) {
 			if (item.saleType === 'fraction') {
@@ -143,7 +150,10 @@ export function useSaleCart() {
 		isFraction,
 		subtotal,
 		discount,
-		total,
+		calcTotal,
+		finalTotal,
+		collectedTotal,
+		setCollectedTotal,
 		handleAddToCart,
 		handleRemoveItem,
 		handleSubmit,

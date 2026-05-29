@@ -13,7 +13,8 @@ export const SaleCart = ({ onClose }) => {
 		searchRef,
 		filteredProducts, selectedProduct, productPres,
 		isFraction,
-		subtotal, discount, total,
+		subtotal, discount, calcTotal, finalTotal,
+		collectedTotal, setCollectedTotal,
 		handleAddToCart, handleRemoveItem, handleSubmit,
 	} = useSaleCart()
 
@@ -55,7 +56,10 @@ export const SaleCart = ({ onClose }) => {
 						setPaymentMethod={setPaymentMethod}
 						subtotal={subtotal}
 						discount={discount}
-						total={total}
+						calcTotal={calcTotal}
+						finalTotal={finalTotal}
+						collectedTotal={collectedTotal}
+						setCollectedTotal={setCollectedTotal}
 						onRemoveItem={handleRemoveItem}
 						onSubmit={handleSubmit}
 						onClose={onClose}
