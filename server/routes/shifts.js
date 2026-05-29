@@ -51,17 +51,17 @@ router.post('/:id/sales', async (req, res, next) => {
     const product = await Product.findById(pres.productId)
     if (!product) return res.status(404).json({ error: 'Product not found' })
 
+    if ((pres.stock ?? 0) < quantity) return res.status(400).json({ error: 'Insufficient stock' })
+    pres.stock -= quantity
+
     if (product.saleType === 'fraction') {
       const deduction = quantity * (pres.grams ?? 0)
       if ((product.stockGrams ?? 0) < deduction) return res.status(400).json({ error: 'Insufficient stock (grams)' })
       product.stockGrams -= deduction
       await product.save()
-    } else {
-      if ((pres.stock ?? 0) < quantity) return res.status(400).json({ error: 'Insufficient stock' })
-      pres.stock -= quantity
-      await pres.save()
     }
 
+    await pres.save()
     shift.sales.push({ productId, presentationId, quantity, unitPrice, total, timestamp: new Date() })
     await shift.save()
 
@@ -92,14 +92,14 @@ router.post('/:id/ticket', async (req, res, next) => {
       const product = await Product.findById(pres.productId)
       if (!product) return res.status(404).json({ error: `Product not found: ${pres.productId}` })
 
+      if ((pres.stock ?? 0) < item.quantity) {
+        return res.status(400).json({ error: `Stock insuficiente para ${pres.label}` })
+      }
+
       if (product.saleType === 'fraction') {
         const deduction = item.quantity * (pres.grams ?? 0)
         if ((product.stockGrams ?? 0) < deduction) {
           return res.status(400).json({ error: `Stock insuficiente para ${product.name}` })
-        }
-      } else {
-        if ((pres.stock ?? 0) < item.quantity) {
-          return res.status(400).json({ error: `Stock insuficiente para ${pres.label}` })
         }
       }
     }
@@ -109,14 +109,15 @@ router.post('/:id/ticket', async (req, res, next) => {
       const pres = await Presentation.findById(item.presentationId)
       const product = await Product.findById(pres.productId)
 
+      pres.stock -= item.quantity
+
       if (product.saleType === 'fraction') {
         const deduction = item.quantity * (pres.grams ?? 0)
         product.stockGrams -= deduction
         await product.save()
-      } else {
-        pres.stock -= item.quantity
-        await pres.save()
       }
+
+      await pres.save()
 
       shift.sales.push({
         productId: pres.productId,
@@ -183,6 +184,11 @@ router.patch('/:id/sales/:saleId', async (req, res, next) => {
     const product = await Product.findById(pres.productId)
     if (!product) return res.status(404).json({ error: 'Product not found' })
 
+    if (diff > 0 && (pres.stock ?? 0) < diff) {
+      return res.status(400).json({ error: 'Insufficient stock' })
+    }
+    pres.stock -= diff
+
     if (product.saleType === 'fraction') {
       const deduction = diff * (pres.grams ?? 0)
       if (deduction > 0 && (product.stockGrams ?? 0) < deduction) {
@@ -190,13 +196,9 @@ router.patch('/:id/sales/:saleId', async (req, res, next) => {
       }
       product.stockGrams -= deduction
       await product.save()
-    } else {
-      if (diff > 0 && (pres.stock ?? 0) < diff) {
-        return res.status(400).json({ error: 'Insufficient stock' })
-      }
-      pres.stock -= diff
-      await pres.save()
     }
+
+    await pres.save()
 
     sale.quantity = quantity
     sale.total = +(quantity * sale.unitPrice).toFixed(2)
@@ -224,14 +226,15 @@ router.delete('/:id/sales/:saleId', async (req, res, next) => {
     const product = await Product.findById(pres.productId)
     if (!product) return res.status(404).json({ error: 'Product not found' })
 
+    pres.stock += sale.quantity
+
     if (product.saleType === 'fraction') {
       const restore = sale.quantity * (pres.grams ?? 0)
       product.stockGrams += restore
       await product.save()
-    } else {
-      pres.stock += sale.quantity
-      await pres.save()
     }
+
+    await pres.save()
 
     sale.deleteOne()
     await shift.save()

@@ -1,12 +1,4 @@
-@use '../../../theme/values/colors' as *;
-@use '../../../theme/values/sizes' as *;
 
-.shift-sales {
-  margin-top: 12px;
-  padding: 10px 12px;
-  border: 1px solid $grey_dark;
-  border-radius: $smooth;
-}
 
 .shift-sales__title {
   color: $white;

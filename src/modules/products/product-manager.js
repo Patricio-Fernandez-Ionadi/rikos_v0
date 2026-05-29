@@ -170,20 +170,19 @@ export function useProductManager() {
 		const pres = presentations.find((p) => p._id === sale.presentationId)
 		if (pres) {
 			const prod = products.find((p) => p._id === pres.productId)
+			setPresentations((prev) =>
+				prev.map((p) =>
+					p._id === sale.presentationId
+						? { ...p, stock: Math.max(0, (p.stock ?? 0) - sale.quantity) }
+						: p,
+				),
+			)
 			if (prod?.saleType === 'fraction') {
 				const deduction = sale.quantity * (pres.grams ?? 0)
 				setProducts((prev) =>
 					prev.map((p) =>
 						p._id === prod._id
 							? { ...p, stockGrams: Math.max(0, (p.stockGrams ?? 0) - deduction) }
-							: p,
-					),
-				)
-			} else {
-				setPresentations((prev) =>
-					prev.map((p) =>
-						p._id === sale.presentationId
-							? { ...p, stock: Math.max(0, (p.stock ?? 0) - sale.quantity) }
 							: p,
 					),
 				)

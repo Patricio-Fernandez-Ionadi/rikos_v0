@@ -39,6 +39,7 @@ router.put('/:id', async (req, res, next) => {
     const prod = await Product.findByIdAndUpdate(
       req.params.id,
       {
+        categoryId: req.body.categoryId,
         name: req.body.name,
         purchaseCost: req.body.purchaseCost,
         saleType: req.body.saleType,
