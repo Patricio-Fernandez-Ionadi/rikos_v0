@@ -3,11 +3,12 @@ import { useData } from '../../../app/data-context.jsx'
 import { useShift } from '../shift-context.jsx'
 
 export function useSaleCart() {
-	const { products, presentations, setProducts, setPresentations } = useData()
+	const { products, presentations, categories, setProducts, setPresentations } = useData()
 	const { recordTicket } = useShift()
 
 	const [cartItems, setCartItems] = useState([])
 	const [searchQuery, setSearchQuery] = useState('')
+	const [selectedCategory, setSelectedCategory] = useState('')
 	const [selectedProductId, setSelectedProductId] = useState(null)
 	const [selectedPresId, setSelectedPresId] = useState(null)
 	const [quantity, setQuantity] = useState(1)
@@ -21,14 +22,20 @@ export function useSaleCart() {
 	}, [])
 
 	const filteredProducts = useMemo(() => {
-		if (!searchQuery.trim()) return products
-		const q = searchQuery.toLowerCase()
-		return products.filter(
-			(p) =>
-				p.name.toLowerCase().includes(q) ||
-				(p.marca && p.marca.toLowerCase().includes(q)),
-		)
-	}, [products, searchQuery])
+		let filtered = products
+		if (selectedCategory) {
+			filtered = filtered.filter((p) => p.categoryId === selectedCategory)
+		}
+		if (searchQuery.trim()) {
+			const q = searchQuery.toLowerCase()
+			filtered = filtered.filter(
+				(p) =>
+					p.name.toLowerCase().includes(q) ||
+					(p.marca && p.marca.toLowerCase().includes(q)),
+			)
+		}
+		return filtered
+	}, [products, searchQuery, selectedCategory])
 
 	const selectedProduct = useMemo(
 		() => products.find((p) => p._id === selectedProductId),
@@ -67,6 +74,7 @@ export function useSaleCart() {
 		])
 		setQuantity(1)
 		setSelectedPresId(null)
+		setSelectedProductId(null)
 	}
 
 	const handleRemoveItem = (cartId) => {
@@ -134,6 +142,8 @@ export function useSaleCart() {
 		cartItems,
 		searchQuery,
 		setSearchQuery,
+		selectedCategory,
+		setSelectedCategory,
 		selectedProductId,
 		setSelectedProductId,
 		selectedPresId,
@@ -143,6 +153,7 @@ export function useSaleCart() {
 		paymentMethod,
 		setPaymentMethod,
 		searchRef,
+		categories,
 		filteredProducts,
 		selectedProduct,
 		productPres,

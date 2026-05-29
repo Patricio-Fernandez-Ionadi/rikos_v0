@@ -2,6 +2,9 @@ export const ProductBrowser = ({
 	searchRef,
 	searchQuery,
 	setSearchQuery,
+	selectedCategory,
+	setSelectedCategory,
+	categories,
 	filteredProducts,
 	selectedProductId,
 	setSelectedProductId,
@@ -16,14 +19,33 @@ export const ProductBrowser = ({
 }) => {
 	return (
 		<div className='sale-cart__products'>
-			<input
-				ref={searchRef}
-				className='field-input'
-				type='text'
-				placeholder='Buscar producto…'
-				value={searchQuery}
-				onChange={(e) => setSearchQuery(e.target.value)}
-			/>
+			<div className='sale-cart__filters'>
+				<input
+					ref={searchRef}
+					className='field-input'
+					type='text'
+					placeholder='Buscar producto…'
+					value={searchQuery}
+					onChange={(e) => setSearchQuery(e.target.value)}
+				/>
+				<select
+					className='field-input'
+					value={selectedCategory}
+					onChange={(e) => {
+						setSelectedCategory(e.target.value)
+						setSelectedProductId(null)
+					}}
+				>
+					<option value=''>Todas las categorías</option>
+					{categories
+						? categories.map((cat) => (
+								<option key={cat._id} value={cat._id}>
+									{cat.name}
+								</option>
+							))
+						: null}
+				</select>
+			</div>
 
 			<div className='sale-cart__product-list'>
 				{filteredProducts.map((product) => (

@@ -35,7 +35,7 @@
 		background: $black;
 	}
 
-	@media (max-width: $medium - 1px) {
+	@media (max-width: $max-mobile) {
 		min-width: unset;
 
 		thead { display: none; }

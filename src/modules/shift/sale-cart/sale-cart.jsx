@@ -6,11 +6,13 @@ export const SaleCart = ({ onClose }) => {
 	const {
 		cartItems,
 		searchQuery, setSearchQuery,
+		selectedCategory, setSelectedCategory,
 		selectedProductId, setSelectedProductId,
 		selectedPresId, setSelectedPresId,
 		quantity, setQuantity,
 		paymentMethod, setPaymentMethod,
 		searchRef,
+		categories,
 		filteredProducts, selectedProduct, productPres,
 		isFraction,
 		subtotal, discount, calcTotal, finalTotal,
@@ -38,6 +40,9 @@ export const SaleCart = ({ onClose }) => {
 						searchRef={searchRef}
 						searchQuery={searchQuery}
 						setSearchQuery={setSearchQuery}
+						selectedCategory={selectedCategory}
+						setSelectedCategory={setSelectedCategory}
+						categories={categories}
 						filteredProducts={filteredProducts}
 						selectedProductId={selectedProductId}
 						setSelectedProductId={setSelectedProductId}

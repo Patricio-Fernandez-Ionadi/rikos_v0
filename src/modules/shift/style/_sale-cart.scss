@@ -11,7 +11,7 @@
 	flex-direction: column;
 	height: 100vh;
 
-	@media (max-width: $medium - 1px) {
+	@media (max-width: $max-mobile) {
 		max-width: 100%;
 	}
 }
@@ -43,11 +43,15 @@
 .sale-cart__body {
 	display: flex;
 	flex: 1;
+	min-height: 0;
 	overflow: hidden;
 
-	@media (max-width: $medium - 1px) {
+	@media (min-width: $medium) {
+		flex-direction: row;
+	}
+
+	@media (max-width: $max-mobile) {
 		flex-direction: column;
-		overflow: hidden;
 	}
 }
 
@@ -57,26 +61,44 @@
 	flex: 1;
 	display: flex;
 	flex-direction: column;
+	min-height: 0;
 	padding: 12px;
 	border-right: 1px solid $grey_dark;
-	overflow-y: auto;
 
 	@media (min-width: $medium) {
-		padding: 16px;
 		overflow: hidden;
+		padding: 16px;
 	}
 
-	@media (max-width: $medium - 1px) {
+	@media (max-width: $max-mobile) {
 		border-right: none;
 		border-bottom: 1px solid $grey_dark;
 		overflow: hidden;
-		padding: 8px;
+		padding: 8px 8px 4px;
+		min-height: 300px;
+	}
+}
+
+.sale-cart__filters {
+	display: flex;
+	gap: 6px;
+	flex-shrink: 0;
+
+	input,
+	select {
+		flex: 1;
+		min-width: 0;
+	}
+
+	@media (max-width: $max-mobile) {
+		gap: 4px;
 	}
 }
 
 .sale-cart__product-list {
 	flex: 1;
 	overflow-y: auto;
+	min-height: 0;
 	margin: 6px 0;
 	display: flex;
 	flex-direction: column;
@@ -93,7 +115,9 @@
 	border: 1px solid transparent;
 	border-radius: $thin;
 	cursor: pointer;
-	transition: background 0.15s, border-color 0.15s;
+	transition:
+		background 0.15s,
+		border-color 0.15s;
 
 	@media (min-width: $medium) {
 		padding: 8px 10px;
@@ -148,7 +172,9 @@
 	border: 1px solid transparent;
 	border-radius: $thin;
 	cursor: pointer;
-	transition: background 0.15s, border-color 0.15s;
+	transition:
+		background 0.15s,
+		border-color 0.15s;
 
 	&:hover {
 		background: rgba($primary, 0.06);
@@ -210,16 +236,17 @@
 	flex-direction: column;
 	padding: 12px;
 	overflow: hidden;
+	flex-shrink: 0;
 
 	@media (min-width: $medium) {
 		padding: 16px;
 	}
 
-	@media (max-width: $medium - 1px) {
+	@media (max-width: $max-mobile) {
 		width: 100%;
-		padding: 10px 12px;
-		overflow-y: auto;
+		padding: 6px 10px 8px;
 		flex: none;
+		flex-shrink: 0;
 	}
 }
 
@@ -236,6 +263,7 @@
 	flex-direction: column;
 	gap: 4px;
 	min-height: 0;
+	max-height: 100%;
 }
 
 .sale-cart__cart-item {
