@@ -70,10 +70,11 @@ export function useProductManager() {
 					productId: created._id, supplierId, purchaseCost: productData.purchaseCost,
 				})
 			}
+			dispatch({ type: 'CLOSE_PRODUCT_FORM' })
+			return created
 		} catch (e) {
 			console.error(e)
 		}
-		dispatch({ type: 'CLOSE_PRODUCT_FORM' })
 	}, [setProducts])
 
 	const editProductFn = useCallback(async (data) => {

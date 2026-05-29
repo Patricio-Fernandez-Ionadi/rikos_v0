@@ -56,7 +56,10 @@ export const ProductsPage = () => {
 			>
 				<ProductForm
 					categories={categories} suppliers={suppliers}
-					onSubmit={createProduct}
+					onSubmit={async (data) => {
+						const created = await createProduct(data)
+						if (created?._id) navigate(`/products/${created._id}`)
+					}}
 					onCancel={() => closeProductForm()}
 				/>
 			</Modal>
