@@ -85,11 +85,13 @@ export const ProductBrowser = ({
 										type='number'
 										min='1'
 										value={quantity}
-										onChange={(e) =>
-											setQuantity(
-												Math.max(1, parseInt(e.target.value) || 1),
-											)
-										}
+										onChange={(e) => {
+											const v = e.target.value
+											setQuantity(v === '' ? '' : Math.max(1, parseInt(v) || 1))
+										}}
+										onBlur={() => {
+											if (quantity === '' || quantity < 1) setQuantity(1)
+										}}
 									/>
 									{isFraction && pres.grams && (
 										<span className='sale-cart__grams-hint'>

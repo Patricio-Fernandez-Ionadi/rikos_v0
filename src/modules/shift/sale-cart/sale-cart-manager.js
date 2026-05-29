@@ -47,7 +47,8 @@ export function useSaleCart() {
 	const isFraction = selectedProduct?.saleType === 'fraction'
 
 	const handleAddToCart = () => {
-		if (!selectedPres || !selectedProduct || quantity < 1) return
+		const qty = Math.max(1, parseInt(quantity) || 1)
+		if (!selectedPres || !selectedProduct) return
 		setCartItems((prev) => [
 			...prev,
 			{
@@ -58,9 +59,9 @@ export function useSaleCart() {
 				presLabel: selectedPres.label,
 				saleType: selectedProduct.saleType,
 				grams: selectedPres.grams,
-				quantity,
+				quantity: qty,
 				unitPrice: selectedPres.salePrice ?? 0,
-				total: quantity * (selectedPres.salePrice ?? 0),
+				total: qty * (selectedPres.salePrice ?? 0),
 			},
 		])
 		setQuantity(1)
