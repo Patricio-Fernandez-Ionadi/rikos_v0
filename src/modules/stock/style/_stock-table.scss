@@ -1,5 +1,6 @@
 @use '../../../theme/values/colors' as *;
 @use '../../../theme/values/sizes' as *;
+@use '../../../theme/values/mediaqueries' as *;
 
 .stock-page__table-wrap {
 	overflow-x: auto;
@@ -32,6 +33,56 @@
 
 	tr:hover td {
 		background: $black;
+	}
+
+	@media (max-width: $medium - 1px) {
+		min-width: unset;
+
+		thead { display: none; }
+		tbody, tr, td { display: block; }
+
+		tr {
+			padding: 10px;
+			margin-bottom: 8px;
+			border: 1px solid $black_light;
+			border-radius: $thin;
+		}
+
+		tr:hover td { background: unset; }
+		td { border: none; padding: 2px 0; }
+
+		.stock-cell--product {
+			color: $white;
+			font-weight: 700;
+			font-size: 1em;
+			padding-bottom: 5px;
+		}
+
+		.stock-cell--category,
+		.stock-cell--pres {
+			display: none;
+		}
+
+		.stock-cell--stock {
+			font-size: 0.85em;
+		}
+
+		.stock-cell--grams {
+			font-size: 0.85em;
+			color: $grey_light;
+		}
+
+		.stock-cell--grams:empty {
+			display: none;
+		}
+
+		.stock-cell--actions {
+			padding-top: 5px;
+		}
+
+		.stock-page__edit {
+			width: 100%;
+		}
 	}
 }
 

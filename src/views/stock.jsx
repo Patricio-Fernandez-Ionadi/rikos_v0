@@ -13,16 +13,11 @@ export const StockPage = () => {
 	const filtered = presentations.filter((p) => {
 		const prod = getProduct(p.productId)
 		if (!prod) return false
+		const presStock = p.stock ?? 0
 		if (filter === 'all') return true
-		const stock = prod.saleType === 'fraction'
-			? (prod.stockGrams ?? 0)
-			: (p.stock ?? 0)
-		if (filter === 'stocked') return stock > 0
-		if (filter === 'low') {
-			if (prod.saleType === 'fraction') return stock > 0 && stock <= 500
-			return stock > 0 && stock <= 5
-		}
-		if (filter === 'empty') return stock <= 0
+		if (filter === 'stocked') return presStock > 0
+		if (filter === 'low') return presStock > 0 && presStock <= 5
+		if (filter === 'empty') return presStock <= 0
 		return true
 	})
 
@@ -41,11 +36,12 @@ export const StockPage = () => {
 				<table className='stock-page__table'>
 					<thead>
 						<tr>
-							<th>Producto</th>
-							<th>Categoría</th>
-							<th>Presentación</th>
-							<th>Stock</th>
-							<th>Acciones</th>
+							<th className='stock-cell--product'>Producto</th>
+							<th className='stock-cell--category'>Categoría</th>
+							<th className='stock-cell--pres'>Presentación</th>
+							<th className='stock-cell--stock'>Stock (unidades)</th>
+							<th className='stock-cell--grams'>Gramos totales</th>
+							<th className='stock-cell--actions'>Acciones</th>
 						</tr>
 					</thead>
 					<tbody>

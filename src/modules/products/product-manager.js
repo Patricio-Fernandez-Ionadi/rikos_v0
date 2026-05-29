@@ -148,13 +148,27 @@ export function useProductManager() {
 		const val = parseInt(state.stockValue, 10)
 		if (isNaN(val) || val < 0) return
 		try {
+			const pres = presentations.find((p) => p._id === presId)
+			if (!pres) return
+			const product = products.find((p) => p._id === pres.productId)
+			const isFraction = product?.saleType === 'fraction'
+
 			const updated = await stockService.updateStock(presId, val)
 			setPresentations((prev) => prev.map((p) => (p._id === updated._id ? updated : p)))
+
+			if (isFraction && pres.grams) {
+				const delta = val - (pres.stock ?? 0)
+				if (delta !== 0) {
+					const gramsDelta = delta * pres.grams
+					const updatedProduct = await stockService.updateStockGrams(product._id, (product.stockGrams ?? 0) + gramsDelta)
+					setProducts((prev) => prev.map((p) => (p._id === updatedProduct._id ? updatedProduct : p)))
+				}
+			}
 		} catch (e) {
 			console.error(e)
 		}
 		dispatch({ type: 'CANCEL_STOCK_EDIT' })
-	}, [state.stockValue, setPresentations])
+	}, [state.stockValue, setPresentations, setProducts, presentations, products])
 
 	const updateStockGramsFn = useCallback(async (productId, stockGrams) => {
 		try {

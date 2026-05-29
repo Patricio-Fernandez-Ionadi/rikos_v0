@@ -22,18 +22,15 @@ export const StockRow = ({ pres, product, categoryName }) => {
 			setPresentations((prev) =>
 				prev.map((p) => (p._id === updated._id ? updated : p)),
 			)
-		} catch (e) {
-			console.error(e)
-		}
-		setStockEdit(null)
-	}
-
-	const handleStockGramsUpdate = async (productId) => {
-		const val = parseInt(stockValue)
-		if (isNaN(val) || val < 0) return
-		try {
-			const updated = await stockService.updateStockGrams(productId, val)
-			setProducts((prev) => prev.map((p) => (p._id === updated._id ? updated : p)))
+			if (isFraction && pres.grams) {
+				const oldStock = pres.stock ?? 0
+				const delta = val - oldStock
+				if (delta !== 0) {
+					const gramsDelta = delta * pres.grams
+					const updatedProduct = await stockService.updateStockGrams(product._id, (product.stockGrams ?? 0) + gramsDelta)
+					setProducts((prev) => prev.map((p) => (p._id === updatedProduct._id ? updatedProduct : p)))
+				}
+			}
 		} catch (e) {
 			console.error(e)
 		}
@@ -42,6 +39,13 @@ export const StockRow = ({ pres, product, categoryName }) => {
 
 	const handleSale = async (sale) => {
 		await addSale(sale)
+		setPresentations((prev) =>
+			prev.map((p) =>
+				p._id === sale.presentationId
+					? { ...p, stock: Math.max(0, (p.stock ?? 0) - sale.quantity) }
+					: p,
+			),
+		)
 		if (isFraction) {
 			const deduction = sale.quantity * (pres.grams ?? 0)
 			setProducts((prev) =>
@@ -51,39 +55,38 @@ export const StockRow = ({ pres, product, categoryName }) => {
 						: p,
 				),
 			)
-		} else {
-			setPresentations((prev) =>
-				prev.map((p) =>
-					p._id === sale.presentationId
-						? { ...p, stock: Math.max(0, (p.stock ?? 0) - sale.quantity) }
-						: p,
-				),
-			)
 		}
 		setSalePresId(null)
 	}
 
-	const stockDisplay = isFraction ? (product.stockGrams ?? 0) : (pres.stock ?? 0)
-	const stockLabel = isFraction ? `${stockDisplay}g` : stockDisplay
-	const stockLow = !isFraction && (pres.stock ?? 0) <= 5
-	const stockLowFraction = isFraction && (product.stockGrams ?? 0) <= 100
+	const presStock = pres.stock ?? 0
+	const totalGrams = product.stockGrams ?? 0
+	const stockLow = presStock <= (isFraction ? 5 : 5)
+	const gramsLow = isFraction && totalGrams <= 100
 
 	return (
 		<>
 			<tr key={pres._id}>
-				<td style={{ color: '#f5f5f5' }}>{product.name}{product.marca ? <span className='stock-page__marca'> — {product.marca}</span> : ''}</td>
-				<td>{categoryName}</td>
-				<td>{pres.label ?? '—'} {isFraction && pres.grams ? `(${pres.grams}g)` : ''}</td>
-				<td>
+				<td className='stock-cell--product' style={{ color: '#f5f5f5' }}>{product.name}{product.marca ? <span className='stock-page__marca'> — {product.marca}</span> : ''}</td>
+				<td className='stock-cell--category'>{categoryName}</td>
+				<td className='stock-cell--pres'>{pres.label ?? '—'} {isFraction && pres.grams ? `(${pres.grams}g)` : ''}</td>
+				<td className='stock-cell--stock'>
 					<span
-						className={`stock-page__qty ${stockLow || stockLowFraction ? 'stock-page__qty--low' : 'stock-page__qty--ok'}`}
+						className={`stock-page__qty ${stockLow ? 'stock-page__qty--low' : 'stock-page__qty--ok'}`}
 					>
-						{stockLabel}
+						{presStock} u
 					</span>
 				</td>
-				<td>
+				<td className='stock-cell--grams'>
+					{isFraction && (
+						<span className={`stock-page__qty ${gramsLow ? 'stock-page__qty--low' : 'stock-page__qty--ok'}`}>
+							{totalGrams}g
+						</span>
+					)}
+				</td>
+				<td className='stock-cell--actions'>
 					<div className='stock-page__edit'>
-						{stockEdit === (isFraction ? product._id : pres._id) ? (
+						{stockEdit === pres._id ? (
 							<>
 								<input
 									className='field-input field-input--xs'
@@ -93,10 +96,7 @@ export const StockRow = ({ pres, product, categoryName }) => {
 								/>
 								<button
 									className='sidebar__btn sidebar__btn--xs'
-									onClick={() => isFraction
-										? handleStockGramsUpdate(product._id)
-										: handleStockUpdate(pres._id)
-									}
+									onClick={() => handleStockUpdate(pres._id)}
 								>
 									OK
 								</button>
@@ -112,8 +112,8 @@ export const StockRow = ({ pres, product, categoryName }) => {
 								<button
 									className='sidebar__btn sidebar__btn--xs'
 									onClick={() => {
-										setStockEdit(isFraction ? product._id : pres._id)
-										setStockValue(String(stockDisplay))
+										setStockEdit(pres._id)
+										setStockValue(String(presStock))
 									}}
 								>
 									Ajustar
