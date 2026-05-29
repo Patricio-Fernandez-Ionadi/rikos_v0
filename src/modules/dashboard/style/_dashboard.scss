@@ -50,16 +50,22 @@
 	font-size: 18px;
 }
 
+.dashboard__table-wrap {
+	overflow-x: auto;
+	margin-bottom: 24px;
+	-webkit-overflow-scrolling: touch;
+}
+
 .dashboard__table {
 	width: 100%;
 	border-collapse: collapse;
-	margin-bottom: 24px;
 
 	th,
 	td {
 		text-align: left;
 		padding: 8px 12px;
 		border-bottom: 1px solid $black_light;
+		white-space: nowrap;
 	}
 
 	th {
@@ -96,4 +102,19 @@
 .dashboard__badge--open {
 	background: $primary;
 	color: $white_light;
+}
+
+.dashboard__row--clickable {
+	cursor: pointer;
+
+	&:hover td {
+		color: $white;
+	}
+}
+
+@media (max-width: $max-mobile) {
+	.dashboard__th--desktop,
+	.dashboard__td--desktop {
+		display: none;
+	}
 }

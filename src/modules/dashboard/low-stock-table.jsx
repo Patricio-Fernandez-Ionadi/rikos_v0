@@ -17,7 +17,8 @@ export const LowStockTable = () => {
 			<h3 className='dashboard__section-title'>
 				Stock bajo (≤5 unidades)
 			</h3>
-			<table className='dashboard__table'>
+			<div className='dashboard__table-wrap'>
+				<table className='dashboard__table'>
 				<thead>
 					<tr>
 						<th>Producto</th>
@@ -44,6 +45,7 @@ export const LowStockTable = () => {
 					})}
 				</tbody>
 			</table>
+			</div>
 		</>
 	)
 }

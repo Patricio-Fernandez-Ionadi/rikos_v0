@@ -1,50 +1,48 @@
+import { useNavigate } from 'react-router-dom'
 import { useShift } from '../../modules/shift/shift-context.jsx'
 
 /**
- * Summary table for the active shift — sales count, total, opening cash,
- * expected balance, and status badge.
+ * Card for the active shift — shows sales count, total, opening cash,
+ * expected balance, and status. Only renders when a shift is open.
  */
 export const ActiveShiftSummary = () => {
+	const navigate = useNavigate()
 	const { shift } = useShift()
 
 	if (!shift) return null
 
 	const activeSales = shift.sales?.length ?? 0
 	const activeTotal =
-		shift.sales?.reduce((s, x) => s + x.total, 0) ?? 0
+		shift.sales?.reduce((s, x) => s + (x.collectedAmount ?? x.total), 0) ?? 0
+
+	const expected = shift.openingCash + activeTotal
 
 	return (
-		<>
-			<h3 className='dashboard__section-title'>Turno activo</h3>
-			<table className='dashboard__table'>
-				<thead>
-					<tr>
-						<th>Ventas</th>
-						<th>Total</th>
-						<th>Efectivo inicial</th>
-						<th>Esperado</th>
-						<th>Estado</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>{activeSales}</td>
-						<td>${activeTotal.toLocaleString()}</td>
-						<td>${shift.openingCash.toLocaleString()}</td>
-						<td>
-							$
-							{(
-								shift.openingCash + activeTotal
-							).toLocaleString()}
-						</td>
-						<td>
-							<span className='dashboard__badge dashboard__badge--open'>
-								Abierto
-							</span>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</>
+		<a className='dashboard__card' onClick={() => navigate('/shifts')}>
+			<h4 className='dashboard__card-title'>
+				Turno activo
+				<span className='dashboard__badge dashboard__badge--open' style={{ marginLeft: 8 }}>
+					Abierto
+				</span>
+			</h4>
+			<div style={{ display: 'flex', gap: 24, marginTop: 12, flexWrap: 'wrap' }}>
+				<div>
+					<div className='dashboard__card-desc'>Ventas</div>
+					<div className='dashboard__card-value' style={{ fontSize: 22 }}>{activeSales}</div>
+				</div>
+				<div>
+					<div className='dashboard__card-desc'>Total vendido</div>
+					<div className='dashboard__card-value' style={{ fontSize: 22 }}>${activeTotal.toLocaleString()}</div>
+				</div>
+				<div>
+					<div className='dashboard__card-desc'>Efectivo inicial</div>
+					<div className='dashboard__card-value' style={{ fontSize: 22 }}>${shift.openingCash.toLocaleString()}</div>
+				</div>
+				<div>
+					<div className='dashboard__card-desc'>Esperado</div>
+					<div className='dashboard__card-value' style={{ fontSize: 22 }}>${expected.toLocaleString()}</div>
+				</div>
+			</div>
+		</a>
 	)
 }
