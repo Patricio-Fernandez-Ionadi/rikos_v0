@@ -40,6 +40,24 @@ export function ShiftProvider({ children }) {
 		else clearLocal()
 	}, [state.shift])
 
+	// On mount, fetch active shift from server (opened from another device)
+	useEffect(() => {
+		if (state.shift) return // local shift takes precedence
+		shiftService.getActiveShift().then((serverShift) => {
+			if (!serverShift) return
+			dispatch({ type: 'SET_SHIFT', shift: {
+				openingTime: serverShift.openingTime,
+				openingCash: serverShift.openingCash,
+				sales: serverShift.sales ?? [],
+				adjustments: serverShift.adjustments ?? [],
+				status: 'open',
+				_dbId: serverShift._id,
+			}})
+			dispatch({ type: 'SET_SYNCED', synced: true })
+		}).catch(() => {})
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [])
+
 	const openShift = useCallback(async (openingCash) => {
 		const s = {
 			openingTime: new Date().toISOString(),
@@ -111,7 +129,7 @@ export function ShiftProvider({ children }) {
 
 		const saleItems = items.map((item) => {
 			const ratio = itemsTotal > 0 ? (item.total ?? 0) / itemsTotal : 0
-			const itemCollected = diff !== 0 && ratio > 0
+			const adjustedTotal = diff !== 0 && ratio > 0
 				? +(item.total + diff * ratio).toFixed(2)
 				: null
 			return {
@@ -120,8 +138,8 @@ export function ShiftProvider({ children }) {
 				presentationId: item.presentationId,
 				quantity: item.quantity,
 				unitPrice: item.unitPrice,
-				total: item.total,
-				collectedAmount: itemCollected,
+				total: adjustedTotal ?? item.total,
+				collectedAmount: adjustedTotal,
 				paymentMethod,
 				ticketId,
 				timestamp: new Date().toISOString(),
@@ -133,13 +151,19 @@ export function ShiftProvider({ children }) {
 		if (current._dbId) {
 			try {
 				await shiftService.recordTicket(current._dbId, {
-					items: items.map((item) => ({
-						productId: item.productId,
-						presentationId: item.presentationId,
-						quantity: item.quantity,
-						unitPrice: item.unitPrice,
-						total: item.total,
-					})),
+					items: items.map((item) => {
+						const ratio = itemsTotal > 0 ? (item.total ?? 0) / itemsTotal : 0
+						const adj = diff !== 0 && ratio > 0
+							? +(item.total + diff * ratio).toFixed(2)
+							: null
+						return {
+							productId: item.productId,
+							presentationId: item.presentationId,
+							quantity: item.quantity,
+							unitPrice: item.unitPrice,
+							total: adj ?? item.total,
+						}
+					}),
 					paymentMethod,
 					ticketId,
 					collectedTotal,
