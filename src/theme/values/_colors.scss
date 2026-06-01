@@ -40,6 +40,12 @@ $info: #2f89fc;
 $shadow_color: rgba($white, 0.08);
 $shadow_color_strong: rgba($white, 0.15);
 
+// Background variants
+$bg_surface: #1e1e1e;
+$bg_elevated: #2a2a2a;
+$bg_overlay: rgba(0, 0, 0, 0.6);
+$bg_card: $grey_dark;
+
 // Semánticos
 $relative_major: #439124;
 $relative_minor: #20b2aa;

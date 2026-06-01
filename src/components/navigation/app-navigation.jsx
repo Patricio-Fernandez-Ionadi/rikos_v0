@@ -1,22 +1,60 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 import { NavItem } from './app-nav-item'
 
 const LINKS = [
 	{ to: '/products', label: 'Productos' },
 	{ to: '/suppliers', label: 'Proveedores' },
 	{ to: '/stock', label: 'Stock' },
-	{ to: '/tasks', label: 'Tareas' },
 	{ to: '/shifts', label: 'Turnos' },
+	{ to: '/tasks', label: 'Tareas' },
 	{ to: '/soporte', label: 'Soporte' },
+]
+
+const GROUPS = [
+	{
+		label: 'Gestión',
+		links: [
+			{ to: '/products', label: 'Productos' },
+			{ to: '/suppliers', label: 'Proveedores' },
+			{ to: '/stock', label: 'Stock' },
+		],
+	},
+	{
+		label: 'Ventas',
+		links: [
+			{ to: '/shifts', label: 'Turnos' },
+			{ to: '/tasks', label: 'Tareas' },
+		],
+	},
+	{
+		label: 'Soporte',
+		links: [
+			{ to: '/soporte', label: 'Soporte' },
+		],
+	},
 ]
 
 export const Navigation = () => {
 	const [menuOpen, setMenuOpen] = useState(false)
+	const location = useLocation()
+
+	useEffect(() => {
+		setMenuOpen(false)
+	}, [location.pathname])
 
 	return (
 		<nav className='navigation__nav'>
-			<NavItem to={'/'} label={"RIKO'S"} isLogo={true} onClick={() => setMenuOpen(false)} />
+			<NavItem to={'/'} label={"RIKO'S"} isLogo={true} />
 
+			{/* Desktop: inline links */}
+			<div className='navigation__desktop-links'>
+				{LINKS.map((link) => (
+					<NavItem key={link.to} to={link.to} label={link.label} />
+				))}
+			</div>
+
+			{/* Mobile: hamburger */}
 			<button
 				className={`navigation__hamburger ${menuOpen ? 'navigation__hamburger--open' : ''}`}
 				onClick={() => setMenuOpen((v) => !v)}
@@ -27,9 +65,16 @@ export const Navigation = () => {
 				<span />
 			</button>
 
-			<div className={`navigation__links ${menuOpen ? 'navigation__links--open' : ''}`}>
-				{LINKS.map((link) => (
-					<NavItem key={link.to} to={link.to} label={link.label} onClick={() => setMenuOpen(false)} />
+			{/* Mobile: overlay + drawer */}
+			{menuOpen && <div className='navigation__overlay' onClick={() => setMenuOpen(false)} />}
+			<div className={`navigation__drawer ${menuOpen ? 'navigation__drawer--open' : ''}`}>
+				{GROUPS.map((group) => (
+					<div key={group.label} className='navigation__group'>
+						<span className='navigation__group-label'>{group.label}</span>
+						{group.links.map((link) => (
+							<NavItem key={link.to} to={link.to} label={link.label} onClick={() => setMenuOpen(false)} />
+						))}
+					</div>
 				))}
 			</div>
 		</nav>

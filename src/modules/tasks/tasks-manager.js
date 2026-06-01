@@ -3,48 +3,6 @@ import { useData } from '../../app/data-context.jsx'
 import * as tasksData from './tasks-data.js'
 
 export const TASK_GROUPS = [
-	{
-		key: 'falta-envasar',
-		icon: '📦',
-		title: 'Falta envasar',
-		desc: 'Productos que necesitan ser envasados',
-		isNameType: false,
-	},
-	{
-		key: 'falta-stock',
-		icon: '🔄',
-		title: 'Falta stock',
-		desc: 'Productos que necesitan reposición de stock',
-		isNameType: false,
-	},
-	{
-		key: 'productos-sugeridos',
-		icon: '💡',
-		title: 'Productos sugeridos',
-		desc: 'Nombres de productos que no existen aún en los datos',
-		isNameType: true,
-	},
-	{
-		key: 'faltan-etiquetas',
-		icon: '🏷️',
-		title: 'Faltan etiquetas',
-		desc: 'Productos que necesitan etiquetas',
-		isNameType: false,
-	},
-	{
-		key: 'otros',
-		icon: '📌',
-		title: 'Otros',
-		desc: 'Otras tareas pendientes',
-		isNameType: false,
-	},
-	{
-		key: 'para-pedir',
-		icon: '📋',
-		title: 'Para pedir',
-		desc: 'Productos marcados manualmente para reposición',
-		isNameType: false,
-	},
 ]
 
 export function useTasksManager() {

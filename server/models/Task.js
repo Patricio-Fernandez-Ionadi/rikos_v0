@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 const taskSchema = new mongoose.Schema({
   type: {
     type: String,
-    enum: ['falta-envasar', 'falta-stock', 'productos-sugeridos', 'faltan-etiquetas', 'otros', 'para-pedir'],
+    enum: ['falta-envasar', 'falta-stock', 'productos-sugeridos', 'faltan-etiquetas', 'otros'],
     required: true,
   },
   productId: {
