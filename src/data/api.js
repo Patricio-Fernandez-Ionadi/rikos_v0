@@ -58,6 +58,11 @@ export const deleteSale = (shiftId, saleId) =>
 export const addAdjustment = (shiftId, data) =>
   request(`/shifts/${shiftId}/adjustments`, { method: 'PATCH', body: JSON.stringify(data) })
 
+// ─── Tasks ─────────────────────────────────────────────────
+export const getTasks = () => request('/tasks')
+export const createTask = (data) => request('/tasks', { method: 'POST', body: JSON.stringify(data) })
+export const deleteTask = (id) => request(`/tasks/${id}`, { method: 'DELETE' })
+
 // ─── Notes ─────────────────────────────────────────────────
 export const getNotes = () => request('/notes')
 export const createNote = (data) => request('/notes', { method: 'POST', body: JSON.stringify(data) })

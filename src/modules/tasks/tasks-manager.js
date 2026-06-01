@@ -1,153 +1,123 @@
-import { useState, useCallback, useMemo } from 'react'
+import { useState, useCallback, useMemo, useEffect } from 'react'
 import { useData } from '../../app/data-context.jsx'
+import * as tasksData from './tasks-data.js'
 
-const STORAGE_KEY = 'rikos_restock_list'
-
-function loadRestockList() {
-	try {
-		const raw = localStorage.getItem(STORAGE_KEY)
-		return raw ? JSON.parse(raw) : []
-	} catch {
-		return []
-	}
-}
-
-function saveRestockList(ids) {
-	try {
-		localStorage.setItem(STORAGE_KEY, JSON.stringify(ids))
-	} catch { /* quota exceeded */ }
-}
-
-const TASK_GROUPS = [
+export const TASK_GROUPS = [
 	{
-		key: 'no-label',
-		icon: '🏷️',
-		title: 'Sin etiqueta',
-		desc: 'Presentaciones sin etiqueta asignada',
-		filter: (pres) => !pres.label || pres.label.trim() === '',
-	},
-	{
-		key: 'needs-packaging',
+		key: 'falta-envasar',
 		icon: '📦',
 		title: 'Falta envasar',
-		desc: 'Productos fraccionados con stock a granel sin envasar',
-		filter: () => false,
-		productFilter: (prod) => prod.saleType === 'fraction' && (prod.stockGrams ?? 0) > 0,
+		desc: 'Productos que necesitan ser envasados',
+		isNameType: false,
 	},
 	{
-		key: 'no-stock',
+		key: 'falta-stock',
 		icon: '🔄',
-		title: 'Sin stock',
-		desc: 'Presentaciones agotadas',
-		filter: (pres) => (pres.stock ?? 0) <= 0,
+		title: 'Falta stock',
+		desc: 'Productos que necesitan reposición de stock',
+		isNameType: false,
 	},
 	{
-		key: 'no-price',
-		icon: '💰',
-		title: 'Sin precio de venta',
-		desc: 'Presentaciones sin precio asignado',
-		filter: (pres) => pres.salePrice == null,
+		key: 'productos-sugeridos',
+		icon: '💡',
+		title: 'Productos sugeridos',
+		desc: 'Nombres de productos que no existen aún en los datos',
+		isNameType: true,
 	},
 	{
-		key: 'no-margin',
-		icon: '📊',
-		title: 'Sin margen',
-		desc: 'Productos sin margen de ganancia',
-		productFilter: (prod) => prod.margin == null,
+		key: 'faltan-etiquetas',
+		icon: '🏷️',
+		title: 'Faltan etiquetas',
+		desc: 'Productos que necesitan etiquetas',
+		isNameType: false,
 	},
 	{
-		key: 'no-cost',
-		icon: '💵',
-		title: 'Sin costo de compra',
-		desc: 'Productos sin costo de compra registrado',
-		productFilter: (prod) => prod.purchaseCost == null,
+		key: 'otros',
+		icon: '📌',
+		title: 'Otros',
+		desc: 'Otras tareas pendientes',
+		isNameType: false,
 	},
 	{
-		key: 'restock',
+		key: 'para-pedir',
 		icon: '📋',
 		title: 'Para pedir',
 		desc: 'Productos marcados manualmente para reposición',
-		productFilter: () => false,
-		isManual: true,
+		isNameType: false,
 	},
 ]
 
-const getProduct = (products, id) => products.find((p) => p._id === id)
-
 export function useTasksManager() {
-	const { products, presentations } = useData()
-	const [restockIds, setRestockIds] = useState(loadRestockList)
+	const { products } = useData()
+	const [version, setVersion] = useState(0)
+	const bump = useCallback(() => setVersion((v) => v + 1), [])
 
-	const addToRestock = useCallback((productId) => {
-		setRestockIds((prev) => {
-			if (prev.includes(productId)) return prev
-			const next = [...prev, productId]
-			saveRestockList(next)
-			return next
-		})
-	}, [])
+	// Load from server on mount
+	useEffect(() => {
+		tasksData.init().then(bump)
+	}, [bump])
 
-	const removeFromRestock = useCallback((productId) => {
-		setRestockIds((prev) => {
-			const next = prev.filter((id) => id !== productId)
-			saveRestockList(next)
-			return next
-		})
-	}, [])
+	const suggestions = useMemo(() => {
+		return tasksData.getNameSuggestions()
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [version])
 
-	const isInRestock = useCallback(
-		(productId) => restockIds.includes(productId),
-		[restockIds],
+	const getTaskProducts = useCallback(
+		(category) => {
+			const ids = tasksData.getProductIdsByType(category)
+			return ids.map((id) => products.find((p) => p._id === id)).filter(Boolean)
+		},
+		[products],
 	)
 
-	const toggleRestock = useCallback((productId) => {
-		setRestockIds((prev) => {
-			const next = prev.includes(productId)
-				? prev.filter((id) => id !== productId)
-				: [...prev, productId]
-			saveRestockList(next)
-			return next
-		})
-	}, [])
+	const toggleProductTask = useCallback(
+		async (category, productId) => {
+			tasksData.toggleProductTask(category, productId)
+			bump()
+		},
+		[bump],
+	)
 
-	const taskData = useMemo(() => {
-		const activeGroups = TASK_GROUPS.map((group) => {
-			if (group.isManual) {
-				const matched = restockIds
-					.map((id) => getProduct(products, id))
-					.filter(Boolean)
-				return { group, productItems: matched, presProductItems: [] }
-			}
-			if (group.productFilter) {
-				const matched = products.filter(group.productFilter)
-				return { group, productItems: matched, presProductItems: [] }
-			}
-			const matched = presentations.filter((pres) => {
-				const prod = getProduct(products, pres.productId)
-				if (!prod) return false
-				return group.filter(pres, prod)
-			})
-			return {
-				group,
-				productItems: [],
-				presProductItems: matched
-					.map((pres) => ({
-						pres,
-						product: getProduct(products, pres.productId),
-					}))
-					.filter((x) => x.product),
-			}
-		}).filter((g) => g.productItems.length > 0 || g.presProductItems.length > 0)
-		return activeGroups
-	}, [products, presentations, restockIds])
+	const isInTask = useCallback(
+		(category, productId) => {
+			return tasksData.getProductIdsByType(category).includes(productId)
+		},
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+		[version],
+	)
+
+	const addSuggested = useCallback(
+		async (name) => {
+			await tasksData.addSuggestion(name)
+			bump()
+		},
+		[bump],
+	)
+
+	const removeSuggested = useCallback(
+		async (id) => {
+			await tasksData.removeSuggestion(id)
+			bump()
+		},
+		[bump],
+	)
+
+	const getProductTaskCategories = useCallback(
+		(productId) => {
+			return tasksData.getProductTaskTypes(productId)
+		},
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+		[version],
+	)
 
 	return {
-		taskGroups: TASK_GROUPS,
-		taskData,
-		restockIds,
-		addToRestock,
-		removeFromRestock,
-		isInRestock,
-		toggleRestock,
+		TASK_GROUPS,
+		suggestedProducts: suggestions,
+		getTaskProducts,
+		toggleProductTask,
+		isInTask,
+		addSuggested,
+		removeSuggested,
+		getProductTaskCategories,
 	}
 }

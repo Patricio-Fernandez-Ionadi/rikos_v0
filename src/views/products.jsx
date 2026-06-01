@@ -1,5 +1,6 @@
 import { useNavigate, Link } from 'react-router-dom'
 import { useProductManager } from '../modules/products/product-manager.js'
+import { useTasksManager } from '../modules/tasks/tasks-manager.js'
 import { ProductList } from '../modules/products/product-list.jsx'
 import { Modal } from '../components/Modal.jsx'
 import { ProductForm } from '../modules/products/product/product-form.jsx'
@@ -17,6 +18,8 @@ export const ProductsPage = () => {
 		closeEditProduct,
 		editProduct,
 	} = useProductManager()
+
+	const { getProductTaskCategories, toggleProductTask } = useTasksManager()
 
 	return (
 		<div className='product-browser'>
@@ -43,6 +46,8 @@ export const ProductsPage = () => {
 						onEvent={(id) => navigate(`/products/${id}`)}
 						filteredProducts={filteredProducts}
 						presentations={presentations}
+						getProductTaskCategories={getProductTaskCategories}
+						toggleProductTask={toggleProductTask}
 					/>
 				</div>
 			</div>

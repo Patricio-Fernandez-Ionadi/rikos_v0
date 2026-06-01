@@ -1,0 +1,46 @@
+@use '../../../theme/values/colors' as *;
+
+.task-assigner {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.task-assigner--compact {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 6px;
+
+  .task-assigner__item {
+    font-size: 0.8em;
+  }
+
+  .task-assigner__label {
+    gap: 3px;
+  }
+}
+
+.task-assigner__item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 0;
+  cursor: pointer;
+  color: $grey;
+  font-size: 0.85em;
+
+  &:hover {
+    color: $white;
+  }
+
+  input[type="checkbox"] {
+    accent-color: $primary;
+  }
+}
+
+.task-assigner__label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+}

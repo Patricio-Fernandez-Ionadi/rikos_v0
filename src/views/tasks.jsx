@@ -1,57 +1,51 @@
-import { useState, useMemo } from 'react'
-import { useTasksManager } from '../modules/tasks/tasks-manager.js'
+import { useTasksManager, TASK_GROUPS } from '../modules/tasks/tasks-manager.js'
 import { TaskCard } from '../modules/tasks/task-card.jsx'
-import { SearchInput } from '../components/search-input.jsx'
+import { useData } from '../app/data-context.jsx'
 
 export const TasksPage = () => {
-	const { taskData, isInRestock, toggleRestock } = useTasksManager()
-	const [searchTerm, setSearchTerm] = useState('')
+	const { products } = useData()
+	const {
+		getTaskProducts,
+		toggleProductTask,
+		suggestedProducts,
+		addSuggested,
+		removeSuggested,
+	} = useTasksManager()
 
-	const filteredData = useMemo(() => {
-		if (!searchTerm.trim()) return taskData
-		const q = searchTerm.toLowerCase()
-		return taskData.map((g) => ({
-			...g,
-			productItems: g.productItems.filter((p) =>
-				p.name.toLowerCase().includes(q)
-			),
-			presProductItems: g.presProductItems.filter(({ pres, product }) =>
-				product.name.toLowerCase().includes(q) ||
-				(pres.label && pres.label.toLowerCase().includes(q))
-			),
-		})).filter((g) => g.productItems.length > 0 || g.presProductItems.length > 0)
-	}, [taskData, searchTerm])
+	const hasAny = TASK_GROUPS.some((g) => {
+		if (g.isNameType) return suggestedProducts.length > 0
+		return getTaskProducts(g.key).length > 0
+	})
 
 	return (
 		<div className='tasks-page'>
 			<h2 className='tasks-page__title'>Tareas pendientes</h2>
 
-			<SearchInput
-				placeholder='Buscar producto…'
-				value={searchTerm}
-				onChange={(e) => setSearchTerm(e.target.value)}
-				style={{ marginBottom: 16 }}
-			/>
-
 			<div className='tasks__grid'>
-				{filteredData.length === 0 ? (
-					<p className='placeholder' style={{ textAlign: 'center', padding: 40, color: '#616161' }}>
-						{searchTerm.trim()
-							? 'No hay tareas que coincidan con la búsqueda'
-							: '¡Todo al día! No hay tareas pendientes.'
-						}
-					</p>
-				) : (
-					filteredData.map(({ group, productItems, presProductItems }) => (
+				{TASK_GROUPS.map((group) => {
+					const assignedProducts = group.isNameType
+						? []
+						: getTaskProducts(group.key)
+					const suggestions = group.isNameType ? suggestedProducts : []
+
+					return (
 						<TaskCard
 							key={group.key}
 							group={group}
-							productItems={productItems}
-							presProductItems={presProductItems}
-							isInRestock={isInRestock}
-							onToggleRestock={toggleRestock}
+							products={assignedProducts}
+							suggestions={suggestions}
+							toggleProduct={(productId) => toggleProductTask(group.key, productId)}
+							addSuggested={addSuggested}
+							removeSuggested={removeSuggested}
+							allProducts={products}
 						/>
-					))
+					)
+				})}
+
+				{!hasAny && (
+					<p className='placeholder' style={{ textAlign: 'center', padding: 40, color: '#616161', gridColumn: '1 / -1' }}>
+						No hay tareas pendientes
+					</p>
 				)}
 			</div>
 		</div>

@@ -17,6 +17,7 @@ import shiftsRouter from './routes/shifts.js'
 import notesRouter from './routes/notes.js'
 import suppliersRouter from './routes/suppliers.js'
 import productSuppliersRouter from './routes/product-suppliers.js'
+import tasksRouter from './routes/tasks.js'
 
 const app = express()
 const PORT = process.env.PORT || 3001
@@ -31,6 +32,7 @@ app.use('/api/shifts', shiftsRouter)
 app.use('/api/notes', notesRouter)
 app.use('/api/suppliers', suppliersRouter)
 app.use('/api/product-suppliers', productSuppliersRouter)
+app.use('/api/tasks', tasksRouter)
 
 app.use((err, _req, res, _next) => {
 	console.error(err)

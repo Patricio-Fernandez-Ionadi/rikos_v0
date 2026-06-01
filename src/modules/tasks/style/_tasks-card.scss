@@ -124,3 +124,53 @@
     background: rgba($error, 0.1);
   }
 }
+
+.tasks__card-item--empty {
+  color: $grey;
+  font-style: italic;
+  justify-content: center;
+  padding: 12px 16px;
+}
+
+/* ── Add area inside task card ──────────────── */
+.tasks__card-add {
+  padding: 8px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.tasks__card-add-form {
+  margin-top: 8px;
+}
+
+.tasks__card-add-row {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.tasks__card-search-results {
+  list-style: none;
+  margin: 6px 0 0;
+  padding: 0;
+  background: $black;
+  border: 1px solid $grey_dark;
+  border-radius: 4px;
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.tasks__card-search-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  font-size: 0.85em;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .tasks__card-link {
+    color: $white;
+  }
+}

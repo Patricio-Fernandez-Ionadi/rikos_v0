@@ -1,4 +1,6 @@
 import { useProductDetail } from './product-detail-manager.js'
+import { useTasksManager } from '../../tasks/tasks-manager.js'
+import { TaskAssigner } from '../../tasks/task-assigner.jsx'
 import { Modal } from '../../../components/Modal.jsx'
 import { ProductForm } from './product-form.jsx'
 import { ProductInfo } from './product-info.jsx'
@@ -24,6 +26,8 @@ export const ProductDetail = ({ productId }) => {
 		handleSale,
 		handleAddSupplier, handleRemoveSupplier, handleUseSupplierCost,
 	} = useProductDetail(productId)
+
+	const { getProductTaskCategories, toggleProductTask } = useTasksManager()
 
 	if (!product) {
 		return (
@@ -79,6 +83,18 @@ export const ProductDetail = ({ productId }) => {
 				handleRemoveSupplier={handleRemoveSupplier}
 				handleAddSupplier={handleAddSupplier}
 			/>
+
+			{/* ── Tasks ────────────────────────────────────── */}
+			<div className='detail-page__section'>
+				<div className='detail-page__section-header'>
+					<h3>Tareas</h3>
+				</div>
+				<TaskAssigner
+					productId={product._id}
+					getProductTaskCategories={getProductTaskCategories}
+					toggleProductTask={toggleProductTask}
+				/>
+			</div>
 
 			{/* ── Modals ────────────────────────────────────── */}
 			<Modal open={editProductOpen} onClose={() => setEditProductOpen(false)} title='Editar producto'>
