@@ -1,18 +1,24 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Modal } from '../../components/Modal.jsx'
 import { useShift } from '../../modules/shift/shift-context.jsx'
 
 /**
  * Modal form to open a new shift. Manages its own cash input state
- * and calls openShift from ShiftContext on submit.
+ * and calls openShift from ShiftContext on submit. Defaults to the
+ * previous shift's closing cash, editable by the user.
  *
  * @param {Object}     props
- * @param {boolean}    props.open     Whether the modal is visible
- * @param {Function}   props.onClose  Callback to close the modal
+ * @param {boolean}    props.open                Whether the modal is visible
+ * @param {Function}   props.onClose             Callback to close the modal
+ * @param {number|string} props.defaultOpeningCash  Suggested opening cash (previous closing)
  */
-export const OpenShiftForm = ({ open, onClose }) => {
+export const OpenShiftForm = ({ open, onClose, defaultOpeningCash = '' }) => {
 	const { openShift } = useShift()
-	const [openingCash, setOpeningCash] = useState('')
+	const [openingCash, setOpeningCash] = useState(defaultOpeningCash)
+
+	useEffect(() => {
+		if (open) setOpeningCash(defaultOpeningCash)
+	}, [open, defaultOpeningCash])
 
 	const handleOpen = async () => {
 		const cash = parseFloat(openingCash)

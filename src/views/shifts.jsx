@@ -40,7 +40,11 @@ export const ShiftsPage = () => {
         </>
       )}
 
-      <OpenShiftForm open={showOpen} onClose={() => setShowOpen(false)} />
+      <OpenShiftForm
+        open={showOpen}
+        onClose={() => setShowOpen(false)}
+        defaultOpeningCash={pastShifts[0]?.closingCash ?? ''}
+      />
 
       <h3 style={{ color: '#f5f5f5', margin: '24px 0 12px' }}>Turnos anteriores</h3>
 
