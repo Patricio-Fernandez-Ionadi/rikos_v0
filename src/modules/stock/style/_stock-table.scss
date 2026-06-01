@@ -109,6 +109,35 @@
 	font-weight: 400;
 }
 
+.stock-page__edit-panel {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 6px;
+	background: $black;
+	border: 1px solid $grey_dark;
+	border-radius: $thin;
+	padding: 6px 8px;
+}
+
+.stock-page__edit-field {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+}
+
+.stock-page__edit-label {
+	color: $grey_light;
+	font-size: 0.75em;
+	white-space: nowrap;
+}
+
+.stock-page__edit-actions {
+	display: flex;
+	gap: 4px;
+	margin-left: auto;
+}
+
 .stock-cell__link {
 	background: none;
 	border: none;

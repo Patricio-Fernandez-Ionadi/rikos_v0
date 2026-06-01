@@ -10,31 +10,42 @@ export const StockRow = ({ pres, product, categoryName, onNavigate }) => {
 
 	const isFraction = product?.saleType === 'fraction'
 
-	const [stockEdit, setStockEdit] = useState(null)
-	const [stockValue, setStockValue] = useState('')
+	const [editPresId, setEditPresId] = useState(null)
+	const [editStock, setEditStock] = useState('')
+	const [editGrams, setEditGrams] = useState('')
 	const [salePresId, setSalePresId] = useState(null)
 
-	const handleStockUpdate = async (presId) => {
-		const val = parseInt(stockValue)
-		if (isNaN(val) || val < 0) return
+	const handleUpdate = async () => {
+		const stockVal = parseInt(editStock)
+		if (isNaN(stockVal) || stockVal < 0) return
+
 		try {
-			const updated = await stockService.updateStock(presId, val)
+			const updated = await stockService.updateStock(pres._id, stockVal)
 			setPresentations((prev) =>
 				prev.map((p) => (p._id === updated._id ? updated : p)),
 			)
-			if (isFraction && pres.grams) {
-				const oldStock = pres.stock ?? 0
-				const delta = val - oldStock
-				if (delta !== 0) {
-					const gramsDelta = delta * pres.grams
-					const updatedProduct = await stockService.updateStockGrams(product._id, (product.stockGrams ?? 0) + gramsDelta)
+
+			if (isFraction) {
+				if (pres.grams) {
+					const oldStock = pres.stock ?? 0
+					const delta = stockVal - oldStock
+					if (delta !== 0) {
+						const gramsDelta = delta * pres.grams
+						const updatedProduct = await stockService.updateStockGrams(product._id, (product.stockGrams ?? 0) + gramsDelta)
+						setProducts((prev) => prev.map((p) => (p._id === updatedProduct._id ? updatedProduct : p)))
+					}
+				}
+
+				const gramsVal = parseInt(editGrams)
+				if (!isNaN(gramsVal) && gramsVal >= 0 && gramsVal !== (product.stockGrams ?? 0)) {
+					const updatedProduct = await stockService.updateStockGrams(product._id, gramsVal)
 					setProducts((prev) => prev.map((p) => (p._id === updatedProduct._id ? updatedProduct : p)))
 				}
 			}
 		} catch (e) {
 			console.error(e)
 		}
-		setStockEdit(null)
+		setEditPresId(null)
 	}
 
 	const handleSale = async (sale) => {
@@ -90,52 +101,57 @@ export const StockRow = ({ pres, product, categoryName, onNavigate }) => {
 					)}
 				</td>
 				<td className='stock-cell--actions'>
-					<div className='stock-page__edit'>
-						{stockEdit === pres._id ? (
-							<>
+					{editPresId === pres._id ? (
+						<div className='stock-page__edit-panel'>
+							<div className='stock-page__edit-field'>
+								<span className='stock-page__edit-label'>Unidades</span>
 								<input
 									className='field-input field-input--xs'
 									type='number'
-									value={stockValue}
-									onChange={(e) => setStockValue(e.target.value)}
+									value={editStock}
+									onChange={(e) => setEditStock(e.target.value)}
 								/>
+							</div>
+							{isFraction && (
+								<div className='stock-page__edit-field'>
+									<span className='stock-page__edit-label'>Gramos</span>
+									<input
+										className='field-input field-input--xs'
+										type='number'
+										value={editGrams}
+										onChange={(e) => setEditGrams(e.target.value)}
+									/>
+								</div>
+							)}
+							<div className='stock-page__edit-actions'>
+								<button className='sidebar__btn sidebar__btn--xs' onClick={handleUpdate}>OK</button>
+								<button className='sidebar__btn sidebar__btn--xs' onClick={() => setEditPresId(null)}>X</button>
+							</div>
+						</div>
+					) : (
+						<div className='stock-page__edit'>
+							<button
+								className='sidebar__btn sidebar__btn--xs'
+								onClick={() => {
+									setEditPresId(pres._id)
+									setEditStock(String(presStock))
+									setEditGrams(String(totalGrams))
+								}}
+							>
+								Ajustar
+							</button>
+							{shift && shift.status === 'open' && (
 								<button
-									className='sidebar__btn sidebar__btn--xs'
-									onClick={() => handleStockUpdate(pres._id)}
+									className='shift-bar__btn shift-bar__btn--primary shift-bar__btn--sm'
+									onClick={() =>
+										setSalePresId(salePresId === pres._id ? null : pres._id)
+									}
 								>
-									OK
+									Vender
 								</button>
-								<button
-									className='sidebar__btn sidebar__btn--xs'
-									onClick={() => setStockEdit(null)}
-								>
-									X
-								</button>
-							</>
-						) : (
-							<>
-								<button
-									className='sidebar__btn sidebar__btn--xs'
-									onClick={() => {
-										setStockEdit(pres._id)
-										setStockValue(String(presStock))
-									}}
-								>
-									Ajustar
-								</button>
-								{shift && shift.status === 'open' && (
-									<button
-										className='shift-bar__btn shift-bar__btn--primary shift-bar__btn--sm'
-										onClick={() =>
-											setSalePresId(salePresId === pres._id ? null : pres._id)
-										}
-									>
-										Vender
-									</button>
-								)}
-							</>
-						)}
-					</div>
+							)}
+						</div>
+					)}
 					{salePresId === pres._id && (
 						<SaleForm
 							presentation={pres}
