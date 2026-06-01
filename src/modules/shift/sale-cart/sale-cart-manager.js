@@ -28,14 +28,17 @@ export function useSaleCart() {
 		}
 		if (searchQuery.trim()) {
 			const q = searchQuery.toLowerCase()
-			filtered = filtered.filter(
-				(p) =>
-					p.name.toLowerCase().includes(q) ||
-					(p.marca && p.marca.toLowerCase().includes(q)),
-			)
+			filtered = filtered.filter((p) => {
+				if (p.name.toLowerCase().includes(q)) return true
+				if (p.marca && p.marca.toLowerCase().includes(q)) return true
+				const presLabels = presentations
+					.filter((pr) => pr.productId === p._id)
+					.map((pr) => pr.label?.toLowerCase() ?? '')
+				return presLabels.some((l) => l.includes(q))
+			})
 		}
 		return filtered
-	}, [products, searchQuery, selectedCategory])
+	}, [products, presentations, searchQuery, selectedCategory])
 
 	const selectedProduct = useMemo(
 		() => products.find((p) => p._id === selectedProductId),

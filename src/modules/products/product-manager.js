@@ -22,10 +22,17 @@ export function useProductManager() {
 		}
 		if (state.searchTerm.trim()) {
 			const term = state.searchTerm.trim().toLowerCase()
-			result = result.filter((p) => p.name.toLowerCase().includes(term))
+			result = result.filter((p) => {
+				if (p.name.toLowerCase().includes(term)) return true
+				if (p.marca && p.marca.toLowerCase().includes(term)) return true
+				const presLabels = presentations
+					.filter((pr) => pr.productId === p._id)
+					.map((pr) => pr.label?.toLowerCase() ?? '')
+				return presLabels.some((l) => l.includes(term))
+			})
 		}
 		return result
-	}, [products, state.selectedCategoryIds, state.searchTerm])
+	}, [products, presentations, state.selectedCategoryIds, state.searchTerm])
 
 	const selectedProduct = useMemo(
 		() => products.find((p) => p._id === state.selectedProductId) ?? null,
