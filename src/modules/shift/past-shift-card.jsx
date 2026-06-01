@@ -3,7 +3,7 @@ import { useData } from '../../app/data-context.jsx'
 /**
  * Card for a single closed shift showing date range, stats (sales count,
  * total, opening/closing cash, expected balance, difference), optional
- * notes, and an expandable sales table.
+ * notes, adjustments, and an expandable sales table.
  *
  * @param {Object}     props
  * @param {Object}     props.shift        Closed shift data
@@ -24,6 +24,15 @@ export const PastShiftCard = ({ shift: s, isExpanded, onToggle }) => {
 					? 'shifts-page__diff--positive'
 					: ''
 			: ''
+
+	const adjustments = s.adjustments ?? []
+	const adjustmentsTotal = adjustments.reduce((sum, a) => sum + a.amount, 0)
+
+	const typeLabel = {
+		expense: 'Gasto',
+		withdrawal: 'Retiro',
+		adjustment: 'Ajuste',
+	}
 
 	return (
 		<div className='shifts-page__card'>
@@ -64,6 +73,14 @@ export const PastShiftCard = ({ shift: s, isExpanded, onToggle }) => {
 						${s.openingCash?.toLocaleString() ?? 0}
 					</span>
 				</div>
+				{adjustmentsTotal > 0 && (
+					<div className='shifts-page__stat'>
+						Ajustes:{' '}
+						<span className='shifts-page__stat-value'>
+							-${adjustmentsTotal.toLocaleString()}
+						</span>
+					</div>
+				)}
 				<div className='shifts-page__stat'>
 					Cierre:{' '}
 					<span className='shifts-page__stat-value'>
@@ -90,6 +107,19 @@ export const PastShiftCard = ({ shift: s, isExpanded, onToggle }) => {
 					style={{ color: '#8e8e8e', fontSize: '0.85em', marginTop: 8 }}
 				>
 					Notas: {s.notes}
+				</div>
+			)}
+
+			{adjustments.length > 0 && (
+				<div className='shift-adjustments'>
+					<h4 className='shift-adjustments__title'>Ajustes</h4>
+					{adjustments.map((adj, i) => (
+						<div key={adj._id ?? i} className='shift-adjustments__item'>
+							<span className='shift-adjustments__type'>{typeLabel[adj.type] ?? adj.type}</span>
+							<span className='shift-adjustments__desc'>{adj.description}</span>
+							<span className='shift-adjustments__amount'>-${adj.amount.toLocaleString()}</span>
+						</div>
+					))}
 				</div>
 			)}
 

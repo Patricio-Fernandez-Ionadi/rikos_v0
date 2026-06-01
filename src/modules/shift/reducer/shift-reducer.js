@@ -44,6 +44,14 @@ export function shiftReducer(state, action) {
 					),
 				},
 			}
+		case 'ADD_ADJUSTMENT':
+			return {
+				...state,
+				shift: {
+					...state.shift,
+					adjustments: [...(state.shift?.adjustments ?? []), action.adjustment],
+				},
+			}
 		case 'UPDATE_DB_ID':
 			return {
 				...state,

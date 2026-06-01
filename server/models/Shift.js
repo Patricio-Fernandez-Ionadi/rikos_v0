@@ -12,6 +12,13 @@ const saleItemSchema = new mongoose.Schema({
   timestamp: { type: Date, default: Date.now },
 })
 
+const adjustmentSchema = new mongoose.Schema({
+  amount: { type: Number, required: true },
+  type: { type: String, enum: ['expense', 'withdrawal', 'adjustment'], default: 'expense' },
+  description: { type: String, default: '' },
+  timestamp: { type: Date, default: Date.now },
+})
+
 const shiftSchema = new mongoose.Schema({
   openingTime: { type: Date, required: true },
   closingTime: { type: Date, default: null },
@@ -22,6 +29,7 @@ const shiftSchema = new mongoose.Schema({
   status: { type: String, enum: ['open', 'closed'], default: 'open' },
   notes: { type: String, default: '' },
   sales: [saleItemSchema],
+  adjustments: [adjustmentSchema],
 })
 
 export default mongoose.model('Shift', shiftSchema)

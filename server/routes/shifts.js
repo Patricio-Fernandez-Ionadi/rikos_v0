@@ -270,7 +270,8 @@ router.post('/:id/close', async (req, res, next) => {
       (s) => !s.paymentMethod || s.paymentMethod === 'cash',
     )
     const totalSales = cashSales.reduce((sum, s) => sum + (s.collectedAmount ?? s.total), 0)
-    const expectedBalance = shift.openingCash + totalSales
+    const adjustmentsTotal = (shift.adjustments ?? []).reduce((sum, a) => sum + a.amount, 0)
+    const expectedBalance = shift.openingCash + totalSales - adjustmentsTotal
 
     shift.closingCash = closingCash
     shift.expectedBalance = expectedBalance
@@ -281,6 +282,31 @@ router.post('/:id/close', async (req, res, next) => {
 
     await shift.save()
     res.json(shift)
+  } catch (e) { next(e) }
+})
+
+/**
+ * PATCH /:id/adjustments — Record an adjustment (expense/withdrawal/etc.) on a shift.
+ */
+router.patch('/:id/adjustments', async (req, res, next) => {
+  try {
+    const shift = await Shift.findById(req.params.id)
+    if (!shift) return res.status(404).json({ error: 'Shift not found' })
+
+    const { amount, type, description } = req.body
+    if (amount == null || amount <= 0) {
+      return res.status(400).json({ error: 'amount must be a positive number' })
+    }
+
+    shift.adjustments.push({
+      amount,
+      type: type || 'expense',
+      description: description || '',
+      timestamp: new Date(),
+    })
+
+    await shift.save()
+    res.status(201).json(shift)
   } catch (e) { next(e) }
 })
 

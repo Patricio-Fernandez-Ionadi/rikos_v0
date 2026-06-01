@@ -14,4 +14,8 @@ export const updateSale = (shiftId, saleId, data) =>
 
 /** Delete a sale item (restores stock). */
 export const deleteSale = (shiftId, saleId) =>
-	api.deleteSale(shiftId, saleId)
+  api.deleteSale(shiftId, saleId)
+
+/** Record an adjustment on the shift. */
+export const addAdjustment = (shiftId, data) =>
+  api.addAdjustment(shiftId, data)

@@ -184,6 +184,32 @@ export function ShiftProvider({ children }) {
 		}
 	}, [])
 
+	const addAdjustment = useCallback(async ({ amount, type, description }) => {
+		const current = shiftRef.current
+		if (!current || current.status !== 'open') return
+
+		const adj = {
+			_tempId: `${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
+			amount,
+			type: type || 'expense',
+			description: description || '',
+			timestamp: new Date().toISOString(),
+		}
+
+		dispatch({ type: 'ADD_ADJUSTMENT', adjustment: adj })
+
+		if (current._dbId) {
+			try {
+				await shiftService.addAdjustment(current._dbId, { amount, type, description })
+				dispatch({ type: 'SET_SYNCED', synced: true })
+			} catch {
+				dispatch({ type: 'SET_SYNCED', synced: false })
+			}
+		} else {
+			dispatch({ type: 'SET_SYNCED', synced: false })
+		}
+	}, [])
+
 	const closeShift = useCallback(async (closingCash, notes = '') => {
 		const current = shiftRef.current
 		if (!current) return null
@@ -192,7 +218,8 @@ export function ShiftProvider({ children }) {
 		const cashSalesTotal = current.sales
 			.filter((s) => !s.paymentMethod || s.paymentMethod === 'cash')
 			.reduce((sum, s) => sum + (s.collectedAmount ?? s.total), 0)
-		const expectedBalance = +(current.openingCash + cashSalesTotal).toFixed(2)
+		const adjustmentsTotal = (current.adjustments ?? []).reduce((sum, a) => sum + a.amount, 0)
+		const expectedBalance = +(current.openingCash + cashSalesTotal - adjustmentsTotal).toFixed(2)
 		const difference = +(closingCash - expectedBalance).toFixed(2)
 
 		const closed = {
@@ -264,6 +291,7 @@ export function ShiftProvider({ children }) {
 			recordTicket,
 			editSale,
 			removeSale,
+			addAdjustment,
 			syncToDb,
 			closeShift,
 			cancelShift,

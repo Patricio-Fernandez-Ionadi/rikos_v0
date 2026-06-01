@@ -55,6 +55,8 @@ export const updateSale = (shiftId, saleId, data) =>
   request(`/shifts/${shiftId}/sales/${saleId}`, { method: 'PATCH', body: JSON.stringify(data) })
 export const deleteSale = (shiftId, saleId) =>
   request(`/shifts/${shiftId}/sales/${saleId}`, { method: 'DELETE' })
+export const addAdjustment = (shiftId, data) =>
+  request(`/shifts/${shiftId}/adjustments`, { method: 'PATCH', body: JSON.stringify(data) })
 
 // ─── Notes ─────────────────────────────────────────────────
 export const getNotes = () => request('/notes')

@@ -1,11 +1,13 @@
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useShift } from '../../modules/shift/shift-context.jsx'
+import { useShift } from './shift-context.jsx'
+import { AdjustmentForm } from './adjustment-form.jsx'
 import { ShiftSalesList } from './shift-sales-list.jsx'
 
 /**
  * Displays the active shift card with its stats (opening time, cash,
  * sales count, total, expected balance), sync/close action buttons,
- * and the embedded ShiftSalesList.
+ * adjustments list/add form, and the embedded ShiftSalesList.
  *
  * @param {Object}     props
  * @param {Function}   props.onRequestClose  Callback when user clicks "Cerrar Turno"
@@ -13,6 +15,16 @@ import { ShiftSalesList } from './shift-sales-list.jsx'
 export const ActiveShiftCard = ({ onRequestClose }) => {
 	const { shift, synced, syncToDb } = useShift()
 	const navigate = useNavigate()
+	const [showAdjustmentForm, setShowAdjustmentForm] = useState(false)
+
+	const adjustments = shift.adjustments ?? []
+	const adjustmentsTotal = adjustments.reduce((sum, a) => sum + a.amount, 0)
+
+	const typeLabel = {
+		expense: 'Gasto',
+		withdrawal: 'Retiro',
+		adjustment: 'Ajuste',
+	}
 
 	return (
 		<div className='shifts-page__card'>
@@ -27,6 +39,12 @@ export const ActiveShiftCard = ({ onRequestClose }) => {
 					>
 						+ Registrar Venta
 					</button>
+					<button
+						className='shift-bar__btn'
+						onClick={() => setShowAdjustmentForm(!showAdjustmentForm)}
+					>
+						{showAdjustmentForm ? 'Cancelar' : '+ Ajuste'}
+					</button>
 					{!synced && (
 						<button className='shift-bar__btn' onClick={() => syncToDb()}>
 							Sincronizar
@@ -40,6 +58,11 @@ export const ActiveShiftCard = ({ onRequestClose }) => {
 					</button>
 				</div>
 			</div>
+
+			{showAdjustmentForm && (
+				<AdjustmentForm onClose={() => setShowAdjustmentForm(false)} />
+			)}
+
 			<div className='shifts-page__stats'>
 				<div className='shifts-page__stat'>
 					Apertura:{' '}
@@ -96,13 +119,27 @@ export const ActiveShiftCard = ({ onRequestClose }) => {
 							<div className='shifts-page__stat'>
 								Esperado en caja:{' '}
 								<span className='shifts-page__stat-value'>
-									${(shift.openingCash + cashTotal).toLocaleString()}
+									${(shift.openingCash + cashTotal - adjustmentsTotal).toLocaleString()}
 								</span>
 							</div>
 						</>
 					)
 				})()}
 			</div>
+
+			{adjustments.length > 0 && (
+				<div className='shift-adjustments'>
+					<h4 className='shift-adjustments__title'>Ajustes</h4>
+					{adjustments.map((adj, i) => (
+						<div key={adj._tempId ?? adj._id ?? i} className='shift-adjustments__item'>
+							<span className='shift-adjustments__type'>{typeLabel[adj.type] ?? adj.type}</span>
+							<span className='shift-adjustments__desc'>{adj.description}</span>
+							<span className='shift-adjustments__amount'>-${adj.amount.toLocaleString()}</span>
+						</div>
+					))}
+				</div>
+			)}
+
 			<ShiftSalesList />
 		</div>
 	)

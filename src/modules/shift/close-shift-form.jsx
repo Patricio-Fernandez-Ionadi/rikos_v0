@@ -5,16 +5,23 @@ import { useShift } from '../../modules/shift/shift-context.jsx'
 /**
  * Modal form to close the active shift. Manages its own closing cash,
  * notes, and error state, and calls closeShift from ShiftContext on submit.
+ * Shows the adjusted expected balance (openingCash + cashSales - adjustments).
  *
  * @param {Object}     props
  * @param {boolean}    props.open     Whether the modal is visible
  * @param {Function}   props.onClose  Callback to close the modal
  */
 export const CloseShiftForm = ({ open, onClose }) => {
-	const { closeShift } = useShift()
+	const { shift, closeShift } = useShift()
 	const [closingCash, setClosingCash] = useState('')
 	const [closingNotes, setClosingNotes] = useState('')
 	const [closeError, setCloseError] = useState('')
+
+	const cashSalesTotal = (shift?.sales ?? [])
+		.filter((s) => !s.paymentMethod || s.paymentMethod === 'cash')
+		.reduce((sum, s) => sum + (s.collectedAmount ?? s.total), 0)
+	const adjustmentsTotal = (shift?.adjustments ?? []).reduce((sum, a) => sum + a.amount, 0)
+	const expectedBalance = +(shift?.openingCash ?? 0) + cashSalesTotal - adjustmentsTotal
 
 	const handleClose = async () => {
 		const cash = parseFloat(closingCash)
@@ -33,6 +40,14 @@ export const CloseShiftForm = ({ open, onClose }) => {
 	return (
 		<Modal open={open} onClose={onClose} title='Cerrar Turno'>
 			{closeError && <p className='field-error'>{closeError}</p>}
+			<div className='shifts-page__stats' style={{ marginBottom: 12 }}>
+				<div className='shifts-page__stat'>
+					Esperado en caja:{' '}
+					<span className='shifts-page__stat-value'>
+						${expectedBalance.toLocaleString()}
+					</span>
+				</div>
+			</div>
 			<label className='field-label'>Efectivo final ($)</label>
 			<input
 				className='field-input'

@@ -1,0 +1,48 @@
+@use '../../../theme/values/colors' as *;
+
+.shift-adjustments {
+	margin-top: 12px;
+	padding-top: 8px;
+	border-top: 1px solid $grey_dark;
+}
+
+.shift-adjustments__title {
+	color: $white;
+	font-size: 0.85em;
+	font-weight: 700;
+	margin: 0 0 6px;
+}
+
+.shift-adjustments__item {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 4px 0;
+	font-size: 0.85em;
+}
+
+.shift-adjustments__type {
+	color: $info;
+	font-weight: 600;
+	min-width: 60px;
+}
+
+.shift-adjustments__desc {
+	color: $grey_light;
+	flex: 1;
+}
+
+.shift-adjustments__amount {
+	color: $error;
+	font-weight: 700;
+	margin-left: auto;
+}
+
+.shift-adjustments__form {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	margin-bottom: 12px;
+	padding-bottom: 12px;
+	border-bottom: 1px solid $grey_dark;
+}
