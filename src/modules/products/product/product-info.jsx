@@ -21,7 +21,7 @@ export const ProductInfo = ({
 	return (
 		<>
 			<div className='detail-page__header'>
-				<button className='sidebar__btn' onClick={() => navigate('/products')}>
+				<button className='sidebar__btn' onClick={() => navigate(-1)}>
 					← Volver
 				</button>
 				<div className='detail-page__header-right'>
