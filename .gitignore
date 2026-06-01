@@ -12,6 +12,7 @@ dist
 dist-ssr
 *.local
 *.txt
+*.csv
 
 package-lock.json
 

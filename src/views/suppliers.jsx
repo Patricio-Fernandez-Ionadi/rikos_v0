@@ -28,27 +28,29 @@ export const SuppliersPage = () => {
 		setShowForm(true)
 	}
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault()
 		if (!form.name.trim()) return
-		if (editing) {
-			updateSupplier(editing._id, {
-				name: form.name.trim(),
-				contactName: form.contactName.trim() || null,
-				phone: form.phone.trim() || null,
-				email: form.email.trim() || null,
-				notes: form.notes.trim(),
-			})
-		} else {
-			createSupplier({
-				name: form.name.trim(),
-				contactName: form.contactName.trim() || null,
-				phone: form.phone.trim() || null,
-				email: form.email.trim() || null,
-				notes: form.notes.trim(),
-			})
-		}
-		setShowForm(false)
+		try {
+			if (editing) {
+				await updateSupplier(editing._id, {
+					name: form.name.trim(),
+					contactName: form.contactName.trim() || null,
+					phone: form.phone.trim() || null,
+					email: form.email.trim() || null,
+					notes: form.notes.trim(),
+				})
+			} else {
+				await createSupplier({
+					name: form.name.trim(),
+					contactName: form.contactName.trim() || null,
+					phone: form.phone.trim() || null,
+					email: form.email.trim() || null,
+					notes: form.notes.trim(),
+				})
+			}
+			setShowForm(false)
+		} catch { /* error logged by manager */ }
 	}
 
 	return (
