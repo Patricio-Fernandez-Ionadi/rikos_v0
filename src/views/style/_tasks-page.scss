@@ -1,0 +1,153 @@
+@use '../../theme/values/colors' as *;
+@use '../../theme/values/sizes' as *;
+@use '../../theme/values/mediaqueries' as *;
+
+.tasks-page {
+  padding: 16px;
+
+  @media (min-width: $medium) {
+    padding: 20px;
+  }
+}
+
+.tasks-page__title {
+  color: $white;
+  margin: 0 0 16px;
+}
+
+.tasks__grid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  @media (min-width: $medium) {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+}
+
+.tasks__card {
+  background: $grey_dark;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.tasks__card-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.tasks__card-icon {
+  font-size: 24px;
+  line-height: 1;
+}
+
+.tasks__card-title {
+  color: $white;
+  margin: 0;
+  font-size: 1em;
+}
+
+.tasks__card-desc {
+  color: $grey_light;
+  margin: 2px 0 0;
+  font-size: 0.8em;
+}
+
+.tasks__card-count {
+  margin-left: auto;
+  background: rgba(255, 255, 255, 0.1);
+  color: $white;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 0.85em;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.tasks__card-list {
+  list-style: none;
+  margin: 0;
+  padding: 8px 0;
+}
+
+.tasks__card-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  font-size: 0.85em;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.05);
+  }
+}
+
+.tasks__card-item--more {
+  color: $grey_light;
+  font-style: italic;
+  font-size: 0.8em;
+}
+
+.tasks__card-link {
+  flex: 1;
+  min-width: 0;
+  color: $white;
+  text-decoration: none;
+
+  &:hover {
+    color: $primary_light;
+  }
+}
+
+.tasks__card-label {
+  color: $grey_light;
+  font-size: 0.9em;
+}
+
+.tasks__card-btn {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  border: 1px solid $grey_light;
+  background: transparent;
+  color: $grey_light;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  line-height: 1;
+  transition: all 0.15s;
+
+  &:hover {
+    border-color: $primary_light;
+    color: $primary_light;
+  }
+}
+
+.tasks__card-btn--active {
+  border-color: $success;
+  color: $success;
+  background: rgba($success, 0.1);
+
+  &:hover {
+    border-color: $success;
+    color: $success;
+  }
+}
+
+.tasks__card-btn--remove {
+  border-color: $error;
+  color: $error;
+
+  &:hover {
+    background: rgba($error, 0.1);
+  }
+}

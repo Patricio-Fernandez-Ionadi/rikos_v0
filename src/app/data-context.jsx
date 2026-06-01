@@ -1,4 +1,4 @@
-import { createContext, useContext, useReducer, useEffect, useCallback } from 'react'
+import { createContext, useContext, useReducer, useEffect, useCallback, useRef } from 'react'
 import * as api from '../data/api.js'
 import { dataReducer, INITIAL_DATA_STATE } from './reducer/data-reducer.js'
 
@@ -51,15 +51,34 @@ export function DataProvider({ children }) {
 
 	const refresh = useCallback(async () => {
 		try {
-			const [cats, prods, pres, sups] = await Promise.all([
+			const [cats, prods, pres, sups, pss] = await Promise.all([
 				api.getCategories(),
 				api.getProducts(),
 				api.getPresentations(),
 				api.getSuppliers().catch(() => state.suppliers),
+				api.getProductSuppliers().catch(() => state.productSuppliers),
 			])
-			dispatch({ type: 'LOAD_API', categories: cats, products: prods, presentations: pres, suppliers: sups })
+			dispatch({ type: 'LOAD_API', categories: cats, products: prods, presentations: pres, suppliers: sups, productSuppliers: pss })
 		} catch { /* stay with stale data */ }
-	}, [state.suppliers])
+	}, [state.suppliers, state.productSuppliers])
+
+	const refreshRef = useRef(refresh)
+	refreshRef.current = refresh
+
+	useEffect(() => {
+		const BASE = import.meta.env.VITE_API_URL || '/api'
+		const url = BASE.replace(/\/api\/?$/, '') + '/api/events'
+		const es = new EventSource(url)
+		es.addEventListener('connected', () => console.log('[SSE] connected'))
+		es.onmessage = (e) => {
+			try {
+				const { resource } = JSON.parse(e.data)
+				if (resource !== 'notes') refreshRef.current()
+			} catch { /* ignore malformed events */ }
+		}
+		es.onerror = () => console.warn('[SSE] connection error')
+		return () => es.close()
+	}, [])
 
 	return (
 		<DataContext.Provider value={{

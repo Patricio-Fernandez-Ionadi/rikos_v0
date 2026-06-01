@@ -7,6 +7,7 @@ export const Navigation = () => {
 			<NavItem to={'/products'} label={'Productos'} />
 			<NavItem to={'/suppliers'} label={'Proveedores'} />
 			<NavItem to={'/stock'} label={'Stock'} />
+			<NavItem to={'/tasks'} label={'Tareas'} />
 			<NavItem to={'/shifts'} label={'Turnos'} />
 			<NavItem to={'/soporte'} label={'Soporte'} />
 		</nav>
