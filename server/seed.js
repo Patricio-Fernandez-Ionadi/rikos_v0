@@ -36,6 +36,7 @@ async function seed() {
     const { _id, categoryId, saleType, stockGrams, ...rest } = p
     const saved = await Product.create({
       ...rest,
+      margin: p.margin ?? null,
       saleType: saleType ?? 'unit',
       stockGrams: stockGrams ?? null,
       categoryId: catMap[categoryId],
@@ -45,7 +46,7 @@ async function seed() {
   console.log(`Seeded ${data.products.length} products`)
 
   for (const p of data.presentations) {
-    const { _id, productId, ...rest } = p
+    const { _id, productId, margin, ...rest } = p
     await Presentation.create({ ...rest, productId: prodMap[productId], stock: 0 })
   }
   console.log(`Seeded ${data.presentations.length} presentations`)

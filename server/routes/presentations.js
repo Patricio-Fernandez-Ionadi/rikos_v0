@@ -17,7 +17,6 @@ router.post('/', async (req, res, next) => {
       productId: req.body.productId,
       label: req.body.label ?? null,
       grams: req.body.grams ?? null,
-      margin: req.body.margin ?? null,
       salePrice: req.body.salePrice ?? null,
       stock: req.body.stock ?? 0,
     })
@@ -29,7 +28,7 @@ router.put('/:id', async (req, res, next) => {
   try {
     const pres = await Presentation.findByIdAndUpdate(
       req.params.id,
-      { label: req.body.label, grams: req.body.grams, margin: req.body.margin, salePrice: req.body.salePrice },
+      { label: req.body.label, grams: req.body.grams, salePrice: req.body.salePrice },
       { new: true },
     )
     if (!pres) return res.status(404).json({ error: 'Not found' })

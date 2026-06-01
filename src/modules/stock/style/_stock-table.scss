@@ -108,3 +108,20 @@
 	font-size: 0.85em;
 	font-weight: 400;
 }
+
+.stock-cell__link {
+	background: none;
+	border: none;
+	color: $white;
+	font-size: inherit;
+	font-family: inherit;
+	cursor: pointer;
+	padding: 0;
+	text-align: left;
+	width: 100%;
+
+	&:hover {
+		color: $primary_light;
+		text-decoration: underline;
+	}
+}

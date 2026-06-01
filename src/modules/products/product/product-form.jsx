@@ -5,6 +5,7 @@ export const ProductForm = ({ initial, categories, suppliers = [], onSubmit, onC
   const [name, setName] = useState(initial?.name ?? '')
   const [marca, setMarca] = useState(initial?.marca ?? '')
   const [cost, setCost] = useState(initial?.purchaseCost ?? '')
+  const [margin, setMargin] = useState(initial?.margin ?? '')
   const [saleType, setSaleType] = useState(initial?.saleType ?? 'unit')
   const [stockGrams, setStockGrams] = useState(initial?.stockGrams ?? '')
   const [supplierId, setSupplierId] = useState('')
@@ -17,6 +18,7 @@ export const ProductForm = ({ initial, categories, suppliers = [], onSubmit, onC
       name: name.trim(),
       marca: marca.trim(),
       purchaseCost: cost === '' ? null : parseFloat(cost),
+      margin: margin === '' ? null : parseInt(margin),
       saleType,
       stockGrams: saleType === 'fraction' ? (stockGrams === '' ? 0 : parseInt(stockGrams)) : null,
       supplierId: supplierId || undefined,
@@ -61,6 +63,9 @@ export const ProductForm = ({ initial, categories, suppliers = [], onSubmit, onC
 
       <label className="field-label">Costo de compra ($)</label>
       <input className="field-input" type="number" value={cost} onChange={(e) => setCost(e.target.value)} />
+
+      <label className="field-label">Margen de ganancia (%)</label>
+      <input className="field-input" type="number" value={margin} onChange={(e) => setMargin(e.target.value)} />
 
       <div className="modal-actions">
         <button type="button" className="shift-bar__btn" onClick={onCancel}>Cancelar</button>

@@ -59,7 +59,7 @@ export function getPriceDifference(salePrice, listPrice) {
 export function calculate(product, presentation) {
   const unitsPerKg = getUnitsPerKg(presentation.grams)
   const costPerPresentation = getCostPerPresentation(product.purchaseCost, presentation.grams)
-  const listPrice = getListPrice(costPerPresentation, presentation.margin)
+  const listPrice = getListPrice(costPerPresentation, product.margin)
   const equivalentPerKg = getEquivalentPerKg(listPrice, presentation.grams)
   const priceDifferencePercent = getPriceDifferencePercent(presentation.salePrice, listPrice)
   const priceDifference = getPriceDifference(presentation.salePrice, listPrice)

@@ -4,7 +4,7 @@ import { useShift } from '../../modules/shift/shift-context.jsx'
 import { SaleForm } from '../../components/sale-form.jsx'
 import * as stockService from './services/stock-services.js'
 
-export const StockRow = ({ pres, product, categoryName }) => {
+export const StockRow = ({ pres, product, categoryName, onNavigate }) => {
 	const { setPresentations, setProducts } = useData()
 	const { shift, addSale } = useShift()
 
@@ -67,7 +67,12 @@ export const StockRow = ({ pres, product, categoryName }) => {
 	return (
 		<>
 			<tr key={pres._id}>
-				<td className='stock-cell--product' style={{ color: '#f5f5f5' }}>{product.name}{product.marca ? <span className='stock-page__marca'> — {product.marca}</span> : ''}</td>
+				<td className='stock-cell--product'>
+				<button className='stock-cell__link' onClick={onNavigate}>
+					{product.name}
+					{product.marca ? <span className='stock-page__marca'> — {product.marca}</span> : ''}
+				</button>
+			</td>
 				<td className='stock-cell--category'>{categoryName}</td>
 				<td className='stock-cell--pres'>{pres.label ?? '—'} {isFraction && pres.grams ? `(${pres.grams}g)` : ''}</td>
 				<td className='stock-cell--stock'>

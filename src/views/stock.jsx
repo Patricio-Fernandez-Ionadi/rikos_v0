@@ -1,7 +1,9 @@
 import { useState, useMemo } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useData } from '../app/data-context.jsx'
 import { StockFilterBar } from '../modules/stock/stock-filter-bar.jsx'
 import { StockRow } from '../modules/stock/stock-row.jsx'
+import { SearchInput } from '../components/search-input.jsx'
 
 const FILTER_LABELS = {
 	all: 'Todos',
@@ -11,6 +13,7 @@ const FILTER_LABELS = {
 }
 
 export const StockPage = () => {
+	const navigate = useNavigate()
 	const { categories, products, presentations } = useData()
 	const [filter, setFilter] = useState('all')
 	const [customType, setCustomType] = useState('lt')
@@ -74,9 +77,7 @@ export const StockPage = () => {
 				onCustomValueChange={setCustomValue}
 			/>
 
-			<input
-				className='field-input'
-				type='text'
+			<SearchInput
 				placeholder='Buscar producto, marca o presentación…'
 				value={searchTerm}
 				onChange={(e) => setSearchTerm(e.target.value)}
@@ -104,6 +105,7 @@ export const StockPage = () => {
 								categoryName={
 									getCategory(product.categoryId)?.name ?? '—'
 								}
+								onNavigate={() => navigate(`/products/${product._id}`)}
 							/>
 						))}
 					</tbody>

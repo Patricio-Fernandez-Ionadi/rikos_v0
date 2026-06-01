@@ -52,8 +52,8 @@ const TASK_GROUPS = [
 		key: 'no-margin',
 		icon: '📊',
 		title: 'Sin margen',
-		desc: 'Presentaciones sin margen de ganancia',
-		filter: (pres) => pres.margin == null,
+		desc: 'Productos sin margen de ganancia',
+		productFilter: (prod) => prod.margin == null,
 	},
 	{
 		key: 'no-cost',

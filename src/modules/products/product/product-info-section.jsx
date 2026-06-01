@@ -2,6 +2,7 @@ export const ProductInfoSection = ({
 	isFraction,
 	totalStock,
 	purchaseCost,
+	margin,
 	minSalePrice,
 	categoryName,
 	saleTypeLabel,
@@ -84,6 +85,10 @@ export const ProductInfoSection = ({
 						<span>{marca}</span>
 					</div>
 				)}
+				<div className='detail-page__info-row'>
+					<span className='detail-page__info-label'>Margen</span>
+					<span>{margin != null ? `${margin}%` : '—'}</span>
+				</div>
 				<div className='detail-page__info-row'>
 					<span className='detail-page__info-label'>Tipo</span>
 					<span>{saleTypeLabel}</span>

@@ -1,3 +1,5 @@
+import { SearchInput } from '../../../components/search-input.jsx'
+
 export const ProductBrowser = ({
 	searchRef,
 	searchQuery,
@@ -20,10 +22,8 @@ export const ProductBrowser = ({
 	return (
 		<div className='sale-cart__products'>
 			<div className='sale-cart__filters'>
-				<input
+				<SearchInput
 					ref={searchRef}
-					className='field-input'
-					type='text'
 					placeholder='Buscar producto…'
 					value={searchQuery}
 					onChange={(e) => setSearchQuery(e.target.value)}

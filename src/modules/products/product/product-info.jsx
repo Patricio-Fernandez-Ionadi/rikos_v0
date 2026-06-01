@@ -38,11 +38,13 @@ export const ProductInfo = ({
 			</div>
 
 			<h2 className='detail-page__title'>{product.name}</h2>
+			<div className='detail-page__id'>ID: {product._id}</div>
 
 			<ProductInfoSection
 				isFraction={isFraction}
 				totalStock={totalStock}
 				purchaseCost={product.purchaseCost}
+				margin={product.margin}
 				minSalePrice={minSalePrice}
 				stockGramsEdit={stockGramsEdit}
 				stockGramsValue={stockGramsValue}

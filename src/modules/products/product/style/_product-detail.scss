@@ -26,7 +26,14 @@
 .detail-page__title {
 	color: $white;
 	font-size: 1.6em;
-	margin: 0 0 16px;
+	margin: 0 0 2px;
+}
+
+.detail-page__id {
+	color: $grey;
+	font-size: 0.75em;
+	margin-bottom: 16px;
+	word-break: break-all;
 }
 
 .detail-page__info {

@@ -8,20 +8,18 @@ export const PresentationForm = ({ initial, onSubmit, onCancel, product }) => {
 	const isFraction = product?.saleType === 'fraction'
 	const [label, setLabel] = useState(initial?.label ?? '')
 	const [grams, setGrams] = useState(initial?.grams ?? '')
-	const [margin, setMargin] = useState(initial?.margin ?? '')
 	const [salePrice, setSalePrice] = useState(initial?.salePrice ?? '')
 	const [stock, setStock] = useState(initial?.stock ?? '')
 
 	const listPrice = useMemo(() => {
 		const g = isFraction ? (grams === '' ? null : parseInt(grams)) : null
-		const m = margin === '' ? null : parseInt(margin)
 		if (product?.purchaseCost == null) return null
 		if (isFraction && g == null) return null
 		const cost = isFraction
 			? getCostPerPresentation(product.purchaseCost, g)
 			: product.purchaseCost
-		return getListPrice(cost, m)
-	}, [product?.purchaseCost, isFraction, grams, margin])
+		return getListPrice(cost, product.margin)
+	}, [product?.purchaseCost, product.margin, isFraction, grams])
 
 	const diffInfo = useMemo(() => {
 		if (listPrice == null || salePrice === '') return null
@@ -37,7 +35,6 @@ export const PresentationForm = ({ initial, onSubmit, onCancel, product }) => {
 		onSubmit({
 			label: label.trim() || null,
 			grams: grams === '' ? null : parseInt(grams),
-			margin: margin === '' ? null : parseInt(margin),
 			salePrice: salePrice === '' ? null : parseFloat(salePrice),
 			stock: stock === '' ? 0 : parseInt(stock),
 		})
@@ -68,13 +65,9 @@ export const PresentationForm = ({ initial, onSubmit, onCancel, product }) => {
 				</>
 			)}
 
-			<label className='field-label'>Margen (%)</label>
-			<input
-				className='field-input'
-				type='number'
-				value={margin}
-				onChange={(e) => setMargin(e.target.value)}
-			/>
+			<div style={{ fontSize: '0.85em', color: '#8e8e8e', marginBottom: 8 }}>
+				Margen del producto: {product.margin != null ? `${product.margin}%` : 'No asignado'}
+			</div>
 
 			<label className='field-label'>Stock inicial</label>
 			<input

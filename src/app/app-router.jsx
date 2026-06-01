@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom'
 import { Layout } from './layout'
-import { Dashboard, ProductsPage, ProductDetailPage, ShiftsPage, StockPage, SoportePage, SuppliersPage, SupplierDetailPage, SalePage, TasksPage } from '../views'
+import { Dashboard, ProductsPage, ProductDetailPage, ShiftsPage, StockPage, SoportePage, SuppliersPage, SupplierDetailPage, SalePage, TasksPage, NewProductPage } from '../views'
 
 export const Router = () => {
 	return (
@@ -8,6 +8,7 @@ export const Router = () => {
 			<Route element={<Layout />}>
 				<Route index element={<Dashboard />} />
 				<Route path='products' element={<ProductsPage />} />
+				<Route path='products/new' element={<NewProductPage />} />
 				<Route path='products/:id' element={<ProductDetailPage />} />
 				<Route path='suppliers' element={<SuppliersPage />} />
 				<Route path='suppliers/:id' element={<SupplierDetailPage />} />
