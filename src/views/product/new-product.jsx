@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
-import { useProductManager } from '../modules/products/product-manager.js'
-import { ProductForm } from '../modules/products/product/product-form.jsx'
+import { useProductManager } from '../../modules/products/product-manager.js'
+import { ProductForm } from '../../modules/products/product/product-form.jsx'
 
 export const NewProductPage = () => {
 	const navigate = useNavigate()

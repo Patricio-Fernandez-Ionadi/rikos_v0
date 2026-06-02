@@ -1,25 +1,39 @@
 import { useNavigate } from 'react-router-dom'
-import { useSaleCart } from '../modules/shift/sale-cart/sale-cart-manager.js'
-import { ProductBrowser } from '../modules/shift/sale-cart/product-browser.jsx'
-import { CartPanel } from '../modules/shift/sale-cart/cart-panel.jsx'
+import { useSaleCart } from '../../modules/shift/sale-cart/sale-cart-manager.js'
+import { ProductBrowser } from '../../modules/shift/sale-cart/product-browser.jsx'
+import { CartPanel } from '../../modules/shift/sale-cart/cart-panel.jsx'
 
 export const SalePage = () => {
 	const navigate = useNavigate()
 	const {
 		cartItems,
-		searchQuery, setSearchQuery,
-		selectedCategory, setSelectedCategory,
-		selectedProductId, setSelectedProductId,
-		selectedPresId, setSelectedPresId,
-		quantity, setQuantity,
-		paymentMethod, setPaymentMethod,
+		searchQuery,
+		setSearchQuery,
+		selectedCategory,
+		setSelectedCategory,
+		selectedProductId,
+		setSelectedProductId,
+		selectedPresId,
+		setSelectedPresId,
+		quantity,
+		setQuantity,
+		paymentMethod,
+		setPaymentMethod,
 		searchRef,
 		categories,
-		filteredProducts, selectedProduct, productPres,
+		filteredProducts,
+		selectedProduct,
+		productPres,
 		isFraction,
-		subtotal, discount, calcTotal, finalTotal,
-		collectedTotal, setCollectedTotal,
-		handleAddToCart, handleRemoveItem, handleSubmit,
+		subtotal,
+		discount,
+		calcTotal,
+		finalTotal,
+		collectedTotal,
+		setCollectedTotal,
+		handleAddToCart,
+		handleRemoveItem,
+		handleSubmit,
 	} = useSaleCart()
 
 	return (

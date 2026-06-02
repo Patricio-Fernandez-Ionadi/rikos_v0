@@ -1,109 +1,33 @@
-import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { SearchInput } from '../../components/search-input.jsx'
 
-const MAX_VISIBLE = 3
-
-/**
- * Card for a single task category.
- *
- * @param {Object}   props
- * @param {Object}   props.group            Task group definition
- * @param {Object[]} props.products         Assigned product objects (for non-text-based)
- * @param {Object[]} props.allTasks         All TaskItem objects for this type
- * @param {Function} props.toggleProduct    (productId, note?) => void
- * @param {Function} props.addSuggested     (name, note?) => void
- * @param {Function} props.removeSuggested  (id) => void
- * @param {Function} props.addTextTask      (type, description, productId?) => void
- * @param {Function} props.updateNote       (id, note) => void
- * @param {Function} props.removeTask       (id) => void
- * @param {Object[]} props.allProducts      All products for search
- */
 export const TaskCard = ({
 	group,
-	allTasks = [],
-	toggleProduct,
-	addSuggested,
-	addTextTask,
-	updateNote,
+	showAdd, setShowAdd,
+	expanded, setExpanded,
+	editingNoteId, noteValue, setNoteValue,
+	searchTerm, setSearchTerm,
+	suggestionName, setSuggestionName,
+	otrosDesc, setOtrosDesc,
+	otrosSearch, setOtrosSearch,
+	otrosLinkedProduct, setOtrosLinkedProduct,
+	filtered, otrosFiltered, total, visibleItems, hiddenCount,
+	isNameType, isTextBased,
+	handleToggleProduct,
+	handleAddSuggestion,
+	handleAddOtros,
+	handleNoteClick,
+	handleNoteSave,
+	handleNoteKeyDown,
+	handleLinkOtrosProduct,
+	getProduct,
 	removeTask,
-	allProducts = [],
 }) => {
-	const [searchTerm, setSearchTerm] = useState('')
-	const [suggestionName, setSuggestionName] = useState('')
-	const [showAdd, setShowAdd] = useState(false)
-	const [expanded, setExpanded] = useState(false)
-	const [editingNoteId, setEditingNoteId] = useState(null)
-	const [noteValue, setNoteValue] = useState('')
-
-	// For "Otros" hybrid: text description + optional product link
-	const [otrosDesc, setOtrosDesc] = useState('')
-	const [otrosSearch, setOtrosSearch] = useState('')
-	const [otrosLinkedProduct, setOtrosLinkedProduct] = useState(null)
-
-	const filtered = searchTerm.trim()
-		? allProducts.filter(
-				(p) =>
-					p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-					(p.marca && p.marca.toLowerCase().includes(searchTerm.toLowerCase())),
-			)
-		: []
-
-	const isNameType = group.isNameType
-	const isTextBased = group.textBased
-
-	// Build display items from allTasks (for text-based) or products (for standard)
-	const displayItems = isNameType
-		? allTasks.filter((t) => !t.productId && t.name)
-		: isTextBased
-			? allTasks
-			: allTasks.filter((t) => t.productId)
-
-	const total = displayItems.length
-	const visibleItems = expanded ? displayItems : displayItems.slice(0, MAX_VISIBLE)
-	const hiddenCount = total - MAX_VISIBLE
-
-	const handleToggleProduct = (productId) => {
-		toggleProduct(productId)
-		setSearchTerm('')
-	}
-
-	const handleAddSuggestion = () => {
-		if (suggestionName.trim()) {
-			addSuggested(suggestionName.trim())
-			setSuggestionName('')
-		}
-	}
-
-	const handleAddOtros = () => {
-		if (otrosDesc.trim()) {
-			addTextTask(group.key, otrosDesc.trim(), otrosLinkedProduct?._id ?? null)
-			setOtrosDesc('')
-			setOtrosLinkedProduct(null)
-			setOtrosSearch('')
-		}
-	}
-
-	const handleNoteClick = (task) => {
-		setEditingNoteId(task._id)
-		setNoteValue(task.note ?? '')
-	}
-
-	const handleNoteSave = (taskId) => {
-		updateNote(taskId, noteValue)
-		setEditingNoteId(null)
-	}
-
-	const handleNoteKeyDown = (e, taskId) => {
-		if (e.key === 'Enter') handleNoteSave(taskId)
-		if (e.key === 'Escape') setEditingNoteId(null)
-	}
-
 	const renderItem = (task, index) => {
-		const isProductItem = !!task.productId
-		const prod = isProductItem ? allProducts.find((p) => p._id === task.productId) : null
+		const hasProduct = !!task.productId
+		const prod = hasProduct ? getProduct(task.productId) : null
 		const displayName = isNameType || isTextBased ? task.name : (prod?.name ?? '—')
-		const linkTo = isProductItem && prod ? `/products/${prod._id}` : null
+		const linkTo = hasProduct && prod ? `/products/${prod._id}` : null
 
 		return (
 			<li key={task._id ?? index} className='tasks__card-item'>
@@ -114,7 +38,6 @@ export const TaskCard = ({
 						<span className='tasks__card-item-name'>{displayName}</span>
 					)}
 
-					{/* Note display / edit */}
 					{editingNoteId === task._id ? (
 						<input
 							className='tasks__card-note-input'
@@ -129,7 +52,7 @@ export const TaskCard = ({
 					) : (
 						<span
 							className='tasks__card-note'
-							onClick={() => handleNoteClick(task)}
+							onClick={() => handleNoteClick(task._id, task.note)}
 							title={task.note || 'Agregar detalle'}
 						>
 							{task.note || '✎ Agregar detalle'}
@@ -137,8 +60,7 @@ export const TaskCard = ({
 					)}
 				</div>
 
-				{/* Linked product badge for "Otros" items with a productId */}
-				{isTextBased && task.productId && prod && (
+				{isTextBased && hasProduct && prod && (
 					<Link to={`/products/${prod._id}`} className='tasks__card-product-badge'>
 						{prod.name}
 					</Link>
@@ -166,7 +88,6 @@ export const TaskCard = ({
 				<span className='tasks__card-count'>{total}</span>
 			</div>
 
-			{/* ── Add area ─────────────────────────── */}
 			<div className='tasks__card-add'>
 				<button
 					className='sidebar__btn sidebar__btn--xs'
@@ -178,7 +99,6 @@ export const TaskCard = ({
 				{showAdd && (
 					<div className='tasks__card-add-form'>
 						{isNameType ? (
-							/* productos-sugeridos: text input */
 							<div className='tasks__card-add-row'>
 								<input
 									className='field-input field-input--sm'
@@ -198,7 +118,6 @@ export const TaskCard = ({
 								</button>
 							</div>
 						) : isTextBased ? (
-							/* "Otros": text description + optional product link */
 							<div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
 								<div className='tasks__card-add-row'>
 									<input
@@ -219,7 +138,6 @@ export const TaskCard = ({
 									</button>
 								</div>
 
-								{/* Optional product search */}
 								{!otrosLinkedProduct ? (
 									<div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
 										<SearchInput
@@ -227,28 +145,17 @@ export const TaskCard = ({
 											value={otrosSearch}
 											onChange={(e) => setOtrosSearch(e.target.value)}
 										/>
-											{otrosSearch.trim() && (
+										{otrosSearch.trim() && (
 											<ul className='tasks__card-search-results'>
-												{allProducts
-													.filter((p) =>
-														p.name.toLowerCase().includes(otrosSearch.toLowerCase()) ||
-														(p.marca && p.marca.toLowerCase().includes(otrosSearch.toLowerCase())),
-													)
-													.slice(0, 8)
-													.map((p) => (
-														<li
-															key={p._id}
-															className='tasks__card-search-item tasks__card-search-item--clickable'
-															onClick={() => {
-																setOtrosLinkedProduct(p)
-																setOtrosSearch('')
-															}}
-														>
-															<span className='tasks__card-link'>
-																{p.name}
-															</span>
-														</li>
-													))}
+												{otrosFiltered.slice(0, 8).map((p) => (
+													<li
+														key={p._id}
+														className='tasks__card-search-item tasks__card-search-item--clickable'
+														onClick={() => handleLinkOtrosProduct(p)}
+													>
+														<span className='tasks__card-link'>{p.name}</span>
+													</li>
+												))}
 											</ul>
 										)}
 									</div>
@@ -269,7 +176,6 @@ export const TaskCard = ({
 								)}
 							</div>
 						) : (
-							/* Standard product-based categories: search */
 							<>
 								<SearchInput
 									placeholder='Buscar producto…'
@@ -303,7 +209,6 @@ export const TaskCard = ({
 				)}
 			</div>
 
-			{/* ── List ─────────────────────────────── */}
 			<ul className='tasks__card-list'>
 				{total === 0 && (
 					<li className='tasks__card-item tasks__card-item--empty'>
@@ -313,7 +218,7 @@ export const TaskCard = ({
 				{visibleItems.map((item, i) => renderItem(item, i))}
 			</ul>
 
-			{total > MAX_VISIBLE && (
+			{total > 3 && (
 				<div className='tasks__card-more'>
 					<button
 						className='tasks__card-more-btn'

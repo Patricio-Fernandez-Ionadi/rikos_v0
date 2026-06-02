@@ -1,6 +1,12 @@
 import { useTasksManager, TASK_GROUPS } from '../modules/tasks/tasks-manager.js'
+import { useTaskCard } from '../modules/tasks/task-card-manager.js'
 import { TaskCard } from '../modules/tasks/task-card.jsx'
 import { useData } from '../app/data-context.jsx'
+
+const TaskCardWrapper = ({ group, allTasks, toggleProduct, addSuggested, addTextTask, updateNote, removeTask, allProducts }) => {
+	const props = useTaskCard({ group, allTasks, allProducts, toggleProduct, addSuggested, addTextTask, updateNote })
+	return <TaskCard group={group} removeTask={removeTask} {...props} />
+}
 
 export const TasksPage = () => {
 	const { products } = useData()
@@ -14,9 +20,7 @@ export const TasksPage = () => {
 		removeTask,
 	} = useTasksManager()
 
-	const hasAny = TASK_GROUPS.some((g) => {
-		return getTaskItems(g.key).length > 0
-	})
+	const hasAny = TASK_GROUPS.some((g) => getTaskItems(g.key).length > 0)
 
 	return (
 		<div className='tasks-page'>
@@ -29,7 +33,7 @@ export const TasksPage = () => {
 						: getTaskItems(group.key)
 
 					return (
-						<TaskCard
+						<TaskCardWrapper
 							key={group.key}
 							group={group}
 							allTasks={allTasks}
