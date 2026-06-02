@@ -1,19 +1,23 @@
 import { useNavigate, Link } from 'react-router-dom'
-import { useProductManager } from '../modules/products/product-manager.js'
-import { useTasksManager } from '../modules/tasks/tasks-manager.js'
-import { ProductList } from '../modules/products/product-list.jsx'
-import { Modal } from '../components/Modal.jsx'
-import { ProductForm } from '../modules/products/product/product-form.jsx'
-import { Sidebar } from '../modules/products/sidebar.jsx'
+import { useProductManager } from '../../modules/products/product-manager.js'
+import { useTasksManager } from '../../modules/tasks/tasks-manager.js'
+import { ProductList } from '../../modules/products/product-list.jsx'
+import { Modal } from '../../components/Modal.jsx'
+import { ProductForm } from '../../modules/products/product/product-form.jsx'
+import { Sidebar } from '../../modules/products/sidebar.jsx'
 
 export const ProductsPage = () => {
 	const navigate = useNavigate()
 	const {
-		categories, suppliers,
-		products, presentations,
+		categories,
+		suppliers,
+		products,
+		presentations,
 		filteredProducts,
-		searchTerm, handleSearch,
-		selectedCategoryIds, handleSelectCategories,
+		searchTerm,
+		handleSearch,
+		selectedCategoryIds,
+		handleSelectCategories,
 		editingProduct,
 		closeEditProduct,
 		editProduct,
@@ -62,7 +66,8 @@ export const ProductsPage = () => {
 			>
 				<ProductForm
 					initial={editingProduct}
-					categories={categories} suppliers={suppliers}
+					categories={categories}
+					suppliers={suppliers}
 					onSubmit={editProduct}
 					onCancel={() => closeEditProduct()}
 				/>
