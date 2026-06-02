@@ -14,10 +14,23 @@ router.get('/', async (_req, res, next) => {
 /** Create a task. */
 router.post('/', async (req, res, next) => {
   try {
-    const { type, productId, name } = req.body
+    const { type, productId, name, note } = req.body
     if (!type) return res.status(400).json({ error: 'type is required' })
-    const task = await Task.create({ type, productId: productId || null, name: name || '' })
+    const task = await Task.create({ type, productId: productId || null, name: name || '', note: note || '' })
     res.status(201).json(task)
+  } catch (e) { next(e) }
+})
+
+/** Update a task note. */
+router.patch('/:id/note', async (req, res, next) => {
+  try {
+    const task = await Task.findByIdAndUpdate(
+      req.params.id,
+      { note: req.body.note ?? '' },
+      { new: true },
+    )
+    if (!task) return res.status(404).json({ error: 'Task not found' })
+    res.json(task)
   } catch (e) { next(e) }
 })
 

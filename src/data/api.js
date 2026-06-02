@@ -61,6 +61,7 @@ export const addAdjustment = (shiftId, data) =>
 // ─── Tasks ─────────────────────────────────────────────────
 export const getTasks = () => request('/tasks')
 export const createTask = (data) => request('/tasks', { method: 'POST', body: JSON.stringify(data) })
+export const updateTaskNote = (id, note) => request(`/tasks/${id}/note`, { method: 'PATCH', body: JSON.stringify({ note }) })
 export const deleteTask = (id) => request(`/tasks/${id}`, { method: 'DELETE' })
 
 // ─── Notes ─────────────────────────────────────────────────

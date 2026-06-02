@@ -174,3 +174,86 @@
     color: $white;
   }
 }
+
+/* ── Note inside a task item ──────────────── */
+.tasks__card-note {
+  flex: 1;
+  min-width: 0;
+  color: $grey_light;
+  font-size: 0.85em;
+  cursor: pointer;
+  padding: 1px 4px;
+  border-radius: 3px;
+  border: 1px dashed transparent;
+  transition: border-color 0.15s;
+
+  &:hover {
+    border-color: $grey;
+  }
+}
+
+.tasks__card-note-input {
+  flex: 1;
+  min-width: 0;
+  background: $black;
+  border: 1px solid $grey;
+  border-radius: 3px;
+  color: $white;
+  padding: 2px 6px;
+  font-size: 0.85em;
+  font-family: inherit;
+  outline: none;
+
+  &:focus {
+    border-color: $primary_light;
+  }
+}
+
+/* ── Show more / show less toggle ──────────── */
+.tasks__card-more {
+  display: flex;
+  justify-content: center;
+  padding: 4px 16px 8px;
+}
+
+.tasks__card-more-btn {
+  background: none;
+  border: none;
+  color: $primary_light;
+  font-size: 0.8em;
+  cursor: pointer;
+  padding: 4px 12px;
+  border-radius: 4px;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.05);
+  }
+}
+
+/* ── Linked product badge inside item ──────── */
+.tasks__card-product-badge {
+  font-size: 0.75em;
+  color: $grey;
+  background: rgba(255, 255, 255, 0.06);
+  padding: 1px 6px;
+  border-radius: 3px;
+  white-space: nowrap;
+}
+
+/* ── Item body (name + note stacked) ───────── */
+.tasks__card-item-body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.tasks__card-item-name {
+  color: $white;
+  text-decoration: none;
+
+  &:hover {
+    color: $primary_light;
+  }
+}

@@ -12,6 +12,7 @@ const taskSchema = new mongoose.Schema({
     default: null,
   },
   name: { type: String, default: '' },
+  note: { type: String, default: '' },
 }, { timestamps: true })
 
 taskSchema.index({ type: 1 })

@@ -37,6 +37,7 @@ export const TASK_GROUPS = [
 		title: 'Otros',
 		desc: 'Otras tareas pendientes',
 		isNameType: false,
+		textBased: true,
 	},
 ]
 
@@ -45,7 +46,6 @@ export function useTasksManager() {
 	const [version, setVersion] = useState(0)
 	const bump = useCallback(() => setVersion((v) => v + 1), [])
 
-	// Load from server on mount
 	useEffect(() => {
 		tasksData.init().then(bump)
 	}, [bump])
@@ -63,9 +63,17 @@ export function useTasksManager() {
 		[products],
 	)
 
+	const getTaskItems = useCallback(
+		(category) => {
+			return tasksData.getTasksByType(category)
+		},
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+		[version],
+	)
+
 	const toggleProductTask = useCallback(
-		async (category, productId) => {
-			tasksData.toggleProductTask(category, productId)
+		async (category, productId, note = '') => {
+			tasksData.toggleProductTask(category, productId, note)
 			bump()
 		},
 		[bump],
@@ -80,8 +88,8 @@ export function useTasksManager() {
 	)
 
 	const addSuggested = useCallback(
-		async (name) => {
-			await tasksData.addSuggestion(name)
+		async (name, note = '') => {
+			await tasksData.addSuggestion(name, note)
 			bump()
 		},
 		[bump],
@@ -95,9 +103,43 @@ export function useTasksManager() {
 		[bump],
 	)
 
+	const addTextTask = useCallback(
+		async (type, description, productId = null, note = '') => {
+			await tasksData.addTextTask(type, description, productId, note)
+			bump()
+		},
+		[bump],
+	)
+
+	const updateTaskNote = useCallback(
+		async (id, note) => {
+			await tasksData.updateNote(id, note)
+			bump()
+		},
+		[bump],
+	)
+
+	const removeTask = useCallback(
+		async (id) => {
+			await tasksData.removeTaskById(id)
+			bump()
+		},
+		[bump],
+	)
+
 	const getProductTaskCategories = useCallback(
 		(productId) => {
 			return tasksData.getProductTaskTypes(productId)
+		},
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+		[version],
+	)
+
+	const getProductNote = useCallback(
+		(productId, type) => {
+			const items = tasksData.getTasksByType(type)
+			const found = items.find((t) => t.productId === productId)
+			return found?.note ?? ''
 		},
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[version],
@@ -107,10 +149,15 @@ export function useTasksManager() {
 		TASK_GROUPS,
 		suggestedProducts: suggestions,
 		getTaskProducts,
+		getTaskItems,
 		toggleProductTask,
 		isInTask,
 		addSuggested,
 		removeSuggested,
+		addTextTask,
+		updateTaskNote,
+		removeTask,
 		getProductTaskCategories,
+		getProductNote,
 	}
 }

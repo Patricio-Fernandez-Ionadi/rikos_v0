@@ -5,16 +5,17 @@ import { useData } from '../app/data-context.jsx'
 export const TasksPage = () => {
 	const { products } = useData()
 	const {
-		getTaskProducts,
+		getTaskItems,
 		toggleProductTask,
 		suggestedProducts,
 		addSuggested,
-		removeSuggested,
+		addTextTask,
+		updateTaskNote,
+		removeTask,
 	} = useTasksManager()
 
 	const hasAny = TASK_GROUPS.some((g) => {
-		if (g.isNameType) return suggestedProducts.length > 0
-		return getTaskProducts(g.key).length > 0
+		return getTaskItems(g.key).length > 0
 	})
 
 	return (
@@ -23,20 +24,20 @@ export const TasksPage = () => {
 
 			<div className='tasks__grid'>
 				{TASK_GROUPS.map((group) => {
-					const assignedProducts = group.isNameType
-						? []
-						: getTaskProducts(group.key)
-					const suggestions = group.isNameType ? suggestedProducts : []
+					const allTasks = group.isNameType
+						? suggestedProducts
+						: getTaskItems(group.key)
 
 					return (
 						<TaskCard
 							key={group.key}
 							group={group}
-							products={assignedProducts}
-							suggestions={suggestions}
+							allTasks={allTasks}
 							toggleProduct={(productId) => toggleProductTask(group.key, productId)}
 							addSuggested={addSuggested}
-							removeSuggested={removeSuggested}
+							addTextTask={addTextTask}
+							updateNote={updateTaskNote}
+							removeTask={removeTask}
 							allProducts={products}
 						/>
 					)
