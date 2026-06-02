@@ -60,7 +60,7 @@ export const SalesList = () => {
 								<span
 									className={`shift-sales__expand-icon ${isExpanded(group.id) ? 'shift-sales__expand-icon--open' : ''}`}
 								>
-									▶
+									<span className='material-icons'>chevron_right</span>
 								</span>
 							</div>
 							{isExpanded(group.id) && (

@@ -33,7 +33,7 @@ export const TaskAssigner = ({
 							onChange={() => toggleProductTask(g.key, productId)}
 						/>
 						<span className='task-assigner__label'>
-							{g.icon} {g.title}
+							<span className={`material-icons tasks__card-icon--${g.key}`}>{g.icon}</span> {g.title}
 						</span>
 					</label>
 				)

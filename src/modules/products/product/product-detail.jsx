@@ -110,8 +110,8 @@ export const ProductDetail = ({ productId, filterState = null }) => {
 	return (
 		<div className='detail-page'>
 			<div className='detail-page__header'>
-				<button className='sidebar__btn' onClick={() => navigate(-1)}>
-					← Volver
+				<button className='detail-page__back-btn' onClick={() => navigate(-1)}>
+					<span className='material-icons'>arrow_back</span> Volver
 				</button>
 				{navInfo && (
 					<div className='detail-page__nav'>
@@ -120,38 +120,27 @@ export const ProductDetail = ({ productId, filterState = null }) => {
 							disabled={!navInfo.prevId}
 							onClick={() => handlePrevNext(navInfo.prevId)}
 						>
-							◀ Anterior
+							<span className='material-icons'>chevron_left</span>
 						</button>
 						<span className='detail-page__nav-index'>
-							{navInfo.index + 1} de {navInfo.total}
+							{navInfo.index + 1}/{navInfo.total}
 						</span>
 						<button
 							className='sidebar__btn sidebar__btn--xs'
 							disabled={!navInfo.nextId}
 							onClick={() => handlePrevNext(navInfo.nextId)}
 						>
-							Siguiente ▶
+							<span className='material-icons'>chevron_right</span>
 						</button>
 						<button
 							className={`sidebar__btn sidebar__btn--xs ${filterOpen ? 'sidebar__btn--active' : ''}`}
 							onClick={() => setFilterOpen(!filterOpen)}
 							title='Filtrar'
 						>
-							🔍
+							<span className='material-icons'>search</span>
 						</button>
 					</div>
 				)}
-				<div className='detail-page__header-right'>
-					<button className='sidebar__btn' onClick={() => setEditProductOpen(true)}>
-						Editar
-					</button>
-					<button
-						className='sidebar__btn sidebar__btn--danger'
-						onClick={handleDeleteProduct}
-					>
-						Eliminar
-					</button>
-				</div>
 			</div>
 
 			{/* ── Compact filter bar ──────────────────── */}
@@ -183,7 +172,12 @@ export const ProductDetail = ({ productId, filterState = null }) => {
 				</div>
 			)}
 
-			<h2 className='detail-page__title'>{product.name}</h2>
+			<div className='detail-page__title-row'>
+				<h2 className='detail-page__title'>{product.name}</h2>
+				<button className='detail-page__edit-icon' onClick={() => setEditProductOpen(true)} title='Editar producto'>
+					<span className='material-icons'>edit</span>
+				</button>
+			</div>
 			<div className='detail-page__id'>ID: {product._id}</div>
 
 			<ProductInfo
@@ -241,6 +235,16 @@ export const ProductDetail = ({ productId, filterState = null }) => {
 					getProductTaskCategories={getProductTaskCategories}
 					toggleProductTask={toggleProductTask}
 				/>
+			</div>
+
+			{/* ── Admin actions ──────────────────────────────── */}
+			<div className='detail-page__admin'>
+				<button
+					className='detail-page__admin-btn detail-page__admin-btn--danger'
+					onClick={handleDeleteProduct}
+				>
+					Eliminar
+				</button>
 			</div>
 
 			{/* ── Modals ────────────────────────────────────── */}

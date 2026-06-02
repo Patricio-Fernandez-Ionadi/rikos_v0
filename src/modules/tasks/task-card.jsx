@@ -80,7 +80,7 @@ export const TaskCard = ({
 	return (
 		<div className='tasks__card'>
 			<div className='tasks__card-header'>
-				<span className='tasks__card-icon'>{group.icon}</span>
+				<span className={`tasks__card-icon material-icons tasks__card-icon--${group.key}`}>{group.icon}</span>
 				<div>
 					<h3 className='tasks__card-title'>{group.title}</h3>
 					<p className='tasks__card-desc'>{group.desc}</p>

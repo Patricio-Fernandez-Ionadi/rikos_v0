@@ -15,7 +15,7 @@ export const NewProductPage = () => {
 		<div className='detail-page'>
 			<div className='detail-page__header'>
 				<button className='sidebar__btn' onClick={() => navigate('/products')}>
-					← Volver
+					<span className='material-icons'>arrow_back</span> Volver
 				</button>
 			</div>
 

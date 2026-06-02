@@ -40,7 +40,7 @@ export const SalePage = () => {
 		<div className='sale-cart'>
 			<div className='sale-cart__header'>
 				<button className='sidebar__btn' onClick={() => navigate('/shifts')}>
-					← Volver
+					<span className='material-icons'>arrow_back</span> Volver
 				</button>
 				<h2 className='sale-cart__title'>Registrar Venta</h2>
 			</div>

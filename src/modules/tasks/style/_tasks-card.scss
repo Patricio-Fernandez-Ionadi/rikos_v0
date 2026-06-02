@@ -19,6 +19,12 @@
   line-height: 1;
 }
 
+.tasks__card-icon--falta-envasar { color: $task_icon_envasar; }
+.tasks__card-icon--falta-stock { color: $task_icon_stock; }
+.tasks__card-icon--productos-sugeridos { color: $task_icon_sugerido; }
+.tasks__card-icon--faltan-etiquetas { color: $task_icon_etiqueta; }
+.tasks__card-icon--otros { color: $task_icon_otros; }
+
 .tasks__card-title {
   color: $white;
   margin: 0;

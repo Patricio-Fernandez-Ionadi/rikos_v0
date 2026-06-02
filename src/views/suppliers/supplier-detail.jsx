@@ -133,7 +133,7 @@ export const SupplierDetailPage = () => {
 		<div className='stock-page'>
 			<div className='stock-page__title-row'>
 				<button className='sidebar__btn' onClick={() => navigate('/suppliers')}>
-					← Volver
+					<span className='material-icons'>arrow_back</span> Volver
 				</button>
 				<h2 className='stock-page__title'>{supplier.name}</h2>
 			</div>
