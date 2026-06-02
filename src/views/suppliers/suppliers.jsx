@@ -1,20 +1,22 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useProductManager } from '../modules/products/product-manager.js'
-import { Modal } from '../components/Modal.jsx'
+import { useProductManager } from '../../modules/products/product-manager.js'
+import { Modal } from '../../components/Modal.jsx'
 
 export const SuppliersPage = () => {
 	const navigate = useNavigate()
-	const {
-		suppliers,
-		createSupplier,
-		updateSupplier,
-		deleteSupplier,
-	} = useProductManager()
+	const { suppliers, createSupplier, updateSupplier, deleteSupplier } =
+		useProductManager()
 
 	const [showForm, setShowForm] = useState(false)
 	const [editing, setEditing] = useState(null)
-	const [form, setForm] = useState({ name: '', contactName: '', phone: '', email: '', notes: '' })
+	const [form, setForm] = useState({
+		name: '',
+		contactName: '',
+		phone: '',
+		email: '',
+		notes: '',
+	})
 
 	const openCreate = () => {
 		setEditing(null)
@@ -24,7 +26,13 @@ export const SuppliersPage = () => {
 
 	const openEdit = (s) => {
 		setEditing(s)
-		setForm({ name: s.name, contactName: s.contactName ?? '', phone: s.phone ?? '', email: s.email ?? '', notes: s.notes ?? '' })
+		setForm({
+			name: s.name,
+			contactName: s.contactName ?? '',
+			phone: s.phone ?? '',
+			email: s.email ?? '',
+			notes: s.notes ?? '',
+		})
 		setShowForm(true)
 	}
 
@@ -50,7 +58,9 @@ export const SuppliersPage = () => {
 				})
 			}
 			setShowForm(false)
-		} catch { /* error logged by manager */ }
+		} catch {
+			/* error logged by manager */
+		}
 	}
 
 	return (
@@ -63,7 +73,10 @@ export const SuppliersPage = () => {
 			</div>
 
 			{suppliers.length === 0 ? (
-				<p className='placeholder' style={{ textAlign: 'center', padding: '40px', color: '#616161' }}>
+				<p
+					className='placeholder'
+					style={{ textAlign: 'center', padding: '40px', color: '#616161' }}
+				>
 					No hay proveedores registrados
 				</p>
 			) : (
@@ -88,10 +101,16 @@ export const SuppliersPage = () => {
 									<td>{s.email ?? '—'}</td>
 									<td>{s.notes ?? ''}</td>
 									<td>
-										<button className='sidebar__btn sidebar__btn--xs' onClick={() => navigate(`/suppliers/${s._id}`)}>
+										<button
+											className='sidebar__btn sidebar__btn--xs'
+											onClick={() => navigate(`/suppliers/${s._id}`)}
+										>
 											Productos
 										</button>
-										<button className='sidebar__btn sidebar__btn--xs' onClick={() => openEdit(s)}>
+										<button
+											className='sidebar__btn sidebar__btn--xs'
+											onClick={() => openEdit(s)}
+										>
 											Editar
 										</button>
 										<button
@@ -115,23 +134,59 @@ export const SuppliersPage = () => {
 			>
 				<form className='product-form' onSubmit={handleSubmit}>
 					<label className='field-label'>Nombre *</label>
-					<input className='field-input' type='text' value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} autoFocus required />
+					<input
+						className='field-input'
+						type='text'
+						value={form.name}
+						onChange={(e) => setForm({ ...form, name: e.target.value })}
+						autoFocus
+						required
+					/>
 
 					<label className='field-label'>Nombre de contacto</label>
-					<input className='field-input' type='text' value={form.contactName} onChange={(e) => setForm({ ...form, contactName: e.target.value })} />
+					<input
+						className='field-input'
+						type='text'
+						value={form.contactName}
+						onChange={(e) => setForm({ ...form, contactName: e.target.value })}
+					/>
 
 					<label className='field-label'>Teléfono</label>
-					<input className='field-input' type='text' value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} />
+					<input
+						className='field-input'
+						type='text'
+						value={form.phone}
+						onChange={(e) => setForm({ ...form, phone: e.target.value })}
+					/>
 
 					<label className='field-label'>Email</label>
-					<input className='field-input' type='email' value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
+					<input
+						className='field-input'
+						type='email'
+						value={form.email}
+						onChange={(e) => setForm({ ...form, email: e.target.value })}
+					/>
 
 					<label className='field-label'>Notas</label>
-					<textarea className='field-input' value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} rows={3} />
+					<textarea
+						className='field-input'
+						value={form.notes}
+						onChange={(e) => setForm({ ...form, notes: e.target.value })}
+						rows={3}
+					/>
 
 					<div className='modal-actions'>
-						<button type='button' className='shift-bar__btn' onClick={() => setShowForm(false)}>Cancelar</button>
-						<button type='submit' className='shift-bar__btn shift-bar__btn--primary'>
+						<button
+							type='button'
+							className='shift-bar__btn'
+							onClick={() => setShowForm(false)}
+						>
+							Cancelar
+						</button>
+						<button
+							type='submit'
+							className='shift-bar__btn shift-bar__btn--primary'
+						>
 							{editing ? 'Guardar cambios' : 'Crear proveedor'}
 						</button>
 					</div>
