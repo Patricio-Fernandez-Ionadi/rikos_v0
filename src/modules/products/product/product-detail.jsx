@@ -64,7 +64,7 @@ export const ProductDetail = ({ productId }) => {
 					<div className='detail-page__pres-grid'>
 						{productPres.map((pres) => (
 							<PresentationCard key={pres._id}
-								pres={pres} product={product} isFraction={isFraction}
+								pres={pres} product={product}
 								shift={shift} calculate={calculate}
 								salePresId={salePresId} setSalePresId={setSalePresId}
 								handleSale={handleSale}

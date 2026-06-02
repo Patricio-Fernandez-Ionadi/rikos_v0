@@ -3,7 +3,6 @@ import { SaleForm } from '../../../components/sale-form.jsx'
 export const PresentationCard = ({
 	pres,
 	product,
-	isFraction,
 	shift,
 	calculate,
 	salePresId,
@@ -66,12 +65,10 @@ export const PresentationCard = ({
 					<span>Cantidad:</span>
 					<span>{pres.grams !== null ? `${pres.grams}g` : 1}</span>
 				</div>
-				{!isFraction && (
-					<div className='detail-page__pres-row'>
-						<span>Stock:</span>
-						<span>{pres.stock ?? 0}</span>
-					</div>
-				)}
+				<div className='detail-page__pres-row'>
+					<span>Stock:</span>
+					<span>{pres.stock ?? 0}</span>
+				</div>
 				<div className='detail-page__pres-row'>
 					<span>Margen:</span>
 					<span>{product.margin != null ? `${product.margin}%` : '—'}</span>

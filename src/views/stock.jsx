@@ -14,13 +14,12 @@ const FILTER_LABELS = {
 
 export const StockPage = () => {
 	const navigate = useNavigate()
-	const { categories, products, presentations } = useData()
+	const { products, presentations } = useData()
 	const [filter, setFilter] = useState('all')
 	const [customType, setCustomType] = useState('lt')
 	const [customValue, setCustomValue] = useState(5)
 	const [searchTerm, setSearchTerm] = useState('')
 
-	const getCategory = (id) => categories.find((c) => c._id === id)
 	const getProduct = (id) => products.find((p) => p._id === id)
 
 	const filterDesc = useMemo(() => {
@@ -89,8 +88,6 @@ export const StockPage = () => {
 					<thead>
 						<tr>
 							<th className='stock-cell--product'>Producto</th>
-							<th className='stock-cell--category'>Categoría</th>
-							<th className='stock-cell--pres'>Presentación</th>
 							<th className='stock-cell--stock'>Stock (unidades)</th>
 							<th className='stock-cell--grams'>Gramos totales</th>
 							<th className='stock-cell--actions'>Acciones</th>
@@ -102,9 +99,6 @@ export const StockPage = () => {
 								key={pres._id}
 								pres={pres}
 								product={product}
-								categoryName={
-									getCategory(product.categoryId)?.name ?? '—'
-								}
 								onNavigate={() => navigate(`/products/${product._id}`)}
 							/>
 						))}
