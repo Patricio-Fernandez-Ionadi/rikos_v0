@@ -227,7 +227,7 @@ export const TaskCard = ({
 											value={otrosSearch}
 											onChange={(e) => setOtrosSearch(e.target.value)}
 										/>
-										{otrosSearch.trim() && (
+											{otrosSearch.trim() && (
 											<ul className='tasks__card-search-results'>
 												{allProducts
 													.filter((p) =>
@@ -236,19 +236,17 @@ export const TaskCard = ({
 													)
 													.slice(0, 8)
 													.map((p) => (
-														<li key={p._id} className='tasks__card-search-item'>
-															<Link to={`/products/${p._id}`} className='tasks__card-link'>
+														<li
+															key={p._id}
+															className='tasks__card-search-item tasks__card-search-item--clickable'
+															onClick={() => {
+																setOtrosLinkedProduct(p)
+																setOtrosSearch('')
+															}}
+														>
+															<span className='tasks__card-link'>
 																{p.name}
-															</Link>
-															<button
-																className='tasks__card-btn'
-																onClick={() => {
-																	setOtrosLinkedProduct(p)
-																	setOtrosSearch('')
-																}}
-															>
-																+
-															</button>
+															</span>
 														</li>
 													))}
 											</ul>
@@ -281,16 +279,20 @@ export const TaskCard = ({
 								{filtered.length > 0 && (
 									<ul className='tasks__card-search-results'>
 										{filtered.slice(0, 10).map((p) => (
-											<li key={p._id} className='tasks__card-search-item'>
-												<Link to={`/products/${p._id}`} className='tasks__card-link'>
-													{p.name}
-												</Link>
-												<button
+											<li
+												key={p._id}
+												className='tasks__card-search-item tasks__card-search-item--clickable'
+												onClick={() => handleToggleProduct(p._id)}
+											>
+												<span className='tasks__card-link'>{p.name}</span>
+												<Link
+													to={`/products/${p._id}`}
 													className='tasks__card-btn'
-													onClick={() => handleToggleProduct(p._id)}
+													onClick={(e) => e.stopPropagation()}
+													title='Ver producto'
 												>
-													+
-												</button>
+													↗
+												</Link>
 											</li>
 										))}
 									</ul>

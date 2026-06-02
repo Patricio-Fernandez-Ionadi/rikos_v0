@@ -25,9 +25,14 @@ export const ProductsPage = () => {
 		<div className='product-browser'>
 			<div className='product-browser__header'>
 				<h2 className='product-browser__title'>Productos</h2>
-				<Link to='/products/new' className='sidebar__btn'>
-					+Nuevo
-				</Link>
+				<input
+					className='field-input'
+					type='text'
+					placeholder='Buscar producto, marca o presentación…'
+					value={searchTerm}
+					onChange={(e) => handleSearch(e.target.value)}
+					style={{ flex: 1 }}
+				/>
 			</div>
 
 			<div className='product-browser__layout'>
@@ -35,8 +40,6 @@ export const ProductsPage = () => {
 					categories={categories}
 					filteredProducts={filteredProducts}
 					products={products}
-					searchTerm={searchTerm}
-					onSearch={handleSearch}
 					selectedCategoryIds={selectedCategoryIds}
 					onSelectCategories={handleSelectCategories}
 				/>

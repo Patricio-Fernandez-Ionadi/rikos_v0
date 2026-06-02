@@ -1,13 +1,11 @@
+import { Link } from 'react-router-dom'
 import { CategoriesSidebar } from '../../modules/categorias/categories-button-group'
-import { SearchProduct } from '../../modules/products/product-search-input'
 import { ProductStats } from '../../modules/products/product-stats'
 
 export const Sidebar = ({
 	categories,
 	filteredProducts,
 	products,
-	searchTerm,
-	onSearch,
 	selectedCategoryIds,
 	onSelectCategories,
 }) => {
@@ -19,7 +17,9 @@ export const Sidebar = ({
 					filteredProducts={filteredProducts}
 					products={products}
 				/>
-				<SearchProduct changeEvent={onSearch} value={searchTerm} />
+				<Link to='/products/new' className='sidebar__btn' style={{ display: 'block', marginBottom: 10 }}>
+					+Nuevo producto
+				</Link>
 				<CategoriesSidebar
 					selected={selectedCategoryIds}
 					onEvent={onSelectCategories}

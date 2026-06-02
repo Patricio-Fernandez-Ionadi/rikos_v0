@@ -166,12 +166,21 @@
   padding: 6px 10px;
   font-size: 0.85em;
 
+  .tasks__card-link {
+    color: $white;
+  }
+}
+
+.tasks__card-search-item--clickable {
+  cursor: pointer;
+
   &:hover {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.08);
   }
 
   .tasks__card-link {
-    color: $white;
+    flex: 1;
+    min-width: 0;
   }
 }
 
