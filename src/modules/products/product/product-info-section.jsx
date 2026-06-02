@@ -3,7 +3,7 @@ export const ProductInfoSection = ({
 	totalStock,
 	purchaseCost,
 	margin,
-	minSalePrice,
+	productPres,
 	categoryName,
 	saleTypeLabel,
 	marca,
@@ -17,13 +17,22 @@ export const ProductInfoSection = ({
 	return (
 		<div className='detail-page__info'>
 			<div className='detail-page__info-primary'>
-				<div className='detail-page__info-primary-value'>
-					{minSalePrice != null
-						? `$${minSalePrice.toLocaleString()}`
-						: '—'}
-				</div>
+				{(productPres ?? []).length > 0 ? (
+					<div className='detail-page__info-prices'>
+						{productPres.map((pres) => (
+							<div key={pres._id} className='detail-page__info-price-item'>
+								<span className='detail-page__info-price-label'>{pres.label || '—'}</span>
+								<span className='detail-page__info-price-value'>
+									${pres.salePrice?.toLocaleString() ?? '—'}
+								</span>
+							</div>
+						))}
+					</div>
+				) : (
+					<div className='detail-page__info-primary-value'>—</div>
+				)}
 				<div className='detail-page__info-primary-label'>
-					Precio de venta
+					Precios de venta
 				</div>
 			</div>
 

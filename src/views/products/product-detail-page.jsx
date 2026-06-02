@@ -1,7 +1,9 @@
-import { useParams } from 'react-router-dom'
+import { useParams, useLocation } from 'react-router-dom'
 import { ProductDetail } from '../../modules/products/product/product-detail.jsx'
 
 export const ProductDetailPage = () => {
 	const { id } = useParams()
-	return <ProductDetail productId={id} />
+	const location = useLocation()
+	const filterState = location.state ?? null
+	return <ProductDetail productId={id} filterState={filterState} />
 }
