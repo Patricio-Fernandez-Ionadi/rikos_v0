@@ -13,6 +13,19 @@ import { SuppliersSection } from './suppliers-section.jsx'
 import { PresentationForm } from './presentation-form.jsx'
 import { filterProductIds } from '../../../data/filter-products.js'
 
+function getPageRange(current, total, maxVisible) {
+	if (total <= maxVisible) {
+		return Array.from({ length: total }, (_, i) => i)
+	}
+	const half = Math.floor(maxVisible / 2)
+	let start = Math.max(0, current - half)
+	let end = Math.min(total - 1, start + maxVisible - 1)
+	if (end - start < maxVisible - 1) {
+		start = Math.max(0, end - maxVisible + 1)
+	}
+	return Array.from({ length: end - start + 1 }, (_, i) => start + i)
+}
+
 export const ProductDetail = ({ productId, filterState = null }) => {
 	const navigate = useNavigate()
 	const { products, presentations, categories } = useCatalog()
@@ -109,9 +122,21 @@ export const ProductDetail = ({ productId, filterState = null }) => {
 							<Button size='sm' disabled={!navInfo.prevId} onClick={() => handlePrevNext(navInfo.prevId)}>
 								<span className='material-icons'>chevron_left</span>
 							</Button>
-							<span className='detail-page__nav-index'>
-								{navInfo.index + 1}/{navInfo.total}
-							</span>
+							{getPageRange(navInfo.index, navInfo.total, 3).map((i) => {
+								const p = products.find((p) => p._id === filteredIds[i])
+								const label = p ? p.name.slice(0, 5) : '...'
+								return (
+									<Button
+										key={i}
+										size='sm'
+										variant={i === navInfo.index ? 'primary' : 'default'}
+										onClick={() => handlePrevNext(filteredIds[i])}
+										title={p?.name ?? ''}
+									>
+										{label}
+									</Button>
+								)
+							})}
 							<Button size='sm' disabled={!navInfo.nextId} onClick={() => handlePrevNext(navInfo.nextId)}>
 								<span className='material-icons'>chevron_right</span>
 							</Button>
