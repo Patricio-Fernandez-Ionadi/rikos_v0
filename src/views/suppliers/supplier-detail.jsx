@@ -25,7 +25,7 @@ export const SupplierDetailPage = () => {
 	if (!supplier) {
 		return (
 			<div className='stock-page'>
-				<p className='placeholder' style={{ textAlign: 'center', padding: '40px', color: '#616161' }}>
+				<p className='placeholder'>
 					Proveedor no encontrado
 				</p>
 			</div>
@@ -41,15 +41,15 @@ export const SupplierDetailPage = () => {
 				<h2 className='stock-page__title'>{supplier.name}</h2>
 			</div>
 
-			<div style={{ color: '#e0e0e0', marginBottom: '16px' }}>
+			<div className='text-white mb-16'>
 				{supplier.contactName && <p>Contacto: {supplier.contactName}</p>}
 				{supplier.phone && <p>Teléfono: {supplier.phone}</p>}
 				{supplier.email && <p>Email: {supplier.email}</p>}
-				{supplier.notes && <p style={{ color: '#616161' }}>{supplier.notes}</p>}
+				{supplier.notes && <p className='text-muted'>{supplier.notes}</p>}
 			</div>
 
-			<div className='detail-page__section-header' style={{ marginBottom: '12px' }}>
-				<h3 style={{ color: '#f5f5f5', margin: 0 }}>
+			<div className='detail-page__section-header mb-12'>
+				<h3 className='text-white m-0'>
 					Productos ({productSuppliers.length})
 				</h3>
 				<button
@@ -61,8 +61,8 @@ export const SupplierDetailPage = () => {
 			</div>
 
 			{showAddForm && (
-				<div style={{ border: '1px solid #333', borderRadius: '6px', padding: '12px', marginBottom: '16px' }}>
-					<div style={{ display: 'flex', gap: '8px', marginBottom: '10px' }}>
+				<div className='surface-card p-12 mb-16'>
+					<div className='flex-row gap-8 mb-8'>
 						<button className={`btn ${addMode === 'existing' ? 'btn--active' : ''}`}
 							onClick={() => setAddMode('existing')}>Producto existente</button>
 						<button className={`btn ${addMode === 'new' ? 'btn--active' : ''}`}
@@ -80,10 +80,9 @@ export const SupplierDetailPage = () => {
 								placeholder='Escribí para filtrar…'
 							/>
 							<select
-								className='field-input'
 								value={selectedProductId}
 								onChange={(e) => setSelectedProductId(e.target.value)}
-								style={{ marginTop: '6px' }}
+								className='field-input mt-4'
 							>
 								<option value=''>Seleccionar producto…</option>
 								{filteredAvailableProducts.map((p) => (
@@ -106,7 +105,7 @@ export const SupplierDetailPage = () => {
 									<option key={c._id} value={c._id}>{c.name}</option>
 								))}
 							</select>
-							<label className='field-label' style={{ marginTop: '6px' }}>
+							<label className='field-label mt-4'>
 								Nombre del producto
 							</label>
 							<input
@@ -118,7 +117,7 @@ export const SupplierDetailPage = () => {
 						</>
 					)}
 
-					<label className='field-label' style={{ marginTop: '6px' }}>
+					<label className='field-label mt-4'>
 						Precio de costo ($)
 					</label>
 					<input
@@ -142,7 +141,7 @@ export const SupplierDetailPage = () => {
 			)}
 
 			{productSuppliers.length === 0 ? (
-				<p className='placeholder' style={{ textAlign: 'center', padding: '40px', color: '#616161' }}>
+				<p className='placeholder'>
 					Este proveedor no tiene productos asignados
 				</p>
 			) : (
@@ -164,18 +163,18 @@ export const SupplierDetailPage = () => {
 									: null
 								return (
 									<tr key={ps._id}>
-										<td style={{ color: '#f5f5f5' }}>
+										<td className='text-white'>
 											<a
+												className='text-info'
 												href={`/products/${ps.productId}`}
 												onClick={(e) => { e.preventDefault(); navigate(`/products/${ps.productId}`) }}
-												style={{ color: '#64b5f6', textDecoration: 'none' }}
 											>
 												{product?.name ?? 'Producto eliminado'}
 											</a>
 										</td>
 										<td>{category?.name ?? '—'}</td>
 										<td
-											style={{ color: '#e0e0e0', cursor: 'pointer' }}
+											className='text-white'
 											onClick={() => {
 												if (editingPS !== ps._id) {
 													setEditingPS(ps._id)
@@ -195,7 +194,6 @@ export const SupplierDetailPage = () => {
 														if (e.key === 'Escape') setEditingPS(null)
 													}}
 													autoFocus
-													style={{ width: '100px' }}
 												/>
 											) : (
 												<>${ps.purchaseCost?.toLocaleString() ?? '\u2014'}</>

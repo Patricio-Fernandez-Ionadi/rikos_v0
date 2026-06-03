@@ -55,14 +55,13 @@ export const ShiftsPage = () => {
 				defaultOpeningCash={pastShifts[0]?.closingCash ?? ''}
 			/>
 
-			<h3 style={{ color: '#f5f5f5', margin: '24px 0 12px' }}>
+			<h3 className='text-white' style={{ margin: '24px 0 12px' }}>
 				Turnos anteriores
 			</h3>
 
 			{pastShifts.length === 0 && (
 				<p
-					className='placeholder'
-					style={{ color: '#616161', textAlign: 'center', padding: '40px' }}
+					className='placeholder text-muted text-center p-16'
 				>
 					No hay turnos anteriores registrados
 				</p>

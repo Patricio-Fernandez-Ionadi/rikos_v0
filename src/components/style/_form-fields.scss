@@ -35,6 +35,33 @@
   font-size: 0.8em;
 }
 
+.field-input--lg {
+  max-width: 400px;
+}
+
+.field-input--inline {
+  width: auto;
+  display: inline-block;
+}
+
+.field-textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid $grey_dark;
+  border-radius: $thin;
+  background: $black_dark;
+  color: $white;
+  font-size: 0.9em;
+  resize: vertical;
+  min-height: 64px;
+  font-family: inherit;
+
+  &:focus {
+    outline: none;
+    border-color: $primary;
+  }
+}
+
 .field-error {
   color: $error;
   font-size: 0.85em;

@@ -118,7 +118,7 @@ export const TaskCard = ({
 								</button>
 							</div>
 						) : isTextBased ? (
-							<div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+							<div className='flex-col gap-6'>
 								<div className='tasks__card-add-row'>
 									<input
 										className='field-input field-input--sm'
@@ -139,7 +139,7 @@ export const TaskCard = ({
 								</div>
 
 								{!otrosLinkedProduct ? (
-									<div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+									<div className='flex-col gap-4'>
 										<SearchInput
 											placeholder='Opcional: vincular producto…'
 											value={otrosSearch}
@@ -160,14 +160,13 @@ export const TaskCard = ({
 										)}
 									</div>
 								) : (
-									<div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: '0.85em' }}>
-										<span style={{ color: '#9e9e9e' }}>Producto:</span>
-										<Link to={`/products/${otrosLinkedProduct._id}`} style={{ color: '#9db683' }}>
+									<div className='flex-items-center gap-6 text-sm'>
+										<span className='text-muted-light'>Producto:</span>
+										<Link to={`/products/${otrosLinkedProduct._id}`} className='text-primary'>
 											{otrosLinkedProduct.name}
 										</Link>
 										<button
-											className='tasks__card-btn tasks__card-btn--remove'
-											style={{ width: 20, height: 20, fontSize: 12 }}
+											className='tasks__card-btn tasks__card-btn--remove btn--xs btn--icon'
 											onClick={() => setOtrosLinkedProduct(null)}
 										>
 											✕

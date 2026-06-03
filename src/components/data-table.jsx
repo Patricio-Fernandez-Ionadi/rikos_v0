@@ -22,7 +22,7 @@ export const DataTable = ({
 	const prefix = variant ? `${variant}__` : ''
 
 	if (rows.length === 0) {
-		return <p className='placeholder' style={{ textAlign: 'center', padding: '40px', color: '#616161' }}>{emptyMessage}</p>
+		return <p className='placeholder text-muted'>{emptyMessage}</p>
 	}
 
 	return (

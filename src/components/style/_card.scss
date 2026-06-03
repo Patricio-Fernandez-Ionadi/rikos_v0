@@ -1,0 +1,77 @@
+@use '../../theme/values/colors' as *;
+@use '../../theme/values/sizes' as *;
+@use '../../theme/values/mediaqueries' as *;
+
+// ─── SHARED CARD COMPONENT ─────────────────────────────────────
+
+.card {
+	background: $black;
+	border: 1px solid $grey_dark;
+	border-radius: $smooth;
+	padding: 16px;
+}
+
+.card--interactive {
+	cursor: pointer;
+	transition: border-color 0.2s, background 0.2s;
+
+	&:hover {
+		border-color: $primary;
+		background: $black_light;
+	}
+}
+
+.card--empty {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 16px;
+	padding: 40px 16px;
+}
+
+.card__header {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	margin-bottom: 8px;
+	gap: 8px;
+
+	@media (max-width: $max-mobile) {
+		flex-direction: column;
+	}
+}
+
+.card__title {
+	color: $white;
+	margin: 0 0 4px;
+	font-size: 18px;
+}
+
+.card__subtitle {
+	color: $grey;
+	font-size: 0.85em;
+	margin: 0;
+}
+
+.card__value {
+	color: $primary_light;
+	font-size: 28px;
+	font-weight: 700;
+	margin: 8px 0 0;
+}
+
+.card__actions {
+	display: flex;
+	gap: 6px;
+	flex-wrap: wrap;
+}
+
+.card__body {
+	margin-top: 8px;
+}
+
+.card__footer {
+	margin-top: 12px;
+	border-top: 1px solid $black_light;
+	padding-top: 12px;
+}

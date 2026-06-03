@@ -1,3 +1,4 @@
+@use 'sass:color';
 @use '../../theme/values/colors' as *;
 @use '../../theme/values/sizes' as *;
 
@@ -59,4 +60,35 @@
 .btn--xs {
 	padding: 2px 6px;
 	font-size: 0.75em;
+}
+
+.btn:disabled,
+.btn--disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+	pointer-events: none;
+}
+
+.btn--icon {
+	padding: 6px;
+	min-width: 30px;
+	justify-content: center;
+}
+
+.btn--icon.btn--xs {
+	padding: 2px;
+	min-width: 24px;
+}
+
+.btn--link {
+	background: none;
+	border: none;
+	color: $info;
+	padding: 0;
+	font-size: inherit;
+
+	&:hover {
+		background: none;
+		color: color.adjust($info, $lightness: 10%);
+	}
 }

@@ -104,7 +104,7 @@ export const PastShiftCard = ({ shift: s, isExpanded, onToggle }) => {
 			</div>
 			{s.notes && (
 				<div
-					style={{ color: '#8e8e8e', fontSize: '0.85em', marginTop: 8 }}
+					className='text-sm text-muted-light mt-8'
 				>
 					Notas: {s.notes}
 				</div>

@@ -93,18 +93,16 @@ export const SalesList = () => {
 																).toLocaleString()}
 															</span>
 															<button
-																className='btn btn--primary'
+																className='btn btn--primary btn--xs'
 																onClick={() =>
 																	saveEdit(dbId, itemId, item.unitPrice)
 																}
-																style={{ padding: '2px 8px' }}
 															>
 																OK
 															</button>
 															<button
-																className='btn'
+																className='btn btn--xs'
 																onClick={cancelEdit}
-																style={{ padding: '2px 8px' }}
 															>
 																X
 															</button>
@@ -125,17 +123,15 @@ export const SalesList = () => {
 															${item.total.toLocaleString()}
 														</span>
 														<button
-															className='btn'
+															className='btn btn--xs'
 															onClick={() => startEdit(itemId, item.quantity)}
-															style={{ padding: '1px 6px', fontSize: '0.7em' }}
 															title='Editar cantidad'
 														>
 															✎
 														</button>
 														<button
-															className='btn btn--danger'
+															className='btn btn--xs btn--danger'
 															onClick={() => handleDelete(dbId, itemId)}
-															style={{ padding: '1px 6px', fontSize: '0.7em' }}
 															title='Eliminar'
 														>
 															✕

@@ -24,11 +24,11 @@ export const DashboardCards = () => {
 				<a className='dashboard__card' onClick={() => navigate('/shifts')}>
 					<h4 className='dashboard__card-title'>
 						Turno activo
-						<span className='dashboard__badge dashboard__badge--open' style={{ marginLeft: 8 }}>
+						<span className='dashboard__badge dashboard__badge--open ml-auto'>
 							Abierto
 						</span>
 					</h4>
-					<div style={{ display: 'flex', gap: 16, marginTop: 10, flexWrap: 'wrap' }}>
+					<div className='flex-row gap-16 mt-8 flex-wrap'>
 						<div>
 							<div className='dashboard__card-desc'>Ventas</div>
 							<div className='dashboard__card-value' style={{ fontSize: 20 }}>{activeSales}</div>

@@ -24,7 +24,7 @@ export const ConfirmDialog = ({
 }) => {
 	return (
 		<Modal open={open} onClose={onClose} title={title}>
-			<p style={{ color: '#e0e0e0', margin: '12px 0' }}>{message}</p>
+			<p className='text-white' style={{ margin: '12px 0' }}>{message}</p>
 			<div className='modal-actions'>
 				<Button onClick={onClose}>Cancelar</Button>
 				<Button variant={confirmVariant} onClick={onConfirm}>

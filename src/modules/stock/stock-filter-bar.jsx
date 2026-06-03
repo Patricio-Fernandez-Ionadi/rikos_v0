@@ -14,7 +14,7 @@ export const StockFilterBar = ({ filter, onChange, customType, onCustomTypeChang
 
 	return (
 		<div className='stock-page__toolbar'>
-			<span style={{ color: '#8e8e8e', fontSize: '0.85em' }}>Filtrar:</span>
+			<span className='text-muted-light text-sm'>Filtrar:</span>
 			{options.map((opt) => (
 				<Button
 					key={opt.value}
@@ -27,13 +27,14 @@ export const StockFilterBar = ({ filter, onChange, customType, onCustomTypeChang
 			))}
 
 			{filter === 'custom' && (
-				<div style={{ display: 'inline-flex', gap: 4, alignItems: 'center', marginLeft: 4 }}>
+				<div className='flex-items-center gap-4 ml-auto'>
 					<select
 						className='field-input field-input--xs'
 						value={customType}
 						onChange={(e) => onCustomTypeChange(e.target.value)}
 						style={{ width: 50 }}
 					>
+					
 						<option value='lt'>≤</option>
 						<option value='gt'>≥</option>
 					</select>
@@ -45,8 +46,8 @@ export const StockFilterBar = ({ filter, onChange, customType, onCustomTypeChang
 						onChange={(e) => onCustomValueChange(Math.max(1, parseInt(e.target.value) || 1))}
 						style={{ width: 60 }}
 					/>
-					<span style={{ color: '#8e8e8e', fontSize: '0.8em' }}>
-						unidades
+				<span className='text-muted-light text-xs'>
+					unidades
 					</span>
 				</div>
 			)}

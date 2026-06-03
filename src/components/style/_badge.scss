@@ -1,0 +1,43 @@
+@use '../../theme/values/colors' as *;
+@use '../../theme/values/sizes' as *;
+
+// ─── SHARED BADGE COMPONENT ────────────────────────────────────
+
+.badge {
+	display: inline-block;
+	padding: 2px 8px;
+	border-radius: $thin;
+	font-size: 0.8em;
+	font-weight: 700;
+	line-height: 1.4;
+}
+
+.badge--success {
+	background: $success;
+	color: $white;
+}
+
+.badge--error {
+	background: $error;
+	color: $white;
+}
+
+.badge--info {
+	background: $info;
+	color: $white_light;
+}
+
+.badge--warn {
+	background: $degree_tonica_bg;
+	color: $black_dark;
+}
+
+.badge--neutral {
+	background: $grey_dark;
+	color: $white;
+}
+
+.badge--primary {
+	background: $primary;
+	color: $white_light;
+}

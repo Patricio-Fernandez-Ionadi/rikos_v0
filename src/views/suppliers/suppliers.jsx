@@ -87,7 +87,7 @@ export const SuppliersPage = () => {
 				emptyMessage='No hay proveedores registrados'
 				renderRow={(s) => (
 					<tr key={s._id}>
-						<td style={{ color: '#f5f5f5' }}>{s.name}</td>
+						<td className='text-white'>{s.name}</td>
 						<td>{s.contactName ?? '—'}</td>
 						<td>{s.phone ?? '—'}</td>
 						<td>{s.email ?? '—'}</td>

@@ -48,7 +48,7 @@ export const TasksPage = () => {
 				})}
 
 				{!hasAny && (
-					<p className='placeholder' style={{ textAlign: 'center', padding: 40, color: '#616161', gridColumn: '1 / -1' }}>
+					<p className='placeholder text-muted' style={{ gridColumn: '1 / -1' }}>
 						No hay tareas pendientes
 					</p>
 				)}

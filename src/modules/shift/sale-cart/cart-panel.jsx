@@ -131,7 +131,7 @@ export const CartPanel = ({
 								>
 									${finalTotal.toLocaleString()}
 									{collectedTotal != null && (
-										<span style={{ fontSize: '0.75rem', color: '#999', marginLeft: '6px' }}>
+										<span className='text-xs text-muted-light' style={{ marginLeft: '6px' }}>
 											(manual)
 										</span>
 									)}
@@ -139,7 +139,7 @@ export const CartPanel = ({
 							)}
 						</div>
 						{collectedTotal != null && Math.abs(collectedTotal - calcTotal) > 0.01 && (
-							<div className='sale-cart__total-row' style={{ fontSize: '0.85rem', color: '#ffa726' }}>
+							<div className='sale-cart__total-row text-sm' style={{ color: '#ffa726' }}>
 								<span>Ajuste</span>
 								<span>${(collectedTotal - calcTotal) > 0 ? '+' : ''}{(collectedTotal - calcTotal).toLocaleString()}</span>
 							</div>

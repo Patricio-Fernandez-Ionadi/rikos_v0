@@ -66,7 +66,7 @@ export const PresentationForm = ({ initial, onSubmit, onCancel, product }) => {
 				</>
 			)}
 
-			<div style={{ fontSize: '0.85em', color: '#8e8e8e', marginBottom: 8 }}>
+			<div className='text-sm text-muted-light mb-8'>
 				Margen del producto: {product.margin != null ? `${product.margin}%` : 'No asignado'}
 			</div>
 
@@ -87,12 +87,12 @@ export const PresentationForm = ({ initial, onSubmit, onCancel, product }) => {
 			/>
 
 			{listPrice != null && (
-				<div style={{ fontSize: '0.9em', marginTop: '8px', display: 'flex', flexDirection: 'column', gap: '2px' }}>
-					<span style={{ color: '#9db683' }}>
+				<div className='flex-col gap-4 mt-8'>
+					<span className='text-primary'>
 						Precio de lista sugerido: ${listPrice.toLocaleString()}
 					</span>
 					{diffInfo && (
-						<span style={{ color: diffInfo.diff >= 0 ? '#9db683' : '#e57373' }}>
+						<span className={diffInfo.diff >= 0 ? 'text-primary' : 'text-error'}>
 							Diferencia: ${diffInfo.diff.toLocaleString()} ({diffInfo.pct?.toFixed(1) ?? '?'}%)
 						</span>
 					)}

@@ -6,7 +6,7 @@ export const NoteList = () => {
 
 	if (notes.length === 0) {
 		return (
-			<p className='placeholder' style={{ color: '#616161', textAlign: 'center', padding: '40px' }}>
+			<p className='placeholder text-muted'>
 				No hay notas registradas
 			</p>
 		)

@@ -172,7 +172,7 @@ export const ProductDetail = ({ productId, filterState = null }) => {
 				</div>
 
 				{productPres.length === 0 ? (
-					<p className='placeholder' style={{ color: '#616161' }}>Sin presentaciones</p>
+					<p className='placeholder text-muted'>Sin presentaciones</p>
 				) : (
 					<div className='detail-page__pres-grid'>
 						{productPres.map((pres) => (

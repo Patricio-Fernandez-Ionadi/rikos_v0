@@ -12,7 +12,7 @@ export const SuppliersSection = ({
 
       <div className='detail-page__suppliers'>
         {productSuppliers.length === 0 ? (
-          <p className='placeholder' style={{ color: '#616161' }}>Sin proveedores asignados</p>
+          <p className='placeholder text-muted'>Sin proveedores asignados</p>
         ) : (
           suppliers.filter((s) => assignedSupplierIds.includes(s._id))
             .map((s) => {
