@@ -5,6 +5,7 @@ import { NavItem } from './app-nav-item'
 const LINKS = [
 	{ to: '/products', label: 'Productos' },
 	{ to: '/suppliers', label: 'Proveedores' },
+	{ to: '/orders', label: 'Pedidos' },
 	{ to: '/stock', label: 'Stock' },
 	{ to: '/shifts', label: 'Turnos' },
 	{ to: '/tasks', label: 'Tareas' },
@@ -13,7 +14,7 @@ const LINKS = [
 
 const GROUPS = [
 	{
-		label: 'Gestión',
+		label: 'Inventario',
 		links: [
 			{ to: '/products', label: 'Productos' },
 			{ to: '/suppliers', label: 'Proveedores' },
@@ -21,8 +22,9 @@ const GROUPS = [
 		],
 	},
 	{
-		label: 'Ventas',
+		label: 'Operaciones',
 		links: [
+			{ to: '/orders', label: 'Pedidos' },
 			{ to: '/shifts', label: 'Turnos' },
 			{ to: '/tasks', label: 'Tareas' },
 		],
