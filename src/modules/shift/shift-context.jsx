@@ -4,47 +4,15 @@ import { ensureDbShift, prepareTicketItems } from './services/shift-utils.js'
 import { shiftReducer, INITIAL_SHIFT_STATE } from './reducer/shift-reducer.js'
 import { generateTempId } from '../../data/entities.js'
 
-const STORAGE_KEY = 'rikos_active_shift'
-const CLOSED_KEY = 'rikos_closed_shifts'
 const ShiftContext = createContext(null)
 
-function loadLocal() {
-	try {
-		const raw = localStorage.getItem(STORAGE_KEY)
-		const shift = raw ? JSON.parse(raw) : null
-		if (shift?.status === 'closed') return null
-		return shift
-	} catch {
-		return null
-	}
-}
-
-function saveLocal(state) {
-	try {
-		localStorage.setItem(STORAGE_KEY, JSON.stringify(state))
-	} catch { /* quota exceeded */ }
-}
-
-function clearLocal() {
-	localStorage.removeItem(STORAGE_KEY)
-}
-
 export function ShiftProvider({ children }) {
-	const [state, dispatch] = useReducer(shiftReducer, {
-		...INITIAL_SHIFT_STATE,
-		shift: loadLocal(),
-	})
+	const [state, dispatch] = useReducer(shiftReducer, INITIAL_SHIFT_STATE)
 	const shiftRef = useRef(state.shift)
 	shiftRef.current = state.shift
 
+	// On mount, fetch the active shift from the server (source of truth)
 	useEffect(() => {
-		if (state.shift) saveLocal(state.shift)
-		else clearLocal()
-	}, [state.shift])
-
-	// On mount, fetch active shift from server (opened from another device)
-	useEffect(() => {
-		if (state.shift) return // local shift takes precedence
 		shiftService.getActiveShift().then((serverShift) => {
 			if (!serverShift) return
 			dispatch({ type: 'SET_SHIFT', shift: {
@@ -57,7 +25,6 @@ export function ShiftProvider({ children }) {
 			}})
 			dispatch({ type: 'SET_SYNCED', synced: true })
 		}).catch(() => {})
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
 	const openShift = useCallback(async (openingCash) => {
@@ -250,14 +217,7 @@ export function ShiftProvider({ children }) {
 			} catch { /* close valid locally */ }
 		}
 
-		const history = JSON.parse(localStorage.getItem(CLOSED_KEY) || '[]')
-		history.push(closed)
-		try {
-			localStorage.setItem(CLOSED_KEY, JSON.stringify(history))
-		} catch { /* quota exceeded */ }
-
 		dispatch({ type: 'CLOSE', closedShift: closed })
-		clearLocal()
 		return closed
 	}, [])
 
@@ -274,7 +234,6 @@ export function ShiftProvider({ children }) {
 	}, [])
 
 	const cancelShift = useCallback(() => {
-		clearLocal()
 		dispatch({ type: 'CLEAR' })
 	}, [])
 
