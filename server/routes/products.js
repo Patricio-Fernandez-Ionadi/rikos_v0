@@ -12,6 +12,13 @@ router.get('/', async (req, res, next) => {
   } catch (e) { next(e) }
 })
 
+router.get('/tags', async (req, res, next) => {
+  try {
+    const tags = await Product.distinct('tags')
+    res.json(tags)
+  } catch (e) { next(e) }
+})
+
 router.get('/:id', async (req, res, next) => {
   try {
     const prod = await Product.findById(req.params.id)
@@ -30,6 +37,7 @@ router.post('/', async (req, res, next) => {
       saleType: req.body.saleType ?? 'unit',
       stockGrams: req.body.saleType === 'fraction' ? (req.body.stockGrams ?? 0) : null,
       marca: req.body.marca ?? '',
+      tags: req.body.tags ?? [],
     })
     res.status(201).json(prod)
   } catch (e) { next(e) }
@@ -47,6 +55,7 @@ router.put('/:id', async (req, res, next) => {
         saleType: req.body.saleType,
         stockGrams: req.body.stockGrams,
         marca: req.body.marca ?? '',
+        tags: req.body.tags ?? [],
       },
       { new: true },
     )

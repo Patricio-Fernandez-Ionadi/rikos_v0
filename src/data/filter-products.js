@@ -1,5 +1,5 @@
 /**
- * Filter products by category and/or search term.
+ * Filter products by category, tags, and/or search term.
  * Search matches product name, marca, and presentation labels.
  *
  * @param {Object[]} products       Full product list
@@ -7,18 +7,25 @@
  * @param {Object}   [options]
  * @param {string}   [options.searchTerm='']  Text to search by name/marca/label
  * @param {string[]} [options.categoryIds=[]]  Array of category IDs to filter by
+ * @param {string[]} [options.tags=[]]  Array of tag strings to filter by (OR logic)
  * @returns {Object[]} Filtered products
  */
 export function filterProducts(
 	products,
 	presentations,
-	{ searchTerm = '', categoryIds = [] } = {},
+	{ searchTerm = '', categoryIds = [], tags = [] } = {},
 ) {
 	const ids = Array.isArray(categoryIds) ? categoryIds : [categoryIds].filter(Boolean)
 
 	let result = products
 	if (ids.length > 0) {
 		result = result.filter((p) => ids.includes(p.categoryId))
+	}
+	if (tags.length > 0) {
+		result = result.filter((p) => {
+			const productTags = p.tags ?? []
+			return tags.some((t) => productTags.includes(t))
+		})
 	}
 	if (searchTerm.trim()) {
 		const term = searchTerm.trim().toLowerCase()

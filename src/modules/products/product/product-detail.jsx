@@ -28,7 +28,7 @@ function getPageRange(current, total, maxVisible) {
 
 export const ProductDetail = ({ productId, filterState = null }) => {
 	const navigate = useNavigate()
-	const { products, presentations, categories } = useCatalog()
+	const { products, presentations, categories, tags } = useCatalog()
 	const {
 		product, productPres, category, isFraction, totalStock,
 		productSuppliers, assignedSupplierIds, activeSupplier,
@@ -53,15 +53,17 @@ export const ProductDetail = ({ productId, filterState = null }) => {
 	const [filterOpen, setFilterOpen] = useState(false)
 	const [localSearch, setLocalSearch] = useState(filterState?.searchTerm ?? '')
 	const [localCategories, setLocalCategories] = useState(filterState?.selectedCategoryIds ?? [])
+	const [localTags, setLocalTags] = useState(filterState?.selectedTags ?? [])
 
 	// Keep in sync when navigating to a product from a different filter state
 	const prevFilterKey = useRef(null)
-	const filterKey = JSON.stringify({ s: filterState?.searchTerm, c: filterState?.selectedCategoryIds })
+	const filterKey = JSON.stringify({ s: filterState?.searchTerm, c: filterState?.selectedCategoryIds, t: filterState?.selectedTags })
 	useEffect(() => {
 		if (filterKey !== prevFilterKey.current) {
 			prevFilterKey.current = filterKey
 			setLocalSearch(filterState?.searchTerm ?? '')
 			setLocalCategories(filterState?.selectedCategoryIds ?? [])
+			setLocalTags(filterState?.selectedTags ?? [])
 		}
 	}, [filterKey, filterState])
 
@@ -70,8 +72,9 @@ export const ProductDetail = ({ productId, filterState = null }) => {
 		return filterProductIds(products, presentations, {
 			searchTerm: localSearch,
 			categoryIds: localCategories,
+			tags: localTags,
 		})
-	}, [products, presentations, localSearch, localCategories])
+	}, [products, presentations, localSearch, localCategories, localTags])
 
 	const navInfo = useMemo(() => {
 		if (!product) return null
@@ -92,6 +95,7 @@ export const ProductDetail = ({ productId, filterState = null }) => {
 				productList: filteredIds,
 				searchTerm: localSearch,
 				selectedCategoryIds: localCategories,
+				selectedTags: localTags,
 			},
 		})
 	}
@@ -99,6 +103,12 @@ export const ProductDetail = ({ productId, filterState = null }) => {
 	const handleToggleCategory = (catId) => {
 		setLocalCategories((prev) =>
 			prev.includes(catId) ? prev.filter((c) => c !== catId) : [...prev, catId],
+		)
+	}
+
+	const handleToggleTag = (tag) => {
+		setLocalTags((prev) =>
+			prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag],
 		)
 	}
 
@@ -171,6 +181,18 @@ export const ProductDetail = ({ productId, filterState = null }) => {
 							)
 						})}
 					</div>
+					{tags.length > 0 && (
+						<div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginTop: 8 }}>
+							{tags.map((tag) => {
+								const active = localTags.includes(tag)
+								return (
+									<Button key={tag} size='xs' active={active} onClick={() => handleToggleTag(tag)}>
+										{tag}
+									</Button>
+								)
+							})}
+						</div>
+					)}
 				</div>
 			)}
 
@@ -181,6 +203,14 @@ export const ProductDetail = ({ productId, filterState = null }) => {
 				</Button>
 			</div>
 			<div className='detail-page__id'>ID: {product._id}</div>
+
+			{product.tags?.length > 0 && (
+				<div className='detail-page__tags'>
+					{product.tags.map((tag) => (
+						<span key={tag} className='badge badge--primary'>{tag}</span>
+					))}
+				</div>
+			)}
 
 			<ProductInfo
 				product={product} category={category} isFraction={isFraction}

@@ -26,10 +26,12 @@ package-lock.json
 *.njsproj
 *.sln
 *.sw?
+server/db-clone.js
 
 AGENTS.md
 
 # Environment
+.env.*
 .env
 .env.development
 .env.example

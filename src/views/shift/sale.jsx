@@ -11,6 +11,8 @@ export const SalePage = () => {
 		setSearchQuery,
 		selectedCategory,
 		setSelectedCategory,
+		selectedTags,
+		setSelectedTags,
 		selectedProductId,
 		setSelectedProductId,
 		selectedPresId,
@@ -21,6 +23,7 @@ export const SalePage = () => {
 		setPaymentMethod,
 		searchRef,
 		categories,
+		tags,
 		filteredProducts,
 		selectedProduct,
 		productPres,
@@ -52,7 +55,10 @@ export const SalePage = () => {
 					setSearchQuery={setSearchQuery}
 					selectedCategory={selectedCategory}
 					setSelectedCategory={setSelectedCategory}
+					selectedTags={selectedTags}
+					setSelectedTags={setSelectedTags}
 					categories={categories}
+					tags={tags}
 					filteredProducts={filteredProducts}
 					selectedProductId={selectedProductId}
 					setSelectedProductId={setSelectedProductId}

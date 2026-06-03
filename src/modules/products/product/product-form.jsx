@@ -1,11 +1,15 @@
 import { useState } from 'react'
 import { FormActions } from '../../../components/form-actions.jsx'
 import { CategorySelect } from '../../../components/category-select.jsx'
+import { TagInput } from '../../../components/tag-input.jsx'
+import { useCatalog } from '../../../app/catalog-context.jsx'
 
 export const ProductForm = ({ initial, categories, suppliers = [], onSubmit, onCancel }) => {
+  const { tags: allTags } = useCatalog()
   const [categoryId, setCategoryId] = useState(initial?.categoryId ?? categories[0]?._id ?? '')
   const [name, setName] = useState(initial?.name ?? '')
   const [marca, setMarca] = useState(initial?.marca ?? '')
+  const [productTags, setProductTags] = useState(initial?.tags ?? [])
   const [cost, setCost] = useState(initial?.purchaseCost ?? '')
   const [margin, setMargin] = useState(initial?.margin ?? '')
   const [saleType, setSaleType] = useState(initial?.saleType ?? 'unit')
@@ -19,6 +23,7 @@ export const ProductForm = ({ initial, categories, suppliers = [], onSubmit, onC
       categoryId,
       name: name.trim(),
       marca: marca.trim(),
+      tags: productTags,
       purchaseCost: cost === '' ? null : parseFloat(cost),
       margin: margin === '' ? null : parseInt(margin),
       saleType,
@@ -37,6 +42,15 @@ export const ProductForm = ({ initial, categories, suppliers = [], onSubmit, onC
 
       <label className="field-label">Marca</label>
       <input className="field-input" type="text" value={marca} onChange={(e) => setMarca(e.target.value)} />
+
+      <label className="field-label">Etiquetas</label>
+      <TagInput
+        tags={productTags}
+        allTags={allTags}
+        onAdd={(tag) => setProductTags((prev) => [...prev, tag])}
+        onRemove={(tag) => setProductTags((prev) => prev.filter((t) => t !== tag))}
+        onCreate={(tag) => setProductTags((prev) => [...prev, tag])}
+      />
 
       {!initial && (
         <>

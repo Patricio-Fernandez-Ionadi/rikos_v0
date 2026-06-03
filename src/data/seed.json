@@ -100,13 +100,15 @@
       "_id": "prod-15",
       "categoryId": "cat-8",
       "name": "alfajor celi energy algarroba",
-      "purchaseCost": 1278
+      "purchaseCost": 1278,
+      "tags": ["apto celiacos"]
     },
     {
       "_id": "prod-17",
       "categoryId": "cat-8",
       "name": "alfajor celi energy nuez",
-      "purchaseCost": 1278
+      "purchaseCost": 1278,
+      "tags": ["apto celiacos"]
     },
     {
       "_id": "prod-19",
@@ -153,14 +155,15 @@
     {
       "_id": "prod-33",
       "categoryId": "cat-11",
-      "name": "algas nory argendiet",
-      "purchaseCost": 2540
+      "name": "algas laminadas",
+      "purchaseCost": 7009
     },
     {
       "_id": "prod-35",
       "categoryId": "cat-3",
       "name": "almendras 25/27",
-      "purchaseCost": 20000
+      "purchaseCost": 20000,
+      "tags": ["100% natural"]
     },
     {
       "_id": "prod-37",
@@ -400,7 +403,8 @@
       "_id": "prod-116",
       "categoryId": "cat-3",
       "name": "caju w4",
-      "purchaseCost": 15730
+      "purchaseCost": 15730,
+      "tags": ["100% natural"]
     },
     {
       "_id": "prod-118",
@@ -742,7 +746,8 @@
       "_id": "prod-233",
       "categoryId": "cat-7",
       "name": "galletas pepas p. celiacos natuzen",
-      "purchaseCost": 1939
+      "purchaseCost": 1939,
+      "tags": ["apto celiacos"]
     },
     {
       "_id": "prod-235",
@@ -1192,7 +1197,8 @@
       "_id": "prod-385",
       "categoryId": "cat-3",
       "name": "mix seco sin mani",
-      "purchaseCost": 26082
+      "purchaseCost": 26082,
+      "tags": ["100% natural"]
     },
     {
       "_id": "prod-387",

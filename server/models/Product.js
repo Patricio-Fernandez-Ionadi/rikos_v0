@@ -8,6 +8,7 @@ const productSchema = new mongoose.Schema({
   saleType: { type: String, enum: ['unit', 'fraction'], default: 'unit' },
   stockGrams: { type: Number, default: null },
   marca: { type: String, default: '' },
+  tags: [{ type: String }],
   createdAt: { type: Date, default: Date.now },
 })
 

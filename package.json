@@ -10,6 +10,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "start": "node server/index.js",
+    "db:clone": "node server/db-clone.js",
     "migrate": "node src/data/migrate.js",
     "seed": "npm run migrate && npm run seed --prefix server"
   },

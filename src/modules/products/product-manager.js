@@ -12,7 +12,7 @@ import { applyStockDeduction } from '../../data/stock-utils.js'
 
 export function useProductManager() {
 	const [state, dispatch] = useReducer(productReducer, INITIAL_PRODUCT_STATE)
-	const { categories, products, presentations, suppliers, setProducts, setPresentations, setSuppliers } = useCatalog()
+	const { categories, products, presentations, suppliers, tags, setProducts, setPresentations, setSuppliers } = useCatalog()
 	const { shift, addSale } = useShift()
 
 	// ── Derived data ────────────────────────────────────────
@@ -21,8 +21,9 @@ export function useProductManager() {
 		return filterProducts(products, presentations, {
 			searchTerm: state.searchTerm,
 			categoryIds: state.selectedCategoryIds,
+			tags: state.selectedTags,
 		})
-	}, [products, presentations, state.selectedCategoryIds, state.searchTerm])
+	}, [products, presentations, state.selectedCategoryIds, state.selectedTags, state.searchTerm])
 
 	const selectedProduct = useMemo(
 		() => products.find((p) => p._id === state.selectedProductId) ?? null,
@@ -37,6 +38,7 @@ export function useProductManager() {
 	// ── UI actions (dispatch is stable) ─────────────────────
 
 	const handleSelectCategories = actions.selectCategories(dispatch)
+	const handleSelectTags = actions.selectTags(dispatch)
 	const handleSelectProduct = actions.selectProduct(dispatch)
 	const handleSearch = actions.searchProducts(dispatch)
 	const openProductFormFn = actions.openProductForm(dispatch)
@@ -251,11 +253,12 @@ export function useProductManager() {
 	}, [setSuppliers])
 
 	return {
-		categories, products, presentations, suppliers,
+		categories, products, presentations, suppliers, tags,
 		filteredProducts, selectedProduct, productPresentations,
 		shift,
 		...state,
 		handleSelectCategories,
+		handleSelectTags,
 		handleSelectProduct,
 		handleSearch,
 		openProductForm: openProductFormFn,

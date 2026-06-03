@@ -6,12 +6,13 @@ import { filterProducts } from '../../../data/filter-products.js'
 import { applyBatchStockDeduction } from '../../../data/stock-utils.js'
 
 export function useSaleCart() {
-	const { products, presentations, categories, setProducts, setPresentations } = useCatalog()
+	const { products, presentations, categories, tags, setProducts, setPresentations } = useCatalog()
 	const { recordTicket } = useShift()
 
 	const [cartItems, setCartItems] = useState([])
 	const [searchQuery, setSearchQuery] = useState('')
 	const [selectedCategory, setSelectedCategory] = useState('')
+	const [selectedTags, setSelectedTags] = useState([])
 	const [selectedProductId, setSelectedProductId] = useState(null)
 	const [selectedPresId, setSelectedPresId] = useState(null)
 	const [quantity, setQuantity] = useState(1)
@@ -28,8 +29,9 @@ export function useSaleCart() {
 		return filterProducts(products, presentations, {
 			searchTerm: searchQuery,
 			categoryIds: selectedCategory ? [selectedCategory] : [],
+			tags: selectedTags,
 		})
-	}, [products, presentations, searchQuery, selectedCategory])
+	}, [products, presentations, searchQuery, selectedCategory, selectedTags])
 
 	const selectedProduct = useMemo(
 		() => products.find((p) => p._id === selectedProductId),
@@ -115,6 +117,8 @@ export function useSaleCart() {
 		setSearchQuery,
 		selectedCategory,
 		setSelectedCategory,
+		selectedTags,
+		setSelectedTags,
 		selectedProductId,
 		setSelectedProductId,
 		selectedPresId,
@@ -125,6 +129,7 @@ export function useSaleCart() {
 		setPaymentMethod,
 		searchRef,
 		categories,
+		tags,
 		filteredProducts,
 		selectedProduct,
 		productPres,

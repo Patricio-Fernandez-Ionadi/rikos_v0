@@ -186,3 +186,15 @@
 		}
 	}
 }
+
+// ─── ESTADO VACÍO ─────────────────────────────────────────────
+
+.cat-sidebar__empty {
+	display: block;
+	width: 100%;
+	padding: 6px 0;
+	font-size: 0.8em;
+	color: $grey;
+	font-style: italic;
+	text-align: center;
+}

@@ -7,7 +7,10 @@ export const ProductBrowser = ({
 	setSearchQuery,
 	selectedCategory,
 	setSelectedCategory,
+	selectedTags,
+	setSelectedTags,
 	categories,
+	tags,
 	filteredProducts,
 	selectedProductId,
 	setSelectedProductId,
@@ -20,6 +23,12 @@ export const ProductBrowser = ({
 	setQuantity,
 	handleAddToCart,
 }) => {
+	const handleToggleTag = (tag) => {
+		setSelectedTags((prev) =>
+			prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag],
+		)
+	}
+
 	return (
 		<div className='sale-cart__products'>
 			<div className='sale-cart__filters'>
@@ -37,6 +46,22 @@ export const ProductBrowser = ({
 						setSelectedProductId(null)
 					}}
 				/>
+				{tags.length > 0 && (
+					<div className='sale-cart__tag-filters'>
+						{tags.map((tag) => {
+							const active = selectedTags.includes(tag)
+							return (
+								<button
+									key={tag}
+									className={`cat-sidebar__btn${active ? ' cat-sidebar__btn--active' : ''}`}
+									onClick={() => handleToggleTag(tag)}
+								>
+									{tag}
+								</button>
+							)
+						})}
+					</div>
+				)}
 			</div>
 
 			<div className='sale-cart__product-list'>

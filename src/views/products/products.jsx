@@ -15,11 +15,14 @@ export const ProductsPage = () => {
 		suppliers,
 		products,
 		presentations,
+		tags,
 		filteredProducts,
 		searchTerm,
 		handleSearch,
 		selectedCategoryIds,
 		handleSelectCategories,
+		selectedTags,
+		handleSelectTags,
 		editingProduct,
 		closeEditProduct,
 		editProduct,
@@ -36,6 +39,8 @@ export const ProductsPage = () => {
 		if (q) handleSearch(q)
 		const c = searchParams.get('c')
 		if (c) handleSelectCategories(c.split(','))
+		const t = searchParams.get('t')
+		if (t) handleSelectTags(t.split(','))
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
@@ -47,10 +52,11 @@ export const ProductsPage = () => {
 			const params = {}
 			if (searchTerm) params.q = searchTerm
 			if (selectedCategoryIds.length > 0) params.c = selectedCategoryIds.join(',')
+			if (selectedTags.length > 0) params.t = selectedTags.join(',')
 			setSearchParams(params, { replace: true })
 		}, 200)
 		return () => clearTimeout(syncTimer.current)
-	}, [searchTerm, selectedCategoryIds, setSearchParams])
+	}, [searchTerm, selectedCategoryIds, selectedTags, setSearchParams])
 
 	return (
 		<div className='product-browser'>
@@ -73,6 +79,9 @@ export const ProductsPage = () => {
 					products={products}
 					selectedCategoryIds={selectedCategoryIds}
 					onSelectCategories={handleSelectCategories}
+					tags={tags}
+					selectedTags={selectedTags}
+					onSelectTags={handleSelectTags}
 				/>
 
 				<div className='product-browser__main'>
