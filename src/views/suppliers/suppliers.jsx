@@ -92,10 +92,12 @@ export const SuppliersPage = () => {
 						<td>{s.phone ?? '—'}</td>
 						<td>{s.email ?? '—'}</td>
 						<td>{s.notes ?? ''}</td>
-						<td style={{ display: 'flex', gap: 4 }}>
-							<Button size='xs' onClick={() => navigate(`/suppliers/${s._id}`)}>Productos</Button>
-							<Button size='xs' onClick={() => openEdit(s)}>Editar</Button>
-							<Button size='xs' variant='danger' onClick={() => deleteSupplier(s._id)}>Eliminar</Button>
+						<td>
+							<div style={{ display: 'flex', gap: 4 }}>
+								<Button size='xs' onClick={() => navigate(`/suppliers/${s._id}`)}>Productos</Button>
+								<Button size='xs' onClick={() => openEdit(s)}>Editar</Button>
+								<Button size='xs' variant='danger' onClick={() => deleteSupplier(s._id)}>Eliminar</Button>
+							</div>
 						</td>
 					</tr>
 				)}
