@@ -130,10 +130,32 @@ export const OrderFormPage = () => {
       .sort((a, b) => a.name.localeCompare(b.name))
   }, [products, addedProductIds, searchQuery])
 
-  const handleAddSearchedProduct = () => {
+  const handleAddSearchedProduct = async () => {
     const prod = products.find((p) => p._id === selectedProductId)
     if (!prod) return
-    handleAddItem(prod, prod.purchaseCost ?? 0)
+
+    const existingPS = supplierProducts.find((sp) => sp.productId === prod._id)
+    if (existingPS) {
+      handleAddItem(prod, existingPS.purchaseCost)
+    } else {
+      const costStr = window.prompt(`Costo de "${prod.name}" para ${supplierName}:`, prod.purchaseCost ?? '')
+      if (costStr === null) { setSelectedProductId(''); return }
+      const cost = parseFloat(costStr)
+      if (isNaN(cost) || cost < 0) return
+
+      try {
+        const ps = await supplierService.createProductSupplier({
+          productId: prod._id,
+          supplierId,
+          purchaseCost: cost,
+        })
+        setProductSuppliers((prev) => [...prev, ps])
+        setSupplierProducts((prev) => [...prev, ps])
+      } catch { /* already linked or error — add anyway */ }
+
+      handleAddItem(prod, cost)
+    }
+
     setSelectedProductId('')
     setSearchQuery('')
   }
