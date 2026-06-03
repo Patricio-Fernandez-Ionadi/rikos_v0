@@ -4,7 +4,7 @@ import { ActiveShiftCard } from '../../modules/shift/active-shift-card.jsx'
 import { PastShiftCard } from '../../modules/shift/past-shift-card.jsx'
 import { OpenShiftForm } from '../../modules/shift/open-shift-form.jsx'
 import { CloseShiftForm } from '../../modules/shift/close-shift-form.jsx'
-import * as api from '../../data/api.js'
+import * as shiftService from '../../modules/shift/services/shift-services.js'
 
 /**
  * Shifts page — shows the active shift and past shift history.
@@ -17,7 +17,7 @@ export const ShiftsPage = () => {
 	const [showClose, setShowClose] = useState(false)
 
 	useEffect(() => {
-		api
+		shiftService
 			.getShifts()
 			.then((list) => {
 				setPastShifts(list.filter((s) => s.status === 'closed'))
@@ -33,7 +33,7 @@ export const ShiftsPage = () => {
 				<div className='shifts-page__card shifts-page__card--empty'>
 					<p className='shifts-page__empty-text'>No hay turno activo</p>
 					<button
-						className='shift-bar__btn shift-bar__btn--primary'
+						className='btn btn--primary'
 						onClick={() => setShowOpen(true)}
 					>
 						Abrir Turno

@@ -2,18 +2,20 @@ import { useState, useMemo, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useProductDetail } from './product-detail-manager.js'
 import { useTasksManager } from '../../tasks/tasks-manager.js'
-import { useData } from '../../../app/data-context.jsx'
+import { useCatalog } from '../../../app/catalog-context.jsx'
 import { TaskAssigner } from '../../tasks/task-assigner.jsx'
 import { Modal } from '../../../components/Modal.jsx'
+import { Button } from '../../../components/button.jsx'
 import { ProductForm } from './product-form.jsx'
 import { ProductInfo } from './product-info.jsx'
 import { PresentationCard } from './presentation-card.jsx'
 import { SuppliersSection } from './suppliers-section.jsx'
 import { PresentationForm } from './presentation-form.jsx'
+import { filterProductIds } from '../../../data/filter-products.js'
 
 export const ProductDetail = ({ productId, filterState = null }) => {
 	const navigate = useNavigate()
-	const { products, presentations, categories } = useData()
+	const { products, presentations, categories } = useCatalog()
 	const {
 		product, productPres, category, isFraction, totalStock,
 		productSuppliers, assignedSupplierIds, activeSupplier,
@@ -52,22 +54,10 @@ export const ProductDetail = ({ productId, filterState = null }) => {
 
 	// ── Local filtered list ─────────────────────────
 	const filteredIds = useMemo(() => {
-		let result = products
-		if (localCategories.length > 0) {
-			result = result.filter((p) => localCategories.includes(p.categoryId))
-		}
-		if (localSearch.trim()) {
-			const term = localSearch.trim().toLowerCase()
-			result = result.filter((p) => {
-				if (p.name.toLowerCase().includes(term)) return true
-				if (p.marca && p.marca.toLowerCase().includes(term)) return true
-				const labels = presentations
-					.filter((pr) => pr.productId === p._id)
-					.map((pr) => pr.label?.toLowerCase() ?? '')
-				return labels.some((l) => l.includes(term))
-			})
-		}
-		return result.map((p) => p._id)
+		return filterProductIds(products, presentations, {
+			searchTerm: localSearch,
+			categoryIds: localCategories,
+		})
 	}, [products, presentations, localSearch, localCategories])
 
 	const navInfo = useMemo(() => {
@@ -115,30 +105,18 @@ export const ProductDetail = ({ productId, filterState = null }) => {
 				</button>
 				{navInfo && (
 					<div className='detail-page__nav'>
-						<button
-							className='sidebar__btn sidebar__btn--xs'
-							disabled={!navInfo.prevId}
-							onClick={() => handlePrevNext(navInfo.prevId)}
-						>
+						<Button size='xs' disabled={!navInfo.prevId} onClick={() => handlePrevNext(navInfo.prevId)}>
 							<span className='material-icons'>chevron_left</span>
-						</button>
+						</Button>
 						<span className='detail-page__nav-index'>
 							{navInfo.index + 1}/{navInfo.total}
 						</span>
-						<button
-							className='sidebar__btn sidebar__btn--xs'
-							disabled={!navInfo.nextId}
-							onClick={() => handlePrevNext(navInfo.nextId)}
-						>
+						<Button size='xs' disabled={!navInfo.nextId} onClick={() => handlePrevNext(navInfo.nextId)}>
 							<span className='material-icons'>chevron_right</span>
-						</button>
-						<button
-							className={`sidebar__btn sidebar__btn--xs ${filterOpen ? 'sidebar__btn--active' : ''}`}
-							onClick={() => setFilterOpen(!filterOpen)}
-							title='Filtrar'
-						>
+						</Button>
+						<Button size='xs' active={filterOpen} onClick={() => setFilterOpen(!filterOpen)} title='Filtrar'>
 							<span className='material-icons'>search</span>
-						</button>
+						</Button>
 					</div>
 				)}
 			</div>
@@ -159,13 +137,9 @@ export const ProductDetail = ({ productId, filterState = null }) => {
 						{categories.map((cat) => {
 							const active = localCategories.includes(cat._id)
 							return (
-								<button
-									key={cat._id}
-									className={`sidebar__btn sidebar__btn--xs ${active ? 'sidebar__btn--active' : ''}`}
-									onClick={() => handleToggleCategory(cat._id)}
-								>
+								<Button key={cat._id} size='xs' active={active} onClick={() => handleToggleCategory(cat._id)}>
 									{cat.name}
-								</button>
+								</Button>
 							)
 						})}
 					</div>
@@ -174,9 +148,9 @@ export const ProductDetail = ({ productId, filterState = null }) => {
 
 			<div className='detail-page__title-row'>
 				<h2 className='detail-page__title'>{product.name}</h2>
-				<button className='detail-page__edit-icon' onClick={() => setEditProductOpen(true)} title='Editar producto'>
+				<Button size='xs' onClick={() => setEditProductOpen(true)} title='Editar producto'>
 					<span className='material-icons'>edit</span>
-				</button>
+				</Button>
 			</div>
 			<div className='detail-page__id'>ID: {product._id}</div>
 
@@ -194,9 +168,7 @@ export const ProductDetail = ({ productId, filterState = null }) => {
 			<div className='detail-page__section'>
 				<div className='detail-page__section-header'>
 					<h3>Presentaciones</h3>
-					<button className='sidebar__btn' onClick={() => setPresFormOpen(true)}>
-						+ Nueva
-					</button>
+					<Button block onClick={() => setPresFormOpen(true)}>+ Nueva</Button>
 				</div>
 
 				{productPres.length === 0 ? (

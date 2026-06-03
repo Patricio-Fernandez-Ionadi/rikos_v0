@@ -1,4 +1,5 @@
 import { SaleForm } from '../../../components/sale-form.jsx'
+import { Button } from '../../../components/button.jsx'
 
 export const PresentationCard = ({
 	pres,
@@ -27,27 +28,14 @@ export const PresentationCard = ({
 				<span className='detail-page__pres-label'>{pres.label}</span>
 				<div className='detail-page__pres-actions'>
 					{shift && shift.status === 'open' && (
-						<button
-							className='shift-bar__btn shift-bar__btn--primary shift-bar__btn--sm'
-							onClick={() =>
-								setSalePresId(salePresId === pres._id ? null : pres._id)
-							}
-						>
+						<Button size='sm' variant='primary' onClick={() =>
+							setSalePresId(salePresId === pres._id ? null : pres._id)
+						}>
 							Vender
-						</button>
+						</Button>
 					)}
-					<button
-						className='sidebar__btn sidebar__btn--xs'
-						onClick={() => onEdit(pres)}
-					>
-						Editar
-					</button>
-					<button
-						className='sidebar__btn sidebar__btn--xs sidebar__btn--danger'
-						onClick={() => onDelete(pres._id)}
-					>
-						X
-					</button>
+					<Button size='xs' onClick={() => onEdit(pres)}>Editar</Button>
+					<Button size='xs' variant='danger' onClick={() => onDelete(pres._id)}>X</Button>
 				</div>
 			</div>
 

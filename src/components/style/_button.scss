@@ -1,0 +1,62 @@
+@use '../../theme/values/colors' as *;
+@use '../../theme/values/sizes' as *;
+
+.btn {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 6px 12px;
+	border-radius: $thin;
+	border: 1px solid $grey_dark;
+	background: $black;
+	color: $white;
+	cursor: pointer;
+	font-size: 0.85em;
+	text-decoration: none;
+	white-space: nowrap;
+	line-height: 1.4;
+
+	&:hover {
+		background: $black_light;
+	}
+}
+
+.btn--primary {
+	background: $primary;
+	border-color: $primary;
+	color: $white_light;
+
+	&:hover {
+		background: $primary_light;
+	}
+}
+
+.btn--danger {
+	background: $error;
+	border-color: $error;
+	color: $white;
+
+	&:hover {
+		background: #d32f2f;
+	}
+}
+
+.btn--active {
+	background: $primary;
+	color: $white_light;
+}
+
+.btn--block {
+	width: 100%;
+	text-align: left;
+}
+
+.btn--sm {
+	padding: 4px 8px;
+	font-size: 0.8em;
+}
+
+.btn--xs {
+	padding: 2px 6px;
+	font-size: 0.75em;
+}

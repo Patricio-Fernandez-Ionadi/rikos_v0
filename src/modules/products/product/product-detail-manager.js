@@ -1,12 +1,13 @@
 import { useState, useEffect, useCallback, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useData } from '../../../app/data-context.jsx'
+import { useCatalog } from '../../../app/catalog-context.jsx'
 import { useShift } from '../../shift/shift-context.jsx'
 import { calculate } from '../../../data/index.js'
 import * as productService from '../services/product-services.js'
 import * as presService from './services/presentation-services.js'
 import * as stockService from '../../stock/services/stock-services.js'
 import * as supplierService from '../../suppliers/services/supplier-services.js'
+import { applyStockDeduction } from '../../../data/stock-utils.js'
 
 export function useProductDetail(productId) {
 	const navigate = useNavigate()
@@ -19,7 +20,7 @@ export function useProductDetail(productId) {
 		setProducts,
 		setPresentations,
 		setProductSuppliers,
-	} = useData()
+	} = useCatalog()
 	const { shift, addSale } = useShift()
 
 	const product = useMemo(
@@ -249,27 +250,9 @@ export function useProductDetail(productId) {
 	const handleSale = useCallback(
 		async (sale) => {
 			await addSale(sale)
-			const pres = presentations.find((p) => p._id === sale.presentationId)
-			if (pres) {
-				const prod = products.find((p) => p._id === pres.productId)
-				setPresentations((prev) =>
-					prev.map((p) =>
-						p._id === sale.presentationId
-							? { ...p, stock: Math.max(0, (p.stock ?? 0) - sale.quantity) }
-							: p,
-					),
-				)
-				if (prod?.saleType === 'fraction') {
-					const deduction = sale.quantity * (pres.grams ?? 0)
-					setProducts((prev) =>
-						prev.map((p) =>
-							p._id === prod._id
-								? { ...p, stockGrams: Math.max(0, (p.stockGrams ?? 0) - deduction) }
-								: p,
-						),
-					)
-				}
-			}
+			const result = applyStockDeduction(presentations, products, sale)
+			setPresentations(result.presentations)
+			setProducts(result.products)
 			setSalePresId(null)
 		},
 		[addSale, presentations, products, setProducts, setPresentations],

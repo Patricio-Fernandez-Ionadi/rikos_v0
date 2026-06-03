@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { FormActions } from '../../../components/form-actions.jsx'
+import { CategorySelect } from '../../../components/category-select.jsx'
 
 export const ProductForm = ({ initial, categories, suppliers = [], onSubmit, onCancel }) => {
   const [categoryId, setCategoryId] = useState(initial?.categoryId ?? categories[0]?._id ?? '')
@@ -28,9 +30,7 @@ export const ProductForm = ({ initial, categories, suppliers = [], onSubmit, onC
   return (
     <form className="product-form" onSubmit={handleSubmit}>
       <label className="field-label">Categoría</label>
-      <select className="field-input" value={categoryId} onChange={(e) => setCategoryId(e.target.value)}>
-        {categories.map((c) => <option key={c._id} value={c._id}>{c.name}</option>)}
-      </select>
+      <CategorySelect categories={categories} value={categoryId} onChange={setCategoryId} allowEmpty={false} />
 
       <label className="field-label">Nombre del producto</label>
       <input className="field-input" type="text" value={name} onChange={(e) => setName(e.target.value)} autoFocus />
@@ -67,12 +67,10 @@ export const ProductForm = ({ initial, categories, suppliers = [], onSubmit, onC
       <label className="field-label">Margen de ganancia (%)</label>
       <input className="field-input" type="number" value={margin} onChange={(e) => setMargin(e.target.value)} />
 
-      <div className="modal-actions">
-        <button type="button" className="shift-bar__btn" onClick={onCancel}>Cancelar</button>
-        <button type="submit" className="shift-bar__btn shift-bar__btn--primary">
-          {initial ? 'Guardar cambios' : 'Crear producto'}
-        </button>
-      </div>
+      <FormActions
+        onCancel={onCancel}
+        submitLabel={initial ? 'Guardar cambios' : 'Crear producto'}
+      />
     </form>
   )
 }

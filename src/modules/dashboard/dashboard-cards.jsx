@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom'
-import { useData } from '../../app/data-context.jsx'
+import { useCatalog } from '../../app/catalog-context.jsx'
 import { useShift } from '../../modules/shift/shift-context.jsx'
 
 /**
@@ -8,7 +8,7 @@ import { useShift } from '../../modules/shift/shift-context.jsx'
  */
 export const DashboardCards = () => {
 	const navigate = useNavigate()
-	const { categories, products, presentations } = useData()
+	const { categories, products, presentations } = useCatalog()
 	const { shift } = useShift()
 
 	const totalProducts = products.length

@@ -1,7 +1,7 @@
 import { useTasksManager, TASK_GROUPS } from '../modules/tasks/tasks-manager.js'
 import { useTaskCard } from '../modules/tasks/task-card-manager.js'
 import { TaskCard } from '../modules/tasks/task-card.jsx'
-import { useData } from '../app/data-context.jsx'
+import { useCatalog } from '../app/catalog-context.jsx'
 
 const TaskCardWrapper = ({ group, allTasks, toggleProduct, addSuggested, addTextTask, updateNote, removeTask, allProducts }) => {
 	const props = useTaskCard({ group, allTasks, allProducts, toggleProduct, addSuggested, addTextTask, updateNote })
@@ -9,7 +9,7 @@ const TaskCardWrapper = ({ group, allTasks, toggleProduct, addSuggested, addText
 }
 
 export const TasksPage = () => {
-	const { products } = useData()
+	const { products } = useCatalog()
 	const {
 		getTaskItems,
 		toggleProductTask,

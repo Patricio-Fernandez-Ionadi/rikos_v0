@@ -1,4 +1,4 @@
-import { useData } from '../../app/data-context.jsx'
+import { useCatalog } from '../../app/catalog-context.jsx'
 
 /**
  * Card for a single closed shift showing date range, stats (sales count,
@@ -11,7 +11,7 @@ import { useData } from '../../app/data-context.jsx'
  * @param {Function}   props.onToggle     Callback to toggle expand
  */
 export const PastShiftCard = ({ shift: s, isExpanded, onToggle }) => {
-	const { products } = useData()
+	const { products } = useCatalog()
 
 	const getProductName = (id) =>
 		products.find((p) => p._id === id)?.name ?? '—'

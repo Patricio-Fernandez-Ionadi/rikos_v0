@@ -1,4 +1,5 @@
 import { useSupport } from './support-manager.js'
+import { Button } from '../../components/button.jsx'
 
 export const NoteCard = ({ note }) => {
 	const { handleDelete } = useSupport()
@@ -12,12 +13,7 @@ export const NoteCard = ({ note }) => {
 				<span className='soporte-card__date'>
 					{new Date(note.createdAt).toLocaleString()}
 				</span>
-				<button
-					className='sidebar__btn sidebar__btn--xs sidebar__btn--danger'
-					onClick={() => handleDelete(note._id)}
-				>
-					X
-				</button>
+				<Button size='xs' variant='danger' onClick={() => handleDelete(note._id)}>X</Button>
 			</div>
 			<p className='soporte-card__text'>{note.text}</p>
 		</div>

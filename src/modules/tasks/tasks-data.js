@@ -1,4 +1,5 @@
 import * as taskService from './services/task-services.js'
+import { generateTempId } from '../../data/entities.js'
 
 const STORAGE_KEY = 'rikos_tasks_v3'
 
@@ -125,7 +126,7 @@ export async function toggleProductTask(type, productId, note = '') {
     return false
   }
 
-  const tempId = `temp_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`
+  const tempId = generateTempId({ prefix: 'temp_', length: 6 })
   const newTask = { _id: tempId, type, productId, name: '', note }
   setCache([...tasks, newTask])
 
@@ -144,7 +145,7 @@ export async function toggleProductTask(type, productId, note = '') {
  * @returns {Promise<void>}
  */
 export async function addSuggestion(name, note = '') {
-  const tempId = `temp_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`
+  const tempId = generateTempId({ prefix: 'temp_', length: 6 })
   const newTask = { _id: tempId, type: 'productos-sugeridos', productId: null, name, note }
   setCache([...getCache(), newTask])
 
@@ -163,7 +164,7 @@ export async function addSuggestion(name, note = '') {
  * @returns {Promise<void>}
  */
 export async function addTextTask(type, description, productId = null, note = '') {
-  const tempId = `temp_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`
+  const tempId = generateTempId({ prefix: 'temp_', length: 6 })
   const newTask = { _id: tempId, type, productId, name: description, note }
   setCache([...getCache(), newTask])
 

@@ -1,6 +1,8 @@
 import { createContext, useContext, useReducer, useCallback, useEffect, useRef } from 'react'
 import * as shiftService from './services/shift-services.js'
+import { ensureDbShift, prepareTicketItems } from './services/shift-utils.js'
 import { shiftReducer, INITIAL_SHIFT_STATE } from './reducer/shift-reducer.js'
+import { generateTempId } from '../../data/entities.js'
 
 const STORAGE_KEY = 'rikos_active_shift'
 const CLOSED_KEY = 'rikos_closed_shifts'
@@ -91,7 +93,7 @@ export function ShiftProvider({ children }) {
 		if (!current || current.status !== 'open') return
 
 		const saleItem = {
-			_tempId: `${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
+			_tempId: generateTempId(),
 			productId: sale.productId,
 			presentationId: sale.presentationId,
 			quantity: sale.quantity,
@@ -124,46 +126,33 @@ export function ShiftProvider({ children }) {
 		const current = shiftRef.current
 		if (!current || current.status !== 'open') return
 
-		const itemsTotal = items.reduce((s, i) => s + (i.total ?? 0), 0)
-		const diff = collectedTotal != null ? +(collectedTotal - itemsTotal).toFixed(2) : 0
-
-		const saleItems = items.map((item) => {
-			const ratio = itemsTotal > 0 ? (item.total ?? 0) / itemsTotal : 0
-			const adjustedTotal = diff !== 0 && ratio > 0
-				? +(item.total + diff * ratio).toFixed(2)
-				: null
-			return {
-				_tempId: `${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
-				productId: item.productId,
-				presentationId: item.presentationId,
-				quantity: item.quantity,
-				unitPrice: item.unitPrice,
-				total: adjustedTotal ?? item.total,
-				collectedAmount: adjustedTotal,
-				paymentMethod,
-				ticketId,
-				timestamp: new Date().toISOString(),
-			}
-		})
+		const prepared = prepareTicketItems(items, collectedTotal)
+		const saleItems = prepared.map((item) => ({
+			_tempId: generateTempId(),
+			productId: item.productId,
+			presentationId: item.presentationId,
+			quantity: item.quantity,
+			unitPrice: item.unitPrice,
+			total: item.total,
+			collectedAmount: item.adjustedTotal,
+			paymentMethod,
+			ticketId,
+			timestamp: new Date().toISOString(),
+		}))
 
 		dispatch({ type: 'BATCH_ADD_SALES', sales: saleItems })
 
 		if (current._dbId) {
 			try {
+				const apiItems = prepared.map((item) => ({
+					productId: item.productId,
+					presentationId: item.presentationId,
+					quantity: item.quantity,
+					unitPrice: item.unitPrice,
+					total: item.total,
+				}))
 				await shiftService.recordTicket(current._dbId, {
-					items: items.map((item) => {
-						const ratio = itemsTotal > 0 ? (item.total ?? 0) / itemsTotal : 0
-						const adj = diff !== 0 && ratio > 0
-							? +(item.total + diff * ratio).toFixed(2)
-							: null
-						return {
-							productId: item.productId,
-							presentationId: item.presentationId,
-							quantity: item.quantity,
-							unitPrice: item.unitPrice,
-							total: adj ?? item.total,
-						}
-					}),
+					items: apiItems,
 					paymentMethod,
 					ticketId,
 					collectedTotal,
@@ -181,20 +170,11 @@ export function ShiftProvider({ children }) {
 		const current = shiftRef.current
 		if (!current) return false
 
-		let currentDbId = current._dbId
+		const currentDbId = await ensureDbShift(current._dbId, current.openingCash)
+		if (!currentDbId) return false
 
-		if (!currentDbId) {
-			try {
-				const active = await shiftService.getActiveShift()
-				currentDbId = active?._id
-				if (!currentDbId) {
-					const dbShift = await shiftService.openShift(current.openingCash)
-					currentDbId = dbShift._id
-				}
-				dispatch({ type: 'UPDATE_DB_ID', dbId: currentDbId })
-			} catch {
-				return false
-			}
+		if (current._dbId !== currentDbId) {
+			dispatch({ type: 'UPDATE_DB_ID', dbId: currentDbId })
 		}
 
 		try {
@@ -213,7 +193,7 @@ export function ShiftProvider({ children }) {
 		if (!current || current.status !== 'open') return
 
 		const adj = {
-			_tempId: `${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
+			_tempId: generateTempId(),
 			amount,
 			type: type || 'expense',
 			description: description || '',
@@ -256,17 +236,9 @@ export function ShiftProvider({ children }) {
 			notes,
 		}
 
-		let currentDbId = current._dbId
-		if (!currentDbId) {
-			try {
-				const active = await shiftService.getActiveShift()
-				currentDbId = active?._id
-				if (!currentDbId) {
-					const dbShift = await shiftService.openShift(current.openingCash)
-					currentDbId = dbShift._id
-				}
-				closed._dbId = currentDbId
-			} catch { /* stay local-only */ }
+		const currentDbId = await ensureDbShift(current._dbId, current.openingCash)
+		if (currentDbId) {
+			closed._dbId = currentDbId
 		}
 
 		if (currentDbId) {

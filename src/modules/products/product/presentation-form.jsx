@@ -3,6 +3,7 @@ import {
 	getCostPerPresentation,
 	getListPrice,
 } from '../../../data/calculations.js'
+import { FormActions } from '../../../components/form-actions.jsx'
 
 export const PresentationForm = ({ initial, onSubmit, onCancel, product }) => {
 	const isFraction = product?.saleType === 'fraction'
@@ -98,17 +99,10 @@ export const PresentationForm = ({ initial, onSubmit, onCancel, product }) => {
 				</div>
 			)}
 
-			<div className='modal-actions'>
-				<button type='button' className='shift-bar__btn' onClick={onCancel}>
-					Cancelar
-				</button>
-				<button
-					type='submit'
-					className='shift-bar__btn shift-bar__btn--primary'
-				>
-					{initial ? 'Guardar cambios' : 'Crear presentación'}
-				</button>
-			</div>
+			<FormActions
+				onCancel={onCancel}
+				submitLabel={initial ? 'Guardar cambios' : 'Crear presentación'}
+			/>
 		</form>
 	)
 }

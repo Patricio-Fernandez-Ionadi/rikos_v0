@@ -1,3 +1,5 @@
+import { Button } from '../../../components/button.jsx'
+
 export const SuppliersSection = ({
   productSuppliers, suppliers, assignedSupplierIds, activeSupplier,
   product, handleUseSupplierCost, handleRemoveSupplier, handleAddSupplier,
@@ -32,10 +34,10 @@ export const SuppliersSection = ({
                     ${ps?.purchaseCost?.toLocaleString() ?? '—'}
                     {diff != null && ` (${diff > 0 ? '+' : ''}${diff.toLocaleString()})`}
                   </span>
-                  <button className='sidebar__btn sidebar__btn--xs sidebar__btn--danger'
+                  <Button size='xs' variant='danger'
                     onClick={(e) => { e.stopPropagation(); handleRemoveSupplier(ps._id) }}>
                     X
-                  </button>
+                  </Button>
                 </div>
               )
             })

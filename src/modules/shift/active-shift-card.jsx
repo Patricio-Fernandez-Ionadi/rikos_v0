@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useShift } from './shift-context.jsx'
 import { AdjustmentForm } from './adjustment-form.jsx'
 import { ShiftSalesList } from './shift-sales-list.jsx'
+import { Button } from '../../components/button.jsx'
 
 /**
  * Displays the active shift card with its stats (opening time, cash,
@@ -33,29 +34,18 @@ export const ActiveShiftCard = ({ onRequestClose }) => {
 					Turno activo
 				</span>
 				<div className='shifts-page__card-actions'>
-					<button
-						className='shift-bar__btn shift-bar__btn--primary'
-						onClick={() => navigate('/shifts/sale')}
-					>
+					<Button variant='primary' onClick={() => navigate('/shifts/sale')}>
 						+ Registrar Venta
-					</button>
-					<button
-						className='shift-bar__btn'
-						onClick={() => setShowAdjustmentForm(!showAdjustmentForm)}
-					>
+					</Button>
+					<Button onClick={() => setShowAdjustmentForm(!showAdjustmentForm)}>
 						{showAdjustmentForm ? 'Cancelar' : '+ Ajuste'}
-					</button>
+					</Button>
 					{!synced && (
-						<button className='shift-bar__btn' onClick={() => syncToDb()}>
-							Sincronizar
-						</button>
+						<Button onClick={() => syncToDb()}>Sincronizar</Button>
 					)}
-					<button
-						className='shift-bar__btn shift-bar__btn--danger'
-						onClick={onRequestClose}
-					>
+					<Button variant='danger' onClick={onRequestClose}>
 						Cerrar Turno
-					</button>
+					</Button>
 				</div>
 			</div>
 

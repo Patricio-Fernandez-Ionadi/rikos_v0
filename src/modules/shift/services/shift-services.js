@@ -19,3 +19,6 @@ export const deleteSale = (shiftId, saleId) =>
 /** Record an adjustment on the shift. */
 export const addAdjustment = (shiftId, data) =>
   api.addAdjustment(shiftId, data)
+
+/** Fetch all shifts (for history). */
+export const getShifts = () => api.getShifts()

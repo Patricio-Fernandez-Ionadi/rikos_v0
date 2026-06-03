@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useShift } from './shift-context.jsx'
+import { FormActions } from '../../components/form-actions.jsx'
 
 /**
  * Inline form to add an adjustment (expense, withdrawal, adjustment)
@@ -51,14 +52,10 @@ export const AdjustmentForm = ({ onClose }) => {
 				value={description}
 				onChange={(e) => setDescription(e.target.value)}
 			/>
-			<div className='modal-actions'>
-				<button type='button' className='shift-bar__btn' onClick={onClose}>
-					Cancelar
-				</button>
-				<button type='submit' className='shift-bar__btn shift-bar__btn--primary'>
-					Agregar
-				</button>
-			</div>
+			<FormActions
+				onCancel={onClose}
+				submitLabel='Agregar'
+			/>
 		</form>
 	)
 }

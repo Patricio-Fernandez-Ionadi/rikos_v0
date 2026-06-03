@@ -2,6 +2,9 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useProductManager } from '../../modules/products/product-manager.js'
 import { Modal } from '../../components/Modal.jsx'
+import { Button } from '../../components/button.jsx'
+import { FormActions } from '../../components/form-actions.jsx'
+import { DataTable } from '../../components/data-table.jsx'
 
 export const SuppliersPage = () => {
 	const navigate = useNavigate()
@@ -67,65 +70,36 @@ export const SuppliersPage = () => {
 		<div className='stock-page'>
 			<div className='stock-page__title-row'>
 				<h2 className='stock-page__title'>Proveedores</h2>
-				<button className='sidebar__btn' onClick={openCreate}>
-					+ Nuevo proveedor
-				</button>
+				<Button block onClick={openCreate}>+ Nuevo proveedor</Button>
 			</div>
 
-			{suppliers.length === 0 ? (
-				<p
-					className='placeholder'
-					style={{ textAlign: 'center', padding: '40px', color: '#616161' }}
-				>
-					No hay proveedores registrados
-				</p>
-			) : (
-				<div className='stock-page__table-wrap'>
-					<table className='stock-page__table'>
-						<thead>
-							<tr>
-								<th>Nombre</th>
-								<th>Contacto</th>
-								<th>Teléfono</th>
-								<th>Email</th>
-								<th>Notas</th>
-								<th>Acciones</th>
-							</tr>
-						</thead>
-						<tbody>
-							{suppliers.map((s) => (
-								<tr key={s._id}>
-									<td style={{ color: '#f5f5f5' }}>{s.name}</td>
-									<td>{s.contactName ?? '—'}</td>
-									<td>{s.phone ?? '—'}</td>
-									<td>{s.email ?? '—'}</td>
-									<td>{s.notes ?? ''}</td>
-									<td>
-										<button
-											className='sidebar__btn sidebar__btn--xs'
-											onClick={() => navigate(`/suppliers/${s._id}`)}
-										>
-											Productos
-										</button>
-										<button
-											className='sidebar__btn sidebar__btn--xs'
-											onClick={() => openEdit(s)}
-										>
-											Editar
-										</button>
-										<button
-											className='sidebar__btn sidebar__btn--xs sidebar__btn--danger'
-											onClick={() => deleteSupplier(s._id)}
-										>
-											Eliminar
-										</button>
-									</td>
-								</tr>
-							))}
-						</tbody>
-					</table>
-				</div>
-			)}
+			<DataTable
+				variant='stock-page'
+				columns={[
+					{ key: 'name', label: 'Nombre' },
+					{ key: 'contact', label: 'Contacto' },
+					{ key: 'phone', label: 'Teléfono' },
+					{ key: 'email', label: 'Email' },
+					{ key: 'notes', label: 'Notas' },
+					{ key: 'actions', label: 'Acciones' },
+				]}
+				rows={suppliers}
+				emptyMessage='No hay proveedores registrados'
+				renderRow={(s) => (
+					<tr key={s._id}>
+						<td style={{ color: '#f5f5f5' }}>{s.name}</td>
+						<td>{s.contactName ?? '—'}</td>
+						<td>{s.phone ?? '—'}</td>
+						<td>{s.email ?? '—'}</td>
+						<td>{s.notes ?? ''}</td>
+						<td style={{ display: 'flex', gap: 4 }}>
+							<Button size='xs' onClick={() => navigate(`/suppliers/${s._id}`)}>Productos</Button>
+							<Button size='xs' onClick={() => openEdit(s)}>Editar</Button>
+							<Button size='xs' variant='danger' onClick={() => deleteSupplier(s._id)}>Eliminar</Button>
+						</td>
+					</tr>
+				)}
+			/>
 
 			<Modal
 				open={showForm}
@@ -175,21 +149,10 @@ export const SuppliersPage = () => {
 						rows={3}
 					/>
 
-					<div className='modal-actions'>
-						<button
-							type='button'
-							className='shift-bar__btn'
-							onClick={() => setShowForm(false)}
-						>
-							Cancelar
-						</button>
-						<button
-							type='submit'
-							className='shift-bar__btn shift-bar__btn--primary'
-						>
-							{editing ? 'Guardar cambios' : 'Crear proveedor'}
-						</button>
-					</div>
+					<FormActions
+						onCancel={() => setShowForm(false)}
+						submitLabel={editing ? 'Guardar cambios' : 'Crear proveedor'}
+					/>
 				</form>
 			</Modal>
 		</div>

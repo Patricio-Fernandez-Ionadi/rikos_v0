@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Modal } from '../../components/Modal.jsx'
 import { useShift } from '../../modules/shift/shift-context.jsx'
+import { FormActions } from '../../components/form-actions.jsx'
 
 /**
  * Modal form to open a new shift. Manages its own cash input state
@@ -38,17 +39,11 @@ export const OpenShiftForm = ({ open, onClose, defaultOpeningCash = '' }) => {
 				onChange={(e) => setOpeningCash(e.target.value)}
 				autoFocus
 			/>
-			<div className='modal-actions'>
-				<button className='shift-bar__btn' onClick={onClose}>
-					Cancelar
-				</button>
-				<button
-					className='shift-bar__btn shift-bar__btn--primary'
-					onClick={handleOpen}
-				>
-					Abrir
-				</button>
-			</div>
+			<FormActions
+				onCancel={onClose}
+				onSubmit={handleOpen}
+				submitLabel='Abrir'
+			/>
 		</Modal>
 	)
 }

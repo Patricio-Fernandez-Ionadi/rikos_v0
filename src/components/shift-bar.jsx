@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useShift } from '../modules/shift/shift-context.jsx'
+import { Button } from './button.jsx'
 
 /**
  * Minimal top bar for the active shift.
@@ -23,14 +24,12 @@ export const ShiftBar = () => {
 						<span className='shift-bar__badge shift-bar__badge--warn'>
 							Ventas sin sincronizar
 						</span>
-						<button className='shift-bar__btn' onClick={() => syncToDb()}>
-							Sincronizar
-						</button>
+						<Button onClick={() => syncToDb()}>Sincronizar</Button>
 					</>
 				)}
 
 				{synced && <span className='shift-bar__stat'>Sincronizado</span>}
-				<Link to='/shifts' className='shift-bar__btn shift-bar__btn--primary'>
+				<Link to='/shifts' className='btn btn--primary'>
 					Ir al turno
 				</Link>
 			</div>

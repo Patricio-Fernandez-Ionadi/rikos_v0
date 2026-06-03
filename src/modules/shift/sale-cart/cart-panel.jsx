@@ -45,7 +45,7 @@ export const CartPanel = ({
 								${item.total.toLocaleString()}
 							</span>
 							<button
-								className='sidebar__btn sidebar__btn--xs sidebar__btn--danger'
+								className='btn btn--xs btn--danger'
 								onClick={() => onRemoveItem(item._cartId)}
 							>
 								✕
@@ -147,7 +147,7 @@ export const CartPanel = ({
 					</div>
 
 					<button
-						className='shift-bar__btn shift-bar__btn--primary sale-cart__submit'
+						className='btn btn--primary sale-cart__submit'
 						onClick={() => onSubmit(onClose)}
 					>
 						Registrar Venta

@@ -1,5 +1,5 @@
 import { useState, useCallback, useMemo, useEffect } from 'react'
-import { useData } from '../../app/data-context.jsx'
+import { useCatalog } from '../../app/catalog-context.jsx'
 import * as tasksData from './tasks-data.js'
 
 export const TASK_GROUPS = [
@@ -42,7 +42,7 @@ export const TASK_GROUPS = [
 ]
 
 export function useTasksManager() {
-	const { products } = useData()
+	const { products } = useCatalog()
 	const [version, setVersion] = useState(0)
 	const bump = useCallback(() => setVersion((v) => v + 1), [])
 

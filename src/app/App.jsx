@@ -1,6 +1,6 @@
 import { BrowserRouter } from 'react-router-dom'
 import { Router } from './app-router.jsx'
-import { DataProvider } from './data-context.jsx'
+import { CatalogProvider } from './catalog-context.jsx'
 import { ShiftProvider } from '../modules/shift/shift-context.jsx'
 import '../theme/index.scss'
 
@@ -8,11 +8,11 @@ export const App = () => {
 	return (
 		<>
 			<BrowserRouter>
-				<DataProvider>
+				<CatalogProvider>
 					<ShiftProvider>
 						<Router />
 					</ShiftProvider>
-				</DataProvider>
+				</CatalogProvider>
 			</BrowserRouter>
 		</>
 	)

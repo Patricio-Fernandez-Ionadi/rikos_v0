@@ -1,9 +1,12 @@
 import { useState, useMemo, useRef, useEffect } from 'react'
-import { useData } from '../../../app/data-context.jsx'
+import { useCatalog } from '../../../app/catalog-context.jsx'
 import { useShift } from '../shift-context.jsx'
+import { generateTempId } from '../../../data/entities.js'
+import { filterProducts } from '../../../data/filter-products.js'
+import { applyBatchStockDeduction } from '../../../data/stock-utils.js'
 
 export function useSaleCart() {
-	const { products, presentations, categories, setProducts, setPresentations } = useData()
+	const { products, presentations, categories, setProducts, setPresentations } = useCatalog()
 	const { recordTicket } = useShift()
 
 	const [cartItems, setCartItems] = useState([])
@@ -22,22 +25,10 @@ export function useSaleCart() {
 	}, [])
 
 	const filteredProducts = useMemo(() => {
-		let filtered = products
-		if (selectedCategory) {
-			filtered = filtered.filter((p) => p.categoryId === selectedCategory)
-		}
-		if (searchQuery.trim()) {
-			const q = searchQuery.toLowerCase()
-			filtered = filtered.filter((p) => {
-				if (p.name.toLowerCase().includes(q)) return true
-				if (p.marca && p.marca.toLowerCase().includes(q)) return true
-				const presLabels = presentations
-					.filter((pr) => pr.productId === p._id)
-					.map((pr) => pr.label?.toLowerCase() ?? '')
-				return presLabels.some((l) => l.includes(q))
-			})
-		}
-		return filtered
+		return filterProducts(products, presentations, {
+			searchTerm: searchQuery,
+			categoryIds: selectedCategory ? [selectedCategory] : [],
+		})
 	}, [products, presentations, searchQuery, selectedCategory])
 
 	const selectedProduct = useMemo(
@@ -63,7 +54,7 @@ export function useSaleCart() {
 		setCartItems((prev) => [
 			...prev,
 			{
-				_cartId: `${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
+				_cartId: generateTempId(),
 				productId: selectedProduct._id,
 				presentationId: selectedPres._id,
 				productName: selectedProduct.name,
@@ -96,7 +87,7 @@ export function useSaleCart() {
 
 	const handleSubmit = async (onClose) => {
 		if (cartItems.length === 0) return
-		const ticketId = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`
+		const ticketId = generateTempId({ length: 8 })
 
 		const items = cartItems.map((i) => ({
 			productId: i.productId,
@@ -108,32 +99,9 @@ export function useSaleCart() {
 
 		await recordTicket(ticketId, paymentMethod, items, finalTotal)
 
-		for (const item of cartItems) {
-			if (item.saleType === 'fraction') {
-				const deduction = item.quantity * (item.grams ?? 0)
-				setProducts((prev) =>
-					prev.map((p) =>
-						p._id === item.productId
-							? {
-									...p,
-									stockGrams: Math.max(0, (p.stockGrams ?? 0) - deduction),
-								}
-							: p,
-					),
-				)
-			} else {
-				setPresentations((prev) =>
-					prev.map((p) =>
-						p._id === item.presentationId
-							? {
-									...p,
-									stock: Math.max(0, (p.stock ?? 0) - item.quantity),
-								}
-							: p,
-					),
-				)
-			}
-		}
+		const result = applyBatchStockDeduction(presentations, products, cartItems)
+		setPresentations(result.presentations)
+		setProducts(result.products)
 
 		setCartItems([])
 		setSelectedProductId(null)

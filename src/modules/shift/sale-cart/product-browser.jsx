@@ -1,4 +1,5 @@
 import { SearchInput } from '../../../components/search-input.jsx'
+import { CategorySelect } from '../../../components/category-select.jsx'
 
 export const ProductBrowser = ({
 	searchRef,
@@ -28,23 +29,14 @@ export const ProductBrowser = ({
 					value={searchQuery}
 					onChange={(e) => setSearchQuery(e.target.value)}
 				/>
-				<select
-					className='field-input'
+				<CategorySelect
+					categories={categories}
 					value={selectedCategory}
-					onChange={(e) => {
-						setSelectedCategory(e.target.value)
+					onChange={(value) => {
+						setSelectedCategory(value)
 						setSelectedProductId(null)
 					}}
-				>
-					<option value=''>Todas las categorías</option>
-					{categories
-						? categories.map((cat) => (
-								<option key={cat._id} value={cat._id}>
-									{cat.name}
-								</option>
-							))
-						: null}
-				</select>
+				/>
 			</div>
 
 			<div className='sale-cart__product-list'>
@@ -121,7 +113,7 @@ export const ProductBrowser = ({
 										</span>
 									)}
 									<button
-										className='shift-bar__btn shift-bar__btn--primary'
+										className='btn btn--primary'
 										onClick={handleAddToCart}
 									>
 										Agregar

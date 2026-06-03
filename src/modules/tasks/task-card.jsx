@@ -90,7 +90,7 @@ export const TaskCard = ({
 
 			<div className='tasks__card-add'>
 				<button
-					className='sidebar__btn sidebar__btn--xs'
+					className='btn btn--xs'
 					onClick={() => setShowAdd(!showAdd)}
 				>
 					{showAdd ? 'Cancelar' : '+ Agregar'}
@@ -110,7 +110,7 @@ export const TaskCard = ({
 									autoFocus
 								/>
 								<button
-									className='sidebar__btn sidebar__btn--xs'
+									className='btn btn--xs'
 									disabled={!suggestionName.trim()}
 									onClick={handleAddSuggestion}
 								>
@@ -130,7 +130,7 @@ export const TaskCard = ({
 										autoFocus
 									/>
 									<button
-										className='sidebar__btn sidebar__btn--xs'
+										className='btn btn--xs'
 										disabled={!otrosDesc.trim()}
 										onClick={handleAddOtros}
 									>

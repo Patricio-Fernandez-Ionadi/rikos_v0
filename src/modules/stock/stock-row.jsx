@@ -1,11 +1,13 @@
 import { useState } from 'react'
-import { useData } from '../../app/data-context.jsx'
+import { useCatalog } from '../../app/catalog-context.jsx'
 import { useShift } from '../../modules/shift/shift-context.jsx'
 import { SaleForm } from '../../components/sale-form.jsx'
+import { Button } from '../../components/button.jsx'
 import * as stockService from './services/stock-services.js'
+import { applyStockDeduction } from '../../data/stock-utils.js'
 
 export const StockRow = ({ pres, product, onNavigate }) => {
-	const { setPresentations, setProducts } = useData()
+	const { presentations, products, setPresentations, setProducts } = useCatalog()
 	const { shift, addSale } = useShift()
 
 	const isFraction = product?.saleType === 'fraction'
@@ -50,23 +52,9 @@ export const StockRow = ({ pres, product, onNavigate }) => {
 
 	const handleSale = async (sale) => {
 		await addSale(sale)
-		setPresentations((prev) =>
-			prev.map((p) =>
-				p._id === sale.presentationId
-					? { ...p, stock: Math.max(0, (p.stock ?? 0) - sale.quantity) }
-					: p,
-			),
-		)
-		if (isFraction) {
-			const deduction = sale.quantity * (pres.grams ?? 0)
-			setProducts((prev) =>
-				prev.map((p) =>
-					p._id === product._id
-						? { ...p, stockGrams: Math.max(0, (p.stockGrams ?? 0) - deduction) }
-						: p,
-				),
-			)
-		}
+		const result = applyStockDeduction(presentations, products, sale)
+		setPresentations(result.presentations)
+		setProducts(result.products)
 		setSalePresId(null)
 	}
 
@@ -123,31 +111,25 @@ export const StockRow = ({ pres, product, onNavigate }) => {
 								</div>
 							)}
 							<div className='stock-page__edit-actions'>
-								<button className='sidebar__btn sidebar__btn--xs' onClick={handleUpdate}>OK</button>
-								<button className='sidebar__btn sidebar__btn--xs' onClick={() => setEditPresId(null)}>X</button>
+								<Button size='xs' onClick={handleUpdate}>OK</Button>
+								<Button size='xs' onClick={() => setEditPresId(null)}>X</Button>
 							</div>
 						</div>
 					) : (
 						<div className='stock-page__edit'>
-							<button
-								className='sidebar__btn sidebar__btn--xs'
-								onClick={() => {
-									setEditPresId(pres._id)
-									setEditStock(String(presStock))
-									setEditGrams(String(totalGrams))
-								}}
-							>
+							<Button size='xs' onClick={() => {
+								setEditPresId(pres._id)
+								setEditStock(String(presStock))
+								setEditGrams(String(totalGrams))
+							}}>
 								Ajustar
-							</button>
+							</Button>
 							{shift && shift.status === 'open' && (
-								<button
-									className='shift-bar__btn shift-bar__btn--primary shift-bar__btn--sm'
-									onClick={() =>
-										setSalePresId(salePresId === pres._id ? null : pres._id)
-									}
-								>
+								<Button size='sm' variant='primary' onClick={() =>
+									setSalePresId(salePresId === pres._id ? null : pres._id)
+								}>
 									Vender
-								</button>
+								</Button>
 							)}
 						</div>
 					)}

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Modal } from '../../components/Modal.jsx'
 import { useShift } from '../../modules/shift/shift-context.jsx'
+import { FormActions } from '../../components/form-actions.jsx'
 
 /**
  * Modal form to close the active shift. Manages its own closing cash,
@@ -63,17 +64,12 @@ export const CloseShiftForm = ({ open, onClose }) => {
 				onChange={(e) => setClosingNotes(e.target.value)}
 				rows={2}
 			/>
-			<div className='modal-actions'>
-				<button className='shift-bar__btn' onClick={onClose}>
-					Cancelar
-				</button>
-				<button
-					className='shift-bar__btn shift-bar__btn--danger'
-					onClick={handleClose}
-				>
-					Cerrar
-				</button>
-			</div>
+			<FormActions
+				onCancel={onClose}
+				onSubmit={handleClose}
+				submitLabel='Cerrar'
+				submitVariant='danger'
+			/>
 		</Modal>
 	)
 }

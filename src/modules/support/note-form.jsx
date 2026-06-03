@@ -28,7 +28,7 @@ export const NoteForm = () => {
 			<div className='soporte-form__row'>
 				<button
 					type='submit'
-					className='shift-bar__btn shift-bar__btn--primary'
+					className='btn btn--primary'
 					disabled={!text.trim()}
 				>
 					Agregar nota

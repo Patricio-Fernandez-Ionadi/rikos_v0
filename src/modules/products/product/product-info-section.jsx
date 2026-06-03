@@ -1,3 +1,5 @@
+import { InlineEdit } from '../../../components/inline-edit.jsx'
+
 export const ProductInfoSection = ({
 	isFraction,
 	totalStock,
@@ -42,31 +44,22 @@ export const ProductInfoSection = ({
 					<span>
 						{isFraction ? (
 							stockGramsEdit ? (
-								<span className='stock-edit-inline'>
+								<span className='inline-edit'>
 									<input
 										className='field-input field-input--xs'
 										type='number'
 										value={stockGramsValue}
 										onChange={(e) => setStockGramsValue(e.target.value)}
 									/>
-									<button
-										className='sidebar__btn sidebar__btn--xs'
-										onClick={handleStockGramsSave}
-									>
-										OK
-									</button>
-									<button
-										className='sidebar__btn sidebar__btn--xs'
-										onClick={() => setStockGramsEdit(false)}
-									>
-										X
-									</button>
+									<span className='inline-edit__suffix'>g</span>
+									<button className='btn btn--xs' onClick={handleStockGramsSave}>OK</button>
+									<button className='btn btn--xs' onClick={() => setStockGramsEdit(false)}>X</button>
 								</span>
 							) : (
 								<>
 									{totalStock ?? 0}g
 									<button
-										className='sidebar__btn sidebar__btn--xs'
+										className='btn btn--xs'
 										onClick={() => {
 											setStockGramsValue(String(totalStock ?? 0))
 											setStockGramsEdit(true)

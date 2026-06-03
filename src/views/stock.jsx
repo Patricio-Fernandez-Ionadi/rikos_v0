@@ -1,9 +1,11 @@
 import { useState, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useData } from '../app/data-context.jsx'
+import { useCatalog } from '../app/catalog-context.jsx'
 import { StockFilterBar } from '../modules/stock/stock-filter-bar.jsx'
 import { StockRow } from '../modules/stock/stock-row.jsx'
 import { SearchInput } from '../components/search-input.jsx'
+import { DataTable } from '../components/data-table.jsx'
+import { EmptyState } from '../components/empty-state.jsx'
 
 const FILTER_LABELS = {
 	all: 'Todos',
@@ -14,7 +16,7 @@ const FILTER_LABELS = {
 
 export const StockPage = () => {
 	const navigate = useNavigate()
-	const { products, presentations } = useData()
+	const { products, presentations } = useCatalog()
 	const [filter, setFilter] = useState('all')
 	const [customType, setCustomType] = useState('lt')
 	const [customValue, setCustomValue] = useState(5)
@@ -83,41 +85,24 @@ export const StockPage = () => {
 				style={{ marginBottom: 12 }}
 			/>
 
-			<div className='stock-page__table-wrap'>
-				<table className='stock-page__table'>
-					<thead>
-						<tr>
-							<th className='stock-cell--product'>Producto</th>
-							<th className='stock-cell--stock'>Stock (unidades)</th>
-							<th className='stock-cell--grams'>Gramos totales</th>
-							<th className='stock-cell--actions'>Acciones</th>
-						</tr>
-					</thead>
-					<tbody>
-						{items.map(({ pres, product }) => (
-							<StockRow
-								key={pres._id}
-								pres={pres}
-								product={product}
-								onNavigate={() => navigate(`/products/${product._id}`)}
-							/>
-						))}
-					</tbody>
-				</table>
-			</div>
-
-			{items.length === 0 && (
-				<p
-					className='placeholder'
-					style={{
-						textAlign: 'center',
-						padding: '40px',
-						color: '#616161',
-					}}
-				>
-					No hay presentaciones con el filtro: {filterDesc}
-				</p>
-			)}
+			<DataTable
+				variant='stock-page'
+				columns={[
+					{ key: 'product', label: 'Producto', className: 'stock-cell--product' },
+					{ key: 'stock', label: 'Stock (unidades)', className: 'stock-cell--stock' },
+					{ key: 'grams', label: 'Gramos totales', className: 'stock-cell--grams' },
+					{ key: 'actions', label: 'Acciones', className: 'stock-cell--actions' },
+				]}
+				rows={items}
+				emptyMessage={`No hay presentaciones con el filtro: ${filterDesc}`}
+				renderRow={({ pres, product }) => (
+					<StockRow
+						pres={pres}
+						product={product}
+						onNavigate={() => navigate(`/products/${product._id}`)}
+					/>
+				)}
+			/>
 		</div>
 	)
 }

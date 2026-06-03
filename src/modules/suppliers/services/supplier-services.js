@@ -16,6 +16,10 @@ export async function getProductSuppliers(productId) {
 	return await api.getProductSuppliers(productId)
 }
 
+export async function getProductSuppliersBySupplier(supplierId) {
+	return await api.getProductSuppliersBySupplier(supplierId)
+}
+
 export async function getSupplier(id) {
 	return await api.getSupplier(id)
 }

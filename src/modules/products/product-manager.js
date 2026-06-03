@@ -1,5 +1,5 @@
 import { useReducer, useMemo, useCallback } from 'react'
-import { useData } from '../../app/data-context.jsx'
+import { useCatalog } from '../../app/catalog-context.jsx'
 import { useShift } from '../../modules/shift/shift-context.jsx'
 import { productReducer, INITIAL_PRODUCT_STATE } from './reducer/product-reducer.js'
 import * as actions from './reducer/product-actions.js'
@@ -7,31 +7,21 @@ import * as productService from './services/product-services.js'
 import * as presService from './product/services/presentation-services.js'
 import * as stockService from '../stock/services/stock-services.js'
 import * as supplierService from '../suppliers/services/supplier-services.js'
+import { filterProducts } from '../../data/filter-products.js'
+import { applyStockDeduction } from '../../data/stock-utils.js'
 
 export function useProductManager() {
 	const [state, dispatch] = useReducer(productReducer, INITIAL_PRODUCT_STATE)
-	const { categories, products, presentations, suppliers, setProducts, setPresentations, setSuppliers } = useData()
+	const { categories, products, presentations, suppliers, setProducts, setPresentations, setSuppliers } = useCatalog()
 	const { shift, addSale } = useShift()
 
 	// ── Derived data ────────────────────────────────────────
 
 	const filteredProducts = useMemo(() => {
-		let result = products
-		if (state.selectedCategoryIds.length > 0) {
-			result = result.filter((p) => state.selectedCategoryIds.includes(p.categoryId))
-		}
-		if (state.searchTerm.trim()) {
-			const term = state.searchTerm.trim().toLowerCase()
-			result = result.filter((p) => {
-				if (p.name.toLowerCase().includes(term)) return true
-				if (p.marca && p.marca.toLowerCase().includes(term)) return true
-				const presLabels = presentations
-					.filter((pr) => pr.productId === p._id)
-					.map((pr) => pr.label?.toLowerCase() ?? '')
-				return presLabels.some((l) => l.includes(term))
-			})
-		}
-		return result
+		return filterProducts(products, presentations, {
+			searchTerm: state.searchTerm,
+			categoryIds: state.selectedCategoryIds,
+		})
 	}, [products, presentations, state.selectedCategoryIds, state.searchTerm])
 
 	const selectedProduct = useMemo(
@@ -189,27 +179,9 @@ export function useProductManager() {
 
 	const handleSaleFn = useCallback(async (sale) => {
 		await addSale(sale)
-		const pres = presentations.find((p) => p._id === sale.presentationId)
-		if (pres) {
-			const prod = products.find((p) => p._id === pres.productId)
-			setPresentations((prev) =>
-				prev.map((p) =>
-					p._id === sale.presentationId
-						? { ...p, stock: Math.max(0, (p.stock ?? 0) - sale.quantity) }
-						: p,
-				),
-			)
-			if (prod?.saleType === 'fraction') {
-				const deduction = sale.quantity * (pres.grams ?? 0)
-				setProducts((prev) =>
-					prev.map((p) =>
-						p._id === prod._id
-							? { ...p, stockGrams: Math.max(0, (p.stockGrams ?? 0) - deduction) }
-							: p,
-					),
-				)
-			}
-		}
+		const result = applyStockDeduction(presentations, products, sale)
+		setPresentations(result.presentations)
+		setProducts(result.products)
 		dispatch({ type: 'CANCEL_SALE' })
 	}, [addSale, presentations, products, setProducts, setPresentations])
 

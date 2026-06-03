@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { FormActions } from './form-actions.jsx'
 
 export const SaleForm = ({ presentation, product, onSubmit, onCancel }) => {
   const isFraction = product?.saleType === 'fraction'
@@ -52,8 +53,7 @@ export const SaleForm = ({ presentation, product, onSubmit, onCancel }) => {
       </div>
       <div className="sale-form__total">Total: ${total.toLocaleString()}</div>
       <div className="sale-form__actions">
-        <button type="button" className="shift-bar__btn" onClick={onCancel}>Cancelar</button>
-        <button type="submit" className="shift-bar__btn shift-bar__btn--primary">Vender</button>
+        <FormActions onCancel={onCancel} submitLabel="Vender" />
       </div>
     </form>
   )

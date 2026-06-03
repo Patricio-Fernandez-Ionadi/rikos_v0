@@ -1,4 +1,4 @@
-import { useData } from '../../../app/data-context.jsx'
+import { useCatalog } from '../../../app/catalog-context.jsx'
 import { useSalesManager } from './sales-manager.js'
 
 export const SalesList = () => {
@@ -14,7 +14,7 @@ export const SalesList = () => {
 		saveEdit,
 		handleDelete,
 	} = useSalesManager()
-	const { products } = useData()
+	const { products } = useCatalog()
 
 	const getProductName = (productId) =>
 		products.find((p) => p._id === productId)?.name ?? '—'
@@ -93,7 +93,7 @@ export const SalesList = () => {
 																).toLocaleString()}
 															</span>
 															<button
-																className='shift-bar__btn shift-bar__btn--primary'
+																className='btn btn--primary'
 																onClick={() =>
 																	saveEdit(dbId, itemId, item.unitPrice)
 																}
@@ -102,7 +102,7 @@ export const SalesList = () => {
 																OK
 															</button>
 															<button
-																className='shift-bar__btn'
+																className='btn'
 																onClick={cancelEdit}
 																style={{ padding: '2px 8px' }}
 															>
@@ -125,7 +125,7 @@ export const SalesList = () => {
 															${item.total.toLocaleString()}
 														</span>
 														<button
-															className='shift-bar__btn'
+															className='btn'
 															onClick={() => startEdit(itemId, item.quantity)}
 															style={{ padding: '1px 6px', fontSize: '0.7em' }}
 															title='Editar cantidad'
@@ -133,7 +133,7 @@ export const SalesList = () => {
 															✎
 														</button>
 														<button
-															className='shift-bar__btn shift-bar__btn--danger'
+															className='btn btn--danger'
 															onClick={() => handleDelete(dbId, itemId)}
 															style={{ padding: '1px 6px', fontSize: '0.7em' }}
 															title='Eliminar'

@@ -1,13 +1,7 @@
+import { Button } from '../../components/button.jsx'
+
 /**
  * Filter bar for the stock page — presets + custom threshold.
- *
- * @param {Object}     props
- * @param {string}     props.filter            Current filter value
- * @param {Function}   props.onChange          Callback receiving the new filter value
- * @param {string}     props.customType        'lt' | 'gt'
- * @param {Function}   props.onCustomTypeChange
- * @param {number}     props.customValue
- * @param {Function}   props.onCustomValueChange
  */
 export const StockFilterBar = ({ filter, onChange, customType, onCustomTypeChange, customValue, onCustomValueChange }) => {
 	const options = [
@@ -22,21 +16,14 @@ export const StockFilterBar = ({ filter, onChange, customType, onCustomTypeChang
 		<div className='stock-page__toolbar'>
 			<span style={{ color: '#8e8e8e', fontSize: '0.85em' }}>Filtrar:</span>
 			{options.map((opt) => (
-				<button
+				<Button
 					key={opt.value}
-					className={
-						'sidebar__btn' +
-						(filter === opt.value ? ' sidebar__btn--active' : '')
-					}
-					style={{
-						width: 'auto',
-						padding: '4px 10px',
-						fontSize: '0.8em',
-					}}
+					size='xs'
+					active={filter === opt.value}
 					onClick={() => onChange(opt.value)}
 				>
 					{opt.label}
-				</button>
+				</Button>
 			))}
 
 			{filter === 'custom' && (
