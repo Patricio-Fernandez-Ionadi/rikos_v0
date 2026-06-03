@@ -11,7 +11,7 @@
     "preview": "vite preview",
     "start": "node server/index.js",
     "db:clone": "node server/db-clone.js",
-    "migrate": "node src/data/migrate.js",
+    "migrate": "node src/data/dev/migrate.js",
     "seed": "npm run migrate && npm run seed --prefix server"
   },
   "dependencies": {

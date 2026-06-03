@@ -16,6 +16,9 @@ dist-ssr
 
 package-lock.json
 
+# Dev-only data / scripts
+src/data/dev/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

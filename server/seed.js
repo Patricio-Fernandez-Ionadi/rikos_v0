@@ -15,7 +15,7 @@ async function seed() {
   await mongoose.connect(process.env.MONGODB_URI)
   console.log('Connected to MongoDB')
 
-  const data = JSON.parse(readFileSync(resolve(__dirname, '../src/data/seed.json'), 'utf-8'))
+  const data = JSON.parse(readFileSync(resolve(__dirname, '../src/data/dev/seed.json'), 'utf-8'))
 
   await Category.deleteMany({})
   await Product.deleteMany({})

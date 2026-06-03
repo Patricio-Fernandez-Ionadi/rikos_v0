@@ -3,7 +3,7 @@ import { resolve, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
-const SEED_PATH = resolve(__dirname, '../src/data/seed.json')
+const SEED_PATH = resolve(__dirname, '../src/data/dev/seed.json')
 
 const data = JSON.parse(readFileSync(SEED_PATH, 'utf-8'))
 
