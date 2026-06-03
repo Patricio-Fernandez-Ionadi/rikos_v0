@@ -57,6 +57,32 @@
   }
 }
 
+// ─── BACK BUTTON ──────────────────────────────────────────────
+
+.back-btn {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	padding: 6px 12px;
+	background: none;
+	border: 1px solid transparent;
+	border-radius: $thin;
+	color: $grey;
+	font-size: 0.85em;
+	cursor: pointer;
+	text-decoration: none;
+
+	&:hover {
+		color: $primary_light;
+		background: rgba(255, 255, 255, 0.05);
+		border-color: $black_light;
+	}
+
+	.material-icons {
+		font-size: 1.1em;
+	}
+}
+
 // ─── UTILIDADES ───────────────────────────────────────────────
 
 .placeholder {

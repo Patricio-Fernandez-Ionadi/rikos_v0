@@ -35,7 +35,7 @@ export const SupplierDetailPage = () => {
 	return (
 		<div className='stock-page'>
 			<div className='stock-page__title-row'>
-				<button className='btn btn--block' onClick={() => navigate('/suppliers')}>
+				<button className='back-btn' onClick={() => navigate('/suppliers')}>
 					<span className='material-icons'>arrow_back</span> Volver
 				</button>
 				<h2 className='stock-page__title'>{supplier.name}</h2>
@@ -204,7 +204,7 @@ export const SupplierDetailPage = () => {
 												className='btn btn--xs btn--danger'
 												onClick={() => handleUnlink(ps._id)}
 											>
-												X
+												✕
 											</button>
 										</td>
 									</tr>

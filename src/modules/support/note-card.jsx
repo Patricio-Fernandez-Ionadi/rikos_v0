@@ -13,7 +13,7 @@ export const NoteCard = ({ note }) => {
 				<span className='soporte-card__date'>
 					{new Date(note.createdAt).toLocaleString()}
 				</span>
-				<Button size='xs' variant='danger' onClick={() => handleDelete(note._id)}>X</Button>
+				<Button size='xs' variant='danger' onClick={() => handleDelete(note._id)}>✕</Button>
 			</div>
 			<p className='soporte-card__text'>{note.text}</p>
 		</div>

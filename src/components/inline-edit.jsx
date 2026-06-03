@@ -48,7 +48,7 @@ export const InlineEdit = ({
 				/>
 				{suffix && <span className='inline-edit__suffix'>{suffix}</span>}
 				<Button size='xs' onClick={handleSave}>OK</Button>
-				<Button size='xs' onClick={handleCancel}>X</Button>
+				<Button size='xs' onClick={handleCancel}>✕</Button>
 			</span>
 		)
 	}

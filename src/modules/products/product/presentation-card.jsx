@@ -35,7 +35,7 @@ export const PresentationCard = ({
 						</Button>
 					)}
 					<Button size='xs' onClick={() => onEdit(pres)}>Editar</Button>
-					<Button size='xs' variant='danger' onClick={() => onDelete(pres._id)}>X</Button>
+					<Button size='xs' variant='danger' onClick={() => onDelete(pres._id)}>✕</Button>
 				</div>
 			</div>
 

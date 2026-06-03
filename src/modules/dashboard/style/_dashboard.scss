@@ -54,6 +54,11 @@
 	overflow-x: auto;
 	margin-bottom: 24px;
 	-webkit-overflow-scrolling: touch;
+	background: $bg_surface;
+	border: 1px solid $grey_dark;
+	border-radius: $smooth;
+	padding: 4px;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
 .dashboard__table {

@@ -39,7 +39,7 @@ export const SalePage = () => {
 	return (
 		<div className='sale-cart'>
 			<div className='sale-cart__header'>
-				<button className='btn btn--block' onClick={() => navigate('/shifts')}>
+				<button className='back-btn' onClick={() => navigate('/shifts')}>
 					<span className='material-icons'>arrow_back</span> Volver
 				</button>
 				<h2 className='sale-cart__title'>Registrar Venta</h2>

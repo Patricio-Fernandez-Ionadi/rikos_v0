@@ -35,9 +35,9 @@ export const SuppliersSection = ({
                     {diff != null && ` (${diff > 0 ? '+' : ''}${diff.toLocaleString()})`}
                   </span>
                   <Button size='xs' variant='danger'
-                    onClick={(e) => { e.stopPropagation(); handleRemoveSupplier(ps._id) }}>
-                    X
-                  </Button>
+onClick={(e) => { e.stopPropagation(); handleRemoveSupplier(ps._id) }}>
+    ✕
+</Button>
                 </div>
               )
             })

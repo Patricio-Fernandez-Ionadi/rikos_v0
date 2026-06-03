@@ -112,7 +112,7 @@ export const StockRow = ({ pres, product, onNavigate }) => {
 							)}
 							<div className='stock-page__edit-actions'>
 								<Button size='xs' onClick={handleUpdate}>OK</Button>
-								<Button size='xs' onClick={() => setEditPresId(null)}>X</Button>
+    <Button size='xs' onClick={() => setEditPresId(null)}>✕</Button>
 							</div>
 						</div>
 					) : (

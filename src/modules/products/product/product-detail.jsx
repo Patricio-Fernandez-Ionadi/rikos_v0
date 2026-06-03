@@ -100,22 +100,25 @@ export const ProductDetail = ({ productId, filterState = null }) => {
 	return (
 		<div className='detail-page'>
 			<div className='detail-page__header'>
-				<button className='detail-page__back-btn' onClick={() => navigate(-1)}>
+				<button className='back-btn' onClick={() => navigate('/products')}>
 					<span className='material-icons'>arrow_back</span> Volver
 				</button>
 				{navInfo && (
 					<div className='detail-page__nav'>
-						<Button size='xs' disabled={!navInfo.prevId} onClick={() => handlePrevNext(navInfo.prevId)}>
-							<span className='material-icons'>chevron_left</span>
-						</Button>
-						<span className='detail-page__nav-index'>
-							{navInfo.index + 1}/{navInfo.total}
-						</span>
-						<Button size='xs' disabled={!navInfo.nextId} onClick={() => handlePrevNext(navInfo.nextId)}>
-							<span className='material-icons'>chevron_right</span>
-						</Button>
-						<Button size='xs' active={filterOpen} onClick={() => setFilterOpen(!filterOpen)} title='Filtrar'>
+						<div className='detail-page__nav-pagination'>
+							<Button size='sm' disabled={!navInfo.prevId} onClick={() => handlePrevNext(navInfo.prevId)}>
+								<span className='material-icons'>chevron_left</span>
+							</Button>
+							<span className='detail-page__nav-index'>
+								{navInfo.index + 1}/{navInfo.total}
+							</span>
+							<Button size='sm' disabled={!navInfo.nextId} onClick={() => handlePrevNext(navInfo.nextId)}>
+								<span className='material-icons'>chevron_right</span>
+							</Button>
+						</div>
+						<Button size='sm' variant={filterOpen ? 'primary' : ''} active={filterOpen} onClick={() => setFilterOpen(!filterOpen)} title='Filtrar'>
 							<span className='material-icons'>search</span>
+							Filtrar
 						</Button>
 					</div>
 				)}
@@ -168,7 +171,7 @@ export const ProductDetail = ({ productId, filterState = null }) => {
 			<div className='detail-page__section'>
 				<div className='detail-page__section-header'>
 					<h3>Presentaciones</h3>
-					<Button block onClick={() => setPresFormOpen(true)}>+ Nueva</Button>
+					<Button size='sm' onClick={() => setPresFormOpen(true)}>+ Nueva</Button>
 				</div>
 
 				{productPres.length === 0 ? (

@@ -5,6 +5,14 @@
 .stock-page__table-wrap {
 	overflow-x: auto;
 	-webkit-overflow-scrolling: touch;
+	background: $bg_surface;
+	border: 1px solid $grey_dark;
+	border-radius: $smooth;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+
+	@media (max-width: $max-mobile) {
+		background: linear-gradient(to right, $bg_surface 90%, transparent);
+	}
 }
 
 .stock-page__table {

@@ -53,7 +53,7 @@ export const ProductInfoSection = ({
 									/>
 									<span className='inline-edit__suffix'>g</span>
 									<button className='btn btn--xs' onClick={handleStockGramsSave}>OK</button>
-									<button className='btn btn--xs' onClick={() => setStockGramsEdit(false)}>X</button>
+									<button className='btn btn--xs' onClick={() => setStockGramsEdit(false)}>✕</button>
 								</span>
 							) : (
 								<>
