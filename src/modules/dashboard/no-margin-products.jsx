@@ -40,6 +40,11 @@ export const NoMarginProducts = () => {
 					)
 				}}
 			/>
+			{noMargin.length > 10 && (
+				<p className='dashboard__see-all'>
+					<a href='/alerts/no-margin'>Ver todos ({noMargin.length})</a>
+				</p>
+			)}
 		</>
 	)
 }

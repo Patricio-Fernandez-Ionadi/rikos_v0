@@ -40,6 +40,11 @@ export const NoCostProducts = () => {
 					)
 				}}
 			/>
+			{noCost.length > 10 && (
+				<p className='dashboard__see-all'>
+					<a href='/alerts/no-cost'>Ver todos ({noCost.length})</a>
+				</p>
+			)}
 		</>
 	)
 }

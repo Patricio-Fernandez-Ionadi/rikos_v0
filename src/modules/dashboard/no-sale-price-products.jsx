@@ -43,6 +43,11 @@ export const NoSalePriceProducts = () => {
 					)
 				}}
 			/>
+			{noPrice.length > 10 && (
+				<p className='dashboard__see-all'>
+					<a href='/alerts/no-sale-price'>Ver todos ({noPrice.length})</a>
+				</p>
+			)}
 		</>
 	)
 }

@@ -42,6 +42,11 @@ export const NoPresentationsProducts = () => {
 					)
 				}}
 			/>
+			{noPres.length > 10 && (
+				<p className='dashboard__see-all'>
+					<a href='/alerts/no-presentations'>Ver todos ({noPres.length})</a>
+				</p>
+			)}
 		</>
 	)
 }
