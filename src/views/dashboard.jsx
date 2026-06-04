@@ -1,10 +1,13 @@
 import { DashboardCards } from '../modules/dashboard/dashboard-cards.jsx'
 import { NoCostProducts } from '../modules/dashboard/no-cost-products.jsx'
+import { NoMarginProducts } from '../modules/dashboard/no-margin-products.jsx'
+import { NoSalePriceProducts } from '../modules/dashboard/no-sale-price-products.jsx'
+import { NoPresentationsProducts } from '../modules/dashboard/no-presentations-products.jsx'
 import { LowStockTable } from '../modules/dashboard/low-stock-table.jsx'
 import { RecentEntries } from '../modules/dashboard/recent-entries.jsx'
 
 /**
- * Main dashboard — shows summary cards, low-stock warnings, recent shifts.
+ * Main dashboard — shows summary cards, warnings, recent entries.
  */
 export const Dashboard = () => {
 	return (
@@ -14,6 +17,9 @@ export const Dashboard = () => {
 			<DashboardCards />
 			<RecentEntries />
 			<NoCostProducts />
+			<NoMarginProducts />
+			<NoSalePriceProducts />
+			<NoPresentationsProducts />
 			<LowStockTable />
 		</div>
 	)
