@@ -209,25 +209,57 @@ export function useProductDetail(productId) {
 				setPresentations((prev) =>
 					prev.map((p) => (p._id === updated._id ? updated : p)),
 				)
+
+				if (isFraction && editingPres.grams) {
+					const oldStock = editingPres.stock ?? 0
+					const newStock = data.stock ?? 0
+					const delta = newStock - oldStock
+					if (delta !== 0) {
+						const gramsDelta = delta * editingPres.grams
+						const updatedProduct = await stockService.updateStockGrams(
+							product._id,
+							(product.stockGrams ?? 0) - gramsDelta,
+						)
+						setProducts((prev) =>
+							prev.map((p) =>
+								p._id === updatedProduct._id ? updatedProduct : p,
+							),
+						)
+					}
+				}
 			} catch (e) {
 				console.error(e)
 			}
 			setEditingPres(null)
 		},
-		[editingPres, setPresentations],
+		[editingPres, isFraction, product, setPresentations, setProducts],
 	)
 
 	const handleDeletePres = useCallback(
 		async (presId) => {
 			if (!window.confirm('¿Eliminar esta presentación?')) return
 			try {
+				const pres = productPres.find((p) => p._id === presId)
 				await presService.deletePresentation(presId)
 				setPresentations((prev) => prev.filter((p) => p._id !== presId))
+
+				if (isFraction && pres?.grams && (pres.stock ?? 0) > 0) {
+					const recoveredGrams = (pres.stock ?? 0) * pres.grams
+					const updatedProduct = await stockService.updateStockGrams(
+						product._id,
+						(product.stockGrams ?? 0) + recoveredGrams,
+					)
+					setProducts((prev) =>
+						prev.map((p) =>
+							p._id === updatedProduct._id ? updatedProduct : p,
+						),
+					)
+				}
 			} catch (e) {
 				console.error(e)
 			}
 		},
-		[setPresentations],
+		[isFraction, product, productPres, setPresentations, setProducts],
 	)
 
 	// ── Stock ────────────────────────────────────────────

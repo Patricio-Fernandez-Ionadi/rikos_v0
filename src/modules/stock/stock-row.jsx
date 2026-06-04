@@ -33,7 +33,7 @@ export const StockRow = ({ pres, product, onNavigate }) => {
 					const delta = stockVal - oldStock
 					if (delta !== 0) {
 						const gramsDelta = delta * pres.grams
-						const updatedProduct = await stockService.updateStockGrams(product._id, (product.stockGrams ?? 0) + gramsDelta)
+						const updatedProduct = await stockService.updateStockGrams(product._id, (product.stockGrams ?? 0) - gramsDelta)
 						setProducts((prev) => prev.map((p) => (p._id === updatedProduct._id ? updatedProduct : p)))
 					}
 				}
