@@ -2,17 +2,17 @@
 @use '../../../theme/values/sizes' as *;
 
 .product-list {
-	max-height: 600px;
-	overflow-y: auto;
-	border: 1px solid $grey_dark;
-	border-radius: $smooth;
+	// max-height: 600px;
+	// overflow-y: auto;
+	// border: 1px solid $grey_dark;
+	// border-radius: $smooth;
 
 	@media (max-width: 768px) {
-		max-height: 500px;
+		// max-height: 500px;
 	}
 
 	@media (max-width: 480px) {
-		max-height: 400px;
+		// max-height: 400px;
 	}
 }
 
