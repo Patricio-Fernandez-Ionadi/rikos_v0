@@ -4,15 +4,15 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "dev:server": "npm run dev --prefix server",
-    "build": "vite build",
-    "lint": "eslint .",
-    "preview": "vite preview",
-    "start": "node server/index.js",
-    "db:clone": "node server/db-clone.js",
+    "seed": "npm run migrate && npm run seed --prefix server",
     "migrate": "node src/data/dev/migrate.js",
-    "seed": "npm run migrate && npm run seed --prefix server"
+    "dev:server": "npm run dev --prefix server",
+    "db:clone": "node server/db-clone.js",
+    "dev": "vite",
+    "lint": "eslint .",
+    "build": "vite build",
+    "preview": "vite preview",
+    "start": "node server/index.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
