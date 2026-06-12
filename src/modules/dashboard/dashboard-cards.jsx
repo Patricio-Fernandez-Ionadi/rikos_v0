@@ -75,11 +75,11 @@ export const DashboardCards = () => {
 				</p>
 			</Link>
 
-			<div className='dashboard__card' style={{ cursor: 'default' }}>
+			<Link to='/categories' className='dashboard__card'>
 				<h3 className='dashboard__card-title'>Categorías</h3>
 				<p className='dashboard__card-desc'>Total en el catálogo</p>
 				<p className='dashboard__card-value'>{totalCategories}</p>
-			</div>
+			</Link>
 
 			<div className='dashboard__card' style={{ cursor: 'default' }}>
 				<h3 className='dashboard__card-title'>Presentaciones</h3>

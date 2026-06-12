@@ -10,6 +10,7 @@ const LINKS = [
 	{ to: '/shifts', label: 'Turnos' },
 	{ to: '/tasks', label: 'Tareas' },
 	{ to: '/soporte', label: 'Soporte' },
+	{ to: '/categories', label: 'Categorias' },
 ]
 
 const GROUPS = [
@@ -19,6 +20,7 @@ const GROUPS = [
 			{ to: '/products', label: 'Productos' },
 			{ to: '/suppliers', label: 'Proveedores' },
 			{ to: '/stock', label: 'Stock' },
+			{ to: '/categories', label: 'Categorias' },
 		],
 	},
 	{
@@ -31,9 +33,7 @@ const GROUPS = [
 	},
 	{
 		label: 'Soporte',
-		links: [
-			{ to: '/soporte', label: 'Soporte' },
-		],
+		links: [{ to: '/soporte', label: 'Soporte' }],
 	},
 ]
 
@@ -68,13 +68,25 @@ export const Navigation = () => {
 			</button>
 
 			{/* Mobile: overlay + drawer */}
-			{menuOpen && <div className='navigation__overlay' onClick={() => setMenuOpen(false)} />}
-			<div className={`navigation__drawer ${menuOpen ? 'navigation__drawer--open' : ''}`}>
+			{menuOpen && (
+				<div
+					className='navigation__overlay'
+					onClick={() => setMenuOpen(false)}
+				/>
+			)}
+			<div
+				className={`navigation__drawer ${menuOpen ? 'navigation__drawer--open' : ''}`}
+			>
 				{GROUPS.map((group) => (
 					<div key={group.label} className='navigation__group'>
 						<span className='navigation__group-label'>{group.label}</span>
 						{group.links.map((link) => (
-							<NavItem key={link.to} to={link.to} label={link.label} onClick={() => setMenuOpen(false)} />
+							<NavItem
+								key={link.to}
+								to={link.to}
+								label={link.label}
+								onClick={() => setMenuOpen(false)}
+							/>
 						))}
 					</div>
 				))}
