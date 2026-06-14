@@ -12,8 +12,14 @@ import { filterProducts } from '../../data/filter-products.js'
 export const ProductsPage = () => {
 	const navigate = useNavigate()
 	const {
-		categories, suppliers, products, presentations, tags,
-		editingProduct, closeEditProduct, editProduct,
+		categories,
+		suppliers,
+		products,
+		presentations,
+		tags,
+		editingProduct,
+		closeEditProduct,
+		editProduct,
 	} = useProductManager()
 
 	const { getProductTaskCategories, toggleProductTask } = useTasksManager()
@@ -24,13 +30,20 @@ export const ProductsPage = () => {
 		selectedTags: [],
 	})
 
-	const filteredProducts = useMemo(() =>
-		filterProducts(products, presentations, {
-			searchTerm: filterState.searchTerm,
-			categoryIds: filterState.selectedCategoryIds,
-			tags: filterState.selectedTags,
-		}),
-		[products, presentations, filterState.searchTerm, filterState.selectedCategoryIds, filterState.selectedTags],
+	const filteredProducts = useMemo(
+		() =>
+			filterProducts(products, presentations, {
+				searchTerm: filterState.searchTerm,
+				categoryIds: filterState.selectedCategoryIds,
+				tags: filterState.selectedTags,
+			}),
+		[
+			products,
+			presentations,
+			filterState.searchTerm,
+			filterState.selectedCategoryIds,
+			filterState.selectedTags,
+		],
 	)
 
 	return (
@@ -59,9 +72,11 @@ export const ProductsPage = () => {
 
 				<div className='product-browser__main'>
 					<ProductList
-						onEvent={(id) => navigate(`/products/${id}`, {
-							state: { productList: filteredProducts.map((p) => p._id) },
-						})}
+						onEvent={(id) =>
+							navigate(`/products/${id}`, {
+								state: { productList: filteredProducts.map((p) => p._id) },
+							})
+						}
 						filteredProducts={filteredProducts}
 						presentations={presentations}
 						getProductTaskCategories={getProductTaskCategories}
