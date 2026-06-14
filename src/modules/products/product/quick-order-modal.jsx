@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect } from 'react'
-import { Modal } from '../../../components/modal.jsx'
 import { Button } from '../../../components/button.jsx'
+import { Modal } from '../../../components/Modal.jsx'
 
 export function QuickOrderModal({
 	open,
