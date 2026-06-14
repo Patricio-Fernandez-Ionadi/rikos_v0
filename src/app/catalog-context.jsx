@@ -30,13 +30,14 @@ export function CatalogProvider({ children }) {
 	useEffect(() => {
 		;(async () => {
 			try {
-				const [cats, prods, pres, sups] = await Promise.all([
+				const [cats, prods, pres, sups, pss] = await Promise.all([
 					catalogService.getCategories(),
 					catalogService.getProducts(),
 					catalogService.getPresentations(),
 					catalogService.getSuppliers().catch(() => []),
+					catalogService.getProductSuppliers().catch(() => []),
 				])
-				dispatch({ type: 'LOAD_API', categories: cats, products: prods, presentations: pres, suppliers: sups })
+				dispatch({ type: 'LOAD_API', categories: cats, products: prods, presentations: pres, suppliers: sups, productSuppliers: pss })
 			} catch (e) {
 				console.error('Failed to load data:', e)
 				dispatch({ type: 'SET_LOADING', loading: false })

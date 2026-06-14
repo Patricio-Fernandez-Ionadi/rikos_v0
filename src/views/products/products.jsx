@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useCatalog } from '../../app/catalog-context.jsx'
 import { useProductManager } from '../../modules/products/product-manager.js'
 import { useTasksManager } from '../../modules/tasks/tasks-manager.js'
 import { ProductSearch } from '../../components/product-search.jsx'
@@ -21,6 +22,7 @@ export const ProductsPage = () => {
 		closeEditProduct,
 		editProduct,
 	} = useProductManager()
+	const { productSuppliers: allProductSuppliers } = useCatalog()
 
 	const { getProductTaskCategories, toggleProductTask } = useTasksManager()
 
@@ -36,10 +38,14 @@ export const ProductsPage = () => {
 				searchTerm: filterState.searchTerm,
 				categoryIds: filterState.selectedCategoryIds,
 				tags: filterState.selectedTags,
+				suppliers,
+				productSuppliers: allProductSuppliers,
 			}),
 		[
 			products,
 			presentations,
+			suppliers,
+			allProductSuppliers,
 			filterState.searchTerm,
 			filterState.selectedCategoryIds,
 			filterState.selectedTags,
@@ -57,6 +63,8 @@ export const ProductsPage = () => {
 				presentations={presentations}
 				categories={categories}
 				allTags={tags}
+				suppliers={suppliers}
+				productSuppliers={allProductSuppliers}
 				compact
 				filterState={filterState}
 				onFilterStateChange={setFilterState}

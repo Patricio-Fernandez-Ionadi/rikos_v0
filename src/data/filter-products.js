@@ -1,19 +1,21 @@
 /**
- * Filter products by category, tags, and/or search term.
- * Search matches product name, marca, and presentation labels.
+ * Filter products by category, tags, search term, and/or supplier name.
+ * Search matches product name, marca, presentation labels, and supplier names.
  *
  * @param {Object[]} products       Full product list
  * @param {Object[]} presentations  Full presentation list
  * @param {Object}   [options]
- * @param {string}   [options.searchTerm='']  Text to search by name/marca/label
+ * @param {string}   [options.searchTerm='']  Text to search by name/marca/label/supplier
  * @param {string[]} [options.categoryIds=[]]  Array of category IDs to filter by
  * @param {string[]} [options.tags=[]]  Array of tag strings to filter by (OR logic)
+ * @param {Object[]} [options.suppliers]  Suppliers list (enables supplier name search)
+ * @param {Object[]} [options.productSuppliers]  Links products to suppliers
  * @returns {Object[]} Filtered products
  */
 export function filterProducts(
 	products,
 	presentations,
-	{ searchTerm = '', categoryIds = [], tags = [] } = {},
+	{ searchTerm = '', categoryIds = [], tags = [], suppliers, productSuppliers } = {},
 ) {
 	const ids = Array.isArray(categoryIds) ? categoryIds : [categoryIds].filter(Boolean)
 
@@ -29,13 +31,29 @@ export function filterProducts(
 	}
 	if (searchTerm.trim()) {
 		const term = searchTerm.trim().toLowerCase()
+
+		const supplierNameById = {}
+		suppliers?.forEach((s) => { supplierNameById[s._id] = (s.name ?? '').toLowerCase() })
+
+		const productToSupplierIds = {}
+		productSuppliers?.forEach((ps) => {
+			if (!productToSupplierIds[ps.productId]) productToSupplierIds[ps.productId] = []
+			productToSupplierIds[ps.productId].push(ps.supplierId)
+		})
+
 		result = result.filter((p) => {
 			if (p.name.toLowerCase().includes(term)) return true
 			if (p.marca && p.marca.toLowerCase().includes(term)) return true
+
 			const labels = presentations
 				.filter((pr) => pr.productId === p._id)
 				.map((pr) => pr.label?.toLowerCase() ?? '')
-			return labels.some((l) => l.includes(term))
+			if (labels.some((l) => l.includes(term))) return true
+
+			const sids = productToSupplierIds[p._id] ?? []
+			if (sids.some((sid) => supplierNameById[sid]?.includes(term))) return true
+
+			return false
 		})
 	}
 	return result

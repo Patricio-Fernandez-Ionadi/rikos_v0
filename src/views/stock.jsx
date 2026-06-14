@@ -51,7 +51,7 @@ const StockContent = ({ filteredProducts, navigate }) => {
 
 export const StockPage = () => {
   const navigate = useNavigate()
-  const { products, presentations, categories, allTags } = useCatalog()
+  const { products, presentations, categories, allTags, suppliers, productSuppliers } = useCatalog()
 
   return (
     <div className='stock-page'>
@@ -62,6 +62,8 @@ export const StockPage = () => {
         presentations={presentations}
         categories={categories}
         allTags={allTags}
+        suppliers={suppliers}
+        productSuppliers={productSuppliers}
         compact
         showTags={false}
         placeholder='Buscar producto, marca o presentación…'

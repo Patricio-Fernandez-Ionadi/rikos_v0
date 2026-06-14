@@ -6,6 +6,8 @@ export function ProductSearch({
   presentations,
   categories,
   allTags,
+  suppliers,
+  productSuppliers,
   compact = false,
   placeholder = 'Buscar producto...',
   autoFocus = false,
@@ -55,8 +57,10 @@ export function ProductSearch({
       searchTerm,
       categoryIds: selectedCategoryIds,
       tags: selectedTags,
+      suppliers,
+      productSuppliers,
     })
-  }, [products, presentations, searchTerm, selectedCategoryIds, selectedTags])
+  }, [products, presentations, searchTerm, selectedCategoryIds, selectedTags, suppliers, productSuppliers])
 
   const handleSearch = useCallback((e) => update({ searchTerm: e.target.value }), [update])
   const clearSearch = useCallback(() => update({ searchTerm: '' }), [update])

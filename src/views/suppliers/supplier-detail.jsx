@@ -8,7 +8,7 @@ import { ProductSearch } from '../../components/product-search.jsx'
 export const SupplierDetailPage = () => {
   const { id } = useParams()
   const navigate = useNavigate()
-  const { products, categories, presentations } = useCatalog()
+  const { products, categories, presentations, suppliers, productSuppliers: allProductSuppliers } = useCatalog()
   const {
     supplier, productSuppliers, filteredAvailableProducts,
     showAddForm, setShowAddForm,
@@ -71,6 +71,8 @@ export const SupplierDetailPage = () => {
         products={products}
         presentations={presentations}
         categories={categories}
+        suppliers={suppliers}
+        productSuppliers={allProductSuppliers}
         compact
         showCategories={false}
         showTags={false}
