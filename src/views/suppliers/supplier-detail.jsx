@@ -3,11 +3,12 @@ import { useCatalog } from '../../app/catalog-context.jsx'
 import { useSupplierDetailManager } from '../../modules/suppliers/supplier-detail-manager.js'
 import { SupplierAddProductForm } from '../../modules/suppliers/components/supplier-add-product-form/supplier-add-product-form.jsx'
 import { SupplierProductTable } from '../../modules/suppliers/components/supplier-product-table/supplier-product-table.jsx'
+import { ProductSearch } from '../../components/product-search.jsx'
 
 export const SupplierDetailPage = () => {
   const { id } = useParams()
   const navigate = useNavigate()
-  const { products, categories } = useCatalog()
+  const { products, categories, presentations } = useCatalog()
   const {
     supplier, productSuppliers, filteredAvailableProducts,
     showAddForm, setShowAddForm,
@@ -66,15 +67,30 @@ export const SupplierDetailPage = () => {
         categories={categories}
       />
 
-      <SupplierProductTable
-        productSuppliers={productSuppliers}
+      <ProductSearch
         products={products}
+        presentations={presentations}
         categories={categories}
-        editingPS={editingPS} setEditingPS={setEditingPS}
-        editCost={editCost} setEditCost={setEditCost}
-        handleUpdateCost={handleUpdateCost}
-        handleUnlink={handleUnlink}
-      />
+        compact
+        showCategories={false}
+        showTags={false}
+        placeholder='Buscar producto…'
+      >
+        {({ filteredProducts }) => {
+          const filteredIds = new Set(filteredProducts.map((p) => p._id))
+          return (
+            <SupplierProductTable
+              productSuppliers={productSuppliers.filter((ps) => filteredIds.has(ps.productId))}
+              products={products}
+              categories={categories}
+              editingPS={editingPS} setEditingPS={setEditingPS}
+              editCost={editCost} setEditCost={setEditCost}
+              handleUpdateCost={handleUpdateCost}
+              handleUnlink={handleUnlink}
+            />
+          )
+        }}
+      </ProductSearch>
     </div>
   )
 }
