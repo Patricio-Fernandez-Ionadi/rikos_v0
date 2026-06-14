@@ -14,8 +14,6 @@ dist-ssr
 *.txt
 *.csv
 
-package-lock.json
-
 # Dev-only data / scripts
 src/data/dev/
 
