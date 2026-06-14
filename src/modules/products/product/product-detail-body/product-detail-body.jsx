@@ -36,14 +36,20 @@ export function ProductDetailBody({
   setEditProductOpen,
   handleDeleteProduct,
   setPresFormOpen,
+  onQuickOrder,
 }) {
   return (
     <>
       <div className='detail-page__title-row'>
         <h2 className='detail-page__title'>{product.name}</h2>
-        <Button size='xs' onClick={() => setEditProductOpen(true)} title='Editar producto'>
-          <span className='material-icons'>edit</span>
-        </Button>
+        <div className='detail-page__title-actions'>
+          <Button size='xs' variant='primary' onClick={onQuickOrder} title='Pedir a proveedor'>
+            Pedir
+          </Button>
+          <Button size='xs' onClick={() => setEditProductOpen(true)} title='Editar producto'>
+            <span className='material-icons'>edit</span>
+          </Button>
+        </div>
       </div>
       <div className='detail-page__id'>ID: {product._id}</div>
 

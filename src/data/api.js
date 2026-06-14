@@ -59,11 +59,13 @@ export const addAdjustment = (shiftId, data) =>
   request(`/shifts/${shiftId}/adjustments`, { method: 'PATCH', body: JSON.stringify(data) })
 
 // ─── Orders ────────────────────────────────────────────────
-export const getOrders = () => request('/orders')
+export const getOrders = (status) => request(`/orders${status ? `?status=${status}` : ''}`)
 export const getOrder = (id) => request(`/orders/${id}`)
 export const createOrder = (data) => request('/orders', { method: 'POST', body: JSON.stringify(data) })
 export const updateOrder = (id, data) => request(`/orders/${id}`, { method: 'PUT', body: JSON.stringify(data) })
 export const deleteOrder = (id) => request(`/orders/${id}`, { method: 'DELETE' })
+export const addItemToOrder = (id, item) => request(`/orders/${id}/items`, { method: 'PATCH', body: JSON.stringify(item) })
+export const updateOrderStatus = (id, status) => request(`/orders/${id}/status`, { method: 'PATCH', body: JSON.stringify({ status }) })
 
 // ─── Tasks ─────────────────────────────────────────────────
 export const getTasks = () => request('/tasks')

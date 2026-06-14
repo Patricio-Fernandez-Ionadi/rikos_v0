@@ -21,9 +21,9 @@ export function SupplierProductsPanel({ supplierName, supplierProducts, productM
                 style={{ justifyContent: 'space-between', alignItems: 'center', background: 'var(--black)', padding: '8px 12px', borderRadius: 6 }}>
                 <span className='text-white'>{prod.name}</span>
                 <span style={{ color: 'var(--grey-light)', fontSize: '0.85em' }}>
-                  ${sp.purchaseCost?.toLocaleString() ?? '\u2014'} u.
+                  {sp.supplierUnitLabel ?? 'Unidad'} · ${sp.purchaseCost?.toLocaleString() ?? '—'}
                 </span>
-                <Button size='xs' onClick={() => onAdd(prod, sp.purchaseCost)}>+ Agregar</Button>
+                <Button size='xs' onClick={() => onAdd(prod, sp.purchaseCost, sp.supplierUnitLabel)}>+ Agregar</Button>
               </div>
             )
           })}

@@ -28,11 +28,25 @@ export function useOrders() {
     dispatch({ type: 'REMOVE_ORDER', id })
   }, [])
 
+  const addItem = useCallback(async (orderId, item) => {
+    const order = await orderService.addItemToOrder(orderId, item)
+    dispatch({ type: 'UPDATE_ORDER', order })
+    return order
+  }, [])
+
+  const closeOrder = useCallback(async (id) => {
+    const order = await orderService.updateOrderStatus(id, 'placed')
+    dispatch({ type: 'UPDATE_ORDER', order })
+    return order
+  }, [])
+
   return {
     orders: state.orders,
     loading: state.loading,
     createOrder,
     updateOrder,
     deleteOrder,
+    addItem,
+    closeOrder,
   }
 }

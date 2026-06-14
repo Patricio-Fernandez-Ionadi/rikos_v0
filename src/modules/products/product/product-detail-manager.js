@@ -7,6 +7,7 @@ import { useProductDetailEffect } from './hooks/use-product-detail-effect.js'
 import { useProductDetailMutations } from './hooks/use-product-detail-mutations.js'
 import { usePresentationActions } from './hooks/use-presentation-actions.js'
 import { useSupplierActions } from './hooks/use-supplier-actions.js'
+import { useQuickOrder } from './hooks/use-quick-order.js'
 
 export function useProductDetail(productId) {
 	const { products, presentations, categories, suppliers, productSuppliers, setProducts, setPresentations, setProductSuppliers } = useCatalog()
@@ -59,6 +60,9 @@ export function useProductDetail(productId) {
 			setProducts,
 		})
 
+	const { quickOrder } = useQuickOrder()
+	const [quickOrderOpen, setQuickOrderOpen] = useState(false)
+
 	return {
 		product, productPres, categories, category, isFraction, totalStock,
 		productSuppliers, assignedSupplierIds, activeSupplier, activeSupplierName,
@@ -74,5 +78,6 @@ export function useProductDetail(productId) {
 		handleCreatePres, handleEditPres, handleDeletePres,
 		handleStockGramsSave, handleSale,
 		handleAddSupplier, handleRemoveSupplier, handleUseSupplierCost,
+		quickOrder, quickOrderOpen, setQuickOrderOpen,
 	}
 }

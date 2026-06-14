@@ -6,6 +6,7 @@ import { useCatalog } from '../../../app/catalog-context.jsx'
 import { ProductDetailNav } from './product-detail-nav/product-detail-nav.jsx'
 import { ProductDetailBody } from './product-detail-body/product-detail-body.jsx'
 import { ProductDetailModals } from './product-detail-modals/product-detail-modals.jsx'
+import { QuickOrderModal } from './quick-order-modal.jsx'
 import { filterProductIds } from '../../../data/filter-products.js'
 
 export const ProductDetail = ({ productId, filterState = null }) => {
@@ -47,6 +48,7 @@ export const ProductDetail = ({ productId, filterState = null }) => {
 		handleAddSupplier,
 		handleRemoveSupplier,
 		handleUseSupplierCost,
+		quickOrder, quickOrderOpen, setQuickOrderOpen,
 	} = useProductDetail(productId)
 
 	const { getProductTaskCategories, toggleProductTask } = useTasksManager()
@@ -181,6 +183,16 @@ export const ProductDetail = ({ productId, filterState = null }) => {
 				setEditProductOpen={setEditProductOpen}
 				handleDeleteProduct={handleDeleteProduct}
 				setPresFormOpen={setPresFormOpen}
+				onQuickOrder={() => setQuickOrderOpen(true)}
+			/>
+
+			<QuickOrderModal
+				open={quickOrderOpen}
+				onClose={() => setQuickOrderOpen(false)}
+				product={product}
+				productSuppliers={productSuppliers}
+				suppliers={suppliers}
+				onConfirm={quickOrder}
 			/>
 
 			<ProductDetailModals

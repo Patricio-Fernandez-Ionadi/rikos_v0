@@ -9,13 +9,15 @@ export function useSupplierActions({
   setProducts,
 }) {
   const handleAddSupplier = useCallback(
-    async (supplierId, purchaseCost) => {
+    async (supplierId, purchaseCost, supplierUnitLabel, supplierUnitQty) => {
       if (!product) return
       try {
         const ps = await supplierService.createProductSupplier({
           productId: product._id,
           supplierId,
           purchaseCost,
+          supplierUnitLabel: supplierUnitLabel ?? 'Unidad',
+          supplierUnitQty: supplierUnitQty ?? 1,
         })
         setProductSuppliers((prev) => [...prev, ps])
       } catch (e) {
@@ -38,13 +40,15 @@ export function useSupplierActions({
   )
 
   const handleUseSupplierCost = useCallback(
-    async (cost) => {
-      if (!product) return
+    async (ps) => {
+      if (!product || !ps) return
+      const qty = ps.supplierUnitQty ?? 1
+      const costPerUnit = +(ps.purchaseCost / qty).toFixed(2)
       try {
         const updated = await productService.updateProduct(product._id, {
           categoryId: product.categoryId,
           name: product.name,
-          purchaseCost: cost,
+          purchaseCost: costPerUnit,
           saleType: product.saleType,
           stockGrams: product.stockGrams,
         })

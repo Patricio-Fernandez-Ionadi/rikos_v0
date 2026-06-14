@@ -1,9 +1,9 @@
 import { Button } from '../../../components/button.jsx'
 
-export const SuppliersSection = ({
+export function SuppliersSection({
   productSuppliers, suppliers, assignedSupplierIds, activeSupplier,
   product, handleUseSupplierCost, handleRemoveSupplier, handleAddSupplier,
-}) => {
+}) {
   return (
     <div className='detail-page__section'>
       <div className='detail-page__section-header'>
@@ -25,10 +25,14 @@ export const SuppliersSection = ({
               return (
                 <div key={s._id}
                   className={`detail-page__supplier-row${isActive ? ' detail-page__supplier-row--active' : ''}`}
-                  onClick={() => isActive ? null : handleUseSupplierCost(ps?.purchaseCost)}
+                  onClick={() => isActive ? null : handleUseSupplierCost(ps)}
                   role='button' tabIndex={0}>
                   <span className='detail-page__supplier-name'>
                     {s.name}{isActive && ' ✓'}
+                  </span>
+                  <span className='detail-page__supplier-label'>
+                    {ps?.supplierUnitLabel ?? 'Unidad'}
+                    {ps?.supplierUnitQty > 1 && ` (×${ps.supplierUnitQty})`}
                   </span>
                   <span className={`detail-page__supplier-cost ${diffClass}`}>
                     ${ps?.purchaseCost?.toLocaleString() ?? '—'}

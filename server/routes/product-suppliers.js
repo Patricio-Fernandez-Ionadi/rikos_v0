@@ -25,6 +25,8 @@ router.post('/', async (req, res, next) => {
       productId: req.body.productId,
       supplierId: req.body.supplierId,
       purchaseCost: req.body.purchaseCost,
+      supplierUnitLabel: req.body.supplierUnitLabel ?? 'Unidad',
+      supplierUnitQty: req.body.supplierUnitQty ?? 1,
     })
     res.status(201).json(ps)
   } catch (e) { next(e) }
@@ -32,11 +34,11 @@ router.post('/', async (req, res, next) => {
 
 router.put('/:id', async (req, res, next) => {
   try {
-    const ps = await ProductSupplier.findByIdAndUpdate(
-      req.params.id,
-      { purchaseCost: req.body.purchaseCost },
-      { new: true },
-    )
+    const update = {}
+    if (req.body.purchaseCost !== undefined) update.purchaseCost = req.body.purchaseCost
+    if (req.body.supplierUnitLabel !== undefined) update.supplierUnitLabel = req.body.supplierUnitLabel
+    if (req.body.supplierUnitQty !== undefined) update.supplierUnitQty = req.body.supplierUnitQty
+    const ps = await ProductSupplier.findByIdAndUpdate(req.params.id, update, { new: true })
     if (!ps) return res.status(404).json({ error: 'Not found' })
     res.json(ps)
   } catch (e) { next(e) }

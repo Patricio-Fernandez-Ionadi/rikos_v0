@@ -78,12 +78,13 @@ export function useOrderForm() {
 
   const addedProductIds = useMemo(() => new Set(items.map((i) => i.productId)), [items])
 
-  const handleAddItem = useCallback((product, cost) => {
+  const handleAddItem = useCallback((product, cost, unitLabel) => {
     setItems((prev) => {
       if (prev.some((i) => i.productId === product._id)) return prev
       return [...prev, {
         productId: product._id, productName: product.name,
         quantity: 1, unitCost: cost ?? product.purchaseCost ?? 0,
+        unitLabel: unitLabel ?? '',
       }]
     })
   }, [])
@@ -114,7 +115,7 @@ export function useOrderForm() {
 
     const existingPS = supplierProducts.find((sp) => sp.productId === prod._id)
     if (existingPS) {
-      handleAddItem(prod, existingPS.purchaseCost)
+      handleAddItem(prod, existingPS.purchaseCost, existingPS.supplierUnitLabel)
     } else {
       const costStr = window.prompt(`Costo de "${prod.name}" para ${supplierName}:`, prod.purchaseCost ?? '')
       if (costStr === null) { setSelectedProductId(''); return }
@@ -124,12 +125,14 @@ export function useOrderForm() {
       try {
         const ps = await supplierService.createProductSupplier({
           productId: prod._id, supplierId, purchaseCost: cost,
+          supplierUnitLabel: 'Unidad',
+          supplierUnitQty: 1,
         })
         setProductSuppliers((prev) => [...prev, ps])
         setSupplierProducts((prev) => [...prev, ps])
       } catch { /* ignore */ }
 
-      handleAddItem(prod, cost)
+      handleAddItem(prod, cost, 'Unidad')
     }
     setSelectedProductId('')
     setSearchQuery('')

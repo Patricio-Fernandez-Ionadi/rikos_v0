@@ -25,6 +25,15 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.order-item-list__unit-label {
+  font-size: 0.8em;
+  color: $grey;
+  font-weight: 400;
 }
 
 .order-item-list__field {
@@ -40,4 +49,35 @@
   color: $grey_light;
   font-size: 0.85em;
   white-space: nowrap;
+}
+
+.orders-filters {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 16px;
+  background: $bg_surface;
+  border-radius: $smooth;
+  padding: 4px;
+  width: fit-content;
+}
+
+.orders-filters__btn {
+  background: none;
+  border: none;
+  color: $grey;
+  padding: 6px 16px;
+  border-radius: $thin;
+  cursor: pointer;
+  font-size: 0.85em;
+  font-weight: 600;
+  transition: background 0.15s, color 0.15s;
+
+  &:hover {
+    color: $white;
+  }
+
+  &--active {
+    background: $primary;
+    color: $white;
+  }
 }

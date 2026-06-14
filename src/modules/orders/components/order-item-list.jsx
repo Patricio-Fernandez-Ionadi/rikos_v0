@@ -9,6 +9,7 @@ export function OrderItemList({ items, onQuantityChange, onCostChange, onRemove 
         <div key={item.productId} className='order-item-list__item'>
           <span className='order-item-list__name'>
             {item.productName}
+            {item.unitLabel && <span className='order-item-list__unit-label'>{item.unitLabel}</span>}
           </span>
           <label className='order-item-list__field'>
             Cant:
