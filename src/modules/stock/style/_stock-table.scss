@@ -4,69 +4,70 @@
 @use '../../../theme/values/lists' as *;
 
 .stock-page__table-wrap {
-  @include table-wrap;
+	@include table-wrap;
 }
 
 .stock-page__table {
-  @include table-base;
+	@include table-base;
 
-  th, td {
-    @include cell-ellipsis;
-  }
+	th,
+	td {
+		@include cell-ellipsis;
+	}
 
-  .stock-cell--product {
-    width: 55%;
-  }
+	.stock-cell--product {
+		width: 55%;
+	}
 
-  .stock-cell--stock {
-    width: 22%;
-    text-align: center;
-  }
+	.stock-cell--stock {
+		width: 22%;
+		text-align: center;
+	}
 
-  .stock-cell--grams {
-    width: 23%;
-    text-align: center;
-  }
+	.stock-cell--grams {
+		width: 23%;
+		text-align: center;
+	}
 }
 
 .stock-page__qty {
-  font-weight: 700;
+	font-weight: 700;
 }
 
 .stock-page__qty--ok {
-  color: $success;
+	color: $success;
 }
 
 .stock-page__qty--low {
-  color: $error;
+	color: $error;
 }
 
 .stock-page__marca {
-  color: $grey_light;
-  font-size: 0.85em;
-  font-weight: 400;
+	color: $grey_light;
+	font-size: 0.85em;
+	font-weight: 400;
 }
 
 @media (max-width: $max-mobile) {
-  .stock-cell--desktop {
-    display: none;
-  }
+	.stock-cell--desktop {
+		display: none;
+	}
 }
 
 .stock-cell__link {
-  background: none;
-  border: none;
-  color: $white;
-  font-size: inherit;
-  font-family: inherit;
-  cursor: pointer;
-  padding: 0;
-  width: 100%;
-  justify-content: flex-start;
-  gap: 4px;
+	background: none;
+	border: none;
+	color: $white;
+	font-size: inherit;
+	font-family: inherit;
+	cursor: pointer;
+	padding: 0;
+	width: 100%;
+	justify-content: flex-start;
+	gap: 4px;
 
-  &:hover {
-    color: $primary_light;
-    text-decoration: underline;
-  }
+	&:hover {
+		color: $primary_light;
+		text-decoration: underline;
+	}
 }

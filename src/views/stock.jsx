@@ -1,34 +1,32 @@
+import { useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useCatalog } from '../app/catalog-context.jsx'
 import { useStockManager } from '../modules/stock/stock-manager.js'
 import { StockFilterBar } from '../modules/stock/stock-filter-bar.jsx'
 import { StockRow } from '../modules/stock/stock-row.jsx'
-import { SearchInput } from '../components/search-input.jsx'
+import { ProductSearch } from '../components/product-search.jsx'
 import { DataTable } from '../components/data-table.jsx'
 
-export const StockPage = () => {
-  const navigate = useNavigate()
+const StockContent = ({ filteredProducts, navigate }) => {
+  const productIds = useMemo(
+    () => filteredProducts.length
+      ? new Set(filteredProducts.map((p) => p._id))
+      : null,
+    [filteredProducts]
+  )
+
   const {
     filter, setFilter,
     customType, setCustomType, customValue, setCustomValue,
-    searchTerm, setSearchTerm,
     filterDesc, items,
-  } = useStockManager()
+  } = useStockManager(productIds)
 
   return (
-    <div className='stock-page'>
-      <h2 className='stock-page__title'>Stock</h2>
-
+    <>
       <StockFilterBar
         filter={filter} onChange={setFilter}
         customType={customType} onCustomTypeChange={setCustomType}
         customValue={customValue} onCustomValueChange={setCustomValue}
-      />
-
-      <SearchInput
-        placeholder='Buscar producto, marca o presentación…'
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        style={{ marginBottom: 12 }}
       />
 
       <DataTable
@@ -47,6 +45,31 @@ export const StockPage = () => {
           />
         )}
       />
+    </>
+  )
+}
+
+export const StockPage = () => {
+  const navigate = useNavigate()
+  const { products, presentations, categories, allTags } = useCatalog()
+
+  return (
+    <div className='stock-page'>
+      <h2 className='stock-page__title'>Stock</h2>
+
+      <ProductSearch
+        products={products}
+        presentations={presentations}
+        categories={categories}
+        allTags={allTags}
+        compact
+        showTags={false}
+        placeholder='Buscar producto, marca o presentación…'
+      >
+        {({ filteredProducts }) => (
+          <StockContent filteredProducts={filteredProducts} navigate={navigate} />
+        )}
+      </ProductSearch>
     </div>
   )
 }
