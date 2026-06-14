@@ -3,10 +3,10 @@ import { useNavigate } from 'react-router-dom'
 import { useProductManager } from '../../modules/products/product-manager.js'
 import { useTasksManager } from '../../modules/tasks/tasks-manager.js'
 import { ProductSearch } from '../../components/product-search.jsx'
-import { ProductList } from '../../modules/products/product-list.jsx'
+import { ProductList } from '../../modules/products/product-list/product-list.jsx'
 import { Modal } from '../../components/Modal.jsx'
 import { ProductForm } from '../../modules/products/product/product-form.jsx'
-import { Sidebar } from '../../modules/products/sidebar.jsx'
+import { Sidebar } from '../../modules/products/sidebar/sidebar.jsx'
 import { filterProducts } from '../../data/filter-products.js'
 
 export const ProductsPage = () => {

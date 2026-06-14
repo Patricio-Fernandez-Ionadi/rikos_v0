@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
-import { ProductStats } from '../../modules/products/product-stats'
-import { Button } from '../../components/button.jsx'
+import { ProductStats } from '../product-stats/product-stats.jsx'
+import { Button } from '../../../components/button.jsx'
 
 export const Sidebar = ({
 	categories,

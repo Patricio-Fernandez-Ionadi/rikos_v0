@@ -1,0 +1,128 @@
+@use '../../../theme/values/colors' as *;
+@use '../../../theme/values/sizes' as *;
+
+.product-list__item-wrap {
+  // Item-specific container styles
+}
+
+.product-list__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  cursor: pointer;
+  border-bottom: 1px solid $grey_dark;
+  transition: background 0.15s;
+
+  &:hover {
+    background: rgba($primary, 0.05);
+  }
+}
+
+.product-list__item-left {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1;
+}
+
+.product-list__item-name {
+  color: $white;
+  font-size: 0.9em;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.product-list__item-marca {
+  color: $grey;
+  font-weight: 400;
+  font-size: 0.85em;
+}
+
+.product-list__item-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.product-list__item-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.product-list__item-prices {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 2px;
+}
+
+.product-list__item-prices-sep {
+  color: $grey_dark;
+}
+
+.product-list__item-price-label {
+  color: $grey;
+  font-size: 0.75em;
+
+  &::after {
+    content: ':';
+  }
+}
+
+.product-list__item-price-value {
+  color: $primary_light;
+  font-weight: 600;
+  font-size: 0.85em;
+}
+
+.product-list__item-stock {
+  font-size: 0.75em;
+  color: $grey;
+}
+
+.product-list__item-error {
+  font-size: 0.75em;
+  color: $error;
+  font-style: italic;
+}
+
+.product-list__task-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  background: none;
+  border: 1px solid $grey_dark;
+  border-radius: $thin;
+  color: $grey;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.15s;
+
+  &:hover {
+    border-color: rgba($primary, 0.4);
+    background: rgba($primary, 0.1);
+    color: $primary_light;
+  }
+
+  &--active {
+    border-color: rgba($success, 0.4);
+    background: rgba($success, 0.1);
+    color: $success;
+  }
+}
+
+.product-list__task-panel {
+  padding: 8px 12px 12px;
+  background: $bg_surface;
+  border-bottom: 1px solid $grey_dark;
+}

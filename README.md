@@ -140,11 +140,12 @@ index.html → src/main.jsx → [DataProvider] → [ShiftProvider] → App → P
 
 ## Style system
 
-Each component directory has a `style/` folder with SCSS partials:
-- `_index.scss` forwards all partials in that directory
-- `src/theme/index.scss` imports each component `style/` directory
-- Use theme variables from `src/theme/values/` (`colors`, `sizes`, `mixins`, etc.)
-- Inline styles are deprecated — use SCSS classes instead
+- Each component in its own folder with co-located SCSS
+- SCSS barrel `_index.scss` per component folder
+- `src/theme/index.scss` imports all module/component barrels via `@use`
+- Theme variables: `src/theme/values/` (`colors`, `sizes`, `mixins`, etc.)
+- BEM naming: `.block__element--modifier`
+- Dark theme only (`$background: #121212`)
 
 ## Migration from Excel CSV
 

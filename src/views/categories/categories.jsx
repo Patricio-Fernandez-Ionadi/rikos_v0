@@ -1,8 +1,8 @@
-import { useCategoryManager } from '../../modules/categorias/category-manager.js'
+import { useCategoryManager } from '../../modules/categories/category-manager.js'
 import { Button } from '../../components/button.jsx'
 import { DataTable } from '../../components/data-table.jsx'
 import { Modal } from '../../components/Modal.jsx'
-import { CategoryForm } from '../../modules/categorias/category-form.jsx'
+import { CategoryForm } from '../../modules/categories/category-form.jsx'
 
 export const CategoriesPage = () => {
 	const { categories, editingCategory, formOpen, openForm, closeForm, createCategory, updateCategory, deleteCategory } = useCategoryManager()

@@ -1,5 +1,5 @@
-@forward 'product-list';
-@forward 'product-stats';
-@forward 'search';
-@forward 'sidebar';
+@forward '../product-list';
+@forward '../product-list-item';
+@forward '../product-stats';
+@forward '../sidebar';
 @forward '../product/style';

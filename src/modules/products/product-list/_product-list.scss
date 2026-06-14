@@ -1,0 +1,30 @@
+@use '../../../theme/values/colors' as *;
+@use '../../../theme/values/sizes' as *;
+
+.product-list {
+  // Container for product items
+}
+
+.product-list__item--selected {
+  background: $primary_darken_light;
+}
+
+.product-list__item-price {
+  color: $white;
+  font-weight: 700;
+  font-size: 1em;
+  margin-bottom: 4px;
+
+  @media (max-width: 480px) {
+    font-size: 0.95em;
+  }
+}
+
+.product-list__item-presentations {
+  color: $grey_light;
+  margin-bottom: 4px;
+
+  @media (max-width: 480px) {
+    font-size: 0.85em;
+  }
+}
