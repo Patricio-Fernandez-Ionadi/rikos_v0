@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom'
+import { DottedMenu } from '../../../../components/dotted-menu.jsx'
 
 export function SupplierProductTable({
   productSuppliers, products, categories,
@@ -12,13 +13,13 @@ export function SupplierProductTable({
   }
 
   return (
-    <div className='stock-page__table-wrap'>
-      <table className='stock-page__table'>
+    <div className='supplier-product-table-wrap'>
+      <table className='supplier-product-table'>
         <thead>
           <tr>
             <th>Producto</th>
-            <th>Categoría</th>
             <th>Precio de costo</th>
+            <th className='supplier-product-table__th--desktop'>Categoría</th>
             <th></th>
           </tr>
         </thead>
@@ -28,14 +29,13 @@ export function SupplierProductTable({
             const category = product ? categories.find((c) => c._id === product.categoryId) : null
             return (
               <tr key={ps._id}>
-                <td className='text-white'>
-                  <a className='text-info' href={`/products/${ps.productId}`}
+                <td>
+                  <a className='supplier-product-table__link' href={`/products/${ps.productId}`}
                     onClick={(e) => { e.preventDefault(); navigate(`/products/${ps.productId}`) }}>
-                    {product?.name ?? 'Producto eliminado'}
+                    <span className='text-truncate'>{product?.name ?? 'Producto eliminado'}</span>
                   </a>
                 </td>
-                <td>{category?.name ?? '—'}</td>
-                <td className='text-white'
+                <td className='supplier-product-table__cost'
                   onClick={() => {
                     if (editingPS !== ps._id) { setEditingPS(ps._id); setEditCost(String(ps.purchaseCost ?? '')) }
                   }}>
@@ -49,8 +49,11 @@ export function SupplierProductTable({
                     <>${ps.purchaseCost?.toLocaleString() ?? '\u2014'}</>
                   )}
                 </td>
+                <td className='supplier-product-table__desktop-cell'>{category?.name ?? '—'}</td>
                 <td>
-                  <button className='btn btn--xs btn--danger' onClick={() => handleUnlink(ps._id)}>✕</button>
+                  <DottedMenu items={[
+                    { label: 'Desvincular', onClick: () => handleUnlink(ps._id), danger: true },
+                  ]} />
                 </td>
               </tr>
             )

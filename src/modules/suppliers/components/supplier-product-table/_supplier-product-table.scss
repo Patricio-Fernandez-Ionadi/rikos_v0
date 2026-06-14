@@ -1,0 +1,75 @@
+@use '../../../../theme/values/colors' as *;
+@use '../../../../theme/values/sizes' as *;
+@use '../../../../theme/values/mediaqueries' as *;
+
+.supplier-product-table-wrap {
+  overflow-x: hidden;
+  background: $bg_surface;
+  border: 1px solid $grey_dark;
+  border-radius: $smooth;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.supplier-product-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th, td {
+    text-align: left;
+    padding: 10px 12px;
+    border-bottom: 1px solid $black_light;
+  }
+
+  th {
+    color: $grey_light;
+    font-size: 0.8em;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  td {
+    color: $grey;
+    font-size: 0.9em;
+  }
+
+  tbody tr:hover td {
+    background: $black;
+  }
+}
+
+.supplier-product-table__link {
+  background: none;
+  border: none;
+  color: $white;
+  font-size: inherit;
+  font-family: inherit;
+  cursor: pointer;
+  padding: 0;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  &:hover {
+    color: $primary_light;
+    text-decoration: underline;
+  }
+}
+
+.supplier-product-table__cost {
+  color: $white;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+
+  &:hover {
+    color: $primary_light;
+  }
+}
+
+.supplier-product-table__th--desktop,
+.supplier-product-table__desktop-cell {
+  @media (max-width: $max-mobile) {
+    display: none;
+  }
+}

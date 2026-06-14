@@ -3,6 +3,7 @@ import { Button } from '../../components/button.jsx'
 import { DataTable } from '../../components/data-table.jsx'
 import { Modal } from '../../components/Modal.jsx'
 import { CategoryForm } from '../../modules/categories/category-form.jsx'
+import { DottedMenu } from '../../components/dotted-menu.jsx'
 
 export const CategoriesPage = () => {
 	const { categories, editingCategory, formOpen, openForm, closeForm, createCategory, updateCategory, deleteCategory } = useCategoryManager()
@@ -18,18 +19,20 @@ export const CategoriesPage = () => {
 				variant='stock-page'
 				columns={[
 					{ key: 'name', label: 'Nombre' },
-					{ key: 'actions', label: 'Acciones' },
+					{ key: 'actions', label: '' },
 				]}
 				rows={categories}
 				emptyMessage='No hay categorias registradas'
 				renderRow={(c) => (
 					<tr key={c._id}>
-						<td className='text-white'>{c.name}</td>
 						<td>
-							<div style={{ display: 'flex', gap: 4 }}>
-								<Button size='xs' onClick={() => openForm(c)}>Editar</Button>
-								<Button size='xs' variant='danger' onClick={() => deleteCategory(c._id)}>Eliminar</Button>
-							</div>
+							<span className='text-truncate'>{c.name}</span>
+						</td>
+						<td>
+							<DottedMenu items={[
+								{ label: 'Editar', onClick: () => openForm(c) },
+								{ label: 'Eliminar', onClick: () => deleteCategory(c._id), danger: true },
+							]} />
 						</td>
 					</tr>
 				)}

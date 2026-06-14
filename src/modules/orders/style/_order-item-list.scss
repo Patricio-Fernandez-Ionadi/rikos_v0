@@ -1,0 +1,43 @@
+@use '../../../theme/values/colors' as *;
+@use '../../../theme/values/sizes' as *;
+
+.order-item-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.order-item-list__item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: $bg_surface;
+  border: 1px solid $grey_dark;
+  border-radius: $smooth;
+  padding: 8px 12px;
+}
+
+.order-item-list__name {
+  flex: 1;
+  min-width: 0;
+  color: $white;
+  font-size: 0.9em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.order-item-list__field {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.85em;
+  color: $grey_light;
+  white-space: nowrap;
+}
+
+.order-item-list__subtotal {
+  color: $grey_light;
+  font-size: 0.85em;
+  white-space: nowrap;
+}

@@ -1,65 +1,71 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
+import { createPortal } from 'react-dom'
 
-/**
- * A dotted menu (⋮) that opens a dropdown with action items.
- * Closes on click outside or when an item is selected.
- * Handles overflow and positioning automatically.
- *
- * @param {Object}   props
- * @param {Array}    props.items      Array of { label, onClick } objects
- * @param {string}   [props.className]  Extra class on wrapper
- */
 export const DottedMenu = ({ items, className = '' }) => {
 	const [open, setOpen] = useState(false)
-	const ref = useRef(null)
+	const [pos, setPos] = useState({ top: 0, right: 0 })
+	const triggerRef = useRef(null)
+	const menuRef = useRef(null)
+
+	const close = useCallback(() => setOpen(false), [])
 
 	useEffect(() => {
 		if (!open) return
 
 		const handleClickOutside = (e) => {
-			if (ref.current && !ref.current.contains(e.target)) {
-				setOpen(false)
+			if (menuRef.current && !menuRef.current.contains(e.target) &&
+				triggerRef.current && !triggerRef.current.contains(e.target)) {
+				close()
 			}
 		}
 
-		document.addEventListener('mousedown', handleClickOutside)
-		return () => document.removeEventListener('mousedown', handleClickOutside)
-	}, [open])
+		const handleScroll = () => close()
 
-	const handleItemClick = (item) => {
-		setOpen(false)
-		item.onClick?.()
+		document.addEventListener('mousedown', handleClickOutside)
+		window.addEventListener('scroll', handleScroll, true)
+		return () => {
+			document.removeEventListener('mousedown', handleClickOutside)
+			window.removeEventListener('scroll', handleScroll, true)
+		}
+	}, [open, close])
+
+	const handleOpen = () => {
+		if (!triggerRef.current) return
+		const rect = triggerRef.current.getBoundingClientRect()
+		setPos({ top: rect.bottom + 4, right: window.innerWidth - rect.right })
+		setOpen(true)
 	}
 
 	return (
-		<div
-			ref={ref}
-			className={`dotted-menu${open ? ' dotted-menu--open' : ''}${className ? ` ${className}` : ''}`}
-		>
+		<>
 			<button
-				className='dotted-menu__trigger'
-				onClick={() => setOpen((prev) => !prev)}
+				ref={triggerRef}
+				className={`dotted-menu__trigger${className ? ` ${className}` : ''}`}
+				onClick={handleOpen}
 				type='button'
 				aria-label='Más opciones'
 				aria-expanded={open}
 			>
 				⋮
 			</button>
-
-			{open && (
-				<div className='dotted-menu__dropdown'>
+			{open && createPortal(
+				<div ref={menuRef} className='dotted-menu__dropdown' style={{ position: 'fixed', top: pos.top, right: pos.right, zIndex: 1000 }}>
 					{items.map((item, i) => (
 						<button
 							key={i}
 							className={`dotted-menu__item${item.danger ? ' dotted-menu__item--danger' : ''}`}
-							onClick={() => handleItemClick(item)}
+							onClick={() => {
+								close()
+								item.onClick?.()
+							}}
 							type='button'
 						>
 							{item.label}
 						</button>
 					))}
-				</div>
+				</div>,
+				document.body,
 			)}
-		</div>
+		</>
 	)
 }

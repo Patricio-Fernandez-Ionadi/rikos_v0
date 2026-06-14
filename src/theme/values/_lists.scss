@@ -1,0 +1,62 @@
+@use 'colors' as *;
+@use 'sizes' as *;
+
+$list-item-padding: 10px 12px;
+$list-item-gap: 8px;
+$list-border-color: $grey_dark;
+$list-hover-bg: rgba($primary, 0.05);
+
+@mixin list-item {
+  padding: $list-item-padding;
+  border-bottom: 1px solid $list-border-color;
+  transition: background 0.15s;
+
+  &:hover {
+    background: $list-hover-bg;
+  }
+}
+
+@mixin table-base {
+  width: 100%;
+  border-collapse: collapse;
+
+  th, td {
+    text-align: left;
+    padding: 10px 12px;
+    border-bottom: 1px solid $black_light;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  th {
+    color: $grey_light;
+    font-size: 0.8em;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  td {
+    color: $grey;
+    font-size: 0.9em;
+  }
+
+  tbody tr:hover td {
+    background: $black;
+  }
+}
+
+@mixin table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  background: $bg_surface;
+  border: 1px solid $grey_dark;
+  border-radius: $smooth;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+@mixin cell-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}

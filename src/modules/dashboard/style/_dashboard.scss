@@ -1,6 +1,7 @@
 @use '../../../theme/values/colors' as *;
 @use '../../../theme/values/sizes' as *;
 @use '../../../theme/values/mediaqueries' as *;
+@use '../../../theme/values/lists' as *;
 
 .dashboard__grid {
 	display: grid;
@@ -51,42 +52,18 @@
 }
 
 .dashboard__table-wrap {
-	overflow-x: auto;
-	margin-bottom: 24px;
-	-webkit-overflow-scrolling: touch;
-	background: $bg_surface;
-	border: 1px solid $grey_dark;
-	border-radius: $smooth;
+	@include table-wrap;
+
 	padding: 4px;
-	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+	margin-bottom: 24px;
 }
 
 .dashboard__table {
-	width: 100%;
-	border-collapse: collapse;
-
-	th,
-	td {
-		text-align: left;
-		padding: 8px 12px;
-		border-bottom: 1px solid $black_light;
-		white-space: nowrap;
-	}
-
-	th {
-		color: $grey_light;
-		font-size: 0.8em;
-		text-transform: uppercase;
-		letter-spacing: 0.5px;
-	}
-
-	td {
-		color: $grey;
-		font-size: 0.9em;
-	}
+	@include table-base;
 }
 
 .dashboard__badge {
+	@include cell-ellipsis;
 	display: inline-block;
 	padding: 2px 8px;
 	border-radius: $thin;

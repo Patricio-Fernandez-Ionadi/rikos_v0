@@ -2,14 +2,15 @@
 @use '../../../theme/values/sizes' as *;
 
 .product-list__item-wrap {
-  // Item-specific container styles
+  // wraps item + optional task panel
 }
 
 .product-list__item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 12px;
+  display: grid;
+  grid-template-columns: 1fr 32px;
+  grid-template-rows: auto auto;
+  gap: 4px 8px;
+  padding: 8px 12px;
   cursor: pointer;
   border-bottom: 1px solid $grey_dark;
   transition: background 0.15s;
@@ -19,21 +20,21 @@
   }
 }
 
-.product-list__item-left {
+.product-list__item-header {
+  grid-area: 1 / 1 / 2 / 2;
   display: flex;
-  flex-direction: column;
-  gap: 2px;
+  align-items: center;
   min-width: 0;
-  flex: 1;
 }
 
 .product-list__item-name {
   color: $white;
-  font-size: 0.9em;
   font-weight: 600;
-  white-space: nowrap;
+  font-size: 0.9em;
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
 }
 
 .product-list__item-marca {
@@ -42,58 +43,45 @@
   font-size: 0.85em;
 }
 
-.product-list__item-right {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-shrink: 0;
-}
-
-.product-list__item-meta {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 2px;
-}
-
-.product-list__item-prices {
+.product-list__item-pres {
+  grid-area: 2 / 1 / 3 / 2;
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-end;
-  gap: 2px;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
 }
 
-.product-list__item-prices-sep {
-  color: $grey_dark;
+.product-list__item-pres-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  background: $bg_surface;
+  border: 1px solid $grey_dark;
+  border-radius: $thin;
+  padding: 1px 6px;
+  font-size: 0.8em;
+  line-height: 1.5;
 }
 
-.product-list__item-price-label {
+.product-list__item-pres-label {
   color: $grey;
-  font-size: 0.75em;
-
-  &::after {
-    content: ':';
-  }
 }
 
-.product-list__item-price-value {
+.product-list__item-pres-price {
   color: $primary_light;
   font-weight: 600;
-  font-size: 0.85em;
-}
-
-.product-list__item-stock {
-  font-size: 0.75em;
-  color: $grey;
 }
 
 .product-list__item-error {
-  font-size: 0.75em;
+  font-size: 0.8em;
   color: $error;
   font-style: italic;
 }
 
 .product-list__task-btn {
+  grid-area: 1 / 2 / 3 / 3;
+  align-self: center;
   display: flex;
   align-items: center;
   justify-content: center;

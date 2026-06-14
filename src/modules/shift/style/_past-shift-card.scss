@@ -1,5 +1,6 @@
 @use '../../../theme/values/colors' as *;
 @use '../../../theme/values/sizes' as *;
+@use '../../../theme/values/lists' as *;
 
 .shifts-page__card-date {
 	color: $grey_light;
@@ -23,34 +24,17 @@
 }
 
 .shifts-page__sales-wrap {
-	overflow-x: auto;
-	-webkit-overflow-scrolling: touch;
+	@include table-wrap;
+
 	margin-top: 8px;
-	background: $bg_surface;
-	border: 1px solid $grey_dark;
-	border-radius: $smooth;
 	padding: 8px;
-	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
 .shifts-page__sales-table {
-	width: 100%;
-	min-width: 400px;
-	border-collapse: collapse;
+	@include table-base;
 
-	th,
-	td {
-		text-align: left;
+	th, td {
 		padding: 6px 10px;
-		border-bottom: 1px solid $black_light;
 		font-size: 0.85em;
-	}
-
-	th {
-		color: $grey_light;
-	}
-
-	td {
-		color: $grey;
 	}
 }

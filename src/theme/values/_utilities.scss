@@ -57,6 +57,13 @@
 .text-xs { font-size: 0.75em; }
 .text-bold { font-weight: 700; }
 .text-uppercase { text-transform: uppercase; letter-spacing: 0.5px; }
+.text-truncate {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 140px;
+}
 
 // ─── SURFACE UTILITIES ─────────────────────────────────────────
 

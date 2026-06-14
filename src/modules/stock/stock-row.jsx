@@ -68,7 +68,7 @@ export const StockRow = ({ pres, product, onNavigate }) => {
 			<tr key={pres._id}>
 				<td className='stock-cell--product'>
 				<button className='stock-cell__link' onClick={onNavigate}>
-					{product.name}
+					<span className='text-truncate'>{product.name}</span>
 					{pres.label ? <span className='stock-page__marca'> — {pres.label}</span> : ''}
 					{pres.grams ? <span className='stock-page__marca'> ({pres.grams}g)</span> : ''}
 				</button>
