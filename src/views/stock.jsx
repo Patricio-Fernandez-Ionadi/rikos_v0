@@ -35,9 +35,8 @@ export const StockPage = () => {
         variant='stock-page'
         columns={[
           { key: 'product', label: 'Producto', className: 'stock-cell--product' },
-          { key: 'stock', label: 'Stock (unidades)', className: 'stock-cell--stock' },
-          { key: 'grams', label: 'Gramos totales', className: 'stock-cell--grams' },
-          { key: 'actions', label: 'Acciones', className: 'stock-cell--actions' },
+          { key: 'stock', label: 'Stock', className: 'stock-cell--stock' },
+          { key: 'grams', label: 'Gramos', className: 'stock-cell--grams' },
         ]}
         rows={items}
         emptyMessage={`No hay presentaciones con el filtro: ${filterDesc}`}

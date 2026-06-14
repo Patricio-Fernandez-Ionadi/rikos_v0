@@ -13,6 +13,20 @@
   th, td {
     @include cell-ellipsis;
   }
+
+  .stock-cell--product {
+    width: 55%;
+  }
+
+  .stock-cell--stock {
+    width: 22%;
+    text-align: center;
+  }
+
+  .stock-cell--grams {
+    width: 23%;
+    text-align: center;
+  }
 }
 
 .stock-page__qty {
@@ -27,44 +41,10 @@
   color: $error;
 }
 
-.stock-page__edit {
-  display: inline-flex;
-  gap: 4px;
-}
-
 .stock-page__marca {
   color: $grey_light;
   font-size: 0.85em;
   font-weight: 400;
-}
-
-.stock-page__edit-panel {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 6px;
-  background: $black;
-  border: 1px solid $grey_dark;
-  border-radius: $thin;
-  padding: 6px 8px;
-}
-
-.stock-page__edit-field {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.stock-page__edit-label {
-  color: $grey_light;
-  font-size: 0.75em;
-  white-space: nowrap;
-}
-
-.stock-page__edit-actions {
-  display: flex;
-  gap: 4px;
-  margin-left: auto;
 }
 
 @media (max-width: $max-mobile) {
@@ -81,8 +61,9 @@
   font-family: inherit;
   cursor: pointer;
   padding: 0;
-  text-align: left;
   width: 100%;
+  justify-content: flex-start;
+  gap: 4px;
 
   &:hover {
     color: $primary_light;

@@ -103,3 +103,15 @@
   color: $grey_light;
   font-size: 0.85em;
 }
+
+.inline-edit--clickable {
+  cursor: pointer;
+  padding: 2px 4px;
+  border: 1px solid transparent;
+  border-radius: $thin;
+  transition: border-color 0.15s;
+
+  &:hover {
+    border-color: $grey;
+  }
+}
