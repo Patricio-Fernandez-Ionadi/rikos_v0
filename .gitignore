@@ -32,6 +32,8 @@ src/data/dev/
 server/db-clone.js
 
 AGENTS.md
+opencode.json
+.opencode
 
 # Environment
 .env.*

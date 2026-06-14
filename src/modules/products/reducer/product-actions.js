@@ -1,10 +1,4 @@
-export const selectCategories = (dispatch) => (ids) => dispatch({ type: 'SELECT_CATEGORIES', ids })
-
-export const selectTags = (dispatch) => (tags) => dispatch({ type: 'SELECT_TAGS', tags })
-
 export const selectProduct = (dispatch) => (id) => dispatch({ type: 'SELECT_PRODUCT', id })
-
-export const searchProducts = (dispatch) => (term) => dispatch({ type: 'SET_SEARCH', term })
 
 export const openProductForm = (dispatch) => () => dispatch({ type: 'OPEN_PRODUCT_FORM' })
 

@@ -7,7 +7,6 @@ import * as productService from './services/product-services.js'
 import * as presService from './product/services/presentation-services.js'
 import * as stockService from '../stock/services/stock-services.js'
 import * as supplierService from '../suppliers/services/supplier-services.js'
-import { filterProducts } from '../../data/filter-products.js'
 import { applyStockDeduction } from '../../data/stock-utils.js'
 
 export function useProductManager() {
@@ -16,14 +15,6 @@ export function useProductManager() {
 	const { shift, addSale } = useShift()
 
 	// ── Derived data ────────────────────────────────────────
-
-	const filteredProducts = useMemo(() => {
-		return filterProducts(products, presentations, {
-			searchTerm: state.searchTerm,
-			categoryIds: state.selectedCategoryIds,
-			tags: state.selectedTags,
-		})
-	}, [products, presentations, state.selectedCategoryIds, state.selectedTags, state.searchTerm])
 
 	const selectedProduct = useMemo(
 		() => products.find((p) => p._id === state.selectedProductId) ?? null,
@@ -37,10 +28,7 @@ export function useProductManager() {
 
 	// ── UI actions (dispatch is stable) ─────────────────────
 
-	const handleSelectCategories = actions.selectCategories(dispatch)
-	const handleSelectTags = actions.selectTags(dispatch)
 	const handleSelectProduct = actions.selectProduct(dispatch)
-	const handleSearch = actions.searchProducts(dispatch)
 	const openProductFormFn = actions.openProductForm(dispatch)
 	const closeProductFormFn = actions.closeProductForm(dispatch)
 	const openEditProductFn = actions.editProduct(dispatch)
@@ -254,13 +242,10 @@ export function useProductManager() {
 
 	return {
 		categories, products, presentations, suppliers, tags,
-		filteredProducts, selectedProduct, productPresentations,
+		selectedProduct, productPresentations,
 		shift,
 		...state,
-		handleSelectCategories,
-		handleSelectTags,
 		handleSelectProduct,
-		handleSearch,
 		openProductForm: openProductFormFn,
 		closeProductForm: closeProductFormFn,
 		openEditProduct: openEditProductFn,

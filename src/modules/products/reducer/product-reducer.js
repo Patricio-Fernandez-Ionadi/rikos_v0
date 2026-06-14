@@ -1,8 +1,5 @@
 export const INITIAL_PRODUCT_STATE = {
-	selectedCategoryIds: [],
-	selectedTags: [],
 	selectedProductId: null,
-	searchTerm: '',
 	showProductForm: false,
 	editingProduct: null,
 	showPresForm: false,
@@ -16,14 +13,8 @@ export const INITIAL_PRODUCT_STATE = {
 
 export function productReducer(state, action) {
 	switch (action.type) {
-		case 'SELECT_CATEGORIES':
-			return { ...state, selectedCategoryIds: action.ids }
-		case 'SELECT_TAGS':
-			return { ...state, selectedTags: action.tags }
 		case 'SELECT_PRODUCT':
 			return { ...state, selectedProductId: action.id, showSupplierPanel: false, productSuppliers: [] }
-		case 'SET_SEARCH':
-			return { ...state, searchTerm: action.term }
 		case 'OPEN_PRODUCT_FORM':
 			return { ...state, showProductForm: true }
 		case 'CLOSE_PRODUCT_FORM':
