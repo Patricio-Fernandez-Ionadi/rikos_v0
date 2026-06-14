@@ -36,10 +36,6 @@ app.use('/api/product-suppliers', productSuppliersRouter)
 app.use('/api/tasks', tasksRouter)
 app.use('/api/orders', ordersRouter)
 
-const distPath = path.resolve(__dirname, '../dist')
-app.use(express.static(distPath))
-app.get('*', (_req, res) => res.sendFile(path.join(distPath, 'index.html')))
-
 app.use((err, _req, res, _next) => {
 	console.error(err)
 	res.status(500).json({ error: err.message })
