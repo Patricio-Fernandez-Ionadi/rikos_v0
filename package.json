@@ -1,7 +1,7 @@
 {
   "name": "rikos_v0",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
   "scripts": {
     "seed": "npm run migrate && npm run seed --prefix server",

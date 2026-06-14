@@ -17,7 +17,10 @@ No test runner, type checker, or formatter is configured.
 
 ## Data model
 
-Three entities using `_id` (not `id`): `Category → Product → Presentation` (1:N:1:N).
+Core entities using `_id` (ObjectId): `Category → Product → Presentation` (1:N:1:N).  
+Additional entities: `ProductSupplier` (links products ↔ suppliers), `Order` (purchase orders), `Supplier`.
+
+### Core entities
 
 ```
 ┌─────────────┐       ┌───────────────────┐       ┌───────────────────────┐
@@ -71,15 +74,57 @@ Three entities using `_id` (not `id`): `Category → Product → Presentation` (
 
 ---
 
+### ProductSupplier
+
+| Campo               | Tipo            | Descripción                                                    |
+| ------------------- | --------------- | -------------------------------------------------------------- |
+| `_id`               | `ObjectId`      | Identificador único                                            |
+| `productId`         | `ObjectId`      | `→ Product._id`                                                |
+| `supplierId`        | `ObjectId`      | `→ Supplier._id`                                               |
+| `purchaseCost`      | `number`        | Costo por empaque del proveedor (ARS)                          |
+| `supplierUnitLabel` | `string`        | Cómo empaqueta el proveedor, ej: `"Caja x24"`, `"Bolsa 5kg"` (default `"Unidad"`) |
+| `supplierUnitQty`   | `number`        | Cuántas unidades de consumo por empaque (default 1)            |
+
+`Product.purchaseCost` se deriva: `ps.purchaseCost / ps.supplierUnitQty`.
+
+### Order
+
+| Campo         | Tipo            | Descripción                                                    |
+| ------------- | --------------- | -------------------------------------------------------------- |
+| `_id`         | `ObjectId`      | Identificador único                                            |
+| `supplierId`  | `ObjectId`      | `→ Supplier._id`                                               |
+| `supplierName`| `string`        | Snapshot del nombre del proveedor                              |
+| `status`      | `string`        | `"open"` (en curso) o `"placed"` (cerrado), default `"open"`  |
+| `items`       | `[OrderItem]`   | Subdocumentos con los productos pedidos                        |
+| `totalCost`   | `number`        | Suma de `item.total`                                           |
+| `notes`       | `string`        | Notas del pedido                                               |
+| timestamps    | `Date`          | `createdAt`, `updatedAt`                                       |
+
+#### OrderItem (subdocumento)
+
+| Campo         | Tipo            | Descripción                                                    |
+| ------------- | --------------- | -------------------------------------------------------------- |
+| `productId`   | `ObjectId`      | `→ Product._id`                                                |
+| `productName` | `string`        | Snapshot del nombre del producto                               |
+| `quantity`    | `number`        | Cantidad pedida                                                |
+| `unitCost`    | `number`        | Costo por unidad                                               |
+| `total`       | `number`        | `quantity × unitCost`                                          |
+| `unitLabel`   | `string`        | Snapshot del `supplierUnitLabel` al momento del pedido         |
+
+---
+
 ### Qué se persiste vs qué se calcula
 
 #### SOLO se persiste:
 
-- `Category.id`, `Category.name`
-- `Product.id`, `Product.categoryId`, `Product.name`, `Product.marca`, `Product.purchaseCost`
+- `Category._id`, `Category.name`
+- `Product._id`, `Product.categoryId`, `Product.name`, `Product.marca`, `Product.purchaseCost`
 - `Product.margin`, `Product.saleType`, `Product.stockGrams`, `Product.createdAt`
-- `Presentation.id`, `Presentation.productId`, `Presentation.label`
+- `Presentation._id`, `Presentation.productId`, `Presentation.label`
 - `Presentation.grams`, `Presentation.salePrice`, `Presentation.stock`
+- `Supplier._id`, `Supplier.name`, `Supplier.contactName`, `Supplier.phone`, `Supplier.email`, `Supplier.notes`
+- `ProductSupplier._id`, `ProductSupplier.productId`, `ProductSupplier.supplierId`, `ProductSupplier.purchaseCost`, `ProductSupplier.supplierUnitLabel`, `ProductSupplier.supplierUnitQty`
+- `Order._id`, `Order.supplierId`, `Order.supplierName`, `Order.status`, `Order.items[]`, `Order.totalCost`, `Order.notes`, `Order.createdAt`, `Order.updatedAt`
 
 #### NUNCA se persiste (se calcula dinámicamente):
 
@@ -105,6 +150,9 @@ Three entities using `_id` (not `id`): `Category → Product → Presentation` (
 7. Si `purchaseCost = null` → `costPerPresentation = listPrice = null` (no rompe, muestra estado "sin costo")
 8. Si `margin = null` → `listPrice = costPerPresentation` (se vende a costo)
 9. Si `salePrice = null` → `diff %` y `diff $` = `null` (no se puede calcular diferencia)
+10. **Un Product** `──1:N──` **ProductSupplier** `──N:1──` **Supplier** (un producto puede tener múltiples proveedores, cada uno con su costo y empaque propio)
+11. **Una Order** pertenece a **1 Supplier** y tiene **N OrderItem** (subdocumentos)
+12. Una orden tiene `status: 'open'` (editable) o `'placed'` (cerrada, solo lectura)
 
 ## Architecture
 
@@ -120,9 +168,27 @@ index.html → src/main.jsx → [DataProvider] → [ShiftProvider] → App → P
 
 ### Backend (Express + Mongoose)
 - `server/index.js` — Express app on port 3001, connects to MongoDB via `MONGODB_URI`
-- Models in `server/models/`: `Category`, `Product`, `Presentation` (with `stock`), `Shift`
-- REST routes in `server/routes/`: full CRUD for categories/products/presentations + shift management
+- Models in `server/models/`: `Category`, `Product`, `Presentation` (with `stock`), `Shift`, `Supplier`, `ProductSupplier`, `Order`, `Task`, `Note`
+- REST routes in `server/routes/`: full CRUD for all entities + special endpoints:
+  - `PATCH /orders/:id/items` — Add item to an open order (sums quantity if product exists)
+  - `PATCH /orders/:id/status` — Change order status (`open` ↔ `placed`)
+  - `GET /orders?status=` — Filter orders by status
+  - `POST/PUT /product-suppliers` — Accepts `supplierUnitLabel` and `supplierUnitQty`
 - Run `npm run seed` to populate MongoDB from existing `seed.json`
+
+### Quick Order from Product
+A "Pedir" button in the product detail view opens a `QuickOrderModal` that:
+
+1. Lists all suppliers assigned to the product
+2. Pre-selects the supplier if there's only one, shows a dropdown for multiple
+3. Shows the supplier's presentation info (e.g. "Caja x24 (×24 uds.)")
+4. Inputs for quantity, unit cost (pre-filled from ProductSupplier), calculated total
+5. On confirm: searches for an open order (`status: 'open'`) for that supplier
+   - If found → `PATCH /orders/:id/items` (adds or sums quantity)
+   - If not → `POST /orders` with `status: 'open'`
+6. Navigates to `/orders` filtered by "Abiertos"
+
+The unit label from the supplier's presentation is snapshotted in `OrderItem.unitLabel`.
 
 ### Shift system
 - localStorage is the source of truth during an open shift (resilient to disconnects)
