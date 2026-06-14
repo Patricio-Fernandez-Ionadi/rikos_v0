@@ -1,0 +1,89 @@
+@use '../../../theme/values/colors' as *;
+@use '../../../theme/values/sizes' as *;
+@use '../../../theme/values/mediaqueries' as *;
+
+.orders-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.orders-cards__card {
+  background: $bg_surface;
+  border: 1px solid $grey_dark;
+  border-radius: $smooth;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.orders-cards__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.orders-cards__supplier {
+  color: $white;
+  font-weight: 600;
+  font-size: 1em;
+}
+
+.orders-cards__info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: $grey_light;
+  font-size: 0.85em;
+}
+
+.orders-cards__date {
+  color: $grey;
+  margin-left: auto;
+}
+
+.orders-cards__actions {
+  display: flex;
+  gap: 6px;
+  padding-top: 4px;
+  border-top: 1px solid $grey_dark;
+}
+
+// ── Orders history table (compact) ────────────────
+
+.orders-table__col--supplier {
+  width: 40%;
+}
+
+.orders-table__col--date {
+  width: 22%;
+}
+
+.orders-table__col--cost {
+  width: 18%;
+  text-align: right;
+}
+
+.orders-table__col--actions {
+  width: 20%;
+  text-align: right;
+}
+
+@media (max-width: $max-mobile) {
+  .orders-table__col--supplier {
+    width: 38%;
+  }
+
+  .orders-table__col--date {
+    width: auto;
+  }
+
+  .orders-table__col--cost {
+    width: auto;
+  }
+
+  .orders-table__col--actions {
+    width: auto;
+  }
+}
