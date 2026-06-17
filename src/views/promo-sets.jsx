@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { usePromoSetsManager } from '../modules/promo-sets/promo-sets-manager.js'
 import { PromoSetList } from '../modules/promo-sets/components/promo-set-list.jsx'
 import { PromoSetForm } from '../modules/promo-sets/components/promo-set-form.jsx'
-import { Modal } from '../components/modal.jsx'
+import { Modal } from '../components/Modal.jsx'
 import { ConfirmDialog } from '../components/confirm-dialog.jsx'
 
 export const PromoSetsPage = () => {

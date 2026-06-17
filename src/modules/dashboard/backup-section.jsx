@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react'
 import { exportBackup, restoreBackup } from '../../data/api.js'
-import { Modal } from '../../components/modal.jsx'
+import { Modal } from '../../components/Modal.jsx'
 
 export const BackupSection = () => {
   const [restoring, setRestoring] = useState(false)
