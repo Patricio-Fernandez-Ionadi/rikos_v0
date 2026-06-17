@@ -22,6 +22,7 @@ export const ProductBrowser = ({
 	quantity,
 	setQuantity,
 	handleAddToCart,
+	presInPromos,
 }) => {
 	const handleToggleTag = (tag) => {
 		setSelectedTags((prev) =>
@@ -34,7 +35,7 @@ export const ProductBrowser = ({
 			<div className='sale-cart__filters'>
 				<SearchInput
 					ref={searchRef}
-					placeholder='Buscar producto…'
+					placeholder='Buscar por nombre o código…'
 					value={searchQuery}
 					onChange={(e) => setSearchQuery(e.target.value)}
 				/>
@@ -97,7 +98,11 @@ export const ProductBrowser = ({
 								}}
 							>
 								<div className='sale-cart__pres-info'>
-									<span className='sale-cart__pres-label'>{pres.label}</span>
+									<span className='sale-cart__pres-label'>
+										{pres.code != null && <span className='sale-cart__pres-code'>{pres.code}</span>}
+										{pres.label}
+										{presInPromos?.has(pres._id) && <span className='sale-cart__promo-badge'>PROMO</span>}
+									</span>
 									<span className='sale-cart__pres-price'>
 										${pres.salePrice?.toLocaleString() ?? '—'}
 									</span>

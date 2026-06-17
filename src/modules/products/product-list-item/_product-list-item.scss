@@ -68,6 +68,17 @@
   color: $grey;
 }
 
+.product-list__item-pres-code {
+	display: inline-block;
+	background: $grey_dark;
+	color: $primary_light;
+	font-size: 0.8em;
+	font-weight: 700;
+	padding: 0 4px;
+	border-radius: 2px;
+	margin-right: 3px;
+}
+
 .product-list__item-pres-price {
   color: $primary_light;
   font-weight: 600;

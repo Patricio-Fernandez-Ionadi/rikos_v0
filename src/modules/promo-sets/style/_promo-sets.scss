@@ -1,0 +1,174 @@
+@use '../../../theme/values/colors' as *;
+@use '../../../theme/values/sizes' as *;
+
+.promo-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.promo-form__results {
+  max-height: 240px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.promo-form__result-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px;
+  border-radius: $thin;
+  font-size: 0.85em;
+
+  &:hover {
+    background: $bg_elevated;
+  }
+}
+
+.promo-form__items {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.promo-form__item-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85em;
+}
+
+.pres-code-sm {
+  display: inline-block;
+  background: $grey_dark;
+  color: $primary_light;
+  font-size: 0.75em;
+  font-weight: 700;
+  padding: 0 4px;
+  border-radius: 2px;
+  margin-right: 3px;
+}
+
+.promo-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.promo-list__card {
+  background: $black;
+  border: 1px solid $grey_dark;
+  border-radius: $smooth;
+  padding: 16px;
+
+  &--inactive {
+    opacity: 0.5;
+  }
+}
+
+.promo-list__header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.promo-list__name {
+  color: $white;
+  font-size: 1em;
+  margin: 0;
+  flex: 1;
+}
+
+.promo-list__price {
+  color: $primary_light;
+  font-weight: 700;
+}
+
+.promo-list__badge {
+  font-size: 0.75em;
+  padding: 2px 6px;
+  border-radius: $thin;
+  font-weight: 700;
+
+  &--active {
+    background: $primary;
+    color: $white_light;
+  }
+
+  &--inactive {
+    background: $grey_dark;
+    color: $grey;
+  }
+}
+
+.promo-list__items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.promo-list__item-chip {
+  background: $bg_surface;
+  border: 1px solid $grey_dark;
+  border-radius: $thin;
+  padding: 1px 6px;
+  font-size: 0.75em;
+  color: $grey;
+}
+
+.promo-list__actions {
+  display: flex;
+  gap: 6px;
+}
+
+.promo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+.promo-grid__card {
+  background: $black;
+  border: 1px solid $grey_dark;
+  border-radius: $smooth;
+  padding: 16px;
+  cursor: pointer;
+  transition: border-color 0.2s;
+
+  &:hover {
+    border-color: $primary;
+  }
+}
+
+.promo-grid__name {
+  color: $white;
+  font-size: 0.9em;
+  margin: 0 0 4px;
+}
+
+.promo-grid__price {
+  color: $primary_light;
+  font-weight: 700;
+  font-size: 1.1em;
+}
+
+.promo-grid__items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  margin-top: 8px;
+}
+
+.promo-grid__item {
+  background: $bg_surface;
+  border: 1px solid $grey_dark;
+  border-radius: $thin;
+  padding: 1px 5px;
+  font-size: 0.7em;
+  color: $grey;
+}

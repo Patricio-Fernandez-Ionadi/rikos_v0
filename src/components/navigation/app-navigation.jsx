@@ -11,6 +11,8 @@ const LINKS = [
 	{ to: '/tasks', label: 'Tareas' },
 	{ to: '/soporte', label: 'Soporte' },
 	{ to: '/categories', label: 'Categorias' },
+	{ to: '/promo-sets', label: 'Promos' },
+	{ to: '/menu', label: 'Menú' },
 ]
 
 const GROUPS = [
@@ -28,7 +30,9 @@ const GROUPS = [
 		links: [
 			{ to: '/orders', label: 'Pedidos' },
 			{ to: '/shifts', label: 'Turnos' },
+			{ to: '/promo-sets', label: 'Promos' },
 			{ to: '/tasks', label: 'Tareas' },
+			{ to: '/menu', label: 'Menú' },
 		],
 	},
 	{

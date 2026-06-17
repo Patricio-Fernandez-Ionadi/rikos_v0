@@ -13,12 +13,15 @@ router.get('/', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   try {
+    const last = await Presentation.findOne({ code: { $ne: null } }).sort({ code: -1 })
+    const nextCode = (last?.code ?? 0) + 1
     const pres = await Presentation.create({
       productId: req.body.productId,
       label: req.body.label ?? null,
       grams: req.body.grams ?? null,
       salePrice: req.body.salePrice ?? null,
       stock: req.body.stock ?? 0,
+      code: nextCode,
     })
     res.status(201).json(pres)
   } catch (e) { next(e) }

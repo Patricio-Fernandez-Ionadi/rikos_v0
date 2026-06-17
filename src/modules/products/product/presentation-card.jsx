@@ -25,7 +25,10 @@ export const PresentationCard = ({
 	return (
 		<div className='detail-page__pres-card'>
 			<div className='detail-page__pres-header'>
-				<span className='detail-page__pres-label'>{pres.label}</span>
+				<span className='detail-page__pres-label'>
+					{pres.code != null && <span className='detail-page__pres-code'>{pres.code}</span>}
+					{pres.label}
+				</span>
 				<div className='detail-page__pres-actions'>
 					{shift && shift.status === 'open' && (
 						<Button size='sm' variant='primary' onClick={() =>

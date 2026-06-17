@@ -31,6 +31,8 @@ export function filterProducts(
 	}
 	if (searchTerm.trim()) {
 		const term = searchTerm.trim().toLowerCase()
+		const termNum = parseInt(term, 10)
+		const isNumeric = !isNaN(termNum) && String(termNum) === term
 
 		const supplierNameById = {}
 		suppliers?.forEach((s) => { supplierNameById[s._id] = (s.name ?? '').toLowerCase() })
@@ -41,6 +43,16 @@ export function filterProducts(
 			productToSupplierIds[ps.productId].push(ps.supplierId)
 		})
 
+		const productToCodes = {}
+		if (isNumeric) {
+			presentations.forEach((pr) => {
+				if (pr.code != null) {
+					if (!productToCodes[pr.productId]) productToCodes[pr.productId] = []
+					productToCodes[pr.productId].push(pr.code)
+				}
+			})
+		}
+
 		result = result.filter((p) => {
 			if (p.name.toLowerCase().includes(term)) return true
 			if (p.marca && p.marca.toLowerCase().includes(term)) return true
@@ -49,6 +61,9 @@ export function filterProducts(
 				.filter((pr) => pr.productId === p._id)
 				.map((pr) => pr.label?.toLowerCase() ?? '')
 			if (labels.some((l) => l.includes(term))) return true
+
+			const codes = productToCodes[p._id]
+			if (codes && codes.some((c) => String(c).includes(term))) return true
 
 			const sids = productToSupplierIds[p._id] ?? []
 			if (sids.some((sid) => supplierNameById[sid]?.includes(term))) return true
@@ -69,4 +84,14 @@ export function filterProducts(
  */
 export function filterProductIds(products, presentations, options = {}) {
 	return filterProducts(products, presentations, options).map((p) => p._id)
+}
+
+/**
+ * Find a presentation by exact code match.
+ * Returns the presentation object or null.
+ */
+export function findPresentationByCode(presentations, code) {
+	const num = parseInt(code, 10)
+	if (isNaN(num)) return null
+	return presentations.find((p) => p.code === num) ?? null
 }

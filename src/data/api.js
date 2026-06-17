@@ -91,3 +91,14 @@ export const getProductSuppliersBySupplier = (supplierId) => request(`/product-s
 export const createProductSupplier = (data) => request('/product-suppliers', { method: 'POST', body: JSON.stringify(data) })
 export const updateProductSupplier = (id, data) => request(`/product-suppliers/${id}`, { method: 'PUT', body: JSON.stringify(data) })
 export const deleteProductSupplier = (id) => request(`/product-suppliers/${id}`, { method: 'DELETE' })
+
+// ─── Promo Sets ──────────────────────────────────────────────
+export const getPromoSets = (all) => request(`/promo-sets${all ? '?all=true' : ''}`)
+export const getPromoSet = (id) => request(`/promo-sets/${id}`)
+export const createPromoSet = (data) => request('/promo-sets', { method: 'POST', body: JSON.stringify(data) })
+export const updatePromoSet = (id, data) => request(`/promo-sets/${id}`, { method: 'PUT', body: JSON.stringify(data) })
+export const deletePromoSet = (id) => request(`/promo-sets/${id}`, { method: 'DELETE' })
+
+// ─── Backup ───────────────────────────────────────────────────
+export const exportBackup = () => request('/backup/export')
+export const restoreBackup = (data) => request('/backup/restore', { method: 'POST', body: JSON.stringify(data) })

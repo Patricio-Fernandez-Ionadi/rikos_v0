@@ -116,6 +116,21 @@
 }
 
 @media (max-width: $max-mobile) {
+.dashboard__card--backup {
+	cursor: default;
+
+	&:hover {
+		border-color: $grey_dark;
+		background: $black;
+	}
+}
+
+.dashboard__backup-actions {
+	display: flex;
+	gap: 8px;
+	margin-top: 12px;
+}
+
 	.dashboard__th--desktop,
 	.dashboard__td--desktop {
 		display: none;

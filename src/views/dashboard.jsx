@@ -5,6 +5,7 @@ import { NoSalePriceProducts } from '../modules/dashboard/no-sale-price-products
 import { NoPresentationsProducts } from '../modules/dashboard/no-presentations-products.jsx'
 import { LowStockTable } from '../modules/dashboard/low-stock-table.jsx'
 import { RecentEntries } from '../modules/dashboard/recent-entries.jsx'
+import { BackupSection } from '../modules/dashboard/backup-section.jsx'
 
 /**
  * Main dashboard — shows summary cards, warnings, recent entries.
@@ -15,6 +16,7 @@ export const Dashboard = () => {
 			<h2 className='dashboard__title'>Dashboard</h2>
 
 			<DashboardCards />
+			<BackupSection />
 			<RecentEntries />
 			<NoCostProducts />
 			<NoMarginProducts />

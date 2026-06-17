@@ -6,8 +6,10 @@ const presentationSchema = new mongoose.Schema({
   grams: { type: Number, default: null },
   salePrice: { type: Number, default: null },
   stock: { type: Number, default: 0 },
+  code: { type: Number, default: null },
 })
 
 presentationSchema.index({ productId: 1 })
+presentationSchema.index({ code: 1 }, { unique: true, sparse: true })
 
 export default mongoose.model('Presentation', presentationSchema)

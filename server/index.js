@@ -19,6 +19,8 @@ import suppliersRouter from './routes/suppliers.js'
 import productSuppliersRouter from './routes/product-suppliers.js'
 import tasksRouter from './routes/tasks.js'
 import ordersRouter from './routes/orders.js'
+import backupRouter from './routes/backup.js'
+import promoSetsRouter from './routes/promo-sets.js'
 
 const app = express()
 const PORT = process.env.PORT || 3001
@@ -35,6 +37,8 @@ app.use('/api/suppliers', suppliersRouter)
 app.use('/api/product-suppliers', productSuppliersRouter)
 app.use('/api/tasks', tasksRouter)
 app.use('/api/orders', ordersRouter)
+app.use('/api/backup', backupRouter)
+app.use('/api/promo-sets', promoSetsRouter)
 
 app.use((err, _req, res, _next) => {
 	console.error(err)

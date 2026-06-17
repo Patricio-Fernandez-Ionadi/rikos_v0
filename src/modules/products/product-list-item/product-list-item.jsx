@@ -29,7 +29,10 @@ export const ProductListItem = ({ product, onEvent }) => {
 					{productPresentations.length > 0 ? (
 						productPresentations.map((pres) => (
 							<span key={pres._id} className='product-list__item-pres-chip'>
-								<span className='product-list__item-pres-label'>{pres.label}</span>
+								<span className='product-list__item-pres-label'>
+									{pres.code != null && <span className='product-list__item-pres-code'>{pres.code}</span>}
+									{pres.label}
+								</span>
 								<span className='product-list__item-pres-price'>${pres.salePrice?.toLocaleString() ?? '—'}</span>
 							</span>
 						))

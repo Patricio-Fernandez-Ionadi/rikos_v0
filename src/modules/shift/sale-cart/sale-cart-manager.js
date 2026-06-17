@@ -2,8 +2,9 @@ import { useState, useMemo, useRef, useEffect } from 'react'
 import { useCatalog } from '../../../app/catalog-context.jsx'
 import { useShift } from '../shift-context.jsx'
 import { generateTempId } from '../../../data/entities.js'
-import { filterProducts } from '../../../data/filter-products.js'
+import { filterProducts, findPresentationByCode } from '../../../data/filter-products.js'
 import { applyBatchStockDeduction } from '../../../data/stock-utils.js'
+import { getPromoSets } from '../../../data/api.js'
 
 export function useSaleCart() {
 	const { products, presentations, categories, tags, setProducts, setPresentations } = useCatalog()
@@ -18,12 +19,40 @@ export function useSaleCart() {
 	const [quantity, setQuantity] = useState(1)
 	const [paymentMethod, setPaymentMethod] = useState('electronic')
 	const [collectedTotal, setCollectedTotal] = useState(null)
+	const [promoSets, setPromoSets] = useState([])
+	const [activeTab, setActiveTab] = useState('products')
 
 	const searchRef = useRef(null)
 
 	useEffect(() => {
 		searchRef.current?.focus()
 	}, [])
+
+	useEffect(() => {
+		getPromoSets().then(setPromoSets).catch(() => {})
+	}, [])
+
+	const presInPromos = useMemo(() => {
+		const ids = new Set()
+		for (const set of promoSets) {
+			if (!set.active) continue
+			for (const item of set.items) {
+				ids.add(item.presentationId)
+			}
+		}
+		return ids
+	}, [promoSets])
+
+	const codeMatch = useMemo(() => {
+		return findPresentationByCode(presentations, searchQuery.trim())
+	}, [presentations, searchQuery])
+
+	useEffect(() => {
+		if (codeMatch) {
+			setSelectedProductId(codeMatch.productId)
+			setSelectedPresId(codeMatch._id)
+		}
+	}, [codeMatch])
 
 	const filteredProducts = useMemo(() => {
 		return filterProducts(products, presentations, {
@@ -75,6 +104,44 @@ export function useSaleCart() {
 
 	const handleRemoveItem = (cartId) => {
 		setCartItems((prev) => prev.filter((i) => i._cartId !== cartId))
+	}
+
+	const handleAddPromoToCart = (promoSet) => {
+		const newItems = promoSet.items.map((item) => {
+			const pres = presentations.find((p) => p._id === item.presentationId)
+			if (!pres) return null
+			const prod = products.find((p) => p._id === pres.productId)
+			if (!prod) return null
+			return {
+				_cartId: generateTempId(),
+				productId: prod._id,
+				presentationId: pres._id,
+				productName: prod.name,
+				presLabel: pres.label,
+				saleType: prod.saleType,
+				grams: pres.grams,
+				quantity: item.quantity,
+				unitPrice: 0,
+				total: 0,
+			}
+		}).filter(Boolean)
+
+		if (newItems.length === 0) return
+
+		const promoItem = {
+			_cartId: generateTempId(),
+			productId: null,
+			presentationId: null,
+			productName: `PROMO: ${promoSet.name}`,
+			presLabel: '',
+			saleType: 'unit',
+			grams: null,
+			quantity: 1,
+			unitPrice: promoSet.price,
+			total: promoSet.price,
+		}
+
+		setCartItems((prev) => [...prev, promoItem, ...newItems])
 	}
 
 	const subtotal = cartItems.reduce((s, i) => s + i.total, 0)
@@ -144,5 +211,10 @@ export function useSaleCart() {
 		handleAddToCart,
 		handleRemoveItem,
 		handleSubmit,
+		promoSets,
+		activeTab,
+		setActiveTab,
+		presInPromos,
+		handleAddPromoToCart,
 	}
 }

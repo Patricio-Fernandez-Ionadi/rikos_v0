@@ -277,6 +277,17 @@
 	border-bottom: 1px solid rgba(55, 55, 55, 0.2);
 }
 
+.detail-page__pres-code {
+	display: inline-block;
+	background: $grey_dark;
+	color: $primary_light;
+	font-size: 0.75em;
+	font-weight: 700;
+	padding: 0 5px;
+	border-radius: 3px;
+	margin-right: 4px;
+}
+
 .detail-page__pres-label {
 	color: $primary;
 	font-size: 1.1em;
