@@ -1,4 +1,4 @@
-import { useState, useMemo, useRef, useEffect } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { useCatalog } from '../../../app/catalog-context.jsx'
 import { useShift } from '../shift-context.jsx'
 import { generateTempId } from '../../../data/entities.js'
@@ -6,27 +6,43 @@ import { filterProducts, findPresentationByCode } from '../../../data/filter-pro
 import { applyBatchStockDeduction } from '../../../data/stock-utils.js'
 import { getPromoSets } from '../../../data/api.js'
 
+const STORAGE_KEY = 'rikos-sale-cart'
+
+function loadPersisted() {
+	try {
+		const raw = sessionStorage.getItem(STORAGE_KEY)
+		if (!raw) return null
+		return JSON.parse(raw)
+	} catch { return null }
+}
+
+function savePersisted(state) {
+	try {
+		sessionStorage.setItem(STORAGE_KEY, JSON.stringify(state))
+	} catch { /* quota exceeded, ignore */ }
+}
+
+const persisted = loadPersisted()
+
 export function useSaleCart() {
 	const { products, presentations, categories, tags, setProducts, setPresentations } = useCatalog()
 	const { recordTicket } = useShift()
 
-	const [cartItems, setCartItems] = useState([])
+	const [cartItems, setCartItems] = useState(persisted?.cartItems ?? [])
 	const [searchQuery, setSearchQuery] = useState('')
 	const [selectedCategory, setSelectedCategory] = useState('')
 	const [selectedTags, setSelectedTags] = useState([])
 	const [selectedProductId, setSelectedProductId] = useState(null)
 	const [selectedPresId, setSelectedPresId] = useState(null)
 	const [quantity, setQuantity] = useState(1)
-	const [paymentMethod, setPaymentMethod] = useState('electronic')
-	const [collectedTotal, setCollectedTotal] = useState(null)
+	const [paymentMethod, setPaymentMethod] = useState(persisted?.paymentMethod ?? 'electronic')
+	const [collectedTotal, setCollectedTotal] = useState(persisted?.collectedTotal ?? null)
 	const [promoSets, setPromoSets] = useState([])
-	const [activeTab, setActiveTab] = useState('products')
-
-	const searchRef = useRef(null)
+	const [activeTab, setActiveTab] = useState(persisted?.activeTab ?? 'products')
 
 	useEffect(() => {
-		searchRef.current?.focus()
-	}, [])
+		savePersisted({ cartItems, paymentMethod, collectedTotal, activeTab })
+	}, [cartItems, paymentMethod, collectedTotal, activeTab])
 
 	useEffect(() => {
 		getPromoSets().then(setPromoSets).catch(() => {})
@@ -175,6 +191,7 @@ export function useSaleCart() {
 		setCartItems([])
 		setSelectedProductId(null)
 		setSelectedPresId(null)
+		sessionStorage.removeItem(STORAGE_KEY)
 		onClose()
 	}
 
@@ -194,7 +211,6 @@ export function useSaleCart() {
 		setQuantity,
 		paymentMethod,
 		setPaymentMethod,
-		searchRef,
 		categories,
 		tags,
 		filteredProducts,

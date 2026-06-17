@@ -22,7 +22,6 @@ export const SalePage = () => {
 		setQuantity,
 		paymentMethod,
 		setPaymentMethod,
-		searchRef,
 		categories,
 		tags,
 		filteredProducts,
@@ -72,7 +71,6 @@ export const SalePage = () => {
 			<div className='sale-cart__body'>
 				{activeTab === 'products' ? (
 					<ProductBrowser
-						searchRef={searchRef}
 						searchQuery={searchQuery}
 						setSearchQuery={setSearchQuery}
 						selectedCategory={selectedCategory}
