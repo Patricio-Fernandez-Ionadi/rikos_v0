@@ -1,4 +1,4 @@
-import { Modal } from './modal.jsx'
+import { Modal } from './Modal.jsx'
 import { Button } from './button.jsx'
 
 /**
