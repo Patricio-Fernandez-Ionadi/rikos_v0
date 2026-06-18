@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 import { NavItem } from './app-nav-item'
+import { version } from '../../../package.json'
 
 const LINKS = [
 	{ to: '/products', label: 'Productos' },
@@ -59,6 +60,7 @@ export const Navigation = () => {
 					<NavItem key={link.to} to={link.to} label={link.label} />
 				))}
 			</div>
+			<span className='navigation__version-desktop'>v{version}</span>
 
 			{/* Mobile: hamburger */}
 			<button
@@ -94,6 +96,7 @@ export const Navigation = () => {
 						))}
 					</div>
 				))}
+				<span className='navigation__version-mobile'>v{version}</span>
 			</div>
 		</nav>
 	)

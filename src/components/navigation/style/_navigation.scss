@@ -171,3 +171,27 @@
 .navigation__sync {
 	margin-left: auto;
 }
+
+/* ── Version indicators ─────────────────────────── */
+.navigation__version-desktop {
+	margin-left: auto;
+	font-size: 0.65em;
+	color: $grey;
+	white-space: nowrap;
+
+	@media (max-width: $max-mobile) {
+		display: none;
+	}
+}
+
+.navigation__version-mobile {
+	display: none;
+
+	@media (max-width: $max-mobile) {
+		display: block;
+		text-align: center;
+		font-size: 0.7em;
+		color: $grey;
+		padding: 24px 0 8px;
+	}
+}
