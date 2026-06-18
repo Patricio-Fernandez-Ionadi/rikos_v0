@@ -23,7 +23,6 @@ export function ShiftProvider({ children }) {
 				status: 'open',
 				_dbId: serverShift._id,
 			}})
-			dispatch({ type: 'SET_SYNCED', synced: true })
 		}).catch(() => {})
 	}, [])
 
@@ -42,15 +41,11 @@ export function ShiftProvider({ children }) {
 				s.openingTime = active.openingTime
 				s.openingCash = active.openingCash
 				s.sales = active.sales ?? []
-				dispatch({ type: 'SET_SYNCED', synced: true })
 			} else {
 				const dbShift = await shiftService.openShift(openingCash)
 				s._dbId = dbShift._id
-				dispatch({ type: 'SET_SYNCED', synced: true })
 			}
-		} catch {
-			dispatch({ type: 'SET_SYNCED', synced: false })
-		}
+		} catch { /* local-only */ }
 
 		dispatch({ type: 'SET_SHIFT', shift: s })
 	}, [])
@@ -80,12 +75,7 @@ export function ShiftProvider({ children }) {
 					unitPrice: sale.unitPrice,
 					total: sale.total,
 				})
-				dispatch({ type: 'SET_SYNCED', synced: true })
-			} catch {
-				dispatch({ type: 'SET_SYNCED', synced: false })
-			}
-		} else {
-			dispatch({ type: 'SET_SYNCED', synced: false })
+			} catch { /* ignore */ }
 		}
 	}, [])
 
@@ -124,34 +114,7 @@ export function ShiftProvider({ children }) {
 					ticketId,
 					collectedTotal,
 				})
-				dispatch({ type: 'SET_SYNCED', synced: true })
-			} catch {
-				dispatch({ type: 'SET_SYNCED', synced: false })
-			}
-		} else {
-			dispatch({ type: 'SET_SYNCED', synced: false })
-		}
-	}, [])
-
-	const syncToDb = useCallback(async () => {
-		const current = shiftRef.current
-		if (!current) return false
-
-		const currentDbId = await ensureDbShift(current._dbId, current.openingCash)
-		if (!currentDbId) return false
-
-		if (current._dbId !== currentDbId) {
-			dispatch({ type: 'UPDATE_DB_ID', dbId: currentDbId })
-		}
-
-		try {
-			if (current.sales.length > 0) {
-				await shiftService.syncSales(currentDbId, current.sales)
-			}
-			dispatch({ type: 'SET_SYNCED', synced: true })
-			return true
-		} catch {
-			return false
+			} catch { /* ignore */ }
 		}
 	}, [])
 
@@ -172,12 +135,7 @@ export function ShiftProvider({ children }) {
 		if (current._dbId) {
 			try {
 				await shiftService.addAdjustment(current._dbId, { amount, type, description })
-				dispatch({ type: 'SET_SYNCED', synced: true })
-			} catch {
-				dispatch({ type: 'SET_SYNCED', synced: false })
-			}
-		} else {
-			dispatch({ type: 'SET_SYNCED', synced: false })
+			} catch { /* ignore */ }
 		}
 	}, [])
 
@@ -240,14 +198,12 @@ export function ShiftProvider({ children }) {
 	return (
 		<ShiftContext.Provider value={{
 			shift: state.shift,
-			synced: state.synced,
 			openShift,
 			addSale,
 			recordTicket,
 			editSale,
 			removeSale,
 			addAdjustment,
-			syncToDb,
 			closeShift,
 			cancelShift,
 		}}>

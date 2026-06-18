@@ -14,7 +14,7 @@ import { Button } from '../../components/button.jsx'
  * @param {Function}   props.onRequestClose  Callback when user clicks "Cerrar Turno"
  */
 export const ActiveShiftCard = ({ onRequestClose }) => {
-	const { shift, synced, syncToDb } = useShift()
+	const { shift } = useShift()
 	const navigate = useNavigate()
 	const [showAdjustmentForm, setShowAdjustmentForm] = useState(false)
 
@@ -40,7 +40,6 @@ export const ActiveShiftCard = ({ onRequestClose }) => {
 					<Button onClick={() => setShowAdjustmentForm(!showAdjustmentForm)}>
 						{showAdjustmentForm ? 'Cancelar' : '+ Ajuste'}
 					</Button>
-					{!synced && <Button onClick={() => syncToDb()}>Sincronizar</Button>}
 					<Button variant='danger' onClick={onRequestClose}>
 						Cerrar Turno
 					</Button>

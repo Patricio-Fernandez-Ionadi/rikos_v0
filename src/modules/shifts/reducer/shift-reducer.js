@@ -1,14 +1,11 @@
 export const INITIAL_SHIFT_STATE = {
 	shift: null,
-	synced: false,
 }
 
 export function shiftReducer(state, action) {
 	switch (action.type) {
 		case 'SET_SHIFT':
 			return { ...state, shift: action.shift }
-		case 'SET_SYNCED':
-			return { ...state, synced: action.synced }
 		case 'ADD_SALE':
 			return {
 				...state,
@@ -38,7 +35,6 @@ export function shiftReducer(state, action) {
 		case 'EDIT_SALE':
 			return {
 				...state,
-				synced: false,
 				shift: {
 					...state.shift,
 					sales: state.shift.sales.map((s) =>
