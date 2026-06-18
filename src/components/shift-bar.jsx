@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { useShift } from '../modules/shift/shift-context.jsx'
+import { useShift } from '../modules/shifts/shift-context.jsx'
 import { Button } from './button.jsx'
 
 /**

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Modal } from '../../components/Modal.jsx'
-import { useShift } from '../../modules/shift/shift-context.jsx'
+import { useShift } from '../../modules/shifts/shift-context.jsx'
 import { FormActions } from '../../components/form-actions.jsx'
 
 /**
@@ -21,8 +21,12 @@ export const CloseShiftForm = ({ open, onClose }) => {
 	const cashSalesTotal = (shift?.sales ?? [])
 		.filter((s) => !s.paymentMethod || s.paymentMethod === 'cash')
 		.reduce((sum, s) => sum + (s.collectedAmount ?? s.total), 0)
-	const adjustmentsTotal = (shift?.adjustments ?? []).reduce((sum, a) => sum + a.amount, 0)
-	const expectedBalance = +(shift?.openingCash ?? 0) + cashSalesTotal - adjustmentsTotal
+	const adjustmentsTotal = (shift?.adjustments ?? []).reduce(
+		(sum, a) => sum + a.amount,
+		0,
+	)
+	const expectedBalance =
+		+(shift?.openingCash ?? 0) + cashSalesTotal - adjustmentsTotal
 
 	const handleClose = async () => {
 		const cash = parseFloat(closingCash)

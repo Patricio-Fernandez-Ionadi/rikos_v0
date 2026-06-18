@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { useCatalog } from '../../app/catalog-context.jsx'
-import { useShift } from '../../modules/shift/shift-context.jsx'
+import { useShift } from '../../modules/shifts/shift-context.jsx'
 
 /**
  * Grid of summary cards linking to main sections.
@@ -16,7 +16,8 @@ export const DashboardCards = () => {
 	const totalPresentations = presentations.length
 	const withStock = presentations.filter((p) => (p.stock ?? 0) > 0).length
 	const activeSales = shift?.sales?.length ?? 0
-	const activeTotal = shift?.sales?.reduce((s, x) => s + (x.collectedAmount ?? x.total), 0) ?? 0
+	const activeTotal =
+		shift?.sales?.reduce((s, x) => s + (x.collectedAmount ?? x.total), 0) ?? 0
 
 	return (
 		<div className='dashboard__grid'>
@@ -31,19 +32,27 @@ export const DashboardCards = () => {
 					<div className='flex-row gap-16 mt-8 flex-wrap'>
 						<div>
 							<div className='dashboard__card-desc'>Ventas</div>
-							<div className='dashboard__card-value' style={{ fontSize: 20 }}>{activeSales}</div>
+							<div className='dashboard__card-value' style={{ fontSize: 20 }}>
+								{activeSales}
+							</div>
 						</div>
 						<div>
 							<div className='dashboard__card-desc'>Total</div>
-							<div className='dashboard__card-value' style={{ fontSize: 20 }}>${activeTotal.toLocaleString()}</div>
+							<div className='dashboard__card-value' style={{ fontSize: 20 }}>
+								${activeTotal.toLocaleString()}
+							</div>
 						</div>
 						<div>
 							<div className='dashboard__card-desc'>Inicial</div>
-							<div className='dashboard__card-value' style={{ fontSize: 20 }}>${shift.openingCash.toLocaleString()}</div>
+							<div className='dashboard__card-value' style={{ fontSize: 20 }}>
+								${shift.openingCash.toLocaleString()}
+							</div>
 						</div>
 						<div>
 							<div className='dashboard__card-desc'>Esperado</div>
-							<div className='dashboard__card-value' style={{ fontSize: 20 }}>${(shift.openingCash + activeTotal).toLocaleString()}</div>
+							<div className='dashboard__card-value' style={{ fontSize: 20 }}>
+								${(shift.openingCash + activeTotal).toLocaleString()}
+							</div>
 						</div>
 					</div>
 				</a>
@@ -51,9 +60,7 @@ export const DashboardCards = () => {
 
 			<Link to='/products' className='dashboard__card'>
 				<h3 className='dashboard__card-title'>Productos</h3>
-				<p className='dashboard__card-desc'>
-					Gestionar catálogo y precios
-				</p>
+				<p className='dashboard__card-desc'>Gestionar catálogo y precios</p>
 				<p className='dashboard__card-value'>{totalProducts}</p>
 			</Link>
 
@@ -66,9 +73,7 @@ export const DashboardCards = () => {
 			<Link to='/shifts' className='dashboard__card'>
 				<h3 className='dashboard__card-title'>Turnos</h3>
 				<p className='dashboard__card-desc'>
-					{shift
-						? 'Ir al turno activo'
-						: 'Historial de turnos'}
+					{shift ? 'Ir al turno activo' : 'Historial de turnos'}
 				</p>
 				<p className='dashboard__card-value'>
 					{shift ? `$${activeTotal.toLocaleString()}` : '—'}

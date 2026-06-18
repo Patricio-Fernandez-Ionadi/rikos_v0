@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react'
-import { useShift } from '../../modules/shift/shift-context.jsx'
-import { ActiveShiftCard } from '../../modules/shift/active-shift-card.jsx'
-import { PastShiftCard } from '../../modules/shift/past-shift-card.jsx'
-import { OpenShiftForm } from '../../modules/shift/open-shift-form.jsx'
-import { CloseShiftForm } from '../../modules/shift/close-shift-form.jsx'
-import * as shiftService from '../../modules/shift/services/shift-services.js'
+import { useShift } from '../../modules/shifts/shift-context.jsx'
+import { ActiveShiftCard } from '../../modules/shifts/active-shift-card.jsx'
+import { PastShiftCard } from '../../modules/shifts/past-shift-card.jsx'
+import { OpenShiftForm } from '../../modules/shifts/open-shift-form.jsx'
+import { CloseShiftForm } from '../../modules/shifts/close-shift-form.jsx'
+import * as shiftService from '../../modules/shifts/services/shift-services.js'
 
 /**
  * Shifts page — shows the active shift and past shift history.
@@ -60,9 +60,7 @@ export const ShiftsPage = () => {
 			</h3>
 
 			{pastShifts.length === 0 && (
-				<p
-					className='placeholder text-muted text-center p-16'
-				>
+				<p className='placeholder text-muted text-center p-16'>
 					No hay turnos anteriores registrados
 				</p>
 			)}

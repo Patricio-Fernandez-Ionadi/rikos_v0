@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Modal } from '../../components/Modal.jsx'
-import { useShift } from '../../modules/shift/shift-context.jsx'
+import { useShift } from '../../modules/shifts/shift-context.jsx'
 import { FormActions } from '../../components/form-actions.jsx'
 
 /**

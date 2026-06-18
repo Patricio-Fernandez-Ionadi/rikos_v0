@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useSaleCart } from '../../modules/shift/sale-cart/sale-cart-manager.js'
-import { ProductBrowser } from '../../modules/shift/sale-cart/product-browser.jsx'
-import { CartPanel } from '../../modules/shift/sale-cart/cart-panel.jsx'
+import { useSaleCart } from '../../modules/shifts/sale-cart/sale-cart-manager.js'
+import { ProductBrowser } from '../../modules/shifts/sale-cart/product-browser.jsx'
+import { CartPanel } from '../../modules/shifts/sale-cart/cart-panel.jsx'
 import { PromoSetView } from '../../modules/promo-sets/components/promo-set-list.jsx'
 
 export const SalePage = () => {
@@ -111,7 +111,10 @@ export const SalePage = () => {
 					/>
 				) : (
 					<div className='sale-cart__products'>
-						<PromoSetView promoSets={promoSets} onAddToCart={handleAddPromoToCart} />
+						<PromoSetView
+							promoSets={promoSets}
+							onAddToCart={handleAddPromoToCart}
+						/>
 					</div>
 				)}
 
@@ -121,23 +124,34 @@ export const SalePage = () => {
 			</div>
 
 			{cartItems.length > 0 && (
-				<button className='sale-cart__cart-bar' onClick={() => setShowDrawer(true)}>
+				<button
+					className='sale-cart__cart-bar'
+					onClick={() => setShowDrawer(true)}
+				>
 					<span className='sale-cart__cart-bar-info'>
 						{cartItems.length} {cartItems.length === 1 ? 'item' : 'items'}
 					</span>
 					<span className='sale-cart__cart-bar-total'>
 						${finalTotal.toLocaleString()}
 					</span>
-					<span className='sale-cart__cart-bar-action'>
-						Ver carrito
-					</span>
+					<span className='sale-cart__cart-bar-action'>Ver carrito</span>
 				</button>
 			)}
 
 			{showDrawer && (
-				<div className='sale-cart__drawer-overlay' onClick={() => setShowDrawer(false)}>
-					<div className='sale-cart__drawer' onClick={(e) => e.stopPropagation()}>
-						<CartPanel {...cartProps} isDrawer onDrawerClose={() => setShowDrawer(false)} />
+				<div
+					className='sale-cart__drawer-overlay'
+					onClick={() => setShowDrawer(false)}
+				>
+					<div
+						className='sale-cart__drawer'
+						onClick={(e) => e.stopPropagation()}
+					>
+						<CartPanel
+							{...cartProps}
+							isDrawer
+							onDrawerClose={() => setShowDrawer(false)}
+						/>
 					</div>
 				</div>
 			)}

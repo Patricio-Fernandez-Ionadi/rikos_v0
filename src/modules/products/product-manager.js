@@ -1,7 +1,10 @@
 import { useReducer, useMemo, useCallback } from 'react'
 import { useCatalog } from '../../app/catalog-context.jsx'
-import { useShift } from '../../modules/shift/shift-context.jsx'
-import { productReducer, INITIAL_PRODUCT_STATE } from './reducer/product-reducer.js'
+import { useShift } from '../../modules/shifts/shift-context.jsx'
+import {
+	productReducer,
+	INITIAL_PRODUCT_STATE,
+} from './reducer/product-reducer.js'
 import * as actions from './reducer/product-actions.js'
 import * as supplierService from '../suppliers/services/supplier-services.js'
 import { useProductCrud } from './hooks/use-product-crud.js'
@@ -9,7 +12,16 @@ import { useProductStockSale } from './hooks/use-product-stock-sale.js'
 
 export function useProductManager() {
 	const [state, dispatch] = useReducer(productReducer, INITIAL_PRODUCT_STATE)
-	const { categories, products, presentations, suppliers, tags, setProducts, setPresentations, setSuppliers } = useCatalog()
+	const {
+		categories,
+		products,
+		presentations,
+		suppliers,
+		tags,
+		setProducts,
+		setPresentations,
+		setSuppliers,
+	} = useCatalog()
 	const { shift, addSale } = useShift()
 
 	const selectedProduct = useMemo(
@@ -39,76 +51,130 @@ export function useProductManager() {
 	const toggleSupplierPanelFn = actions.toggleSupplierPanel(dispatch)
 	const setProductSuppliersFn = actions.setProductSuppliers(dispatch)
 
-	const { createProductFn, editProductFn, deleteProductFn, createPresFn, editPresFn, deletePresFn } =
-		useProductCrud({ selectedProduct, editingProduct: state.editingProduct, setProducts, setPresentations, dispatch })
+	const {
+		createProductFn,
+		editProductFn,
+		deleteProductFn,
+		createPresFn,
+		editPresFn,
+		deletePresFn,
+	} = useProductCrud({
+		selectedProduct,
+		editingProduct: state.editingProduct,
+		setProducts,
+		setPresentations,
+		dispatch,
+	})
 
 	const { updateStockFn, updateStockGramsFn, handleSaleFn } =
-		useProductStockSale({ presentations, products, setPresentations, setProducts, addSale, stockValue: state.stockValue, dispatch })
+		useProductStockSale({
+			presentations,
+			products,
+			setPresentations,
+			setProducts,
+			addSale,
+			stockValue: state.stockValue,
+			dispatch,
+		})
 
-	const loadProductSuppliersFn = useCallback(async (productId) => {
-		try {
-			const pss = await supplierService.getProductSuppliers(productId)
-			setProductSuppliersFn(pss)
-		} catch (e) {
-			console.error(e)
-		}
-	}, [setProductSuppliersFn])
+	const loadProductSuppliersFn = useCallback(
+		async (productId) => {
+			try {
+				const pss = await supplierService.getProductSuppliers(productId)
+				setProductSuppliersFn(pss)
+			} catch (e) {
+				console.error(e)
+			}
+		},
+		[setProductSuppliersFn],
+	)
 
-	const addProductSupplierFn = useCallback(async (productId, supplierId, purchaseCost) => {
-		try {
-			const ps = await supplierService.createProductSupplier({ productId, supplierId, purchaseCost })
-			setProductSuppliersFn([...state.productSuppliers, ps])
-		} catch (e) {
-			console.error(e)
-		}
-	}, [state.productSuppliers, setProductSuppliersFn])
+	const addProductSupplierFn = useCallback(
+		async (productId, supplierId, purchaseCost) => {
+			try {
+				const ps = await supplierService.createProductSupplier({
+					productId,
+					supplierId,
+					purchaseCost,
+				})
+				setProductSuppliersFn([...state.productSuppliers, ps])
+			} catch (e) {
+				console.error(e)
+			}
+		},
+		[state.productSuppliers, setProductSuppliersFn],
+	)
 
-	const removeProductSupplierFn = useCallback(async (psId) => {
-		try {
-			await supplierService.deleteProductSupplier(psId)
-			setProductSuppliersFn(state.productSuppliers.filter((ps) => ps._id !== psId))
-		} catch (e) {
-			console.error(e)
-		}
-	}, [state.productSuppliers, setProductSuppliersFn])
+	const removeProductSupplierFn = useCallback(
+		async (psId) => {
+			try {
+				await supplierService.deleteProductSupplier(psId)
+				setProductSuppliersFn(
+					state.productSuppliers.filter((ps) => ps._id !== psId),
+				)
+			} catch (e) {
+				console.error(e)
+			}
+		},
+		[state.productSuppliers, setProductSuppliersFn],
+	)
 
-	const setProductCostFromSupplierFn = useCallback(async (cost) => {
-		if (!selectedProduct) return
-		await editProductFn({ ...selectedProduct, purchaseCost: cost })
-	}, [selectedProduct, editProductFn])
+	const setProductCostFromSupplierFn = useCallback(
+		async (cost) => {
+			if (!selectedProduct) return
+			await editProductFn({ ...selectedProduct, purchaseCost: cost })
+		},
+		[selectedProduct, editProductFn],
+	)
 
-	const createSupplierFn = useCallback(async (data) => {
-		try {
-			const created = await supplierService.createSupplier(data)
-			setSuppliers((prev) => [...prev, created])
-			return created
-		} catch (e) {
-			console.error(e)
-		}
-	}, [setSuppliers])
+	const createSupplierFn = useCallback(
+		async (data) => {
+			try {
+				const created = await supplierService.createSupplier(data)
+				setSuppliers((prev) => [...prev, created])
+				return created
+			} catch (e) {
+				console.error(e)
+			}
+		},
+		[setSuppliers],
+	)
 
-	const updateSupplierFn = useCallback(async (id, data) => {
-		try {
-			const updated = await supplierService.updateSupplier(id, data)
-			setSuppliers((prev) => prev.map((s) => (s._id === updated._id ? updated : s)))
-		} catch (e) {
-			console.error(e)
-		}
-	}, [setSuppliers])
+	const updateSupplierFn = useCallback(
+		async (id, data) => {
+			try {
+				const updated = await supplierService.updateSupplier(id, data)
+				setSuppliers((prev) =>
+					prev.map((s) => (s._id === updated._id ? updated : s)),
+				)
+			} catch (e) {
+				console.error(e)
+			}
+		},
+		[setSuppliers],
+	)
 
-	const deleteSupplierFn = useCallback(async (id) => {
-		if (!window.confirm('¿Eliminar este proveedor?')) return
-		try {
-			await supplierService.deleteSupplier(id)
-			setSuppliers((prev) => prev.filter((s) => s._id !== id))
-		} catch (e) {
-			console.error(e)
-		}
-	}, [setSuppliers])
+	const deleteSupplierFn = useCallback(
+		async (id) => {
+			if (!window.confirm('¿Eliminar este proveedor?')) return
+			try {
+				await supplierService.deleteSupplier(id)
+				setSuppliers((prev) => prev.filter((s) => s._id !== id))
+			} catch (e) {
+				console.error(e)
+			}
+		},
+		[setSuppliers],
+	)
 
 	return {
-		categories, products, presentations, suppliers, tags,
-		selectedProduct, productPresentations,
+		categories,
+		products,
+		presentations,
+		suppliers,
+		tags,
+		selectedProduct,
+		productPresentations,
 		shift,
 		...state,
 		handleSelectProduct,

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useShift } from './shift-context.jsx'
 import { AdjustmentForm } from './adjustment-form.jsx'
-import { ShiftSalesList } from './shift-sales-list.jsx'
+import { SalesList } from './sales/sales-list.jsx'
 import { Button } from '../../components/button.jsx'
 
 /**
@@ -40,9 +40,7 @@ export const ActiveShiftCard = ({ onRequestClose }) => {
 					<Button onClick={() => setShowAdjustmentForm(!showAdjustmentForm)}>
 						{showAdjustmentForm ? 'Cancelar' : '+ Ajuste'}
 					</Button>
-					{!synced && (
-						<Button onClick={() => syncToDb()}>Sincronizar</Button>
-					)}
+					{!synced && <Button onClick={() => syncToDb()}>Sincronizar</Button>}
 					<Button variant='danger' onClick={onRequestClose}>
 						Cerrar Turno
 					</Button>
@@ -68,14 +66,12 @@ export const ActiveShiftCard = ({ onRequestClose }) => {
 				</div>
 				<div className='shifts-page__stat'>
 					Items:{' '}
-					<span className='shifts-page__stat-value'>
-						{shift.sales.length}
-					</span>
+					<span className='shifts-page__stat-value'>{shift.sales.length}</span>
 				</div>
 				<div className='shifts-page__stat'>
 					Clientes:{' '}
 					<span className='shifts-page__stat-value'>
-						{new Set(shift.sales.map(s => s.ticketId || s._tempId)).size}
+						{new Set(shift.sales.map((s) => s.ticketId || s._tempId)).size}
 					</span>
 				</div>
 				{(() => {
@@ -109,7 +105,12 @@ export const ActiveShiftCard = ({ onRequestClose }) => {
 							<div className='shifts-page__stat'>
 								Esperado en caja:{' '}
 								<span className='shifts-page__stat-value'>
-									${(shift.openingCash + cashTotal - adjustmentsTotal).toLocaleString()}
+									$
+									{(
+										shift.openingCash +
+										cashTotal -
+										adjustmentsTotal
+									).toLocaleString()}
 								</span>
 							</div>
 						</>
@@ -121,16 +122,23 @@ export const ActiveShiftCard = ({ onRequestClose }) => {
 				<div className='shift-adjustments'>
 					<h4 className='shift-adjustments__title'>Ajustes</h4>
 					{adjustments.map((adj, i) => (
-						<div key={adj._tempId ?? adj._id ?? i} className='shift-adjustments__item'>
-							<span className='shift-adjustments__type'>{typeLabel[adj.type] ?? adj.type}</span>
+						<div
+							key={adj._tempId ?? adj._id ?? i}
+							className='shift-adjustments__item'
+						>
+							<span className='shift-adjustments__type'>
+								{typeLabel[adj.type] ?? adj.type}
+							</span>
 							<span className='shift-adjustments__desc'>{adj.description}</span>
-							<span className='shift-adjustments__amount'>-${adj.amount.toLocaleString()}</span>
+							<span className='shift-adjustments__amount'>
+								-${adj.amount.toLocaleString()}
+							</span>
 						</div>
 					))}
 				</div>
 			)}
 
-			<ShiftSalesList />
+			<SalesList />
 		</div>
 	)
 }

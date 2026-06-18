@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useCatalog } from '../../../app/catalog-context.jsx'
-import { useShift } from '../../shift/shift-context.jsx'
+import { useShift } from '../../shifts/shift-context.jsx'
 import { calculate } from '../../../data/index.js'
 import { useProductDetailData } from './hooks/use-product-detail-data.js'
 import { useProductDetailEffect } from './hooks/use-product-detail-effect.js'
@@ -10,11 +10,29 @@ import { useSupplierActions } from './hooks/use-supplier-actions.js'
 import { useQuickOrder } from './hooks/use-quick-order.js'
 
 export function useProductDetail(productId) {
-	const { products, presentations, categories, suppliers, productSuppliers, setProducts, setPresentations, setProductSuppliers } = useCatalog()
+	const {
+		products,
+		presentations,
+		categories,
+		suppliers,
+		productSuppliers,
+		setProducts,
+		setPresentations,
+		setProductSuppliers,
+	} = useCatalog()
 	const { shift, addSale } = useShift()
 
-	const { product, productPres, category, isFraction, totalStock, assignedSupplierIds, activeSupplier, minSalePrice, activeSupplierName } =
-		useProductDetailData(productId)
+	const {
+		product,
+		productPres,
+		category,
+		isFraction,
+		totalStock,
+		assignedSupplierIds,
+		activeSupplier,
+		minSalePrice,
+		activeSupplierName,
+	} = useProductDetailData(productId)
 
 	// ── UI state ──────────────────────────────────────────
 	const [editProductOpen, setEditProductOpen] = useState(false)
@@ -26,22 +44,26 @@ export function useProductDetail(productId) {
 
 	useProductDetailEffect({ product, setProductSuppliers, setProducts })
 
-	const { handleEditProduct, handleDeleteProduct, handleStockGramsSave, handleSale } =
-		useProductDetailMutations({
-			product,
-			productSuppliers,
-			activeSupplier,
-			stockGramsValue,
-			setProducts,
-			setPresentations,
-			setProductSuppliers,
-			setEditProductOpen,
-			setStockGramsEdit,
-			setSalePresId,
-			addSale,
-			presentations,
-			products,
-		})
+	const {
+		handleEditProduct,
+		handleDeleteProduct,
+		handleStockGramsSave,
+		handleSale,
+	} = useProductDetailMutations({
+		product,
+		productSuppliers,
+		activeSupplier,
+		stockGramsValue,
+		setProducts,
+		setPresentations,
+		setProductSuppliers,
+		setEditProductOpen,
+		setStockGramsEdit,
+		setSalePresId,
+		addSale,
+		presentations,
+		products,
+	})
 
 	const { handleCreatePres, handleEditPres, handleDeletePres } =
 		usePresentationActions({
@@ -64,20 +86,44 @@ export function useProductDetail(productId) {
 	const [quickOrderOpen, setQuickOrderOpen] = useState(false)
 
 	return {
-		product, productPres, categories, category, isFraction, totalStock,
-		productSuppliers, assignedSupplierIds, activeSupplier, activeSupplierName,
-		minSalePrice, suppliers, shift,
+		product,
+		productPres,
+		categories,
+		category,
+		isFraction,
+		totalStock,
+		productSuppliers,
+		assignedSupplierIds,
+		activeSupplier,
+		activeSupplierName,
+		minSalePrice,
+		suppliers,
+		shift,
 		calculate: (pres) => calculate(product, pres),
-		editProductOpen, setEditProductOpen,
-		presFormOpen, setPresFormOpen,
-		editingPres, setEditingPres,
-		salePresId, setSalePresId,
-		stockGramsEdit, setStockGramsEdit,
-		stockGramsValue, setStockGramsValue,
-		handleEditProduct, handleDeleteProduct,
-		handleCreatePres, handleEditPres, handleDeletePres,
-		handleStockGramsSave, handleSale,
-		handleAddSupplier, handleRemoveSupplier, handleUseSupplierCost,
-		quickOrder, quickOrderOpen, setQuickOrderOpen,
+		editProductOpen,
+		setEditProductOpen,
+		presFormOpen,
+		setPresFormOpen,
+		editingPres,
+		setEditingPres,
+		salePresId,
+		setSalePresId,
+		stockGramsEdit,
+		setStockGramsEdit,
+		stockGramsValue,
+		setStockGramsValue,
+		handleEditProduct,
+		handleDeleteProduct,
+		handleCreatePres,
+		handleEditPres,
+		handleDeletePres,
+		handleStockGramsSave,
+		handleSale,
+		handleAddSupplier,
+		handleRemoveSupplier,
+		handleUseSupplierCost,
+		quickOrder,
+		quickOrderOpen,
+		setQuickOrderOpen,
 	}
 }
