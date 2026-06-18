@@ -30,7 +30,9 @@ export function shiftReducer(state, action) {
 				...state,
 				shift: {
 					...state.shift,
-					sales: state.shift.sales.filter((s) => s._tempId !== action.tempId),
+					sales: state.shift.sales.filter(
+						(s) => s._tempId !== action.tempId && s._id !== action.tempId,
+					),
 				},
 			}
 		case 'EDIT_SALE':
@@ -40,7 +42,9 @@ export function shiftReducer(state, action) {
 				shift: {
 					...state.shift,
 					sales: state.shift.sales.map((s) =>
-						s._tempId === action.tempId ? { ...s, ...action.fields } : s,
+						s._tempId === action.tempId || s._id === action.tempId
+							? { ...s, ...action.fields }
+							: s,
 					),
 				},
 			}
