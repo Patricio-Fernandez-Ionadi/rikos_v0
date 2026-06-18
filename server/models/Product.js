@@ -10,6 +10,7 @@ const productSchema = new mongoose.Schema({
   marca: { type: String, default: '' },
   tags: [{ type: String }],
   createdAt: { type: Date, default: Date.now },
+  costUpdatedAt: { type: Date, default: null },
 })
 
 productSchema.index({ categoryId: 1 })

@@ -96,21 +96,31 @@ export function useSaleCart() {
 	const handleAddToCart = () => {
 		const qty = Math.max(1, parseInt(quantity) || 1)
 		if (!selectedPres || !selectedProduct) return
-		setCartItems((prev) => [
-			...prev,
-			{
-				_cartId: generateTempId(),
-				productId: selectedProduct._id,
-				presentationId: selectedPres._id,
-				productName: selectedProduct.name,
-				presLabel: selectedPres.label,
-				saleType: selectedProduct.saleType,
-				grams: selectedPres.grams,
-				quantity: qty,
-				unitPrice: selectedPres.salePrice ?? 0,
-				total: qty * (selectedPres.salePrice ?? 0),
-			},
-		])
+		setCartItems((prev) => {
+			const existing = prev.find((i) => i.presentationId === selectedPres._id)
+			if (existing) {
+				return prev.map((i) =>
+					i._cartId === existing._cartId
+						? { ...i, quantity: i.quantity + qty, total: (i.quantity + qty) * i.unitPrice }
+						: i,
+				)
+			}
+			return [
+				...prev,
+				{
+					_cartId: generateTempId(),
+					productId: selectedProduct._id,
+					presentationId: selectedPres._id,
+					productName: selectedProduct.name,
+					presLabel: selectedPres.label,
+					saleType: selectedProduct.saleType,
+					grams: selectedPres.grams,
+					quantity: qty,
+					unitPrice: selectedPres.salePrice ?? 0,
+					total: qty * (selectedPres.salePrice ?? 0),
+				},
+			]
+		})
 		setQuantity(1)
 		setSelectedPresId(null)
 		setSelectedProductId(null)
@@ -118,6 +128,15 @@ export function useSaleCart() {
 
 	const handleRemoveItem = (cartId) => {
 		setCartItems((prev) => prev.filter((i) => i._cartId !== cartId))
+	}
+
+	const handleUpdateItemQuantity = (cartId, newQty) => {
+		const qty = Math.max(1, parseInt(newQty) || 1)
+		setCartItems((prev) => prev.map((i) =>
+			i._cartId === cartId
+				? { ...i, quantity: qty, total: qty * i.unitPrice }
+				: i,
+		))
 	}
 
 	const handleAddPromoToCart = (promoSet) => {
@@ -224,6 +243,7 @@ export function useSaleCart() {
 		setCollectedTotal,
 		handleAddToCart,
 		handleRemoveItem,
+		handleUpdateItemQuantity,
 		handleSubmit,
 		promoSets,
 		activeTab,

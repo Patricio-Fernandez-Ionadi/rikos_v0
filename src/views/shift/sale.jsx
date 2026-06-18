@@ -38,6 +38,7 @@ export const SalePage = () => {
 		setCollectedTotal,
 		handleAddToCart,
 		handleRemoveItem,
+		handleUpdateItemQuantity,
 		handleSubmit,
 		promoSets,
 		activeTab,
@@ -57,6 +58,7 @@ export const SalePage = () => {
 		collectedTotal,
 		setCollectedTotal,
 		onRemoveItem: handleRemoveItem,
+		onUpdateItemQuantity: handleUpdateItemQuantity,
 		onSubmit: handleSubmit,
 		onClose: () => navigate('/shifts'),
 	}

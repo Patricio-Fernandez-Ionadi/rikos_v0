@@ -45,18 +45,22 @@ router.post('/', async (req, res, next) => {
 
 router.put('/:id', async (req, res, next) => {
   try {
+    const update = {
+      categoryId: req.body.categoryId,
+      name: req.body.name,
+      purchaseCost: req.body.purchaseCost,
+      margin: req.body.margin,
+      saleType: req.body.saleType,
+      stockGrams: req.body.stockGrams,
+      marca: req.body.marca ?? '',
+      tags: req.body.tags ?? [],
+    }
+    if (req.body.purchaseCost !== undefined) {
+      update.costUpdatedAt = new Date()
+    }
     const prod = await Product.findByIdAndUpdate(
       req.params.id,
-      {
-        categoryId: req.body.categoryId,
-        name: req.body.name,
-        purchaseCost: req.body.purchaseCost,
-        margin: req.body.margin,
-        saleType: req.body.saleType,
-        stockGrams: req.body.stockGrams,
-        marca: req.body.marca ?? '',
-        tags: req.body.tags ?? [],
-      },
+      update,
       { new: true },
     )
     if (!prod) return res.status(404).json({ error: 'Not found' })

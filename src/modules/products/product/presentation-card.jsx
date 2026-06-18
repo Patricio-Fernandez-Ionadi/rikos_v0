@@ -1,5 +1,5 @@
 import { SaleForm } from '../../../components/sale-form.jsx'
-import { Button } from '../../../components/button.jsx'
+import { DottedMenu } from '../../../components/dotted-menu.jsx'
 
 export const PresentationCard = ({
 	pres,
@@ -22,6 +22,14 @@ export const PresentationCard = ({
 					: 'detail-page__diff--neutral'
 			: 'detail-page__diff--neutral'
 
+	const menuItems = [
+		...(shift && shift.status === 'open'
+			? [{ label: 'Vender', onClick: () => setSalePresId(salePresId === pres._id ? null : pres._id) }]
+			: []),
+		{ label: 'Editar', onClick: () => onEdit(pres) },
+		{ label: 'Eliminar', onClick: () => onDelete(pres._id), danger: true },
+	]
+
 	return (
 		<div className='detail-page__pres-card'>
 			<div className='detail-page__pres-header'>
@@ -30,15 +38,7 @@ export const PresentationCard = ({
 					{pres.label}
 				</span>
 				<div className='detail-page__pres-actions'>
-					{shift && shift.status === 'open' && (
-						<Button size='sm' variant='primary' onClick={() =>
-							setSalePresId(salePresId === pres._id ? null : pres._id)
-						}>
-							Vender
-						</Button>
-					)}
-					<Button size='xs' onClick={() => onEdit(pres)}>Editar</Button>
-					<Button size='xs' variant='danger' onClick={() => onDelete(pres._id)}>✕</Button>
+					<DottedMenu items={menuItems} />
 				</div>
 			</div>
 

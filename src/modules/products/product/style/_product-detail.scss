@@ -206,6 +206,14 @@
 	.detail-page__info-label {
 		font-size: 0.75em;
 	}
+
+	.detail-page__info-secondary-date {
+		display: block;
+		font-size: 0.65em;
+		font-weight: 400;
+		color: #888;
+		margin-top: 2px;
+	}
 }
 
 .detail-page__info-tertiary {
@@ -223,6 +231,16 @@
 
 	&:last-child {
 		border-bottom: none;
+	}
+
+	&--muted {
+		color: $grey;
+		font-size: 0.85em;
+
+		.detail-page__info-label {
+			font-size: 0.75em;
+			opacity: 0.7;
+		}
 	}
 }
 
@@ -298,6 +316,22 @@
 	display: flex;
 	gap: 6px;
 	align-items: center;
+
+	.dotted-menu__trigger {
+		width: 30px;
+		height: 30px;
+		min-width: 30px;
+		font-size: 1.1em;
+		background: transparent;
+		border-color: transparent;
+		color: $grey;
+
+		&:hover {
+			background: rgba($grey, 0.1);
+			color: $grey_light;
+			border-color: $grey_dark;
+		}
+	}
 }
 
 .detail-page__pres-details {

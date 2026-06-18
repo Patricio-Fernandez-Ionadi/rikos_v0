@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { DottedMenu } from '../../../components/dotted-menu.jsx'
 
 export const CartPanel = ({
 	cartItems,
@@ -11,6 +12,7 @@ export const CartPanel = ({
 	collectedTotal,
 	setCollectedTotal,
 	onRemoveItem,
+	onUpdateItemQuantity,
 	onSubmit,
 	onClose,
 	isDrawer,
@@ -19,6 +21,22 @@ export const CartPanel = ({
 	const hasItems = cartItems.length > 0
 	const [editingTotal, setEditingTotal] = useState(false)
 	const [totalInput, setTotalInput] = useState('')
+	const [editingQty, setEditingQty] = useState(null)
+	const [qtyInput, setQtyInput] = useState('')
+
+	const handleEditQty = (cartId, currentQty) => {
+		setEditingQty(cartId)
+		setQtyInput(String(currentQty))
+	}
+
+	const commitQty = () => {
+		if (editingQty == null) return
+		const v = parseInt(qtyInput)
+		if (!isNaN(v) && v >= 1) {
+			onUpdateItemQuantity(editingQty, v)
+		}
+		setEditingQty(null)
+	}
 
 	return (
 		<div className={`sale-cart__cart${isDrawer ? ' sale-cart__cart--drawer' : ''}`}>
@@ -45,25 +63,37 @@ export const CartPanel = ({
 					cartItems.map((item) => (
 						<div key={item._cartId} className='sale-cart__cart-item'>
 							<div className='sale-cart__cart-item-info'>
-								<span className='sale-cart__cart-item-name'>
-									{item.productName}
-								</span>
-								<span className='sale-cart__cart-item-pres'>
-									{item.presLabel}
-								</span>
-								<span className='sale-cart__cart-item-qty'>
-									{item.quantity}u × ${item.unitPrice.toLocaleString()}
-								</span>
+								<div className='sale-cart__cart-item-title'>
+									<span className='sale-cart__cart-item-name'>{item.productName}</span>
+									{item.presLabel && <span className='sale-cart__cart-item-extra'>· {item.presLabel}</span>}
+								</div>
+								{editingQty === item._cartId ? (
+									<input
+										className='field-input field-input--xs sale-cart__cart-qty-input'
+										type='number'
+										min='1'
+										value={qtyInput}
+										onChange={(e) => setQtyInput(e.target.value)}
+										onBlur={commitQty}
+										onKeyDown={(e) => {
+											if (e.key === 'Enter') commitQty()
+											if (e.key === 'Escape') setEditingQty(null)
+										}}
+										autoFocus
+									/>
+								) : (
+									<span className='sale-cart__cart-item-qty'>
+										{item.quantity}u × ${item.unitPrice.toLocaleString()}
+									</span>
+								)}
 							</div>
 							<span className='sale-cart__cart-item-total'>
 								${item.total.toLocaleString()}
 							</span>
-							<button
-								className='btn btn--xs btn--danger'
-								onClick={() => onRemoveItem(item._cartId)}
-							>
-								✕
-							</button>
+							<DottedMenu items={[
+								{ label: 'Editar cantidad', onClick: () => handleEditQty(item._cartId, item.quantity) },
+								{ label: 'Quitar', onClick: () => onRemoveItem(item._cartId), danger: true },
+							]} />
 						</div>
 					))
 				)}

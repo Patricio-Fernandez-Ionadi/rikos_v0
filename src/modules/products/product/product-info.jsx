@@ -31,6 +31,8 @@ export const ProductInfo = ({
 			saleTypeLabel={isFraction ? 'Fraccionable' : 'Unidad'}
 			marca={product.marca}
 			activeSupplierName={activeSupplierName}
+			createdAt={product.createdAt}
+			costUpdatedAt={product.costUpdatedAt}
 		/>
 	)
 }

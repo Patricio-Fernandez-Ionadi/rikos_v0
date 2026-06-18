@@ -31,7 +31,7 @@ export function ProductDetailModals({
       <Modal open={presFormOpen} onClose={onClosePresForm} title='Nueva presentación'>
         <PresentationForm
           product={product}
-          onSubmit={handleCreatePres}
+          onSubmit={async (data) => { await handleCreatePres(data); onClosePresForm() }}
           onCancel={onClosePresForm}
         />
       </Modal>
@@ -40,7 +40,7 @@ export function ProductDetailModals({
         <PresentationForm
           initial={editingPres}
           product={product}
-          onSubmit={handleEditPres}
+          onSubmit={async (data) => { await handleEditPres(data); onCloseEditingPres() }}
           onCancel={onCloseEditingPres}
         />
       </Modal>

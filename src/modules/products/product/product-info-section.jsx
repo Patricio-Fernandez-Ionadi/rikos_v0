@@ -10,6 +10,8 @@ export const ProductInfoSection = ({
 	saleTypeLabel,
 	marca,
 	activeSupplierName,
+	createdAt,
+	costUpdatedAt,
 	stockGramsEdit,
 	stockGramsValue,
 	setStockGramsEdit,
@@ -76,7 +78,14 @@ export const ProductInfoSection = ({
 				</div>
 				<div className='detail-page__info-secondary-item'>
 					<span className='detail-page__info-label'>Costo de compra</span>
-					<span>${purchaseCost?.toLocaleString() ?? 'Sin datos'}</span>
+					<span>
+						${purchaseCost?.toLocaleString() ?? 'Sin datos'}
+						{costUpdatedAt && (
+							<span className='detail-page__info-secondary-date'>
+								actualizado {new Date(costUpdatedAt).toLocaleDateString()}
+							</span>
+						)}
+					</span>
 				</div>
 			</div>
 
@@ -103,6 +112,18 @@ export const ProductInfoSection = ({
 					<div className='detail-page__info-row'>
 						<span className='detail-page__info-label'>Proveedor actual</span>
 						<span>{activeSupplierName}</span>
+					</div>
+				)}
+				{createdAt && (
+					<div className='detail-page__info-row detail-page__info-row--muted'>
+						<span className='detail-page__info-label'>Creado</span>
+						<span>{new Date(createdAt).toLocaleDateString()}</span>
+					</div>
+				)}
+				{costUpdatedAt && (
+					<div className='detail-page__info-row detail-page__info-row--muted'>
+						<span className='detail-page__info-label'>Costo actualizado</span>
+						<span>{new Date(costUpdatedAt).toLocaleDateString()}</span>
 					</div>
 				)}
 			</div>
