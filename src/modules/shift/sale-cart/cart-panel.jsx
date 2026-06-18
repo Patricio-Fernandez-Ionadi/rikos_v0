@@ -13,16 +13,30 @@ export const CartPanel = ({
 	onRemoveItem,
 	onSubmit,
 	onClose,
+	isDrawer,
+	onDrawerClose,
 }) => {
 	const hasItems = cartItems.length > 0
 	const [editingTotal, setEditingTotal] = useState(false)
 	const [totalInput, setTotalInput] = useState('')
 
 	return (
-		<div className='sale-cart__cart'>
-			<h4 className='sale-cart__cart-heading'>
-				Carrito ({cartItems.length})
-			</h4>
+		<div className={`sale-cart__cart${isDrawer ? ' sale-cart__cart--drawer' : ''}`}>
+			{isDrawer && (
+				<div className='sale-cart__cart-drawer-header'>
+					<h4 className='sale-cart__cart-heading'>
+						Carrito ({cartItems.length})
+					</h4>
+					<button className='btn btn--xs' onClick={onDrawerClose}>
+						<span className='material-icons'>close</span>
+					</button>
+				</div>
+			)}
+			{!isDrawer && (
+				<h4 className='sale-cart__cart-heading'>
+					Carrito ({cartItems.length})
+				</h4>
+			)}
 
 			<div className='sale-cart__cart-list'>
 				{!hasItems ? (

@@ -22,23 +22,21 @@ function savePersisted(state) {
 	} catch { /* quota exceeded, ignore */ }
 }
 
-const persisted = loadPersisted()
-
 export function useSaleCart() {
 	const { products, presentations, categories, tags, setProducts, setPresentations } = useCatalog()
 	const { recordTicket } = useShift()
 
-	const [cartItems, setCartItems] = useState(persisted?.cartItems ?? [])
+	const [cartItems, setCartItems] = useState(() => loadPersisted()?.cartItems ?? [])
 	const [searchQuery, setSearchQuery] = useState('')
 	const [selectedCategory, setSelectedCategory] = useState('')
 	const [selectedTags, setSelectedTags] = useState([])
 	const [selectedProductId, setSelectedProductId] = useState(null)
 	const [selectedPresId, setSelectedPresId] = useState(null)
 	const [quantity, setQuantity] = useState(1)
-	const [paymentMethod, setPaymentMethod] = useState(persisted?.paymentMethod ?? 'electronic')
-	const [collectedTotal, setCollectedTotal] = useState(persisted?.collectedTotal ?? null)
+	const [paymentMethod, setPaymentMethod] = useState(() => loadPersisted()?.paymentMethod ?? 'electronic')
+	const [collectedTotal, setCollectedTotal] = useState(() => loadPersisted()?.collectedTotal ?? null)
 	const [promoSets, setPromoSets] = useState([])
-	const [activeTab, setActiveTab] = useState(persisted?.activeTab ?? 'products')
+	const [activeTab, setActiveTab] = useState(() => loadPersisted()?.activeTab ?? 'products')
 
 	useEffect(() => {
 		savePersisted({ cartItems, paymentMethod, collectedTotal, activeTab })
