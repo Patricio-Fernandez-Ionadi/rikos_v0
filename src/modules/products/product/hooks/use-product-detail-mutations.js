@@ -4,6 +4,7 @@ import * as productService from '../../services/product-services.js'
 import * as stockService from '../../../stock/services/stock-services.js'
 import * as supplierService from '../../../suppliers/services/supplier-services.js'
 import { applyStockDeduction } from '../../../../data/stock-utils.js'
+import { useToast } from '../../../../components/Toast.jsx'
 
 export function useProductDetailMutations({
   product,
@@ -21,6 +22,7 @@ export function useProductDetailMutations({
   products: allProducts,
 }) {
   const navigate = useNavigate()
+  const showToast = useToast()
 
   const handleEditProduct = useCallback(
     async (data) => {
@@ -54,12 +56,14 @@ export function useProductDetailMutations({
             purchaseCost: productData.purchaseCost,
           })
         }
+        showToast('Producto editado')
       } catch (e) {
         console.error(e)
+        showToast('Error al editar producto', 'error')
       }
       setEditProductOpen(false)
     },
-    [product, productSuppliers, activeSupplier, setProducts, setProductSuppliers, setEditProductOpen],
+    [product, productSuppliers, activeSupplier, setProducts, setProductSuppliers, setEditProductOpen, showToast],
   )
 
   const handleDeleteProduct = useCallback(async () => {
@@ -70,10 +74,12 @@ export function useProductDetailMutations({
       setProducts((prev) => prev.filter((p) => p._id !== product._id))
       setPresentations((prev) => prev.filter((p) => p.productId !== product._id))
       navigate('/products')
+      showToast('Producto eliminado')
     } catch (e) {
       console.error(e)
+      showToast('Error al eliminar producto', 'error')
     }
-  }, [product, setProducts, setPresentations, navigate])
+  }, [product, setProducts, setPresentations, navigate, showToast])
 
   const handleStockGramsSave = useCallback(async () => {
     if (!product) return
@@ -84,11 +90,13 @@ export function useProductDetailMutations({
       setProducts((prev) =>
         prev.map((p) => (p._id === updated._id ? updated : p)),
       )
+      showToast('Stock actualizado')
     } catch (e) {
       console.error(e)
+      showToast('Error al actualizar stock', 'error')
     }
     setStockGramsEdit(false)
-  }, [product, stockGramsValue, setProducts, setStockGramsEdit])
+  }, [product, stockGramsValue, setProducts, setStockGramsEdit, showToast])
 
   const handleSale = useCallback(
     async (sale) => {

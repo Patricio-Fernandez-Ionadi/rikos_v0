@@ -1,6 +1,7 @@
 import { useCallback } from 'react'
 import * as presService from '../services/presentation-services.js'
 import * as stockService from '../../../stock/services/stock-services.js'
+import { useToast } from '../../../../components/Toast.jsx'
 
 export function usePresentationActions({
   product,
@@ -10,6 +11,8 @@ export function usePresentationActions({
   setPresentations,
   setProducts,
 }) {
+  const showToast = useToast()
+
   const handleCreatePres = useCallback(
     async (data) => {
       if (!product) return
@@ -19,11 +22,13 @@ export function usePresentationActions({
           ...data,
         })
         setPresentations((prev) => [...prev, created])
+        showToast('Presentación creada')
       } catch (e) {
         console.error(e)
+        showToast('Error al crear presentación', 'error')
       }
     },
-    [product, setPresentations],
+    [product, setPresentations, showToast],
   )
 
   const handleEditPres = useCallback(
@@ -55,11 +60,13 @@ export function usePresentationActions({
             )
           }
         }
+        showToast('Presentación actualizada')
       } catch (e) {
         console.error(e)
+        showToast('Error al actualizar presentación', 'error')
       }
     },
-    [editingPres, isFraction, product, setPresentations, setProducts],
+    [editingPres, isFraction, product, setPresentations, setProducts, showToast],
   )
 
   const handleDeletePres = useCallback(
@@ -82,11 +89,13 @@ export function usePresentationActions({
             ),
           )
         }
+        showToast('Presentación eliminada')
       } catch (e) {
         console.error(e)
+        showToast('Error al eliminar presentación', 'error')
       }
     },
-    [isFraction, product, productPres, setPresentations, setProducts],
+    [isFraction, product, productPres, setPresentations, setProducts, showToast],
   )
 
   return { handleCreatePres, handleEditPres, handleDeletePres }

@@ -5,6 +5,7 @@ import { generateTempId } from '../../../data/entities.js'
 import { filterProducts, findPresentationByCode } from '../../../data/filter-products.js'
 import { applyBatchStockDeduction } from '../../../data/stock-utils.js'
 import { getPromoSets } from '../../../data/api.js'
+import { useToast } from '../../../components/Toast.jsx'
 
 const STORAGE_KEY = 'rikos-sale-cart'
 
@@ -25,6 +26,7 @@ function savePersisted(state) {
 export function useSaleCart() {
 	const { products, presentations, categories, tags, setProducts, setPresentations } = useCatalog()
 	const { recordTicket } = useShift()
+	const showToast = useToast()
 
 	const [cartItems, setCartItems] = useState(() => loadPersisted()?.cartItems ?? [])
 	const [searchQuery, setSearchQuery] = useState('')
@@ -199,7 +201,12 @@ export function useSaleCart() {
 			total: i.total,
 		}))
 
-		await recordTicket(ticketId, paymentMethod, items, finalTotal)
+		try {
+			await recordTicket(ticketId, paymentMethod, items, finalTotal)
+		} catch {
+			showToast('Error al registrar venta', 'error')
+			return
+		}
 
 		const result = applyBatchStockDeduction(presentations, products, cartItems)
 		setPresentations(result.presentations)
@@ -209,6 +216,7 @@ export function useSaleCart() {
 		setSelectedProductId(null)
 		setSelectedPresId(null)
 		sessionStorage.removeItem(STORAGE_KEY)
+		showToast('Venta registrada')
 		onClose()
 	}
 
