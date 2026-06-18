@@ -1,38 +1,60 @@
-import { Link } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import { useShift } from '../modules/shifts/shift-context.jsx'
 import { Button } from './button.jsx'
 
-/**
- * Minimal top bar for the active shift.
- * Only renders when a shift is open — shows a badge, sync info, and a link to the shift view.
- * Opening and closing a shift is handled on the /shifts page.
- */
+const CART_KEY = 'rikos-sale-cart'
+
+function hasCartItems() {
+  try {
+    const raw = sessionStorage.getItem(CART_KEY)
+    if (!raw) return false
+    const data = JSON.parse(raw)
+    return Array.isArray(data?.cartItems) && data.cartItems.length > 0
+  } catch {
+    return false
+  }
+}
+
 export const ShiftBar = () => {
-	const { shift, synced, syncToDb } = useShift()
+  const { shift, synced, syncToDb } = useShift()
+  const location = useLocation()
+  const [cartActive, setCartActive] = useState(hasCartItems)
 
-	if (!shift) return null
+  useEffect(() => {
+    setCartActive(hasCartItems())
+  }, [location])
 
-	return (
-		<div className='shift-bar'>
-			<div className='shift-bar__active'>
-				<span className='shift-bar__badge shift-bar__badge--open'>
-					Turno abierto
-				</span>
+  if (!shift) return null
 
-				{!synced && (
-					<>
-						<span className='shift-bar__badge shift-bar__badge--warn'>
-							Ventas sin sincronizar
-						</span>
-						<Button onClick={() => syncToDb()}>Sincronizar</Button>
-					</>
-				)}
+  return (
+    <div className='shift-bar'>
+      <div className='shift-bar__active'>
+        <span className='shift-bar__badge shift-bar__badge--open'>
+          Turno abierto
+        </span>
 
-				{synced && <span className='shift-bar__stat'>Sincronizado</span>}
-				<Link to='/shifts' className='btn btn--primary'>
-					Ir al turno
-				</Link>
-			</div>
-		</div>
-	)
+        {!synced && (
+          <>
+            <span className='shift-bar__badge shift-bar__badge--warn'>
+              Ventas sin sincronizar
+            </span>
+            <Button onClick={() => syncToDb()}>Sincronizar</Button>
+          </>
+        )}
+
+        {synced && <span className='shift-bar__stat'>Sincronizado</span>}
+
+        {cartActive && (
+          <Link to='/shifts/sale' className='shift-bar__btn shift-bar__btn--primary'>
+            Carrito
+          </Link>
+        )}
+
+        <Link to='/shifts' className='btn btn--primary'>
+          Ir al turno
+        </Link>
+      </div>
+    </div>
+  )
 }
