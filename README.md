@@ -225,5 +225,4 @@ Reads `src/data/productos-exel.csv` and writes `src/data/seed.json`. Detects pre
 
 - JSX files use the `.jsx` extension; no TypeScript
 - ESLint `no-unused-vars` ignores names matching `^[A-Z_]`; `server/` excluded via `globalIgnores`
-- Every function must have a JSDoc comment describing its purpose, params, and return
-- Spanish UI labels; ARS prices (Argentine pesos)
+- UI labels in Spanish; ARS prices (Argentine pesos)
