@@ -4,6 +4,6 @@ import { ProductDetail } from '../../modules/products/product/product-detail.jsx
 export const ProductDetailPage = () => {
 	const { id } = useParams()
 	const location = useLocation()
-	const filterState = location.state ?? null
-	return <ProductDetail productId={id} filterState={filterState} />
+	const productList = location.state?.productList ?? null
+	return <ProductDetail productId={id} productList={productList} />
 }

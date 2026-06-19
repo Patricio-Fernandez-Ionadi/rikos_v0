@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect, useRef } from 'react'
+import { useState, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useProductDetail } from './product-detail-manager.js'
 import { useTasksManager } from '../../tasks/tasks-manager.js'
@@ -7,11 +7,10 @@ import { ProductDetailNav } from './product-detail-nav/product-detail-nav.jsx'
 import { ProductDetailBody } from './product-detail-body/product-detail-body.jsx'
 import { ProductDetailModals } from './product-detail-modals/product-detail-modals.jsx'
 import { QuickOrderModal } from './quick-order-modal.jsx'
-import { filterProductIds } from '../../../data/filter-products.js'
 
-export const ProductDetail = ({ productId, filterState = null }) => {
+export const ProductDetail = ({ productId, productList }) => {
 	const navigate = useNavigate()
-	const { products, presentations, categories, tags } = useCatalog()
+	const { products, presentations, categories } = useCatalog()
 	const {
 		product,
 		productPres,
@@ -55,74 +54,40 @@ export const ProductDetail = ({ productId, filterState = null }) => {
 
 	const { getProductTaskCategories, toggleProductTask } = useTasksManager()
 
-	// ── Editable filters ────────────────────────────
-	const [filterOpen, setFilterOpen] = useState(false)
-	const [localSearch, setLocalSearch] = useState(filterState?.searchTerm ?? '')
-	const [localCategories, setLocalCategories] = useState(
-		filterState?.selectedCategoryIds ?? [],
-	)
-	const [localTags, setLocalTags] = useState(filterState?.selectedTags ?? [])
+	// ── Search for other products ────────────────────
+	const [search, setSearch] = useState('')
 
-	// Keep in sync when navigating to a product from a different filter state
-	const prevFilterKey = useRef(null)
-	const filterKey = JSON.stringify({
-		s: filterState?.searchTerm,
-		c: filterState?.selectedCategoryIds,
-		t: filterState?.selectedTags,
-	})
-	useEffect(() => {
-		if (filterKey !== prevFilterKey.current) {
-			prevFilterKey.current = filterKey
-			setLocalSearch(filterState?.searchTerm ?? '')
-			setLocalCategories(filterState?.selectedCategoryIds ?? [])
-			setLocalTags(filterState?.selectedTags ?? [])
-			window.scrollTo(0, 0)
-		}
-	}, [filterKey, filterState])
+	const searchResults = useMemo(() => {
+		if (!search.trim()) return []
+		const q = search.toLowerCase()
+		return products
+			.filter((p) => p.name.toLowerCase().includes(q) && p._id !== product?._id)
+			.slice(0, 12)
+	}, [products, search, product])
 
-	// ── Local filtered list ─────────────────────────
-	const filteredIds = useMemo(() => {
-		return filterProductIds(products, presentations, {
-			searchTerm: localSearch,
-			categoryIds: localCategories,
-			tags: localTags,
-		})
-	}, [products, presentations, localSearch, localCategories, localTags])
+	const handleSelectResult = (targetId) => {
+		setSearch('')
+		navigate(`/products/${targetId}`)
+	}
 
+	// ── Navigation through product list ──────────────
 	const navInfo = useMemo(() => {
-		if (!product) return null
-		const idx = filteredIds.indexOf(productId)
+		if (!product || !productList?.length) return null
+		const idx = productList.indexOf(productId)
 		if (idx === -1) return null
 		return {
 			index: idx,
-			total: filteredIds.length,
-			prevId: idx > 0 ? filteredIds[idx - 1] : null,
-			nextId: idx < filteredIds.length - 1 ? filteredIds[idx + 1] : null,
+			total: productList.length,
+			prevId: idx > 0 ? productList[idx - 1] : null,
+			nextId: idx < productList.length - 1 ? productList[idx + 1] : null,
 		}
-	}, [filteredIds, product, productId])
+	}, [productList, product, productId])
 
 	const handlePrevNext = (targetId) => {
 		navigate(`/products/${targetId}`, {
 			replace: true,
-			state: {
-				productList: filteredIds,
-				searchTerm: localSearch,
-				selectedCategoryIds: localCategories,
-				selectedTags: localTags,
-			},
+			state: { productList },
 		})
-	}
-
-	const handleToggleCategory = (catId) => {
-		setLocalCategories((prev) =>
-			prev.includes(catId) ? prev.filter((c) => c !== catId) : [...prev, catId],
-		)
-	}
-
-	const handleToggleTag = (tag) => {
-		setLocalTags((prev) =>
-			prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag],
-		)
 	}
 
 	if (!product) {
@@ -137,20 +102,12 @@ export const ProductDetail = ({ productId, filterState = null }) => {
 		<div className='detail-page'>
 			<ProductDetailNav
 				navInfo={navInfo}
-				filterOpen={filterOpen}
-				onToggleFilter={() => setFilterOpen(!filterOpen)}
 				onNavigate={handlePrevNext}
-				localSearch={localSearch}
-				onSearchChange={setLocalSearch}
-				products={products}
-				filteredIds={filteredIds}
-				categories={categories}
-				localCategories={localCategories}
-				onToggleCategory={handleToggleCategory}
-				tags={tags}
-				localTags={localTags}
-				onToggleTag={handleToggleTag}
 				onBack={() => navigate(-1)}
+				search={search}
+				onSearchChange={setSearch}
+				searchResults={searchResults}
+				onSelectResult={handleSelectResult}
 			/>
 
 			<ProductDetailBody
