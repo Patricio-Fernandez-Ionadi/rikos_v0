@@ -34,6 +34,8 @@ export function useProductDetail(productId) {
 		activeSupplierName,
 	} = useProductDetailData(productId)
 
+	const hasMissingCodes = presentations.some((p) => p.code == null)
+
 	// ── UI state ──────────────────────────────────────────
 	const [editProductOpen, setEditProductOpen] = useState(false)
 	const [presFormOpen, setPresFormOpen] = useState(false)
@@ -126,5 +128,6 @@ export function useProductDetail(productId) {
 		quickOrder,
 		quickOrderOpen,
 		setQuickOrderOpen,
+		hasMissingCodes,
 	}
 }

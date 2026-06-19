@@ -44,6 +44,7 @@ export const ProductDetail = ({ productId, filterState = null }) => {
 		handleEditPres,
 		handleDeletePres,
 		handleRenumberPres,
+		hasMissingCodes,
 		handleStockGramsSave,
 		handleSale,
 		handleAddSupplier,
@@ -173,6 +174,7 @@ export const ProductDetail = ({ productId, filterState = null }) => {
 				setEditingPres={setEditingPres}
 				handleDeletePres={handleDeletePres}
 				handleRenumberPres={handleRenumberPres}
+				hasMissingCodes={hasMissingCodes}
 				suppliers={suppliers}
 				productSuppliers={productSuppliers}
 				assignedSupplierIds={assignedSupplierIds}

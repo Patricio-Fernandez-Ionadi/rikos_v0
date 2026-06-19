@@ -25,6 +25,7 @@ export function ProductDetailBody({
   setEditingPres,
   handleDeletePres,
   handleRenumberPres,
+  hasMissingCodes,
   suppliers,
   productSuppliers,
   assignedSupplierIds,
@@ -81,9 +82,11 @@ export function ProductDetailBody({
         <div className='detail-page__section-header'>
           <h3>Presentaciones</h3>
           <div className='detail-page__section-actions'>
-            <button type='button' className='detail-page__renumber-btn' onClick={handleRenumberPres} title='Renumerar secuencialmente'>
-              Renumerar
-            </button>
+            {hasMissingCodes && (
+              <button type='button' className='detail-page__renumber-btn' onClick={handleRenumberPres} title='Renumerar secuencialmente'>
+                Renumerar
+              </button>
+            )}
             <Button size='sm' onClick={() => setPresFormOpen(true)}>+ Nueva</Button>
           </div>
         </div>
