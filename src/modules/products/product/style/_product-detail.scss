@@ -273,6 +273,28 @@
 	}
 }
 
+.detail-page__section-actions {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.detail-page__renumber-btn {
+	background: transparent;
+	border: 1px solid $grey_dark;
+	border-radius: $thin;
+	color: $grey_light;
+	cursor: pointer;
+	font-size: 0.75em;
+	padding: 4px 10px;
+	transition: all 0.2s ease;
+
+	&:hover {
+		border-color: $primary;
+		color: $primary;
+	}
+}
+
 .detail-page__pres-grid {
 	display: flex;
 	flex-direction: column;

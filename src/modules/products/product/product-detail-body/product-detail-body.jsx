@@ -24,6 +24,7 @@ export function ProductDetailBody({
   handleSale,
   setEditingPres,
   handleDeletePres,
+  handleRenumberPres,
   suppliers,
   productSuppliers,
   assignedSupplierIds,
@@ -79,7 +80,12 @@ export function ProductDetailBody({
       <div className='detail-page__section'>
         <div className='detail-page__section-header'>
           <h3>Presentaciones</h3>
-          <Button size='sm' onClick={() => setPresFormOpen(true)}>+ Nueva</Button>
+          <div className='detail-page__section-actions'>
+            <button type='button' className='detail-page__renumber-btn' onClick={handleRenumberPres} title='Renumerar secuencialmente'>
+              Renumerar
+            </button>
+            <Button size='sm' onClick={() => setPresFormOpen(true)}>+ Nueva</Button>
+          </div>
         </div>
         {productPres.length === 0 ? (
           <p className='placeholder text-muted'>Sin presentaciones</p>

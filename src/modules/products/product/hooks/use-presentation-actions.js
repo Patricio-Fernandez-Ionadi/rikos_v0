@@ -13,6 +13,19 @@ export function usePresentationActions({
 }) {
   const showToast = useToast()
 
+  const handleRenumberPres = useCallback(async () => {
+    if (!window.confirm('¿Renumerar todas las presentaciones secuencialmente?')) return
+    try {
+      const result = await presService.renumberPresentations()
+      const all = await presService.getAllPresentations()
+      setPresentations(all)
+      showToast(`Presentaciones reordenadas (${result.count} actualizadas)`)
+    } catch (e) {
+      console.error(e)
+      showToast('Error al renumerar presentaciones', 'error')
+    }
+  }, [setPresentations, showToast])
+
   const handleCreatePres = useCallback(
     async (data) => {
       if (!product) return
@@ -98,5 +111,5 @@ export function usePresentationActions({
     [isFraction, product, productPres, setPresentations, setProducts, showToast],
   )
 
-  return { handleCreatePres, handleEditPres, handleDeletePres }
+  return { handleCreatePres, handleEditPres, handleDeletePres, handleRenumberPres }
 }

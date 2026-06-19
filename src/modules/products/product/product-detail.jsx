@@ -43,6 +43,7 @@ export const ProductDetail = ({ productId, filterState = null }) => {
 		handleCreatePres,
 		handleEditPres,
 		handleDeletePres,
+		handleRenumberPres,
 		handleStockGramsSave,
 		handleSale,
 		handleAddSupplier,
@@ -171,6 +172,7 @@ export const ProductDetail = ({ productId, filterState = null }) => {
 				handleSale={handleSale}
 				setEditingPres={setEditingPres}
 				handleDeletePres={handleDeletePres}
+				handleRenumberPres={handleRenumberPres}
 				suppliers={suppliers}
 				productSuppliers={productSuppliers}
 				assignedSupplierIds={assignedSupplierIds}

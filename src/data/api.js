@@ -40,6 +40,7 @@ export const createPresentation = (data) => request('/presentations', { method: 
 export const updatePresentation = (id, data) => request(`/presentations/${id}`, { method: 'PUT', body: JSON.stringify(data) })
 export const deletePresentation = (id) => request(`/presentations/${id}`, { method: 'DELETE' })
 export const updateStock = (id, stock) => request(`/presentations/${id}/stock`, { method: 'PATCH', body: JSON.stringify({ stock }) })
+export const renumberPresentations = () => request('/presentations/renumber', { method: 'POST' })
 
 // ─── Shifts ────────────────────────────────────────────────
 export const getShifts = () => request('/shifts')

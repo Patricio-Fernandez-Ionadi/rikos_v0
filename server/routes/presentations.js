@@ -47,6 +47,21 @@ router.delete('/:id', async (req, res, next) => {
   } catch (e) { next(e) }
 })
 
+/** Reassign sequential codes to all presentations (migration). */
+router.post('/renumber', async (_req, res, next) => {
+  try {
+    const all = await Presentation.find().sort({ _id: 1 })
+    let count = 0
+    for (let i = 0; i < all.length; i++) {
+      if (all[i].code !== i + 1) {
+        await Presentation.findByIdAndUpdate(all[i]._id, { code: i + 1 })
+        count++
+      }
+    }
+    res.json({ count })
+  } catch (e) { next(e) }
+})
+
 router.patch('/:id/stock', async (req, res, next) => {
   try {
     const pres = await Presentation.findByIdAndUpdate(

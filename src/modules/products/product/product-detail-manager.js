@@ -65,7 +65,7 @@ export function useProductDetail(productId) {
 		products,
 	})
 
-	const { handleCreatePres, handleEditPres, handleDeletePres } =
+	const { handleCreatePres, handleEditPres, handleDeletePres, handleRenumberPres } =
 		usePresentationActions({
 			product,
 			editingPres,
@@ -117,6 +117,7 @@ export function useProductDetail(productId) {
 		handleCreatePres,
 		handleEditPres,
 		handleDeletePres,
+		handleRenumberPres,
 		handleStockGramsSave,
 		handleSale,
 		handleAddSupplier,
