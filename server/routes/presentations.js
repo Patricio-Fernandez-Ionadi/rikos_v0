@@ -47,18 +47,17 @@ router.delete('/:id', async (req, res, next) => {
   } catch (e) { next(e) }
 })
 
-/** Reassign sequential codes to all presentations (migration). */
+/** Reassign sequential codes 1..N to all presentations (migration). */
 router.post('/renumber', async (_req, res, next) => {
   try {
+    // Clear all codes first so the unique sparse index doesn't block reassignment
+    await Presentation.updateMany({}, { $unset: { code: '' } })
+
     const all = await Presentation.find().sort({ _id: 1 })
-    let count = 0
     for (let i = 0; i < all.length; i++) {
-      if (all[i].code !== i + 1) {
-        await Presentation.findByIdAndUpdate(all[i]._id, { code: i + 1 })
-        count++
-      }
+      await Presentation.findByIdAndUpdate(all[i]._id, { code: i + 1 })
     }
-    res.json({ count })
+    res.json({ count: all.length })
   } catch (e) { next(e) }
 })
 
