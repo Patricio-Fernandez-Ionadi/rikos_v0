@@ -31,6 +31,9 @@ router.post('/', async (req, res, next) => {
       items: items.map(i => ({
         productId: i.productId,
         productName: i.productName,
+        presentationId: i.presentationId ?? null,
+        presentationLabel: i.presentationLabel ?? null,
+        presentationCode: i.presentationCode ?? null,
         quantity: i.quantity,
         unitCost: i.unitCost,
         total: +(i.quantity * i.unitCost).toFixed(2),
@@ -57,6 +60,9 @@ router.put('/:id', async (req, res, next) => {
     order.items = items.map(i => ({
       productId: i.productId,
       productName: i.productName,
+      presentationId: i.presentationId ?? null,
+      presentationLabel: i.presentationLabel ?? null,
+      presentationCode: i.presentationCode ?? null,
       quantity: i.quantity,
       unitCost: i.unitCost,
       total: +(i.quantity * i.unitCost).toFixed(2),
@@ -84,8 +90,10 @@ router.patch('/:id/items', async (req, res, next) => {
     if (!order) return res.status(404).json({ error: 'Not found' })
     if (order.status !== 'open') return res.status(400).json({ error: 'Order is not open' })
 
-    const { productId, productName, quantity, unitCost, unitLabel } = req.body
-    const existing = order.items.find(i => i.productId === productId)
+    const { productId, productName, presentationId, presentationLabel, presentationCode, quantity, unitCost, unitLabel } = req.body
+    const existing = order.items.find(i =>
+      i.productId === productId && (i.presentationId === (presentationId ?? null))
+    )
     if (existing) {
       existing.quantity += quantity
       existing.total = +(existing.quantity * existing.unitCost).toFixed(2)
@@ -93,6 +101,9 @@ router.patch('/:id/items', async (req, res, next) => {
       order.items.push({
         productId,
         productName,
+        presentationId: presentationId ?? null,
+        presentationLabel: presentationLabel ?? null,
+        presentationCode: presentationCode ?? null,
         quantity,
         unitCost,
         total: +(quantity * unitCost).toFixed(2),

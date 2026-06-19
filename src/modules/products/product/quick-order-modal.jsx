@@ -8,6 +8,7 @@ export function QuickOrderModal({
 	product,
 	productSuppliers,
 	suppliers,
+	presentations,
 	onConfirm,
 }) {
 	const supplierOptions = useMemo(
@@ -22,11 +23,18 @@ export function QuickOrderModal({
 		[productSuppliers, product._id, suppliers],
 	)
 
+	const productPres = useMemo(
+		() => (presentations ?? []).filter((p) => p.productId === product._id),
+		[presentations, product._id],
+	)
+
 	const [selectedIdx, setSelectedIdx] = useState(0)
+	const [selectedPresIdx, setSelectedPresIdx] = useState(0)
 	const [quantity, setQuantity] = useState(1)
 	const [cost, setCost] = useState('')
 
 	const current = supplierOptions[selectedIdx]
+	const selectedPres = productPres[selectedPresIdx]
 
 	useEffect(() => {
 		if (current) setCost(String(current.ps.purchaseCost ?? ''))
@@ -37,6 +45,7 @@ export function QuickOrderModal({
 		if (!current) return
 		onConfirm({
 			product,
+			presentation: selectedPres ?? null,
 			supplierId: current.ps.supplierId,
 			supplierName: current.supplier.name,
 			quantity: Number(quantity),
@@ -75,6 +84,24 @@ export function QuickOrderModal({
 
 				{current && (
 					<>
+						{productPres.length > 0 && (
+							<label className='field'>
+								<span className='field-label'>Presentación del producto</span>
+								<select
+									className='field-input'
+									value={selectedPresIdx}
+									onChange={(e) => setSelectedPresIdx(Number(e.target.value))}
+								>
+									{productPres.map((pres, i) => (
+										<option key={pres._id} value={i}>
+											{pres.code != null ? `#${pres.code} ` : ''}{pres.label || 'Sin etiqueta'}
+											{pres.grams ? ` (${pres.grams}g)` : ''}
+										</option>
+									))}
+								</select>
+							</label>
+						)}
+
 						<div className='field'>
 							<span className='field-label'>Presentación del proveedor</span>
 							<div className='field-hint'>

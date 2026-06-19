@@ -3,6 +3,9 @@ import mongoose from 'mongoose'
 const orderItemSchema = new mongoose.Schema({
   productId: { type: mongoose.Schema.Types.ObjectId, ref: 'Product', required: true },
   productName: { type: String, required: true },
+  presentationId: { type: mongoose.Schema.Types.ObjectId, ref: 'Presentation', default: null },
+  presentationLabel: { type: String, default: null },
+  presentationCode: { type: Number, default: null },
   quantity: { type: Number, required: true, min: 1 },
   unitCost: { type: Number, required: true },
   total: { type: Number, required: true },

@@ -36,6 +36,29 @@
   font-weight: 400;
 }
 
+.order-item-list__pres-label {
+  font-size: 0.8em;
+  color: $grey_light;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.pres-code-sm {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  font-size: 0.7em;
+  font-weight: 700;
+  color: $primary;
+  background: rgba($primary, 0.15);
+  border-radius: 4px;
+  line-height: 1;
+}
+
 .order-item-list__field {
   display: flex;
   align-items: center;

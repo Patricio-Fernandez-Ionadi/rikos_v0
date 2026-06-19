@@ -50,6 +50,27 @@
   border-top: 1px solid $grey_dark;
 }
 
+.orders-cards__items-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 4px 0;
+}
+
+.orders-cards__item-name {
+  font-size: 0.8em;
+  color: $grey_light;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.orders-cards__item-qty {
+  color: $grey;
+  font-size: 0.85em;
+  margin-left: auto;
+}
+
 // ── Orders history table (compact) ────────────────
 
 .orders-table__col--supplier {

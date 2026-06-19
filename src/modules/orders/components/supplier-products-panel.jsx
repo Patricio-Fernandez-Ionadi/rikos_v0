@@ -1,6 +1,6 @@
 import { Button } from '../../../components/button.jsx'
 
-export function SupplierProductsPanel({ supplierName, supplierProducts, productMap, addedProductIds, onAdd }) {
+export function SupplierProductsPanel({ supplierName, supplierProducts, productMap, addedProductIds, onAdd, presentationMap }) {
   return (
     <div className='surface-card p-16 mb-16'>
       <div className='flex-row' style={{ justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
@@ -15,15 +15,47 @@ export function SupplierProductsPanel({ supplierName, supplierProducts, productM
         <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
           {supplierProducts.map((sp) => {
             const prod = productMap.get(sp.productId)
-            if (!prod || addedProductIds.has(sp.productId)) return null
+            if (!prod) return null
+            const presList = presentationMap?.get(prod._id) ?? []
+            const allAdded = presList.length > 0
+              ? presList.every((pres) => addedProductIds.has(`${prod._id}-${pres._id}`))
+              : addedProductIds.has(prod._id)
+            if (!presList.length && addedProductIds.has(prod._id)) return null
+            if (allAdded) return null
+
             return (
-              <div key={sp._id} className='flex-row'
-                style={{ justifyContent: 'space-between', alignItems: 'center', background: 'var(--black)', padding: '8px 12px', borderRadius: 6 }}>
-                <span className='text-white'>{prod.name}</span>
-                <span style={{ color: 'var(--grey-light)', fontSize: '0.85em' }}>
-                  {sp.supplierUnitLabel ?? 'Unidad'} · ${sp.purchaseCost?.toLocaleString() ?? '—'}
-                </span>
-                <Button size='xs' onClick={() => onAdd(prod, sp.purchaseCost, sp.supplierUnitLabel)}>+ Agregar</Button>
+              <div key={sp._id} className='supplier-product-group'>
+                <div className='supplier-product-group__header'>
+                  <span className='text-white'>{prod.name}</span>
+                  <span className='supplier-product-group__cost'>
+                    {sp.supplierUnitLabel ?? 'Unidad'} · ${sp.purchaseCost?.toLocaleString() ?? '—'}
+                  </span>
+                </div>
+                {presList.length > 0 ? (
+                  <div className='supplier-product-group__presents'>
+                    {presList.map((pres) => {
+                      const key = `${prod._id}-${pres._id}`
+                      if (addedProductIds.has(key)) return null
+                      return (
+                        <div key={pres._id} className='supplier-product-group__pres-row'>
+                          <span className='supplier-product-group__pres-label'>
+                            {pres.code != null && <span className='pres-code-sm'>{pres.code}</span>}
+                            {pres.label || 'Sin etiqueta'}
+                          </span>
+                          <Button size='xs' onClick={() => onAdd(prod, sp.purchaseCost, sp.supplierUnitLabel, pres)}>
+                            + Agregar
+                          </Button>
+                        </div>
+                      )
+                    })}
+                  </div>
+                ) : (
+                  <div className='supplier-product-group__no-pres'>
+                    <Button size='xs' onClick={() => onAdd(prod, sp.purchaseCost, sp.supplierUnitLabel)}>
+                      + Agregar producto
+                    </Button>
+                  </div>
+                )}
               </div>
             )
           })}

@@ -8,11 +8,15 @@ import * as productService from '../../products/services/product-services.js'
 
 const NEW_SUPPLIER_VALUE = '__new__'
 
+function itemKey(item) {
+  return item.presentationId ? `${item.productId}-${item.presentationId}` : item.productId
+}
+
 export function useOrderForm() {
   const { id } = useParams()
   const isEditing = Boolean(id)
   const navigate = useNavigate()
-  const { suppliers, products, categories, setProducts, setSuppliers, setProductSuppliers } = useCatalog()
+  const { suppliers, products, presentations, categories, setProducts, setSuppliers, setProductSuppliers } = useCatalog()
   const { createOrder, updateOrder } = useOrders()
 
   const [supplierId, setSupplierId] = useState('')
@@ -46,6 +50,9 @@ export function useOrderForm() {
       setSupplierId(order.supplierId)
       setItems(order.items.map((i) => ({
         productId: i.productId, productName: i.productName,
+        presentationId: i.presentationId ?? null,
+        presentationLabel: i.presentationLabel ?? null,
+        presentationCode: i.presentationCode ?? null,
         quantity: i.quantity, unitCost: i.unitCost,
       })))
       setNotes(order.notes ?? '')
@@ -64,9 +71,9 @@ export function useOrderForm() {
   }, [products])
 
   const filteredProducts = useMemo(() => {
-    const addedIds = new Set(items.map((i) => i.productId))
+    const addedKeys = new Set(items.map(itemKey))
     return products
-      .filter((p) => !addedIds.has(p._id))
+      .filter((p) => !addedKeys.has(p._id))
       .filter((p) => !searchQuery || p.name.toLowerCase().includes(searchQuery.toLowerCase()))
       .sort((a, b) => a.name.localeCompare(b.name))
   }, [products, items, searchQuery])
@@ -76,35 +83,41 @@ export function useOrderForm() {
     [items],
   )
 
-  const addedProductIds = useMemo(() => new Set(items.map((i) => i.productId)), [items])
+  const addedProductIds = useMemo(() => new Set(items.map(itemKey)), [items])
 
-  const handleAddItem = useCallback((product, cost, unitLabel) => {
+  const handleAddItem = useCallback((product, cost, unitLabel, presentation) => {
     setItems((prev) => {
-      if (prev.some((i) => i.productId === product._id)) return prev
+      const key = presentation ? `${product._id}-${presentation._id}` : product._id
+      if (prev.some((i) => itemKey(i) === key)) return prev
       return [...prev, {
-        productId: product._id, productName: product.name,
-        quantity: 1, unitCost: cost ?? product.purchaseCost ?? 0,
+        productId: product._id,
+        productName: product.name,
+        presentationId: presentation?._id ?? null,
+        presentationLabel: presentation?.label ?? null,
+        presentationCode: presentation?.code ?? null,
+        quantity: 1,
+        unitCost: cost ?? product.purchaseCost ?? 0,
         unitLabel: unitLabel ?? '',
       }]
     })
   }, [])
 
-  const handleRemoveItem = useCallback((productId) => {
-    setItems((prev) => prev.filter((i) => i.productId !== productId))
+  const handleRemoveItem = useCallback((key) => {
+    setItems((prev) => prev.filter((i) => itemKey(i) !== key))
   }, [])
 
-  const handleQuantityChange = useCallback((productId, quantity) => {
+  const handleQuantityChange = useCallback((key, quantity) => {
     setItems((prev) =>
       prev.map((i) =>
-        i.productId === productId ? { ...i, quantity: Math.max(1, parseInt(quantity) || 1) } : i,
+        itemKey(i) === key ? { ...i, quantity: Math.max(1, parseInt(quantity) || 1) } : i,
       ),
     )
   }, [])
 
-  const handleCostChange = useCallback((productId, cost) => {
+  const handleCostChange = useCallback((key, cost) => {
     setItems((prev) =>
       prev.map((i) =>
-        i.productId === productId ? { ...i, unitCost: parseFloat(cost) || 0 } : i,
+        itemKey(i) === key ? { ...i, unitCost: parseFloat(cost) || 0 } : i,
       ),
     )
   }, [])
@@ -137,6 +150,15 @@ export function useOrderForm() {
     setSelectedProductId('')
     setSearchQuery('')
   }, [products, supplierProducts, handleAddItem, supplierId, supplierName, selectedProductId, setProductSuppliers])
+
+  const presentationMap = useMemo(() => {
+    const map = new Map()
+    for (const p of presentations) {
+      if (!map.has(p.productId)) map.set(p.productId, [])
+      map.get(p.productId).push(p)
+    }
+    return map
+  }, [presentations])
 
   const handleCreateAndAdd = useCallback(async (name, catId, cost) => {
     const created = await productService.createProduct({
@@ -182,7 +204,8 @@ export function useOrderForm() {
     searchQuery, setSearchQuery,
     selectedProductId, setSelectedProductId,
     filteredProducts, addedProductIds, productMap,
-    categories, suppliers, products,
+    categories, suppliers, products, presentations,
+    presentationMap,
     handleSupplierChange,
     handleAddItem,
     handleRemoveItem,

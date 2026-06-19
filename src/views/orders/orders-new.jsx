@@ -15,6 +15,7 @@ export const OrderFormPage = () => {
     selectedProductId, setSelectedProductId,
     filteredProducts, addedProductIds, productMap,
     categories, suppliers,
+    presentationMap,
     handleSupplierChange,
     handleAddItem, handleRemoveItem,
     handleQuantityChange, handleCostChange,
@@ -60,6 +61,7 @@ export const OrderFormPage = () => {
               supplierProducts={supplierProducts}
               productMap={productMap}
               addedProductIds={addedProductIds}
+              presentationMap={presentationMap}
               onAdd={handleAddItem}
             />
 

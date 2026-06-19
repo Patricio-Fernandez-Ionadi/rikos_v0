@@ -1,5 +1,12 @@
 import { Button } from '../../../components/button.jsx'
 
+function renderItemName(item) {
+  if (item.presentationLabel) {
+    return `${item.productName} — ${item.presentationLabel}`
+  }
+  return item.productName
+}
+
 export function OrderCardsList({ orders, onEdit, onClose, onDelete }) {
   if (orders.length === 0) {
     return <p className='placeholder text-muted'>No hay pedidos abiertos</p>
@@ -17,6 +24,14 @@ export function OrderCardsList({ orders, onEdit, onClose, onDelete }) {
             <span>{o.items.length} producto{o.items.length !== 1 ? 's' : ''}</span>
             <span>${o.totalCost.toLocaleString()}</span>
             <span className='orders-cards__date'>{new Date(o.createdAt).toLocaleDateString()}</span>
+          </div>
+          <div className='orders-cards__items-preview'>
+            {o.items.map((item, i) => (
+              <span key={i} className='orders-cards__item-name'>
+                {renderItemName(item)}
+                <span className='orders-cards__item-qty'>x{item.quantity}</span>
+              </span>
+            ))}
           </div>
           <div className='orders-cards__actions'>
             <Button size='xs' onClick={() => onEdit(o._id)}>Editar</Button>

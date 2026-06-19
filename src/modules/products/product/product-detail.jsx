@@ -196,6 +196,7 @@ export const ProductDetail = ({ productId, filterState = null }) => {
 				product={product}
 				productSuppliers={productSuppliers}
 				suppliers={suppliers}
+				presentations={presentations}
 				onConfirm={quickOrder}
 			/>
 

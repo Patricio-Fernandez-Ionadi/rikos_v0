@@ -13,12 +13,15 @@ export function useQuickOrder() {
   }, [])
 
   const quickOrder = useCallback(async ({
-    product, supplierId, supplierName, quantity, unitCost, unitLabel,
+    product, presentation, supplierId, supplierName, quantity, unitCost, unitLabel,
   }) => {
     const openOrder = await findOpenOrder(supplierId)
     const item = {
       productId: product._id,
       productName: product.name,
+      presentationId: presentation?._id ?? null,
+      presentationLabel: presentation?.label ?? null,
+      presentationCode: presentation?.code ?? null,
       quantity: Number(quantity),
       unitCost: Number(unitCost),
       unitLabel,
