@@ -56,13 +56,17 @@
 
 .tasks__card-item {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 8px;
-  padding: 6px 16px;
+  padding: 8px 16px;
   font-size: 0.85em;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  @media (max-width: 480px) {
+    padding: 10px 16px;
   }
 }
 
@@ -108,26 +112,6 @@
   &:hover {
     border-color: $primary_light;
     color: $primary_light;
-  }
-}
-
-.tasks__card-btn--active {
-  border-color: $success;
-  color: $success;
-  background: rgba($success, 0.1);
-
-  &:hover {
-    border-color: $success;
-    color: $success;
-  }
-}
-
-.tasks__card-btn--remove {
-  border-color: $error;
-  color: $error;
-
-  &:hover {
-    background: rgba($error, 0.1);
   }
 }
 
@@ -245,6 +229,21 @@
   }
 }
 
+/* ── Small inline link button ──────────────── */
+.tasks__card-link-btn {
+  background: none;
+  border: none;
+  color: $grey;
+  cursor: pointer;
+  font-size: 0.85em;
+  padding: 0 4px;
+  line-height: 1;
+
+  &:hover {
+    color: $error;
+  }
+}
+
 /* ── Linked product badge inside item ──────── */
 .tasks__card-product-badge {
   font-size: 0.75em;
@@ -264,11 +263,61 @@
   gap: 2px;
 }
 
+.tasks__card-item-top {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
 .tasks__card-item-name {
+  flex: 1;
+  min-width: 0;
   color: $white;
   text-decoration: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 
   &:hover {
     color: $primary_light;
+  }
+}
+
+/* ── Selectable presentation chips ──────── */
+.tasks__card-pres-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 3px;
+}
+
+.tasks__card-pres-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+  color: $grey_light;
+  font-size: 0.78em;
+  line-height: 1.4;
+  cursor: pointer;
+  transition: all 0.15s;
+
+  &:hover {
+    background: rgba($primary, 0.12);
+    border-color: rgba($primary, 0.3);
+    color: $white;
+  }
+
+  &--sel {
+    background: rgba($primary, 0.2);
+    border-color: $primary;
+    color: $primary_light;
+
+    &:hover {
+      background: rgba($primary, 0.3);
+    }
   }
 }

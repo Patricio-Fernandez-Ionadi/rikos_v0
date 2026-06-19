@@ -54,9 +54,24 @@ export const ProductDetail = ({ productId, productList }) => {
 
 	const { getProductTaskCategories, toggleProductTask } = useTasksManager()
 
-	// ── Search for other products ────────────────────
+	// ── Filter by search ────────────────────────────
 	const [search, setSearch] = useState('')
 
+	const baseIds = useMemo(
+		() => productList ?? products.map((p) => p._id),
+		[productList, products],
+	)
+
+	const filteredIds = useMemo(() => {
+		if (!search.trim()) return baseIds
+		const q = search.toLowerCase()
+		return baseIds.filter((id) => {
+			const p = products.find((x) => x._id === id)
+			return p && p.name.toLowerCase().includes(q)
+		})
+	}, [baseIds, search, products])
+
+	// ── Dropdown results (exclude current) ──────────
 	const searchResults = useMemo(() => {
 		if (!search.trim()) return []
 		const q = search.toLowerCase()
@@ -70,23 +85,23 @@ export const ProductDetail = ({ productId, productList }) => {
 		navigate(`/products/${targetId}`)
 	}
 
-	// ── Navigation through product list ──────────────
+	// ── Navigation through filtered list ────────────
 	const navInfo = useMemo(() => {
-		if (!product || !productList?.length) return null
-		const idx = productList.indexOf(productId)
+		if (!product || !filteredIds.length) return null
+		const idx = filteredIds.indexOf(productId)
 		if (idx === -1) return null
 		return {
 			index: idx,
-			total: productList.length,
-			prevId: idx > 0 ? productList[idx - 1] : null,
-			nextId: idx < productList.length - 1 ? productList[idx + 1] : null,
+			total: filteredIds.length,
+			prevId: idx > 0 ? filteredIds[idx - 1] : null,
+			nextId: idx < filteredIds.length - 1 ? filteredIds[idx + 1] : null,
 		}
-	}, [productList, product, productId])
+	}, [filteredIds, product, productId])
 
 	const handlePrevNext = (targetId) => {
 		navigate(`/products/${targetId}`, {
 			replace: true,
-			state: { productList },
+			state: { productList: filteredIds },
 		})
 	}
 
@@ -108,6 +123,8 @@ export const ProductDetail = ({ productId, productList }) => {
 				onSearchChange={setSearch}
 				searchResults={searchResults}
 				onSelectResult={handleSelectResult}
+				productList={filteredIds}
+				products={products}
 			/>
 
 			<ProductDetailBody

@@ -1,13 +1,13 @@
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { useCatalog } from '../../app/catalog-context.jsx'
 import { useSupplierDetailManager } from '../../modules/suppliers/supplier-detail-manager.js'
 import { SupplierAddProductForm } from '../../modules/suppliers/components/supplier-add-product-form/supplier-add-product-form.jsx'
 import { SupplierProductTable } from '../../modules/suppliers/components/supplier-product-table/supplier-product-table.jsx'
 import { ProductSearch } from '../../components/product-search.jsx'
+import { BackButton } from '../../components/back-button.jsx'
 
 export const SupplierDetailPage = () => {
   const { id } = useParams()
-  const navigate = useNavigate()
   const { products, categories, presentations, suppliers, productSuppliers: allProductSuppliers } = useCatalog()
   const {
     supplier, productSuppliers, filteredAvailableProducts,
@@ -34,9 +34,7 @@ export const SupplierDetailPage = () => {
   return (
     <div className='stock-page'>
       <div className='stock-page__title-row'>
-        <button className='back-btn' onClick={() => navigate('/suppliers')}>
-          <span className='material-icons'>arrow_back</span> Volver
-        </button>
+        <BackButton to='/suppliers' />
         <h2 className='stock-page__title'>{supplier.name}</h2>
       </div>
 

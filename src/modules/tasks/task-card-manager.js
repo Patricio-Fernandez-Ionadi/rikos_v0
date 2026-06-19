@@ -2,7 +2,7 @@ import { useState, useMemo } from 'react'
 
 const MAX_VISIBLE = 3
 
-export function useTaskCard({ group, allTasks = [], allProducts = [], toggleProduct, addSuggested, addTextTask, updateNote }) {
+export function useTaskCard({ group, allTasks = [], allProducts = [], allPresentations = [], toggleProduct, addSuggested, addTextTask, updateNote }) {
 	const [searchTerm, setSearchTerm] = useState('')
 	const [suggestionName, setSuggestionName] = useState('')
 	const [showAdd, setShowAdd] = useState(false)
@@ -89,6 +89,21 @@ export function useTaskCard({ group, allTasks = [], allProducts = [], toggleProd
 	}
 
 	const getProduct = (productId) => allProducts.find((p) => p._id === productId)
+	const getProductPresentations = (productId) => allPresentations.filter((p) => String(p.productId) === String(productId))
+
+	const handleTogglePres = (taskId, presId) => {
+		const task = allTasks.find((t) => t._id === taskId)
+		if (!task) return
+		let ids = []
+		try { ids = JSON.parse(task.note || '[]') } catch { ids = [] }
+		const idx = ids.indexOf(presId)
+		if (idx === -1) {
+			ids.push(presId)
+		} else {
+			ids.splice(idx, 1)
+		}
+		updateNote(taskId, JSON.stringify(ids))
+	}
 
 	return {
 		showAdd, setShowAdd,
@@ -109,5 +124,7 @@ export function useTaskCard({ group, allTasks = [], allProducts = [], toggleProd
 		handleNoteKeyDown,
 		handleLinkOtrosProduct,
 		getProduct,
+		getProductPresentations,
+		handleTogglePres,
 	}
 }

@@ -1,5 +1,6 @@
 import { useOrderForm } from '../../modules/orders/hooks/use-order-form.js'
 import { Button } from '../../components/button.jsx'
+import { BackButton } from '../../components/back-button.jsx'
 import { SupplierSelector } from '../../modules/orders/components/supplier-selector.jsx'
 import { NewSupplierInline } from '../../modules/orders/components/new-supplier-inline.jsx'
 import { SupplierProductsPanel } from '../../modules/orders/components/supplier-products-panel.jsx'
@@ -34,9 +35,7 @@ export const OrderFormPage = () => {
   return (
     <div className='stock-page'>
       <div className='stock-page__title-row'>
-        <button className='back-btn' onClick={() => navigate('/orders')}>
-          <span className='material-icons'>arrow_back</span> Volver
-        </button>
+        <BackButton to='/orders' />
         <h2 className='stock-page__title'>
           {isEditing ? 'Editar pedido' : 'Nuevo pedido'}
         </h2>

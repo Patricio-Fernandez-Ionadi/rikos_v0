@@ -21,6 +21,8 @@ export const TaskCard = ({
   handleNoteKeyDown,
   handleLinkOtrosProduct,
   getProduct,
+  getProductPresentations,
+  handleTogglePres,
   removeTask,
 }) => {
   return (
@@ -59,14 +61,17 @@ export const TaskCard = ({
         {visibleItems.map((item, i) => (
           <TaskCardItem
             key={item._id ?? i}
-            task={item} index={i}
+            task={item}
             isNameType={isNameType} isTextBased={isTextBased}
+            groupKey={group.key}
             getProduct={getProduct}
+            getProductPresentations={getProductPresentations}
             editingNoteId={editingNoteId} noteValue={noteValue}
             setNoteValue={setNoteValue}
             handleNoteSave={handleNoteSave}
             handleNoteKeyDown={handleNoteKeyDown}
             handleNoteClick={handleNoteClick}
+            handleTogglePres={handleTogglePres}
             removeTask={removeTask}
           />
         ))}

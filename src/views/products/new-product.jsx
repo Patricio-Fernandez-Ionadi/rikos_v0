@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import { useProductManager } from '../../modules/products/product-manager.js'
 import { ProductForm } from '../../modules/products/product/product-form.jsx'
+import { BackButton } from '../../components/back-button.jsx'
 
 export const NewProductPage = () => {
 	const navigate = useNavigate()
@@ -14,9 +15,7 @@ export const NewProductPage = () => {
 	return (
 		<div className='detail-page'>
 			<div className='detail-page__header'>
-				<button className='back-btn' onClick={() => navigate('/products')}>
-					<span className='material-icons'>arrow_back</span> Volver
-				</button>
+				<BackButton to='/products' />
 			</div>
 
 			<h2 className='detail-page__title'>Nuevo producto</h2>

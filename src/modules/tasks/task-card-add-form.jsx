@@ -67,7 +67,7 @@ export function TaskCardAddForm({
                   <Link to={`/products/${otrosLinkedProduct._id}`} className='text-primary'>
                     {otrosLinkedProduct.name}
                   </Link>
-                  <button className='tasks__card-btn tasks__card-btn--remove btn--xs btn--icon'
+                  <button className='tasks__card-link-btn'
                     onClick={() => setOtrosLinkedProduct(null)}>✕</button>
                 </div>
               )}

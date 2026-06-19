@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSaleCart } from '../../modules/shifts/sale-cart/sale-cart-manager.js'
+import { BackButton } from '../../components/back-button.jsx'
 import { ProductBrowser } from '../../modules/shifts/sale-cart/product-browser.jsx'
 import { CartPanel } from '../../modules/shifts/sale-cart/cart-panel.jsx'
 import { PromoSetView } from '../../modules/promo-sets/components/promo-set-list.jsx'
@@ -66,9 +67,7 @@ export const SalePage = () => {
 	return (
 		<div className='sale-cart'>
 			<div className='sale-cart__header'>
-				<button className='back-btn' onClick={() => navigate('/shifts')}>
-					<span className='material-icons'>arrow_back</span> Volver
-				</button>
+				<BackButton to='/shifts' />
 				<h2 className='sale-cart__title'>Registrar Venta</h2>
 			</div>
 

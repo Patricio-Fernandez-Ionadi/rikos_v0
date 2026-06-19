@@ -3,13 +3,13 @@ import { useTaskCard } from '../modules/tasks/task-card-manager.js'
 import { TaskCard } from '../modules/tasks/task-card.jsx'
 import { useCatalog } from '../app/catalog-context.jsx'
 
-const TaskCardWrapper = ({ group, allTasks, toggleProduct, addSuggested, addTextTask, updateNote, removeTask, allProducts }) => {
-	const props = useTaskCard({ group, allTasks, allProducts, toggleProduct, addSuggested, addTextTask, updateNote })
-	return <TaskCard group={group} removeTask={removeTask} {...props} />
+const TaskCardWrapper = ({ group, allTasks, toggleProduct, addSuggested, addTextTask, updateNote, removeTask, allProducts, allPresentations }) => {
+	const props = useTaskCard({ group, allTasks, allProducts, allPresentations, toggleProduct, addSuggested, addTextTask, updateNote })
+	return <TaskCard group={group} removeTask={removeTask} allPresentations={allPresentations} {...props} />
 }
 
 export const TasksPage = () => {
-	const { products } = useCatalog()
+	const { products, presentations } = useCatalog()
 	const {
 		getTaskItems,
 		toggleProductTask,
@@ -43,6 +43,7 @@ export const TasksPage = () => {
 							updateNote={updateTaskNote}
 							removeTask={removeTask}
 							allProducts={products}
+							allPresentations={presentations}
 						/>
 					)
 				})}

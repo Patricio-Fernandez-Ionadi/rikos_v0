@@ -3,6 +3,7 @@ import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { useProductManager } from '../../modules/products/product-manager.js'
 import { Button } from '../../components/button.jsx'
 import { FormActions } from '../../components/form-actions.jsx'
+import { BackButton } from '../../components/back-button.jsx'
 
 export const SupplierFormPage = () => {
   const { id } = useParams()
@@ -68,9 +69,7 @@ export const SupplierFormPage = () => {
   return (
     <div className='stock-page'>
       <div className='stock-page__title-row'>
-        <button className='back-btn' onClick={() => navigate(returnTo)}>
-          <span className='material-icons'>arrow_back</span> Volver
-        </button>
+        <BackButton to={returnTo} />
         <h2 className='stock-page__title'>
           {isEditing ? 'Editar proveedor' : 'Nuevo proveedor'}
         </h2>
