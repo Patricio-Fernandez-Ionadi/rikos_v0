@@ -52,9 +52,14 @@ export const StockRow = ({ pres, product, onNavigate }) => {
 		<tr key={pres._id}>
 			<td className='stock-cell--product'>
 				<button className='stock-cell__link' onClick={onNavigate}>
-					<span className='text-truncate'>{product.name}</span>
-					{pres.label ? <span className='stock-page__marca'> — {pres.label}</span> : ''}
-					{pres.grams ? <span className='stock-page__marca'> ({pres.grams}g)</span> : ''}
+					<span className='stock-cell__product-name'>{product.name}</span>
+					{pres.label || pres.grams ? (
+						<span className='stock-cell__pres-info'>
+							{pres.label ? pres.label : ''}
+							{pres.label && pres.grams ? ' · ' : ''}
+							{pres.grams ? `${pres.grams}g` : ''}
+						</span>
+					) : null}
 				</button>
 			</td>
 			<td className='stock-cell--stock'>

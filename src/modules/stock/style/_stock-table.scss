@@ -9,6 +9,7 @@
 
 .stock-page__table {
 	@include table-base;
+	table-layout: fixed;
 
 	th,
 	td {
@@ -16,16 +17,16 @@
 	}
 
 	.stock-cell--product {
-		width: 55%;
+		width: 48%;
 	}
 
 	.stock-cell--stock {
-		width: 22%;
+		width: 26%;
 		text-align: center;
 	}
 
 	.stock-cell--grams {
-		width: 23%;
+		width: 26%;
 		text-align: center;
 	}
 }
@@ -52,6 +53,12 @@
 	.stock-cell--desktop {
 		display: none;
 	}
+
+	.stock-page__table {
+		th, td {
+			padding: 8px 6px;
+		}
+	}
 }
 
 .stock-cell__link {
@@ -61,13 +68,33 @@
 	font-size: inherit;
 	font-family: inherit;
 	cursor: pointer;
-	padding: 0;
+	padding: 2px 0;
 	width: 100%;
-	justify-content: flex-start;
-	gap: 4px;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 2px;
 
 	&:hover {
 		color: $primary_light;
 		text-decoration: underline;
 	}
+}
+
+.stock-cell__product-name {
+	font-size: inherit;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	width: 100%;
+}
+
+.stock-cell__pres-info {
+	color: $grey_light;
+	font-size: 0.85em;
+	font-weight: 400;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	width: 100%;
 }
