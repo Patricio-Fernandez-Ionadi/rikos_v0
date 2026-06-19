@@ -68,6 +68,14 @@
 	border-left-color: $grey;
 }
 
+.soporte-card--resolved {
+	opacity: 0.75;
+}
+
+.soporte-card--suppressed {
+	opacity: 0.55;
+}
+
 .soporte-card__header {
 	display: flex;
 	align-items: center;
@@ -111,4 +119,68 @@
 	white-space: pre-wrap;
 	word-break: break-word;
 	margin: 0;
+}
+
+// ─── Status badge ──────────────────────────────
+.soporte-card__status {
+	font-size: 0.7em;
+	padding: 2px 8px;
+	border-radius: $thin;
+	font-weight: 600;
+	text-transform: uppercase;
+}
+
+.soporte-card__status--resolved {
+	background: $info;
+	color: $white;
+}
+
+.soporte-card__status--suppressed {
+	background: $grey;
+	color: $white;
+}
+
+// ─── Tabs ──────────────────────────────────────
+.soporte-tabs {
+	display: flex;
+	gap: 4px;
+	margin-bottom: 16px;
+	background: $bg_surface;
+	border-radius: $smooth;
+	padding: 4px;
+}
+
+.soporte-tabs__tab {
+	flex: 1;
+	padding: 8px 12px;
+	border: none;
+	border-radius: $thin;
+	background: transparent;
+	color: $grey_light;
+	cursor: pointer;
+	font-size: 0.85em;
+	font-weight: 500;
+	transition: all 0.2s ease;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 6px;
+
+	&:hover {
+		color: $white;
+		background: rgba($white, 0.05);
+	}
+}
+
+.soporte-tabs__tab--active {
+	background: $bg_elevated;
+	color: $white;
+}
+
+.soporte-tabs__count {
+	font-size: 0.8em;
+	padding: 0 6px;
+	border-radius: 10px;
+	background: rgba($white, 0.1);
+	color: $grey_light;
 }

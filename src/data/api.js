@@ -74,8 +74,9 @@ export const updateTaskNote = (id, note) => request(`/tasks/${id}/note`, { metho
 export const deleteTask = (id) => request(`/tasks/${id}`, { method: 'DELETE' })
 
 // ─── Notes ─────────────────────────────────────────────────
-export const getNotes = () => request('/notes')
+export const getNotes = (status) => request(`/notes${status ? `?status=${status}` : ''}`)
 export const createNote = (data) => request('/notes', { method: 'POST', body: JSON.stringify(data) })
+export const updateNoteStatus = (id, status) => request(`/notes/${id}/status`, { method: 'PATCH', body: JSON.stringify({ status }) })
 export const deleteNote = (id) => request(`/notes/${id}`, { method: 'DELETE' })
 
 // ─── Suppliers ─────────────────────────────────────────────

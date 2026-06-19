@@ -3,10 +3,12 @@ import Note from '../models/Note.js'
 
 const router = Router()
 
-/** List all notes, newest first. */
-router.get('/', async (_req, res, next) => {
+/** List notes, newest first. Optional ?status= filter. */
+router.get('/', async (req, res, next) => {
 	try {
-		const notes = await Note.find().sort({ createdAt: -1 })
+		const filter = {}
+		if (req.query.status) filter.status = req.query.status
+		const notes = await Note.find(filter).sort({ createdAt: -1 })
 		res.json(notes)
 	} catch (e) { next(e) }
 })
@@ -18,6 +20,23 @@ router.post('/', async (req, res, next) => {
 		if (!text?.trim()) return res.status(400).json({ error: 'text is required' })
 		const note = await Note.create({ type, text: text.trim() })
 		res.status(201).json(note)
+	} catch (e) { next(e) }
+})
+
+/** Update note status. */
+router.patch('/:id/status', async (req, res, next) => {
+	try {
+		const { status } = req.body
+		if (!['active', 'resolved', 'suppressed'].includes(status)) {
+			return res.status(400).json({ error: 'Invalid status' })
+		}
+		const note = await Note.findByIdAndUpdate(
+			req.params.id,
+			{ status },
+			{ new: true },
+		)
+		if (!note) return res.status(404).json({ error: 'Note not found' })
+		res.json(note)
 	} catch (e) { next(e) }
 })
 

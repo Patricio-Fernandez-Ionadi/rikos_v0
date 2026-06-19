@@ -7,7 +7,8 @@ const STORAGE_KEY = 'rikos_support_notes'
 function loadLocal() {
 	try {
 		const raw = localStorage.getItem(STORAGE_KEY)
-		return raw ? JSON.parse(raw) : []
+		const notes = raw ? JSON.parse(raw) : []
+		return notes.map((n) => ({ ...n, status: n.status || 'active' }))
 	} catch { return [] }
 }
 
@@ -22,6 +23,7 @@ export function SupportProvider({ children }) {
 	const [notes, setNotes] = useState([])
 	const [text, setText] = useState('')
 	const [type, setType] = useState('sugerencia')
+	const [filter, setFilter] = useState('active')
 
 	const persist = useCallback((fn) => {
 		setNotes((prev) => {
@@ -37,12 +39,15 @@ export function SupportProvider({ children }) {
 				setNotes(serverNotes)
 				saveLocal(serverNotes)
 			} else {
-				setNotes(loadLocal())
+				const local = loadLocal()
+				setNotes(local)
 			}
 		}).catch(() => {
 			setNotes(loadLocal())
 		})
 	}, [])
+
+	const filteredNotes = notes.filter((n) => n.status === filter || (filter === 'all'))
 
 	const handleSubmit = useCallback(async (e) => {
 		e.preventDefault()
@@ -62,6 +67,15 @@ export function SupportProvider({ children }) {
 		setText('')
 	}, [type, text, persist])
 
+	const handleStatusChange = useCallback(async (id, status) => {
+		const updated = await supportService.updateNoteStatus(id, status)
+		if (updated) {
+			persist((prev) => prev.map((n) => (n._id === id ? { ...n, status } : n)))
+		} else {
+			persist((prev) => prev.map((n) => (n._id === id ? { ...n, status } : n)))
+		}
+	}, [persist])
+
 	const handleDelete = useCallback(async (id) => {
 		if (!window.confirm('¿Eliminar esta nota?')) return
 		try {
@@ -71,7 +85,11 @@ export function SupportProvider({ children }) {
 	}, [persist])
 
 	return (
-		<SupportContext.Provider value={{ notes, text, setText, type, setType, handleSubmit, handleDelete }}>
+		<SupportContext.Provider value={{
+			notes, filteredNotes, filter, setFilter,
+			text, setText, type, setType,
+			handleSubmit, handleStatusChange, handleDelete,
+		}}>
 			{children}
 		</SupportContext.Provider>
 	)

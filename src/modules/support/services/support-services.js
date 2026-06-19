@@ -1,12 +1,12 @@
 import * as api from '../../../data/api.js'
 
 /**
- * Fetch all notes from the server.
+ * Fetch notes from the server, optionally filtered by status.
  * Returns an empty array on failure (offline).
  */
-export async function getNotes() {
+export async function getNotes(status) {
 	try {
-		return await api.getNotes()
+		return await api.getNotes(status)
 	} catch {
 		return []
 	}
@@ -16,6 +16,15 @@ export async function getNotes() {
 export async function createNote({ type, text }) {
 	try {
 		return await api.createNote({ type, text })
+	} catch {
+		return null
+	}
+}
+
+/** Update a note's status on the server. Returns null on failure. */
+export async function updateNoteStatus(id, status) {
+	try {
+		return await api.updateNoteStatus(id, status)
 	} catch {
 		return null
 	}
