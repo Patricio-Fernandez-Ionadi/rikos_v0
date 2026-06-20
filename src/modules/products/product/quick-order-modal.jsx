@@ -50,7 +50,7 @@ export function QuickOrderModal({
 			supplierName: current.supplier.name,
 			quantity: Number(quantity),
 			unitCost: Number(cost),
-			unitLabel: current.ps.supplierUnitLabel ?? 'Unidad',
+			unitLabel: product?.saleType === 'fraction' ? 'kg' : 'Unidad',
 		})
 	}
 
@@ -105,19 +105,17 @@ export function QuickOrderModal({
 						<div className='field'>
 							<span className='field-label'>Presentación del proveedor</span>
 							<div className='field-hint'>
-								{current.ps.supplierUnitLabel ?? 'Unidad'}
-								{current.ps.supplierUnitQty > 1 && (
-									<span className='text-muted'>
-										{' '}
-										({current.ps.supplierUnitQty} uds. por empaque)
-									</span>
-								)}
+								{current.ps.bultoUnits != null
+									? `${current.ps.bultoUnits} uds. por bulto — $${current.ps.purchaseCost?.toLocaleString()}`
+									: current.ps.bultoKg != null
+									? `${current.ps.bultoKg} kg por bulto — $${current.ps.purchaseCost?.toLocaleString()}`
+									: `${current.ps.supplierUnitLabel ?? 'Unidad'}${current.ps.supplierUnitQty > 1 ? ` (×${current.ps.supplierUnitQty})` : ''}`}
 							</div>
 						</div>
 
 						<label className='field'>
 							<span className='field-label'>
-								Cantidad ({current.ps.supplierUnitLabel ?? 'unidad'})
+								Cantidad ({product?.saleType === 'fraction' ? 'kg' : 'unidad'})
 							</span>
 							<input
 								className='field-input'
@@ -132,7 +130,7 @@ export function QuickOrderModal({
 
 						<label className='field'>
 							<span className='field-label'>
-								Costo por {current.ps.supplierUnitLabel ?? 'unidad'}
+								Costo por {product?.saleType === 'fraction' ? 'kg' : 'unidad'}
 							</span>
 							<input
 								className='field-input'

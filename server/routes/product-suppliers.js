@@ -25,6 +25,8 @@ router.post('/', async (req, res, next) => {
       productId: req.body.productId,
       supplierId: req.body.supplierId,
       purchaseCost: req.body.purchaseCost,
+      bultoUnits: req.body.bultoUnits ?? null,
+      bultoKg: req.body.bultoKg ?? null,
       supplierUnitLabel: req.body.supplierUnitLabel ?? 'Unidad',
       supplierUnitQty: req.body.supplierUnitQty ?? 1,
     })
@@ -36,6 +38,8 @@ router.put('/:id', async (req, res, next) => {
   try {
     const update = {}
     if (req.body.purchaseCost !== undefined) update.purchaseCost = req.body.purchaseCost
+    if (req.body.bultoUnits !== undefined) update.bultoUnits = req.body.bultoUnits
+    if (req.body.bultoKg !== undefined) update.bultoKg = req.body.bultoKg
     if (req.body.supplierUnitLabel !== undefined) update.supplierUnitLabel = req.body.supplierUnitLabel
     if (req.body.supplierUnitQty !== undefined) update.supplierUnitQty = req.body.supplierUnitQty
     const ps = await ProductSupplier.findByIdAndUpdate(req.params.id, update, { new: true })

@@ -1,6 +1,13 @@
 import { useNavigate } from 'react-router-dom'
 import { DottedMenu } from '../../../../components/dotted-menu.jsx'
 
+function getBultoLabel(ps) {
+  if (ps.bultoUnits != null) return `${ps.bultoUnits} uds`
+  if (ps.bultoKg != null) return `${ps.bultoKg} kg`
+  if (ps.supplierUnitQty > 1) return `×${ps.supplierUnitQty} ${ps.supplierUnitLabel ?? ''}`
+  return ''
+}
+
 export function SupplierProductTable({
   productSuppliers, products, categories,
   editingPS, setEditingPS, editCost, setEditCost,
@@ -27,6 +34,7 @@ export function SupplierProductTable({
           {productSuppliers.map((ps) => {
             const product = products?.find((p) => p._id === ps.productId)
             const category = product ? categories.find((c) => c._id === product.categoryId) : null
+            const bultoLabel = getBultoLabel(ps)
             return (
               <tr key={ps._id}>
                 <td>
@@ -46,7 +54,7 @@ export function SupplierProductTable({
                       onKeyDown={(e) => { if (e.key === 'Enter') handleUpdateCost(ps._id); if (e.key === 'Escape') setEditingPS(null) }}
                       autoFocus />
                   ) : (
-                    <>${ps.purchaseCost?.toLocaleString() ?? '\u2014'}</>
+                    <><span className='supplier-product-table__cost-value'>${ps.purchaseCost?.toLocaleString() ?? '\u2014'}</span>{bultoLabel && <span className='supplier-product-table__cost-bulto'> ({bultoLabel})</span>}</>
                   )}
                 </td>
                 <td className='supplier-product-table__desktop-cell'>{category?.name ?? '—'}</td>

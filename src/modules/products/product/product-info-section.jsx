@@ -77,7 +77,7 @@ export const ProductInfoSection = ({
 					</span>
 				</div>
 				<div className='detail-page__info-secondary-item'>
-					<span className='detail-page__info-label'>Costo de compra</span>
+					<span className='detail-page__info-label'>Costo {isFraction ? 'por kg' : 'por unidad'}</span>
 					<span>
 						${purchaseCost?.toLocaleString() ?? 'Sin datos'}
 						{costUpdatedAt && (

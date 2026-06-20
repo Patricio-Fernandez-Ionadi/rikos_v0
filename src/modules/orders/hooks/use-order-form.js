@@ -127,8 +127,10 @@ export function useOrderForm() {
     if (!prod) return
 
     const existingPS = supplierProducts.find((sp) => sp.productId === prod._id)
+    const isFraction = prod?.saleType === 'fraction'
+    const unitLabel = isFraction ? 'kg' : 'Unidad'
     if (existingPS) {
-      handleAddItem(prod, existingPS.purchaseCost, existingPS.supplierUnitLabel)
+      handleAddItem(prod, existingPS.purchaseCost, unitLabel)
     } else {
       const costStr = window.prompt(`Costo de "${prod.name}" para ${supplierName}:`, prod.purchaseCost ?? '')
       if (costStr === null) { setSelectedProductId(''); return }
@@ -138,14 +140,14 @@ export function useOrderForm() {
       try {
         const ps = await supplierService.createProductSupplier({
           productId: prod._id, supplierId, purchaseCost: cost,
-          supplierUnitLabel: 'Unidad',
-          supplierUnitQty: 1,
+          bultoUnits: isFraction ? null : 1,
+          bultoKg: isFraction ? 1 : null,
         })
         setProductSuppliers((prev) => [...prev, ps])
         setSupplierProducts((prev) => [...prev, ps])
       } catch { /* ignore */ }
 
-      handleAddItem(prod, cost, 'Unidad')
+      handleAddItem(prod, cost, unitLabel)
     }
     setSelectedProductId('')
     setSearchQuery('')
@@ -169,12 +171,13 @@ export function useOrderForm() {
     if (supplierId) {
       const ps = await supplierService.createProductSupplier({
         productId: created._id, supplierId, purchaseCost: parseFloat(cost),
+        bultoUnits: 1, bultoKg: null,
       })
       setProductSuppliers((prev) => [...prev, ps])
       setSupplierProducts((prev) => [...prev, ps])
     }
 
-    handleAddItem(created, parseFloat(cost))
+    handleAddItem(created, parseFloat(cost), 'Unidad')
   }, [supplierId, setProducts, setProductSuppliers, handleAddItem])
 
   const handleSubmit = useCallback(async (e) => {

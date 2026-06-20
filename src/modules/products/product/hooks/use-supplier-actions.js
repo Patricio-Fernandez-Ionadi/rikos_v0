@@ -2,6 +2,11 @@ import { useCallback } from 'react'
 import * as supplierService from '../../../suppliers/services/supplier-services.js'
 import * as productService from '../../services/product-services.js'
 
+function getSupplierQty(ps) {
+  if (ps.bultoUnits != null) return ps.bultoUnits
+  if (ps.bultoKg != null) return ps.bultoKg
+  return ps.supplierUnitQty ?? 1
+}
 
 export function useSupplierActions({
   product,
@@ -9,15 +14,16 @@ export function useSupplierActions({
   setProducts,
 }) {
   const handleAddSupplier = useCallback(
-    async (supplierId, purchaseCost, supplierUnitLabel, supplierUnitQty) => {
+    async (supplierId, purchaseCost, bultoUnits, bultoKg) => {
       if (!product) return
+      const isFraction = product.saleType === 'fraction'
       try {
         const ps = await supplierService.createProductSupplier({
           productId: product._id,
           supplierId,
           purchaseCost,
-          supplierUnitLabel: supplierUnitLabel ?? 'Unidad',
-          supplierUnitQty: supplierUnitQty ?? 1,
+          bultoUnits: bultoUnits ?? (isFraction ? null : 1),
+          bultoKg: bultoKg ?? (isFraction ? 1 : null),
         })
         setProductSuppliers((prev) => [...prev, ps])
       } catch (e) {
@@ -42,7 +48,7 @@ export function useSupplierActions({
   const handleUseSupplierCost = useCallback(
     async (ps) => {
       if (!product || !ps) return
-      const qty = ps.supplierUnitQty ?? 1
+      const qty = getSupplierQty(ps)
       const costPerUnit = +(ps.purchaseCost / qty).toFixed(2)
       try {
         const updated = await productService.updateProduct(product._id, {

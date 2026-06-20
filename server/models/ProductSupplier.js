@@ -4,6 +4,8 @@ const productSupplierSchema = new mongoose.Schema({
   productId: { type: mongoose.Schema.Types.ObjectId, ref: 'Product', required: true },
   supplierId: { type: mongoose.Schema.Types.ObjectId, ref: 'Supplier', required: true },
   purchaseCost: { type: Number, required: true },
+  bultoUnits: { type: Number, default: null },
+  bultoKg: { type: Number, default: null },
   supplierUnitLabel: { type: String, default: 'Unidad' },
   supplierUnitQty: { type: Number, default: 1 },
 })

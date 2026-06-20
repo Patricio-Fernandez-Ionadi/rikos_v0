@@ -10,8 +10,11 @@ export function useProductCrud({ selectedProduct, editingProduct, setProducts, s
       const created = await productService.createProduct(productData)
       setProducts((prev) => [...prev, created])
       if (supplierId) {
+        const isFraction = productData.saleType === 'fraction'
         await supplierService.createProductSupplier({
           productId: created._id, supplierId, purchaseCost: productData.purchaseCost,
+          bultoUnits: isFraction ? null : 1,
+          bultoKg: isFraction ? 1 : null,
         })
       }
       dispatch({ type: 'CLOSE_PRODUCT_FORM' })
@@ -29,8 +32,11 @@ export function useProductCrud({ selectedProduct, editingProduct, setProducts, s
       const updated = await productService.updateProduct(id, productData)
       setProducts((prev) => prev.map((p) => (p._id === updated._id ? updated : p)))
       if (supplierId) {
+        const isFraction = productData.saleType === 'fraction'
         await supplierService.createProductSupplier({
           productId: id, supplierId, purchaseCost: productData.purchaseCost,
+          bultoUnits: isFraction ? null : 1,
+          bultoKg: isFraction ? 1 : null,
         })
       }
     } catch (e) {

@@ -58,13 +58,22 @@
 
 .supplier-product-table__cost {
   color: $white;
-  font-weight: 600;
   cursor: pointer;
   white-space: nowrap;
 
   &:hover {
     color: $primary_light;
   }
+}
+
+.supplier-product-table__cost-value {
+  font-weight: 600;
+}
+
+.supplier-product-table__cost-bulto {
+  color: $grey_light;
+  font-weight: 400;
+  font-size: 0.85em;
 }
 
 .supplier-product-table__th--desktop,

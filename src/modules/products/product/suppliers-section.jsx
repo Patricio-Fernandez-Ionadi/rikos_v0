@@ -1,5 +1,26 @@
 import { Button } from '../../../components/button.jsx'
 
+function getSupplierQty(ps) {
+  if (ps.bultoUnits != null) return ps.bultoUnits
+  if (ps.bultoKg != null) return ps.bultoKg
+  return ps.supplierUnitQty ?? 1
+}
+
+function getDerivedCost(ps) {
+  const qty = getSupplierQty(ps)
+  return +(ps.purchaseCost / qty).toFixed(2)
+}
+
+function getBultoLabel(ps) {
+  if (ps.bultoUnits != null) return `${ps.bultoUnits} uds`
+  if (ps.bultoKg != null) return `${ps.bultoKg} kg`
+  return ps.supplierUnitLabel ? `×${ps.supplierUnitQty ?? 1} ${ps.supplierUnitLabel}` : ''
+}
+
+function getCostLabel(product) {
+  return product?.saleType === 'fraction' ? 'Costo por kg' : 'Costo unitario'
+}
+
 export function SuppliersSection({
   productSuppliers, suppliers, assignedSupplierIds, activeSupplier,
   product, handleUseSupplierCost, handleRemoveSupplier, handleAddSupplier,
@@ -18,10 +39,12 @@ export function SuppliersSection({
             .map((s) => {
               const ps = productSuppliers.find((ps) => ps.supplierId === s._id)
               const isActive = ps?.supplierId === activeSupplier
+              const derivedCost = ps ? getDerivedCost(ps) : 0
               const diff = isActive || product.purchaseCost == null
                 ? null
-                : ps.purchaseCost - product.purchaseCost
+                : derivedCost - product.purchaseCost
               const diffClass = diff == null ? '' : diff < 0 ? 'detail-page__diff--positive' : 'detail-page__diff--negative'
+              const costLabel = getCostLabel(product)
               return (
                 <div key={s._id}
                   className={`detail-page__supplier-row${isActive ? ' detail-page__supplier-row--active' : ''}`}
@@ -30,12 +53,11 @@ export function SuppliersSection({
                   <span className='detail-page__supplier-name'>
                     {s.name}{isActive && ' ✓'}
                   </span>
-                  <span className='detail-page__supplier-label'>
-                    {ps?.supplierUnitLabel ?? 'Unidad'}
-                    {ps?.supplierUnitQty > 1 && ` (×${ps.supplierUnitQty})`}
+                  <span className='detail-page__supplier-bulto'>
+                    Bulto: ${ps?.purchaseCost?.toLocaleString() ?? '—'} ({getBultoLabel(ps)})
                   </span>
                   <span className={`detail-page__supplier-cost ${diffClass}`}>
-                    ${ps?.purchaseCost?.toLocaleString() ?? '—'}
+                    {costLabel}: ${derivedCost.toLocaleString()}
                     {diff != null && ` (${diff > 0 ? '+' : ''}${diff.toLocaleString()})`}
                   </span>
                   <Button size='xs' variant='danger'

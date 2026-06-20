@@ -1,5 +1,15 @@
 import { Button } from '../../../components/button.jsx'
 
+function getBultoLabel(ps) {
+  if (ps.bultoUnits != null) return `${ps.bultoUnits} uds`
+  if (ps.bultoKg != null) return `${ps.bultoKg} kg`
+  return ps.supplierUnitLabel ?? 'Unidad'
+}
+
+function getUnitLabel(product) {
+  return product?.saleType === 'fraction' ? 'kg' : 'Unidad'
+}
+
 export function SupplierProductsPanel({ supplierName, supplierProducts, productMap, addedProductIds, onAdd, presentationMap }) {
   return (
     <div className='surface-card p-16 mb-16'>
@@ -28,7 +38,7 @@ export function SupplierProductsPanel({ supplierName, supplierProducts, productM
                 <div className='supplier-product-group__header'>
                   <span className='text-white'>{prod.name}</span>
                   <span className='supplier-product-group__cost'>
-                    {sp.supplierUnitLabel ?? 'Unidad'} · ${sp.purchaseCost?.toLocaleString() ?? '—'}
+                    ${sp.purchaseCost?.toLocaleString() ?? '—'} ({getBultoLabel(sp)})
                   </span>
                 </div>
                 {presList.length > 0 ? (
@@ -42,7 +52,7 @@ export function SupplierProductsPanel({ supplierName, supplierProducts, productM
                             {pres.code != null && <span className='pres-code-sm'>{pres.code}</span>}
                             {pres.label || 'Sin etiqueta'}
                           </span>
-                          <Button size='xs' onClick={() => onAdd(prod, sp.purchaseCost, sp.supplierUnitLabel, pres)}>
+                          <Button size='xs' onClick={() => onAdd(prod, sp.purchaseCost, getUnitLabel(prod), pres)}>
                             + Agregar
                           </Button>
                         </div>
@@ -51,7 +61,7 @@ export function SupplierProductsPanel({ supplierName, supplierProducts, productM
                   </div>
                 ) : (
                   <div className='supplier-product-group__no-pres'>
-                    <Button size='xs' onClick={() => onAdd(prod, sp.purchaseCost, sp.supplierUnitLabel)}>
+                    <Button size='xs' onClick={() => onAdd(prod, sp.purchaseCost, getUnitLabel(prod))}>
                       + Agregar producto
                     </Button>
                   </div>
