@@ -115,7 +115,6 @@
 	margin: -12px 0 16px;
 }
 
-@media (max-width: $max-mobile) {
 .dashboard__card--backup {
 	cursor: default;
 
@@ -125,12 +124,31 @@
 	}
 }
 
-.dashboard__backup-actions {
-	display: flex;
-	gap: 8px;
-	margin-top: 12px;
+.backup__group {
+	margin-top: 16px;
+
+	+ .backup__group {
+		padding-top: 16px;
+		border-top: 1px solid $grey_dark;
+	}
 }
 
+.backup__group-label {
+	display: block;
+	color: $grey;
+	font-size: 0.8em;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	margin-bottom: 8px;
+}
+
+.backup__actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+@media (max-width: $max-mobile) {
 	.dashboard__th--desktop,
 	.dashboard__td--desktop {
 		display: none;

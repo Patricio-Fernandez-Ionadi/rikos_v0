@@ -174,6 +174,7 @@ index.html → src/main.jsx → [DataProvider] → [ShiftProvider] → App → P
   - `PATCH /orders/:id/status` — Change order status (`open` ↔ `placed`)
   - `GET /orders?status=` — Filter orders by status
   - `POST/PUT /product-suppliers` — Accepts `supplierUnitLabel` and `supplierUnitQty`
+  - `GET /backup/export?scope=completo|productos|transacciones|notas-tareas` — JSON backup filtered by scope, uses Mongoose `Model.insertMany()` on restore to preserve ObjectId
 - Run `npm run seed` to populate MongoDB from existing `seed.json`
 
 ### Quick Order from Product

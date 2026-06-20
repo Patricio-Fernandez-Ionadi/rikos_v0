@@ -105,5 +105,5 @@ export const deletePromoSet = (id) => request(`/promo-sets/${id}`, { method: 'DE
 const API_KEY = import.meta.env.VITE_API_KEY || ''
 const authHeaders = API_KEY ? { 'x-api-key': API_KEY } : {}
 
-export const exportBackup = () => request('/backup/export', { headers: authHeaders })
+export const exportBackup = (scope) => request(`/backup/export?scope=${scope}`, { headers: authHeaders })
 export const restoreBackup = (data) => request('/backup/restore', { method: 'POST', body: JSON.stringify(data), headers: authHeaders })
