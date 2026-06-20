@@ -47,7 +47,7 @@ router.get('/export', async (req, res, next) => {
     const payload = {
       _meta: {
         exportedAt: new Date().toISOString(),
-        version: process.env.npm_package_version || '0.4.0',
+        version: process.env.npm_package_version || '0.5.0',
         scope,
         collections: Object.keys(data),
       },
