@@ -203,8 +203,12 @@ export function useSaleCart() {
 
 		try {
 			await recordTicket(ticketId, paymentMethod, items, finalTotal)
-		} catch {
-			showToast('Error al registrar venta', 'error')
+		} catch (err) {
+			if (err instanceof TypeError) {
+				showToast('Venta guardada localmente — se sincronizará cuando el servidor esté disponible', 'error')
+			} else {
+				showToast(err.message || 'Error al registrar venta', 'error')
+			}
 			return
 		}
 

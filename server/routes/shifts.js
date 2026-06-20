@@ -36,7 +36,7 @@ router.post('/', async (req, res, next) => {
   } catch (e) { next(e) }
 })
 
-/** Record a sale on the active shift and deduct stock. */
+/** Record a sale on the active shift and deduct stock. Stock is advisory. */
 router.post('/:id/sales', async (req, res, next) => {
   try {
     const shift = await Shift.findById(req.params.id)
@@ -51,12 +51,16 @@ router.post('/:id/sales', async (req, res, next) => {
     const product = await Product.findById(pres.productId)
     if (!product) return res.status(404).json({ error: 'Product not found' })
 
-    if ((pres.stock ?? 0) < quantity) return res.status(400).json({ error: 'Insufficient stock' })
+    if ((pres.stock ?? 0) < quantity) {
+      console.warn(`Stock bajo para ${pres.label}: ${pres.stock}, vendiendo ${quantity}`)
+    }
     pres.stock -= quantity
 
     if (product.saleType === 'fraction') {
       const deduction = quantity * (pres.grams ?? 0)
-      if ((product.stockGrams ?? 0) < deduction) return res.status(400).json({ error: 'Insufficient stock (grams)' })
+      if ((product.stockGrams ?? 0) < deduction) {
+        console.warn(`Stock bajo (gramos) para ${product.name}: ${product.stockGrams}, vendiendo ${deduction}g`)
+      }
       product.stockGrams -= deduction
       await product.save()
     }
@@ -71,7 +75,8 @@ router.post('/:id/sales', async (req, res, next) => {
 
 /**
  * Record a multi-item ticket on the active shift (batch sale).
- * Validates stock for all items upfront, then deducts and records atomically.
+ * Deducts stock and records atomically. Stock is advisory — sales are never
+ * rejected due to insufficient stock (data may be stale).
  */
 router.post('/:id/ticket', async (req, res, next) => {
   try {
@@ -87,7 +92,6 @@ router.post('/:id/ticket', async (req, res, next) => {
     const itemsTotal = items.reduce((s, i) => s + (i.total ?? 0), 0)
     const diff = collectedTotal != null ? +(collectedTotal - itemsTotal).toFixed(2) : 0
 
-    // 1. Validate stock for every item upfront
     for (const item of items) {
       const pres = await Presentation.findById(item.presentationId)
       if (!pres) return res.status(404).json({ error: `Presentation not found: ${item.presentationId}` })
@@ -96,33 +100,22 @@ router.post('/:id/ticket', async (req, res, next) => {
       if (!product) return res.status(404).json({ error: `Product not found: ${pres.productId}` })
 
       if ((pres.stock ?? 0) < item.quantity) {
-        return res.status(400).json({ error: `Stock insuficiente para ${pres.label}` })
+        console.warn(`Stock bajo para ${pres.label}: ${pres.stock}, vendiendo ${item.quantity}`)
       }
-
-      if (product.saleType === 'fraction') {
-        const deduction = item.quantity * (pres.grams ?? 0)
-        if ((product.stockGrams ?? 0) < deduction) {
-          return res.status(400).json({ error: `Stock insuficiente para ${product.name}` })
-        }
-      }
-    }
-
-    // 2. Deduct stock and push sales
-    for (const item of items) {
-      const pres = await Presentation.findById(item.presentationId)
-      const product = await Product.findById(pres.productId)
 
       pres.stock -= item.quantity
 
       if (product.saleType === 'fraction') {
         const deduction = item.quantity * (pres.grams ?? 0)
+        if ((product.stockGrams ?? 0) < deduction) {
+          console.warn(`Stock bajo (gramos) para ${product.name}: ${product.stockGrams}, vendiendo ${deduction}g`)
+        }
         product.stockGrams -= deduction
         await product.save()
       }
 
       await pres.save()
 
-      // Distribute collectedTotal difference proportionally
       const ratio = itemsTotal > 0 ? (item.total ?? 0) / itemsTotal : 0
       const itemCollected = diff !== 0 && ratio > 0
         ? +(item.total + diff * ratio).toFixed(2)

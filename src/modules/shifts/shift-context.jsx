@@ -6,24 +6,74 @@ import { generateTempId } from '../../data/entities.js'
 
 const ShiftContext = createContext(null)
 
+const SHIFT_STORAGE_KEY = 'rikos-shift'
+
+function saveShiftToLocal(shift) {
+	try {
+		localStorage.setItem(SHIFT_STORAGE_KEY, JSON.stringify(shift))
+	} catch { /* quota */ }
+}
+
+function clearShiftFromLocal() {
+	try {
+		localStorage.removeItem(SHIFT_STORAGE_KEY)
+	} catch { /* ignore */ }
+}
+
+function restoreLocalShift() {
+	try {
+		const raw = localStorage.getItem(SHIFT_STORAGE_KEY)
+		if (!raw) return null
+		const shift = JSON.parse(raw)
+		if (shift?.status !== 'open') return null
+		return shift
+	} catch { return null }
+}
+
 export function ShiftProvider({ children }) {
 	const [state, dispatch] = useReducer(shiftReducer, INITIAL_SHIFT_STATE)
 	const shiftRef = useRef(state.shift)
 	shiftRef.current = state.shift
 
-	// On mount, fetch the active shift from the server (source of truth)
 	useEffect(() => {
-		shiftService.getActiveShift().then((serverShift) => {
-			if (!serverShift) return
-			dispatch({ type: 'SET_SHIFT', shift: {
-				openingTime: serverShift.openingTime,
-				openingCash: serverShift.openingCash,
-				sales: serverShift.sales ?? [],
-				adjustments: serverShift.adjustments ?? [],
-				status: 'open',
-				_dbId: serverShift._id,
-			}})
-		}).catch(() => {})
+		if (state.shift && state.shift.status === 'open') {
+			saveShiftToLocal(state.shift)
+		}
+	}, [state.shift])
+
+	useEffect(() => {
+		shiftService.getActiveShift()
+			.then((serverShift) => {
+				if (serverShift) {
+					const localShift = restoreLocalShift()
+					const mergedSales = [
+						...(localShift?.sales ?? []).filter((ls) =>
+							!serverShift.sales?.some((ss) => ss.ticketId === ls.ticketId),
+						),
+						...(serverShift.sales ?? []),
+					]
+					dispatch({ type: 'SET_SHIFT', shift: {
+						openingTime: serverShift.openingTime,
+						openingCash: serverShift.openingCash,
+						sales: mergedSales,
+						adjustments: serverShift.adjustments ?? [],
+						status: 'open',
+						_dbId: serverShift._id,
+					}})
+					clearShiftFromLocal()
+				} else {
+					const localShift = restoreLocalShift()
+					if (localShift) {
+						dispatch({ type: 'SET_SHIFT', shift: localShift })
+					}
+				}
+			})
+			.catch(() => {
+				const localShift = restoreLocalShift()
+				if (localShift) {
+					dispatch({ type: 'SET_SHIFT', shift: localShift })
+				}
+			})
 	}, [])
 
 	const openShift = useCallback(async (openingCash) => {
@@ -75,7 +125,9 @@ export function ShiftProvider({ children }) {
 					unitPrice: sale.unitPrice,
 					total: sale.total,
 				})
-			} catch { /* ignore */ }
+			} catch {
+				console.warn('addSale: falló el servidor, venta solo local')
+			}
 		}
 	}, [])
 
@@ -100,21 +152,24 @@ export function ShiftProvider({ children }) {
 		dispatch({ type: 'BATCH_ADD_SALES', sales: saleItems })
 
 		if (current._dbId) {
+			const apiItems = prepared.map((item) => ({
+				productId: item.productId,
+				presentationId: item.presentationId,
+				quantity: item.quantity,
+				unitPrice: item.unitPrice,
+				total: item.total,
+			}))
 			try {
-				const apiItems = prepared.map((item) => ({
-					productId: item.productId,
-					presentationId: item.presentationId,
-					quantity: item.quantity,
-					unitPrice: item.unitPrice,
-					total: item.total,
-				}))
 				await shiftService.recordTicket(current._dbId, {
 					items: apiItems,
 					paymentMethod,
 					ticketId,
 					collectedTotal,
 				})
-			} catch { /* ignore */ }
+			} catch (err) {
+				dispatch({ type: 'REMOVE_SALES_BY_TICKET', ticketId })
+				throw err
+			}
 		}
 	}, [])
 
@@ -135,7 +190,9 @@ export function ShiftProvider({ children }) {
 		if (current._dbId) {
 			try {
 				await shiftService.addAdjustment(current._dbId, { amount, type, description })
-			} catch { /* ignore */ }
+			} catch {
+				console.warn('addAdjustment: falló el servidor, ajuste solo local')
+			}
 		}
 	}, [])
 
@@ -172,9 +229,12 @@ export function ShiftProvider({ children }) {
 					await shiftService.syncSales(currentDbId, current.sales)
 				}
 				await shiftService.closeShift(currentDbId, closingCash, notes)
-			} catch { /* close valid locally */ }
+			} catch {
+				console.warn('closeShift: falló el servidor, cierre solo local')
+			}
 		}
 
+		saveShiftToLocal(closed)
 		dispatch({ type: 'CLOSE', closedShift: closed })
 		return closed
 	}, [])
@@ -192,6 +252,7 @@ export function ShiftProvider({ children }) {
 	}, [])
 
 	const cancelShift = useCallback(() => {
+		clearShiftFromLocal()
 		dispatch({ type: 'CLEAR' })
 	}, [])
 

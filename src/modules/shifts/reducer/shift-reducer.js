@@ -44,6 +44,14 @@ export function shiftReducer(state, action) {
 					),
 				},
 			}
+		case 'REMOVE_SALES_BY_TICKET':
+			return {
+				...state,
+				shift: {
+					...state.shift,
+					sales: state.shift.sales.filter((s) => s.ticketId !== action.ticketId),
+				},
+			}
 		case 'ADD_ADJUSTMENT':
 			return {
 				...state,
