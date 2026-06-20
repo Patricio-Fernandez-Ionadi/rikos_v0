@@ -168,13 +168,13 @@ index.html → src/main.jsx → [DataProvider] → [ShiftProvider] → App → P
 
 ### Backend (Express + Mongoose)
 - `server/index.js` — Express app on port 3001, connects to MongoDB via `MONGODB_URI`
-- Models in `server/models/`: `Category`, `Product`, `Presentation` (with `stock`), `Shift`, `Supplier`, `ProductSupplier`, `Order`, `Task`, `Note`
+- Models in `server/models/`: `Category`, `Product`, `Presentation` (with `stock`), `Shift`, `Supplier`, `ProductSupplier`, `Order`, `Task`, `Ticket`
 - REST routes in `server/routes/`: full CRUD for all entities + special endpoints:
   - `PATCH /orders/:id/items` — Add item to an open order (sums quantity if product exists)
   - `PATCH /orders/:id/status` — Change order status (`open` ↔ `placed`)
   - `GET /orders?status=` — Filter orders by status
   - `POST/PUT /product-suppliers` — Accepts `supplierUnitLabel` and `supplierUnitQty`
-  - `GET /backup/export?scope=completo|productos|transacciones|notas-tareas` — JSON backup filtered by scope, uses Mongoose `Model.insertMany()` on restore to preserve ObjectId
+  - `GET /backup/export?scope=completo|productos|transacciones|tickets-tareas` — JSON backup filtered by scope, uses Mongoose `Model.insertMany()` on restore to preserve ObjectId
 - Run `npm run seed` to populate MongoDB from existing `seed.json`
 
 ### Quick Order from Product

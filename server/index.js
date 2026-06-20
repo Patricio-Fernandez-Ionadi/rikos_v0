@@ -14,7 +14,7 @@ import categoriesRouter from './routes/categories.js'
 import productsRouter from './routes/products.js'
 import presentationsRouter from './routes/presentations.js'
 import shiftsRouter from './routes/shifts.js'
-import notesRouter from './routes/notes.js'
+import ticketsRouter from './routes/tickets.js'
 import suppliersRouter from './routes/suppliers.js'
 import productSuppliersRouter from './routes/product-suppliers.js'
 import tasksRouter from './routes/tasks.js'
@@ -32,7 +32,7 @@ app.use('/api/categories', categoriesRouter)
 app.use('/api/products', productsRouter)
 app.use('/api/presentations', presentationsRouter)
 app.use('/api/shifts', shiftsRouter)
-app.use('/api/notes', notesRouter)
+app.use('/api/tickets', ticketsRouter)
 app.use('/api/suppliers', suppliersRouter)
 app.use('/api/product-suppliers', productSuppliersRouter)
 app.use('/api/tasks', tasksRouter)

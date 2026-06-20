@@ -74,11 +74,11 @@ export const createTask = (data) => request('/tasks', { method: 'POST', body: JS
 export const updateTaskNote = (id, note) => request(`/tasks/${id}/note`, { method: 'PATCH', body: JSON.stringify({ note }) })
 export const deleteTask = (id) => request(`/tasks/${id}`, { method: 'DELETE' })
 
-// ─── Notes ─────────────────────────────────────────────────
-export const getNotes = (status) => request(`/notes${status ? `?status=${status}` : ''}`)
-export const createNote = (data) => request('/notes', { method: 'POST', body: JSON.stringify(data) })
-export const updateNoteStatus = (id, status) => request(`/notes/${id}/status`, { method: 'PATCH', body: JSON.stringify({ status }) })
-export const deleteNote = (id) => request(`/notes/${id}`, { method: 'DELETE' })
+// ─── Tickets ───────────────────────────────────────────────
+export const getTickets = (status) => request(`/tickets${status ? `?status=${status}` : ''}`)
+export const createTicket = (data) => request('/tickets', { method: 'POST', body: JSON.stringify(data) })
+export const updateTicketStatus = (id, status) => request(`/tickets/${id}/status`, { method: 'PATCH', body: JSON.stringify({ status }) })
+export const deleteTicket = (id) => request(`/tickets/${id}`, { method: 'DELETE' })
 
 // ─── Suppliers ─────────────────────────────────────────────
 export const getSuppliers = () => request('/suppliers')

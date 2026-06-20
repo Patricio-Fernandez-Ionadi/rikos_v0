@@ -10,7 +10,7 @@ const LINKS = [
 	{ to: '/stock', label: 'Stock' },
 	{ to: '/shifts', label: 'Turnos' },
 	{ to: '/tasks', label: 'Tareas' },
-	{ to: '/soporte', label: 'Soporte' },
+	{ to: '/tickets', label: 'Tickets' },
 	{ to: '/categories', label: 'Categorias' },
 	{ to: '/promo-sets', label: 'Promos' },
 	{ to: '/menu', label: 'Menú' },
@@ -38,7 +38,7 @@ const GROUPS = [
 	},
 	{
 		label: 'Soporte',
-		links: [{ to: '/soporte', label: 'Soporte' }],
+		links: [{ to: '/tickets', label: 'Tickets' }],
 	},
 ]
 

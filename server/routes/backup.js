@@ -24,7 +24,7 @@ router.use(checkAuth)
 const SCOPE_MAP = {
   productos: ['products', 'presentations', 'categories', 'suppliers', 'productsuppliers'],
   transacciones: ['shifts', 'orders', 'promosets'],
-  'notas-tareas': ['notes', 'tasks'],
+  'tickets-tareas': ['tickets', 'tasks'],
 }
 
 router.get('/export', async (req, res, next) => {
@@ -47,7 +47,7 @@ router.get('/export', async (req, res, next) => {
     const payload = {
       _meta: {
         exportedAt: new Date().toISOString(),
-        version: process.env.npm_package_version || '0.3.0',
+        version: process.env.npm_package_version || '0.4.0',
         scope,
         collections: Object.keys(data),
       },

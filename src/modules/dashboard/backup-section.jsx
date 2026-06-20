@@ -7,7 +7,7 @@ const SCOPES = [
   { key: 'completo', label: 'Completo' },
   { key: 'productos', label: 'Productos' },
   { key: 'transacciones', label: 'Transacciones' },
-  { key: 'notas-tareas', label: 'Notas y Tareas' },
+  { key: 'tickets-tareas', label: 'Tickets y Tareas' },
 ]
 
 function buildProductRows(data) {

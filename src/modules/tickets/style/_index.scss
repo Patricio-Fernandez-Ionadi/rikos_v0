@@ -1,31 +1,31 @@
 @use '../../../theme/values/colors' as *;
 @use '../../../theme/values/sizes' as *;
 
-.soporte-page {
+.ticket-page {
 	padding: 24px;
 	max-width: 720px;
 	margin: 0 auto;
 }
 
-.soporte-page__title {
+.ticket-page__title {
 	color: $white;
 	margin-bottom: 4px;
 }
 
-.soporte-page__desc {
+.ticket-page__desc {
 	color: $grey_light;
 	font-size: 0.9em;
 	margin-bottom: 24px;
 }
 
-.soporte-form {
+.ticket-form {
 	background: $bg_surface;
 	border-radius: $smooth;
 	padding: 16px;
 	margin-bottom: 32px;
 }
 
-.soporte-form__row {
+.ticket-form__row {
 	margin-bottom: 12px;
 
 	&:last-child {
@@ -33,57 +33,53 @@
 	}
 }
 
-.soporte-form__select {
+.ticket-form__select {
 	width: 100%;
 }
 
-.soporte-form__textarea {
+.ticket-form__textarea {
 	width: 100%;
 	resize: vertical;
 	font-family: inherit;
 }
 
-.soporte-list {
+.ticket-list {
 	display: flex;
 	flex-direction: column;
 	gap: 12px;
 }
 
-.soporte-card {
+.ticket-card {
 	background: $bg_surface;
 	border-radius: $smooth;
 	padding: 12px 16px;
 	border-left: 3px solid $grey;
 }
 
-.soporte-card--bug {
+.ticket-card--bug {
 	border-left-color: $error;
 }
 
-.soporte-card--sugerencia {
+.ticket-card--sugerencia {
 	border-left-color: $success;
 }
 
-.soporte-card--otro {
+.ticket-card--otro {
 	border-left-color: $grey;
 }
 
-.soporte-card--resolved {
+.ticket-card--resolved {
 	opacity: 0.75;
 }
 
-.soporte-card--suppressed {
-	opacity: 0.55;
-}
-
-.soporte-card__header {
+.ticket-card__header {
 	display: flex;
 	align-items: center;
 	gap: 8px;
 	margin-bottom: 8px;
 }
 
-.soporte-card__badge {
+.ticket-card__badge {
 	font-size: 0.75em;
 	padding: 2px 8px;
 	border-radius: $thin;
@@ -91,28 +87,28 @@
 	text-transform: uppercase;
 }
 
-.soporte-card__badge--bug {
+.ticket-card__badge--bug {
 	background: $error;
 	color: $white;
 }
 
-.soporte-card__badge--sugerencia {
+.ticket-card__badge--sugerencia {
 	background: $success;
 	color: $white;
 }
 
-.soporte-card__badge--otro {
+.ticket-card__badge--otro {
 	background: $grey;
 	color: $white;
 }
 
-.soporte-card__date {
+.ticket-card__date {
 	color: $grey_light;
 	font-size: 0.8em;
 	margin-right: auto;
 }
 
-.soporte-card__text {
+.ticket-card__text {
 	color: $white;
 	font-size: 0.95em;
 	line-height: 1.5;
@@ -122,7 +118,7 @@
 }
 
 // ─── Status badge ──────────────────────────────
-.soporte-card__status {
+.ticket-card__status {
 	font-size: 0.7em;
 	padding: 2px 8px;
 	border-radius: $thin;
@@ -130,18 +126,13 @@
 	text-transform: uppercase;
 }
 
-.soporte-card__status--resolved {
+.ticket-card__status--resolved {
 	background: $info;
 	color: $white;
 }
 
-.soporte-card__status--suppressed {
-	background: $grey;
-	color: $white;
-}
-
 // ─── Tabs ──────────────────────────────────────
-.soporte-tabs {
+.ticket-tabs {
 	display: flex;
 	gap: 4px;
 	margin-bottom: 16px;
@@ -150,7 +141,7 @@
 	padding: 4px;
 }
 
-.soporte-tabs__tab {
+.ticket-tabs__tab {
 	flex: 1;
 	padding: 8px 12px;
 	border: none;
@@ -172,12 +163,12 @@
 	}
 }
 
-.soporte-tabs__tab--active {
+.ticket-tabs__tab--active {
 	background: $bg_elevated;
 	color: $white;
 }
 
-.soporte-tabs__count {
+.ticket-tabs__count {
 	font-size: 0.8em;
 	padding: 0 6px;
 	border-radius: 10px;
