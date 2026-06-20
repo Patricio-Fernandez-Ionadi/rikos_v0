@@ -13,6 +13,7 @@ const taskSchema = new mongoose.Schema({
   },
   name: { type: String, default: '' },
   note: { type: String, default: '' },
+  status: { type: String, enum: ['pending', 'viewed'], default: 'pending' },
 }, { timestamps: true })
 
 taskSchema.index({ type: 1 })

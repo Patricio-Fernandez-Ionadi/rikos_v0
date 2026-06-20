@@ -3,9 +3,9 @@ import { useTaskCard } from '../modules/tasks/task-card-manager.js'
 import { TaskCard } from '../modules/tasks/task-card.jsx'
 import { useCatalog } from '../app/catalog-context.jsx'
 
-const TaskCardWrapper = ({ group, allTasks, toggleProduct, addSuggested, addTextTask, updateNote, removeTask, allProducts, allPresentations }) => {
-	const props = useTaskCard({ group, allTasks, allProducts, allPresentations, toggleProduct, addSuggested, addTextTask, updateNote })
-	return <TaskCard group={group} removeTask={removeTask} allPresentations={allPresentations} {...props} />
+const TaskCardWrapper = ({ group, allTasks, toggleProduct, addSuggested, addTextTask, updateNote, removeTask, markTaskStatus, allProducts, allPresentations }) => {
+	const props = useTaskCard({ group, allTasks, allProducts, allPresentations, toggleProduct, addSuggested, addTextTask, updateNote, markTaskStatus })
+	return <TaskCard group={group} removeTask={removeTask} markTaskStatus={markTaskStatus} allPresentations={allPresentations} {...props} />
 }
 
 export const TasksPage = () => {
@@ -17,6 +17,7 @@ export const TasksPage = () => {
 		addSuggested,
 		addTextTask,
 		updateTaskNote,
+		markTaskStatus,
 		removeTask,
 	} = useTasksManager()
 
@@ -41,6 +42,7 @@ export const TasksPage = () => {
 							addSuggested={addSuggested}
 							addTextTask={addTextTask}
 							updateNote={updateTaskNote}
+							markTaskStatus={markTaskStatus}
 							removeTask={removeTask}
 							allProducts={products}
 							allPresentations={presentations}

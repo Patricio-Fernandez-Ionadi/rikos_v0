@@ -119,6 +119,14 @@ export function useTasksManager() {
 		[bump],
 	)
 
+	const markTaskStatus = useCallback(
+		async (id, status) => {
+			await tasksData.updateTaskStatus(id, status)
+			bump()
+		},
+		[bump],
+	)
+
 	const removeTask = useCallback(
 		async (id) => {
 			await tasksData.removeTaskById(id)
@@ -159,5 +167,6 @@ export function useTasksManager() {
 		removeTask,
 		getProductTaskCategories,
 		getProductNote,
+		markTaskStatus,
 	}
 }

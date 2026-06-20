@@ -72,6 +72,7 @@ export const updateOrderStatus = (id, status) => request(`/orders/${id}/status`,
 export const getTasks = () => request('/tasks')
 export const createTask = (data) => request('/tasks', { method: 'POST', body: JSON.stringify(data) })
 export const updateTaskNote = (id, note) => request(`/tasks/${id}/note`, { method: 'PATCH', body: JSON.stringify({ note }) })
+export const updateTaskStatus = (id, status) => request(`/tasks/${id}/status`, { method: 'PATCH', body: JSON.stringify({ status }) })
 export const deleteTask = (id) => request(`/tasks/${id}`, { method: 'DELETE' })
 
 // ─── Tickets ───────────────────────────────────────────────

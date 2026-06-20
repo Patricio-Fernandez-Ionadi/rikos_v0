@@ -11,6 +11,7 @@ const STORAGE_KEY = 'rikos_tasks_v3'
  * @property {string|null} productId — product ObjectId, null for name-based
  * @property {string}  name       — suggested product name / description
  * @property {string}  note       — additional detail (quantity, instruction, etc.)
+ * @property {string}  status     — 'pending' | 'viewed'
  */
 
 /** @returns {TaskItem[]} */
@@ -55,6 +56,7 @@ export async function init() {
       productId: t.productId ?? null,
       name: t.name ?? '',
       note: t.note ?? '',
+      status: t.status || 'pending',
     }))
     setCache(mapped)
     return mapped
@@ -187,6 +189,25 @@ export async function updateNote(id, note) {
     try {
       await taskService.updateNote(id, note)
     } catch { /* keep local update */ }
+  }
+}
+
+/**
+ * Update a task's status (pending / viewed).
+ * @param {string} id
+ * @param {'pending'|'viewed'} status
+ * @returns {Promise<void>}
+ */
+export async function updateTaskStatus(id, status) {
+  const prev = getCache()
+  setCache(prev.map((t) => (t._id === id ? { ...t, status } : t)))
+
+  if (!id.startsWith('temp_')) {
+    try {
+      await taskService.updateStatus(id, status)
+    } catch {
+      setCache(prev)
+    }
   }
 }
 

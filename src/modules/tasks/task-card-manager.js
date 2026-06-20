@@ -2,13 +2,14 @@ import { useState, useMemo } from 'react'
 
 const MAX_VISIBLE = 3
 
-export function useTaskCard({ group, allTasks = [], allProducts = [], allPresentations = [], toggleProduct, addSuggested, addTextTask, updateNote }) {
+export function useTaskCard({ group, allTasks = [], allProducts = [], allPresentations = [], toggleProduct, addSuggested, addTextTask, updateNote, markTaskStatus }) {
 	const [searchTerm, setSearchTerm] = useState('')
 	const [suggestionName, setSuggestionName] = useState('')
 	const [showAdd, setShowAdd] = useState(false)
-	const [expanded, setExpanded] = useState(false)
 	const [editingNoteId, setEditingNoteId] = useState(null)
 	const [noteValue, setNoteValue] = useState('')
+	const [modalOpen, setModalOpen] = useState(false)
+	const [modalTab, setModalTab] = useState('pending')
 
 	const [otrosDesc, setOtrosDesc] = useState('')
 	const [otrosSearch, setOtrosSearch] = useState('')
@@ -43,9 +44,11 @@ export function useTaskCard({ group, allTasks = [], allProducts = [], allPresent
 		return allTasks.filter((t) => t.productId)
 	}, [allTasks, isNameType, isTextBased])
 
-	const total = displayItems.length
-	const visibleItems = expanded ? displayItems : displayItems.slice(0, MAX_VISIBLE)
-	const hiddenCount = total - MAX_VISIBLE
+	const pendingItems = useMemo(() => displayItems.filter((t) => t.status !== 'viewed'), [displayItems])
+	const viewedItems = useMemo(() => displayItems.filter((t) => t.status === 'viewed'), [displayItems])
+	const total = pendingItems.length
+	const visibleItems = pendingItems.slice(0, MAX_VISIBLE)
+	const hiddenCount = pendingItems.length - MAX_VISIBLE
 
 	const handleToggleProduct = (productId) => {
 		toggleProduct(productId)
@@ -107,7 +110,6 @@ export function useTaskCard({ group, allTasks = [], allProducts = [], allPresent
 
 	return {
 		showAdd, setShowAdd,
-		expanded, setExpanded,
 		editingNoteId, noteValue, setNoteValue,
 		searchTerm, setSearchTerm,
 		suggestionName, setSuggestionName,
@@ -116,6 +118,8 @@ export function useTaskCard({ group, allTasks = [], allProducts = [], allPresent
 		otrosLinkedProduct, setOtrosLinkedProduct,
 		filtered, otrosFiltered, displayItems, total, visibleItems, hiddenCount,
 		isNameType, isTextBased,
+		modalOpen, setModalOpen, modalTab, setModalTab,
+		pendingItems, viewedItems,
 		handleToggleProduct,
 		handleAddSuggestion,
 		handleAddOtros,
@@ -126,5 +130,6 @@ export function useTaskCard({ group, allTasks = [], allProducts = [], allPresent
 		getProduct,
 		getProductPresentations,
 		handleTogglePres,
+		markTaskStatus,
 	}
 }

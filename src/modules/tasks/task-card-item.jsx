@@ -3,7 +3,7 @@ import { DottedMenu } from '../../components/dotted-menu.jsx'
 
 const PRES_GROUP_KEYS = ['falta-envasar', 'falta-stock']
 
-export function TaskCardItem({ task, isNameType, isTextBased, groupKey, getProduct, getProductPresentations, editingNoteId, noteValue, setNoteValue, handleNoteSave, handleNoteKeyDown, handleNoteClick, handleTogglePres, removeTask }) {
+export function TaskCardItem({ task, isNameType, isTextBased, groupKey, getProduct, getProductPresentations, editingNoteId, noteValue, setNoteValue, handleNoteSave, handleNoteKeyDown, handleNoteClick, handleTogglePres, removeTask, markTaskStatus }) {
   const hasProduct = !!task.productId
   const prod = hasProduct ? getProduct(task.productId) : null
   const displayName = isNameType || isTextBased ? task.name : (prod?.name ?? '—')
@@ -20,11 +20,15 @@ export function TaskCardItem({ task, isNameType, isTextBased, groupKey, getProdu
   const showNote = isTextBased
 
   const dottedItems = [
+    ...(task.status === 'viewed'
+      ? [{ label: 'Marcar como pendiente', onClick: () => markTaskStatus(task._id, 'pending') }]
+      : [{ label: 'Marcar como visto', onClick: () => markTaskStatus(task._id, 'viewed') }]
+    ),
     { label: 'Eliminar', onClick: () => removeTask(task._id), danger: true },
   ]
 
   return (
-    <li className='tasks__card-item'>
+    <li className={`tasks__card-item${task.status === 'viewed' ? ' tasks__card-item--viewed' : ''}`}>
       <div className='tasks__card-item-body'>
         <div className='tasks__card-item-top'>
           {linkTo ? (

@@ -1,4 +1,5 @@
 @use '../../../theme/values/colors' as *;
+@use '../../../theme/values/sizes' as *;
 
 .tasks__card {
   background: $grey_dark;
@@ -242,6 +243,68 @@
   &:hover {
     color: $error;
   }
+}
+
+/* ── Viewed item ──────────────────────────── */
+.tasks__card-item--viewed {
+	opacity: 0.55;
+}
+
+/* ── Modal ─────────────────────────────────── */
+.tasks__modal-title {
+	color: $white;
+	margin: 0 0 2px;
+	font-size: 1.1em;
+}
+
+.tasks__modal-desc {
+	color: $grey_light;
+	margin: 0 0 16px;
+	font-size: 0.85em;
+}
+
+.tasks__modal-tabs {
+	display: flex;
+	gap: 4px;
+	margin-bottom: 12px;
+	background: $bg_surface;
+	border-radius: $smooth;
+	padding: 4px;
+}
+
+.tasks__modal-tab {
+	flex: 1;
+	padding: 8px 12px;
+	border: none;
+	border-radius: $thin;
+	background: transparent;
+	color: $grey_light;
+	cursor: pointer;
+	font-size: 0.85em;
+	font-weight: 500;
+	transition: all 0.2s ease;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 6px;
+
+	&:hover {
+		color: $white;
+		background: rgba($white, 0.05);
+	}
+}
+
+.tasks__modal-tab--active {
+	background: $bg_elevated;
+	color: $white;
+}
+
+.tasks__modal-tab-count {
+	font-size: 0.8em;
+	padding: 0 6px;
+	border-radius: 10px;
+	background: rgba($white, 0.1);
+	color: $grey_light;
 }
 
 /* ── Linked product badge inside item ──────── */
