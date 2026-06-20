@@ -24,8 +24,11 @@ import promoSetsRouter from './routes/promo-sets.js'
 
 const app = express()
 const PORT = process.env.PORT || 3001
+const ALLOWED_ORIGIN = process.env.ALLOWED_ORIGIN
 
-app.use(cors())
+app.use(cors({
+  origin: ALLOWED_ORIGIN ? ALLOWED_ORIGIN : true,
+}))
 app.use(express.json())
 
 app.use('/api/categories', categoriesRouter)

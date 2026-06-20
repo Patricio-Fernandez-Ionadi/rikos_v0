@@ -1,6 +1,63 @@
 import { useState, useRef } from 'react'
+import * as XLSX from 'xlsx'
 import { exportBackup, restoreBackup } from '../../data/api.js'
 import { Modal } from '../../components/Modal.jsx'
+
+function buildProductRows(data) {
+  const products = data?.products ?? []
+  const presentations = data?.presentations ?? []
+  const categories = data?.categories ?? []
+  const suppliers = data?.suppliers ?? []
+  const productSuppliers = data?.productsuppliers ?? []
+
+  const catMap = {}
+  for (const c of categories) catMap[c._id] = c.name
+
+  const psByProduct = {}
+  for (const ps of productSuppliers) {
+    if (!psByProduct[ps.productId]) psByProduct[ps.productId] = []
+    psByProduct[ps.productId].push(ps)
+  }
+
+  const presByProduct = {}
+  for (const p of presentations) {
+    if (!presByProduct[p.productId]) presByProduct[p.productId] = []
+    presByProduct[p.productId].push(p)
+  }
+
+  const supMap = {}
+  for (const s of suppliers) supMap[s._id] = s.name
+
+  const rows = []
+
+  for (const product of products) {
+    const presList = presByProduct[product._id]
+    if (!presList || presList.length === 0) continue
+
+    const pss = psByProduct[product._id] ?? []
+    const activePs = pss.find((ps) => ps.purchaseCost === product.purchaseCost)
+    const activeSupName = activePs ? supMap[activePs.supplierId] ?? '' : ''
+    const activeCost = activePs?.purchaseCost ?? ''
+    const activeUnitLabel = activePs?.supplierUnitLabel ?? ''
+
+    for (const pres of presList) {
+      rows.push({
+        Producto: product.name,
+        Categoría: catMap[product.categoryId] ?? '',
+        Marca: product.marca ?? '',
+        Presentación: pres.label ?? '',
+        Código: pres.code ?? '',
+        'Precio Venta': pres.salePrice ?? '',
+        Stock: pres.stock ?? 0,
+        'Proveedor Activo': activeSupName,
+        'Costo Compra': activeCost,
+        'Unidad Proveedor': activeUnitLabel,
+      })
+    }
+  }
+
+  return rows
+}
 
 export const BackupSection = () => {
   const [restoring, setRestoring] = useState(false)
@@ -11,8 +68,8 @@ export const BackupSection = () => {
   const handleExport = async () => {
     setLoading(true)
     try {
-      const data = await exportBackup()
-      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' })
+      const raw = await exportBackup()
+      const blob = new Blob([JSON.stringify(raw, null, 2)], { type: 'application/json' })
       const url = URL.createObjectURL(blob)
       const a = document.createElement('a')
       a.href = url
@@ -21,6 +78,38 @@ export const BackupSection = () => {
       URL.revokeObjectURL(url)
     } catch (e) {
       alert('Error al exportar backup: ' + e.message)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleExportExcel = async () => {
+    setLoading(true)
+    try {
+      const raw = await exportBackup()
+      const data = raw._meta ? raw.data : raw
+      const rows = buildProductRows(data)
+      const ws = XLSX.utils.json_to_sheet(rows)
+
+      const colWidths = [
+        { wch: 30 }, { wch: 16 }, { wch: 14 },
+        { wch: 18 }, { wch: 8 }, { wch: 12 },
+        { wch: 8 }, { wch: 20 }, { wch: 12 }, { wch: 16 },
+      ]
+      ws['!cols'] = colWidths
+
+      const wb = XLSX.utils.book_new()
+      XLSX.utils.book_append_sheet(wb, ws, 'Productos')
+      const xlsxData = XLSX.write(wb, { bookType: 'xlsx', type: 'array' })
+      const blob = new Blob([xlsxData], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' })
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = `rikos-productos-${new Date().toISOString().slice(0, 10)}.xlsx`
+      a.click()
+      URL.revokeObjectURL(url)
+    } catch (e) {
+      alert('Error al exportar Excel: ' + e.message)
     } finally {
       setLoading(false)
     }
@@ -66,6 +155,9 @@ export const BackupSection = () => {
         <div className='dashboard__backup-actions'>
           <button className='btn btn--primary' onClick={handleExport} disabled={loading}>
             {loading ? 'Exportando…' : 'Descargar Backup'}
+          </button>
+          <button className='btn' onClick={handleExportExcel} disabled={loading}>
+            {loading ? 'Exportando…' : 'Excel Productos'}
           </button>
           <button className='btn btn--danger' onClick={() => fileRef.current?.click()} disabled={loading}>
             Restaurar Backup
