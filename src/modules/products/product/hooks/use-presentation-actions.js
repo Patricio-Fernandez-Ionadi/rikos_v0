@@ -1,15 +1,11 @@
 import { useCallback } from 'react'
 import * as presService from '../services/presentation-services.js'
-import * as stockService from '../../../stock/services/stock-services.js'
 import { useToast } from '../../../../components/Toast.jsx'
 
 export function usePresentationActions({
   product,
   editingPres,
-  productPres,
-  isFraction,
   setPresentations,
-  setProducts,
 }) {
   const showToast = useToast()
 
@@ -55,60 +51,28 @@ export function usePresentationActions({
         setPresentations((prev) =>
           prev.map((p) => (p._id === updated._id ? updated : p)),
         )
-
-        if (isFraction && editingPres.grams) {
-          const oldStock = editingPres.stock ?? 0
-          const newStock = data.stock ?? 0
-          const delta = newStock - oldStock
-          if (delta !== 0) {
-            const gramsDelta = delta * editingPres.grams
-            const updatedProduct = await stockService.updateStockGrams(
-              product._id,
-              (product.stockGrams ?? 0) - gramsDelta,
-            )
-            setProducts((prev) =>
-              prev.map((p) =>
-                p._id === updatedProduct._id ? updatedProduct : p,
-              ),
-            )
-          }
-        }
         showToast('Presentación actualizada')
       } catch (e) {
         console.error(e)
         showToast('Error al actualizar presentación', 'error')
       }
     },
-    [editingPres, isFraction, product, setPresentations, setProducts, showToast],
+    [editingPres, setPresentations, showToast],
   )
 
   const handleDeletePres = useCallback(
     async (presId) => {
       if (!window.confirm('¿Eliminar esta presentación?')) return
       try {
-        const pres = productPres?.find((p) => p._id === presId)
         await presService.deletePresentation(presId)
         setPresentations((prev) => prev.filter((p) => p._id !== presId))
-
-        if (isFraction && pres?.grams && (pres.stock ?? 0) > 0) {
-          const recoveredGrams = (pres.stock ?? 0) * pres.grams
-          const updatedProduct = await stockService.updateStockGrams(
-            product._id,
-            (product.stockGrams ?? 0) + recoveredGrams,
-          )
-          setProducts((prev) =>
-            prev.map((p) =>
-              p._id === updatedProduct._id ? updatedProduct : p,
-            ),
-          )
-        }
         showToast('Presentación eliminada')
       } catch (e) {
         console.error(e)
         showToast('Error al eliminar presentación', 'error')
       }
     },
-    [isFraction, product, productPres, setPresentations, setProducts, showToast],
+    [setPresentations, showToast],
   )
 
   return { handleCreatePres, handleEditPres, handleDeletePres, handleRenumberPres }

@@ -18,6 +18,7 @@
 
 	.stock-cell--product {
 		width: 48%;
+		text-align: left;
 	}
 
 	.stock-cell--stock {
@@ -55,7 +56,8 @@
 	}
 
 	.stock-page__table {
-		th, td {
+		th,
+		td {
 			padding: 8px 6px;
 		}
 	}

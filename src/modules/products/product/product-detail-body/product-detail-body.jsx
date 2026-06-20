@@ -33,6 +33,7 @@ export function ProductDetailBody({
   handleUseSupplierCost,
   handleRemoveSupplier,
   handleAddSupplier,
+  handlePresentationStockChange,
   getProductTaskCategories,
   toggleProductTask,
   setEditProductOpen,
@@ -106,6 +107,7 @@ export function ProductDetailBody({
                 handleSale={handleSale}
                 onEdit={setEditingPres}
                 onDelete={handleDeletePres}
+                onStockChange={handlePresentationStockChange}
               />
             ))}
           </div>

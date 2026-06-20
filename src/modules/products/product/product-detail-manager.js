@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import { useCatalog } from '../../../app/catalog-context.jsx'
 import { useShift } from '../../shifts/shift-context.jsx'
 import { calculate } from '../../../data/index.js'
@@ -8,6 +8,7 @@ import { useProductDetailMutations } from './hooks/use-product-detail-mutations.
 import { usePresentationActions } from './hooks/use-presentation-actions.js'
 import { useSupplierActions } from './hooks/use-supplier-actions.js'
 import { useQuickOrder } from './hooks/use-quick-order.js'
+import * as stockService from '../../stock/services/stock-services.js'
 
 export function useProductDetail(productId) {
 	const {
@@ -71,10 +72,7 @@ export function useProductDetail(productId) {
 		usePresentationActions({
 			product,
 			editingPres,
-			productPres,
-			isFraction,
 			setPresentations,
-			setProducts,
 		})
 
 	const { handleAddSupplier, handleRemoveSupplier, handleUseSupplierCost } =
@@ -86,6 +84,17 @@ export function useProductDetail(productId) {
 
 	const { quickOrder } = useQuickOrder()
 	const [quickOrderOpen, setQuickOrderOpen] = useState(false)
+
+	const handlePresentationStockChange = useCallback(async (presId, newStock) => {
+		try {
+			const updated = await stockService.updateStock(presId, newStock)
+			setPresentations((prev) =>
+				prev.map((p) => (p._id === updated._id ? updated : p)),
+			)
+		} catch (e) {
+			console.error(e)
+		}
+	}, [setPresentations])
 
 	return {
 		product,
@@ -125,6 +134,7 @@ export function useProductDetail(productId) {
 		handleAddSupplier,
 		handleRemoveSupplier,
 		handleUseSupplierCost,
+		handlePresentationStockChange,
 		quickOrder,
 		quickOrderOpen,
 		setQuickOrderOpen,

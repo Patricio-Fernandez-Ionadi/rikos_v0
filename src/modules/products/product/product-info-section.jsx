@@ -42,7 +42,7 @@ export const ProductInfoSection = ({
 
 			<div className='detail-page__info-secondary'>
 				<div className='detail-page__info-secondary-item'>
-					<span className='detail-page__info-label'>Stock</span>
+					<span className='detail-page__info-label'>{isFraction ? 'Stock general' : 'Stock'}</span>
 					<span>
 						{isFraction ? (
 							stockGramsEdit ? (

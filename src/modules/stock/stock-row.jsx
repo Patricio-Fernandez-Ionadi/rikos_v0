@@ -17,21 +17,6 @@ export const StockRow = ({ pres, product, onNavigate }) => {
 			setPresentations((prev) =>
 				prev.map((p) => (p._id === updated._id ? updated : p)),
 			)
-
-			if (isFraction && pres.grams) {
-				const oldStock = pres.stock ?? 0
-				const delta = newStock - oldStock
-				if (delta !== 0) {
-					const gramsDelta = delta * pres.grams
-					const updatedProduct = await stockService.updateStockGrams(
-						product._id,
-						(product.stockGrams ?? 0) - gramsDelta,
-					)
-					setProducts((prev) =>
-						prev.map((p) => (p._id === updatedProduct._id ? updatedProduct : p)),
-					)
-				}
-			}
 		} catch (e) {
 			console.error(e)
 		}

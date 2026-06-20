@@ -1,5 +1,6 @@
 import { SaleForm } from '../../../components/sale-form.jsx'
 import { DottedMenu } from '../../../components/dotted-menu.jsx'
+import { InlineEdit } from '../../../components/inline-edit.jsx'
 
 export const PresentationCard = ({
 	pres,
@@ -11,6 +12,7 @@ export const PresentationCard = ({
 	handleSale,
 	onEdit,
 	onDelete,
+	onStockChange,
 }) => {
 	const calc = calculate(pres)
 	const diffClass =
@@ -58,7 +60,14 @@ export const PresentationCard = ({
 				</div>
 				<div className='detail-page__pres-row'>
 					<span>Stock:</span>
-					<span>{pres.stock ?? 0}</span>
+					<span>
+						<InlineEdit
+							value={pres.stock ?? 0}
+							onSave={(val) => onStockChange(pres._id, val)}
+							suffix={product?.saleType === 'fraction' ? 'u' : 'u'}
+							simple
+						/>
+					</span>
 				</div>
 				<div className='detail-page__pres-row'>
 					<span>Margen:</span>
