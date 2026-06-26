@@ -45,6 +45,7 @@ export const ProductDetail = ({ productId, productList }) => {
 		handleRenumberPres,
 		hasMissingCodes,
 		handleStockGramsSave,
+		handleEtiquetasChange,
 		handleSale,
 		handleAddSupplier,
 		handleRemoveSupplier,
@@ -140,6 +141,7 @@ export const ProductDetail = ({ productId, productList }) => {
 				setStockGramsEdit={setStockGramsEdit}
 				setStockGramsValue={setStockGramsValue}
 				handleStockGramsSave={handleStockGramsSave}
+				handleEtiquetasChange={handleEtiquetasChange}
 				shift={shift}
 				calculate={calculate}
 				salePresId={salePresId}
