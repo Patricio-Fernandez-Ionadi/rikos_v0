@@ -7,7 +7,6 @@ import { useProductDetailEffect } from './hooks/use-product-detail-effect.js'
 import { useProductDetailMutations } from './hooks/use-product-detail-mutations.js'
 import { usePresentationActions } from './hooks/use-presentation-actions.js'
 import { useSupplierActions } from './hooks/use-supplier-actions.js'
-import { useQuickOrder } from './hooks/use-quick-order.js'
 import * as stockService from '../../stock/services/stock-services.js'
 import * as productService from '../services/product-services.js'
 
@@ -83,9 +82,6 @@ export function useProductDetail(productId) {
 			setProducts,
 		})
 
-	const { quickOrder } = useQuickOrder()
-	const [quickOrderOpen, setQuickOrderOpen] = useState(false)
-
 	const handlePresentationStockChange = useCallback(async (presId, newStock) => {
 		try {
 			const updated = await stockService.updateStock(presId, newStock)
@@ -149,9 +145,6 @@ export function useProductDetail(productId) {
 		handleUseSupplierCost,
 		handlePresentationStockChange,
 		handleEtiquetasChange,
-		quickOrder,
-		quickOrderOpen,
-		setQuickOrderOpen,
 		hasMissingCodes,
 	}
 }

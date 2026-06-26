@@ -544,12 +544,6 @@
 	width: 100%;
 }
 
-.detail-page__supplier-bulto {
-	color: $grey;
-	font-size: 0.85em;
-	flex: 1;
-}
-
 .detail-page__supplier-cost {
 	color: #e0e0e0;
 	font-size: 0.85em;
@@ -560,25 +554,6 @@
 	margin-top: 8px;
 	padding-top: 8px;
 	border-top: 1px solid rgba(55, 55, 55, 0.2);
-}
-
-.quick-order-form {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding: 8px 0;
-}
-
-.quick-order-form .field-hint {
-  color: $grey;
-  font-size: 0.9em;
-  padding: 4px 0;
-}
-
-.quick-order-form .field-value {
-  color: $primary;
-  font-size: 1.2em;
-  font-weight: 700;
 }
 
 .stock-edit-inline {

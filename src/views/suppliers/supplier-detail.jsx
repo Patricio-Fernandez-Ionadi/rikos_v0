@@ -18,8 +18,6 @@ export const SupplierDetailPage = () => {
     newCatId, setNewCatId,
     newName, setNewName,
     purchaseCost, setPurchaseCost,
-    bultoQuantity, setBultoQuantity,
-    bultoIsCustom, setBultoIsCustom,
     isFraction,
     editingPS, setEditingPS,
     editCost, setEditCost,
@@ -64,8 +62,6 @@ export const SupplierDetailPage = () => {
         newCatId={newCatId} setNewCatId={setNewCatId}
         newName={newName} setNewName={setNewName}
         purchaseCost={purchaseCost} setPurchaseCost={setPurchaseCost}
-        bultoQuantity={bultoQuantity} setBultoQuantity={setBultoQuantity}
-        bultoIsCustom={bultoIsCustom} setBultoIsCustom={setBultoIsCustom}
         isFraction={isFraction}
         handleAddProduct={handleAddProduct}
         categories={categories}

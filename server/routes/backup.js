@@ -23,7 +23,7 @@ router.use(checkAuth)
 
 const SCOPE_MAP = {
   productos: ['products', 'presentations', 'categories', 'suppliers', 'productsuppliers'],
-  transacciones: ['shifts', 'orders', 'promosets'],
+  transacciones: ['shifts', 'promosets'],
   'tickets-tareas': ['tickets', 'tasks'],
 }
 

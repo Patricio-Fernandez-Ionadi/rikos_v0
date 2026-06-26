@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom'
 import { Layout } from './layout'
-import { Dashboard, ProductsPage, ProductDetailPage, ShiftsPage, StockPage, TicketsPage, SuppliersPage, SupplierDetailPage, SupplierFormPage, SalePage, TasksPage, NewProductPage, OrdersPage, OrderFormPage, AlertsPage, CategoriesPage, PromoSetsPage, MenuPage } from '../views'
+import { Dashboard, ProductsPage, ProductDetailPage, ShiftsPage, StockPage, TicketsPage, SuppliersPage, SupplierDetailPage, SupplierFormPage, SalePage, TasksPage, NewProductPage, AlertsPage, CategoriesPage, PromoSetsPage, MenuPage } from '../views'
 
 export const Router = () => {
 	return (
@@ -20,9 +20,6 @@ export const Router = () => {
 				<Route path='shifts/sale' element={<SalePage />} />
 				<Route path='tickets' element={<TicketsPage />} />
         <Route path='tasks' element={<TasksPage />} />
-        <Route path='orders' element={<OrdersPage />} />
-        <Route path='orders/new' element={<OrderFormPage />} />
-        <Route path='orders/:id' element={<OrderFormPage />} />
         <Route path='alerts/:type' element={<AlertsPage />} />
         <Route path='promo-sets' element={<PromoSetsPage />} />
         <Route path='menu' element={<MenuPage />} />

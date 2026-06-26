@@ -70,12 +70,6 @@
   font-weight: 600;
 }
 
-.supplier-product-table__cost-bulto {
-  color: $grey_light;
-  font-weight: 400;
-  font-size: 0.85em;
-}
-
 .supplier-product-table__th--desktop,
 .supplier-product-table__desktop-cell {
   @media (max-width: $max-mobile) {

@@ -1,5 +1,4 @@
 import { FormActions } from '../../../../components/form-actions.jsx'
-import { BULTO_UNITS_OPTIONS, BULTO_KG_OPTIONS } from '../../supplier-detail-manager.js'
 
 export function SupplierAddProductForm({
   showAddForm, addMode, setAddMode,
@@ -8,15 +7,9 @@ export function SupplierAddProductForm({
   filteredAvailableProducts,
   newCatId, setNewCatId, newName, setNewName,
   purchaseCost, setPurchaseCost,
-  bultoQuantity, setBultoQuantity,
-  bultoIsCustom, setBultoIsCustom,
-  isFraction,
   handleAddProduct, categories,
 }) {
   if (!showAddForm) return null
-
-  const bultoOptions = isFraction ? BULTO_KG_OPTIONS : BULTO_UNITS_OPTIONS
-  const bultoLabel = isFraction ? 'kg' : 'uds'
 
   return (
     <div className='surface-card p-12 mb-16'>
@@ -51,42 +44,8 @@ export function SupplierAddProductForm({
         </>
       )}
 
-      <label className='field-label mt-4'>Precio por bulto ($)</label>
+      <label className='field-label mt-4'>Costo ($)</label>
       <input className='field-input' type='number' value={purchaseCost} onChange={(e) => setPurchaseCost(e.target.value)} />
-
-      <label className='field-label mt-4'>
-        {isFraction ? 'Kg del bulto' : 'Unidades por bulto'}
-      </label>
-      <div className='flex-row gap-8'>
-        <select className='field-input' value={bultoIsCustom ? '__custom__' : bultoQuantity}
-          onChange={(e) => {
-            const val = e.target.value
-            if (val === '__custom__') {
-              setBultoIsCustom(true)
-              setBultoQuantity('')
-            } else {
-              setBultoIsCustom(false)
-              setBultoQuantity(val)
-            }
-          }}>
-          <option value=''>Seleccionar…</option>
-          {bultoOptions.map((opt) => (
-            <option key={opt} value={opt}>{opt} {bultoLabel}</option>
-          ))}
-          <option value='__custom__'>Personalizado</option>
-        </select>
-        {bultoIsCustom && (
-          <input className='field-input field-input--sm' type='number' step='0.1' min='0.1'
-            value={bultoQuantity} placeholder='Valor'
-            onChange={(e) => setBultoQuantity(e.target.value)} style={{ width: 80 }} />
-        )}
-      </div>
-
-      {purchaseCost && bultoQuantity && (
-        <div className='text-primary mt-4 text-sm'>
-          Costo derivado: ${(parseFloat(purchaseCost) / parseFloat(bultoQuantity)).toFixed(2)} {isFraction ? '/kg' : '/unidad'}
-        </div>
-      )}
 
       <FormActions hideCancel submitLabel='Asignar' onSubmit={handleAddProduct}
         submitDisabled={

@@ -18,7 +18,6 @@ import ticketsRouter from './routes/tickets.js'
 import suppliersRouter from './routes/suppliers.js'
 import productSuppliersRouter from './routes/product-suppliers.js'
 import tasksRouter from './routes/tasks.js'
-import ordersRouter from './routes/orders.js'
 import backupRouter from './routes/backup.js'
 import promoSetsRouter from './routes/promo-sets.js'
 
@@ -36,7 +35,6 @@ app.use('/api/tickets', ticketsRouter)
 app.use('/api/suppliers', suppliersRouter)
 app.use('/api/product-suppliers', productSuppliersRouter)
 app.use('/api/tasks', tasksRouter)
-app.use('/api/orders', ordersRouter)
 app.use('/api/backup', backupRouter)
 app.use('/api/promo-sets', promoSetsRouter)
 

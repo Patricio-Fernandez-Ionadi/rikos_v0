@@ -6,11 +6,9 @@ import { useCatalog } from '../../../app/catalog-context.jsx'
 import { ProductDetailNav } from './product-detail-nav/product-detail-nav.jsx'
 import { ProductDetailBody } from './product-detail-body/product-detail-body.jsx'
 import { ProductDetailModals } from './product-detail-modals/product-detail-modals.jsx'
-import { QuickOrderModal } from './quick-order-modal.jsx'
-
 export const ProductDetail = ({ productId, productList }) => {
 	const navigate = useNavigate()
-	const { products, presentations, categories } = useCatalog()
+	const { products, categories } = useCatalog()
 	const {
 		product,
 		productPres,
@@ -50,7 +48,6 @@ export const ProductDetail = ({ productId, productList }) => {
 		handleAddSupplier,
 		handleRemoveSupplier,
 		handleUseSupplierCost,
-		quickOrder, quickOrderOpen, setQuickOrderOpen,
 	} = useProductDetail(productId)
 
 	const { getProductTaskCategories, toggleProductTask } = useTasksManager()
@@ -163,17 +160,6 @@ export const ProductDetail = ({ productId, productList }) => {
 				setEditProductOpen={setEditProductOpen}
 				handleDeleteProduct={handleDeleteProduct}
 				setPresFormOpen={setPresFormOpen}
-				onQuickOrder={() => setQuickOrderOpen(true)}
-			/>
-
-			<QuickOrderModal
-				open={quickOrderOpen}
-				onClose={() => setQuickOrderOpen(false)}
-				product={product}
-				productSuppliers={productSuppliers}
-				suppliers={suppliers}
-				presentations={presentations}
-				onConfirm={quickOrder}
 			/>
 
 			<ProductDetailModals

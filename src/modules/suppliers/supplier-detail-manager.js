@@ -3,9 +3,6 @@ import { useCatalog } from '../../app/catalog-context.jsx'
 import * as supplierService from './services/supplier-services.js'
 import * as productService from '../products/services/product-services.js'
 
-export const BULTO_UNITS_OPTIONS = [6, 12, 24, 36, 48, 60, 100]
-export const BULTO_KG_OPTIONS = [1, 1.5, 2, 2.5, 3, 5, 25, 50]
-
 /**
  * Manager hook for the supplier detail page.
  * Encapsulates all state, data loading, and actions.
@@ -37,8 +34,6 @@ export function useSupplierDetailManager(supplierId) {
 	const [newCatId, setNewCatId] = useState(categories[0]?._id ?? '')
 	const [newName, setNewName] = useState('')
 	const [purchaseCost, setPurchaseCost] = useState('')
-	const [bultoQuantity, setBultoQuantity] = useState('')
-	const [bultoIsCustom, setBultoIsCustom] = useState(false)
 
 	// ── Derived product type ────────────────────────────────
 	const selectedProduct = useMemo(
@@ -66,13 +61,10 @@ export function useSupplierDetailManager(supplierId) {
 
 		if (!pid) return
 		try {
-			const qty = bultoQuantity ? parseFloat(bultoQuantity) : 1
 			const ps = await supplierService.createProductSupplier({
 				productId: pid,
 				supplierId,
 				purchaseCost: cost,
-				bultoUnits: isFraction ? null : qty,
-				bultoKg: isFraction ? qty : null,
 			})
 			setProductSuppliers((prev) => [...prev, ps])
 		} catch (e) {
@@ -83,10 +75,8 @@ export function useSupplierDetailManager(supplierId) {
 		setSelectedProductId('')
 		setNewName('')
 		setPurchaseCost('')
-		setBultoQuantity('')
-		setBultoIsCustom(false)
 		setSearchTerm('')
-	}, [supplierId, addMode, selectedProductId, newName, newCatId, purchaseCost, bultoQuantity, isFraction, setProducts])
+	}, [supplierId, addMode, selectedProductId, newName, newCatId, purchaseCost, setProducts])
 
 	// ── Edit cost inline ────────────────────────────────────
 	const [editingPS, setEditingPS] = useState(null)
@@ -143,8 +133,6 @@ export function useSupplierDetailManager(supplierId) {
 		newCatId, setNewCatId,
 		newName, setNewName,
 		purchaseCost, setPurchaseCost,
-		bultoQuantity, setBultoQuantity,
-		bultoIsCustom, setBultoIsCustom,
 		isFraction,
 		editingPS, setEditingPS,
 		editCost, setEditCost,

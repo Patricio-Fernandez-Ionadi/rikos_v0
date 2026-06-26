@@ -6,7 +6,6 @@ import { version } from '../../../package.json'
 const LINKS = [
 	{ to: '/products', label: 'Productos' },
 	{ to: '/suppliers', label: 'Proveedores' },
-	{ to: '/orders', label: 'Pedidos' },
 	{ to: '/stock', label: 'Stock' },
 	{ to: '/shifts', label: 'Turnos' },
 	{ to: '/tasks', label: 'Tareas' },
@@ -29,7 +28,6 @@ const GROUPS = [
 	{
 		label: 'Operaciones',
 		links: [
-			{ to: '/orders', label: 'Pedidos' },
 			{ to: '/shifts', label: 'Turnos' },
 			{ to: '/promo-sets', label: 'Promos' },
 			{ to: '/tasks', label: 'Tareas' },
