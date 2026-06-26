@@ -9,6 +9,7 @@ export const ProductForm = ({ initial, categories, suppliers = [], onSubmit, onC
   const [categoryId, setCategoryId] = useState(initial?.categoryId ?? categories[0]?._id ?? '')
   const [name, setName] = useState(initial?.name ?? '')
   const [marca, setMarca] = useState(initial?.marca ?? '')
+  const [description, setDescription] = useState(initial?.description ?? '')
   const [productTags, setProductTags] = useState(initial?.tags ?? [])
   const [cost, setCost] = useState(initial?.purchaseCost ?? '')
   const [margin, setMargin] = useState(initial?.margin ?? '')
@@ -24,6 +25,7 @@ export const ProductForm = ({ initial, categories, suppliers = [], onSubmit, onC
       categoryId,
       name: name.trim(),
       marca: marca.trim(),
+      description: description.trim(),
       tags: productTags,
       purchaseCost: cost === '' ? null : parseFloat(cost),
       margin: margin === '' ? null : parseInt(margin),
@@ -44,6 +46,9 @@ export const ProductForm = ({ initial, categories, suppliers = [], onSubmit, onC
 
       <label className="field-label">Marca</label>
       <input className="field-input" type="text" value={marca} onChange={(e) => setMarca(e.target.value)} />
+
+      <label className="field-label">Descripción</label>
+      <textarea className="field-input field-textarea" value={description} onChange={(e) => setDescription(e.target.value)} rows={3} />
 
       <label className="field-label">Etiquetas</label>
       <TagInput

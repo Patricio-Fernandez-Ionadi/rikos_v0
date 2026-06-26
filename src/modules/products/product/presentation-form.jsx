@@ -7,8 +7,9 @@ import { FormActions } from '../../../components/form-actions.jsx'
 
 export const PresentationForm = ({ initial, onSubmit, onCancel, product }) => {
 	const isFraction = product?.saleType === 'fraction'
-	const [label, setLabel] = useState(initial?.label ?? '')
-	const [grams, setGrams] = useState(initial?.grams ?? '')
+  const [label, setLabel] = useState(initial?.label ?? '')
+  const [description, setDescription] = useState(initial?.description ?? '')
+  const [grams, setGrams] = useState(initial?.grams ?? '')
 	const [salePrice, setSalePrice] = useState(initial?.salePrice ?? '')
 	const [stock, setStock] = useState(initial?.stock ?? '')
 
@@ -33,9 +34,10 @@ export const PresentationForm = ({ initial, onSubmit, onCancel, product }) => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault()
-		onSubmit({
-			label: label.trim() || null,
-			grams: grams === '' ? null : parseInt(grams),
+    onSubmit({
+      label: label.trim() || null,
+      description: description.trim(),
+      grams: grams === '' ? null : parseInt(grams),
 			salePrice: salePrice === '' ? null : parseFloat(salePrice),
 			stock: stock === '' ? 0 : parseInt(stock),
 		})
@@ -58,15 +60,18 @@ export const PresentationForm = ({ initial, onSubmit, onCancel, product }) => {
 				<>
 					<label className='field-label'>Gramos (requerido)</label>
 					<input
-						className='field-input'
-						type='number'
-						value={grams}
-						onChange={(e) => setGrams(e.target.value)}
-					/>
-				</>
-			)}
+            className='field-input'
+            type='number'
+            value={grams}
+            onChange={(e) => setGrams(e.target.value)}
+          />
+        </>
+      )}
 
-			<div className='text-sm text-muted-light mb-8'>
+      <label className='field-label'>Descripción</label>
+      <textarea className='field-input field-textarea' value={description} onChange={(e) => setDescription(e.target.value)} rows={2} />
+
+      <div className='text-sm text-muted-light mb-8'>
 				Margen del producto: {product.margin != null ? `${product.margin}%` : 'No asignado'}
 			</div>
 

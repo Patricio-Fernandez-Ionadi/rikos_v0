@@ -53,6 +53,10 @@ export const PresentationCard = ({
 				/>
 			)}
 
+			{pres.description && (
+				<div className='detail-page__pres-description'>{pres.description}</div>
+			)}
+
 			<div className='detail-page__pres-details'>
 				<div className='detail-page__pres-row'>
 					<span>Cantidad:</span>

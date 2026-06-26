@@ -9,6 +9,7 @@ const productSchema = new mongoose.Schema({
   stockGrams: { type: Number, default: null },
   etiquetasDisponibles: { type: Number, default: null },
   marca: { type: String, default: '' },
+  description: { type: String, default: '' },
   tags: [{ type: String }],
   createdAt: { type: Date, default: Date.now },
   costUpdatedAt: { type: Date, default: null },

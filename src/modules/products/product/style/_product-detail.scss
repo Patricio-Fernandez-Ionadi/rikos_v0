@@ -227,8 +227,19 @@
 .detail-page__id {
 	color: $grey;
 	font-size: 0.75em;
-	margin-bottom: 16px;
+	margin-bottom: 8px;
 	word-break: break-all;
+}
+
+.detail-page__description {
+	color: $grey_light;
+	font-size: 0.9em;
+	line-height: 1.5;
+	margin-bottom: 16px;
+	padding: 8px 12px;
+	background: rgba(255, 255, 255, 0.03);
+	border-radius: 6px;
+	border-left: 3px solid $primary;
 }
 
 .detail-page__info {
@@ -459,6 +470,16 @@
 			border-color: $grey_dark;
 		}
 	}
+}
+
+.detail-page__pres-description {
+	color: $grey_light;
+	font-size: 0.85em;
+	line-height: 1.4;
+	margin-bottom: 10px;
+	padding: 6px 10px;
+	background: rgba(255, 255, 255, 0.02);
+	border-radius: 4px;
 }
 
 .detail-page__pres-details {

@@ -38,6 +38,7 @@ router.post('/', async (req, res, next) => {
       stockGrams: req.body.saleType === 'fraction' ? (req.body.stockGrams ?? 0) : null,
       etiquetasDisponibles: req.body.etiquetasDisponibles ?? null,
       marca: req.body.marca ?? '',
+      description: req.body.description ?? '',
       tags: req.body.tags ?? [],
     })
     res.status(201).json(prod)
@@ -55,6 +56,7 @@ router.put('/:id', async (req, res, next) => {
       stockGrams: req.body.stockGrams,
       etiquetasDisponibles: req.body.etiquetasDisponibles ?? null,
       marca: req.body.marca ?? '',
+      description: req.body.description ?? '',
       tags: req.body.tags ?? [],
     }
     if (req.body.purchaseCost !== undefined) {

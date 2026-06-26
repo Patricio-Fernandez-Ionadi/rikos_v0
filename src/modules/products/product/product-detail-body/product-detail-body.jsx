@@ -61,6 +61,10 @@ export function ProductDetailBody({
         </div>
       )}
 
+      {product.description && (
+        <div className='detail-page__description'>{product.description}</div>
+      )}
+
       <ProductInfo
         product={product}
         category={category}
