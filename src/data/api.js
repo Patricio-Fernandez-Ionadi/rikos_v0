@@ -33,6 +33,7 @@ export const createProduct = (data) => request('/products', { method: 'POST', bo
 export const updateProduct = (id, data) => request(`/products/${id}`, { method: 'PUT', body: JSON.stringify(data) })
 export const deleteProduct = (id) => request(`/products/${id}`, { method: 'DELETE' })
 export const updateStockGrams = (id, stockGrams) => request(`/products/${id}/stock-grams`, { method: 'PATCH', body: JSON.stringify({ stockGrams }) })
+export const updateEtiquetas = (id, etiquetasDisponibles) => request(`/products/${id}/etiquetas`, { method: 'PATCH', body: JSON.stringify({ etiquetasDisponibles }) })
 
 // ─── Presentations ─────────────────────────────────────────
 export const getPresentations = (productId) => request(`/presentations${productId ? `?productId=${productId}` : ''}`)

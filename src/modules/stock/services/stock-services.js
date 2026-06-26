@@ -8,6 +8,10 @@ export async function updateStockGrams(productId, stockGrams) {
 	return await api.updateStockGrams(productId, stockGrams)
 }
 
+export async function updateEtiquetas(productId, etiquetasDisponibles) {
+	return await api.updateEtiquetas(productId, etiquetasDisponibles)
+}
+
 export async function deletePresentationStock(id) {
 	await api.deletePresentation(id)
 }

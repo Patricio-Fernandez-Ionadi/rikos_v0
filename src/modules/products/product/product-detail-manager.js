@@ -9,6 +9,7 @@ import { usePresentationActions } from './hooks/use-presentation-actions.js'
 import { useSupplierActions } from './hooks/use-supplier-actions.js'
 import { useQuickOrder } from './hooks/use-quick-order.js'
 import * as stockService from '../../stock/services/stock-services.js'
+import * as productService from '../services/product-services.js'
 
 export function useProductDetail(productId) {
 	const {
@@ -96,6 +97,18 @@ export function useProductDetail(productId) {
 		}
 	}, [setPresentations])
 
+	const handleEtiquetasChange = useCallback(async (newVal) => {
+		if (!product) return
+		try {
+			const updated = await productService.updateProduct(product._id, { etiquetasDisponibles: newVal })
+			setProducts((prev) =>
+				prev.map((p) => (p._id === updated._id ? updated : p)),
+			)
+		} catch (e) {
+			console.error(e)
+		}
+	}, [product, setProducts])
+
 	return {
 		product,
 		productPres,
@@ -135,6 +148,7 @@ export function useProductDetail(productId) {
 		handleRemoveSupplier,
 		handleUseSupplierCost,
 		handlePresentationStockChange,
+		handleEtiquetasChange,
 		quickOrder,
 		quickOrderOpen,
 		setQuickOrderOpen,

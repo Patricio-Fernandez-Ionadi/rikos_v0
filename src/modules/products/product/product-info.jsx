@@ -13,6 +13,7 @@ export const ProductInfo = ({
 	setStockGramsEdit,
 	setStockGramsValue,
 	handleStockGramsSave,
+	handleEtiquetasChange,
 }) => {
 	return (
 		<ProductInfoSection
@@ -27,9 +28,11 @@ export const ProductInfo = ({
 			setStockGramsEdit={setStockGramsEdit}
 			setStockGramsValue={setStockGramsValue}
 			handleStockGramsSave={handleStockGramsSave}
+			handleEtiquetasChange={handleEtiquetasChange}
 			categoryName={category?.name ?? null}
 			saleTypeLabel={isFraction ? 'Fraccionable' : 'Unidad'}
 			marca={product.marca}
+			etiquetasDisponibles={product.etiquetasDisponibles}
 			activeSupplierName={activeSupplierName}
 			createdAt={product.createdAt}
 			costUpdatedAt={product.costUpdatedAt}

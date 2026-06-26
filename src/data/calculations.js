@@ -1,3 +1,6 @@
+/** Umbral mínimo de etiquetas disponibles para fraccionables */
+export const ETIQUETAS_THRESHOLD = 10
+
 /** Returns the number of units per kilogram, or null when grams are not set. */
 export function getUnitsPerKg(grams) {
   if (grams == null || grams <= 0) return null

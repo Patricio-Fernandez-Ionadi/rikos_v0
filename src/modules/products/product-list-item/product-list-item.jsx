@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useTasksManager } from '../../tasks/tasks-manager.js'
 import { useProductManager } from '../product-manager.js'
 import { TaskAssigner } from '../../tasks/task-assigner.jsx'
+import { ETIQUETAS_THRESHOLD } from '../../../data/calculations.js'
 
 export const ProductListItem = ({ product, onEvent }) => {
 	const [isTaskOpen, setIsTaskOpen] = useState(false)
@@ -22,6 +23,9 @@ export const ProductListItem = ({ product, onEvent }) => {
 					{product.name}
 					{product.marca && (
 						<span className='product-list__item-marca'> — {product.marca}</span>
+					)}
+					{product.saleType === 'fraction' && product.etiquetasDisponibles != null && product.etiquetasDisponibles < ETIQUETAS_THRESHOLD && (
+						<span className='badge badge--danger' style={{ marginLeft: 6, fontSize: '0.7em' }}>Sin etiquetas</span>
 					)}
 				</span>
 				</div>

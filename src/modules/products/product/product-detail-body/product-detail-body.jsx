@@ -34,6 +34,7 @@ export function ProductDetailBody({
   handleRemoveSupplier,
   handleAddSupplier,
   handlePresentationStockChange,
+  handleEtiquetasChange,
   getProductTaskCategories,
   toggleProductTask,
   setEditProductOpen,
@@ -77,6 +78,7 @@ export function ProductDetailBody({
         setStockGramsEdit={setStockGramsEdit}
         setStockGramsValue={setStockGramsValue}
         handleStockGramsSave={handleStockGramsSave}
+        handleEtiquetasChange={handleEtiquetasChange}
       />
 
       <div className='detail-page__section'>

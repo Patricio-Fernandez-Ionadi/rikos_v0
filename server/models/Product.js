@@ -7,6 +7,7 @@ const productSchema = new mongoose.Schema({
   margin: { type: Number, default: null },
   saleType: { type: String, enum: ['unit', 'fraction'], default: 'unit' },
   stockGrams: { type: Number, default: null },
+  etiquetasDisponibles: { type: Number, default: null },
   marca: { type: String, default: '' },
   tags: [{ type: String }],
   createdAt: { type: Date, default: Date.now },

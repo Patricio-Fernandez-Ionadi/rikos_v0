@@ -14,6 +14,7 @@ export const ProductForm = ({ initial, categories, suppliers = [], onSubmit, onC
   const [margin, setMargin] = useState(initial?.margin ?? '')
   const [saleType, setSaleType] = useState(initial?.saleType ?? 'unit')
   const [stockGrams, setStockGrams] = useState(initial?.stockGrams ?? '')
+  const [etiquetasDisponibles, setEtiquetasDisponibles] = useState(initial?.etiquetasDisponibles ?? '')
   const [supplierId, setSupplierId] = useState('')
 
   const handleSubmit = (e) => {
@@ -28,6 +29,7 @@ export const ProductForm = ({ initial, categories, suppliers = [], onSubmit, onC
       margin: margin === '' ? null : parseInt(margin),
       saleType,
       stockGrams: saleType === 'fraction' ? (stockGrams === '' ? 0 : parseInt(stockGrams)) : null,
+      etiquetasDisponibles: etiquetasDisponibles === '' ? null : parseInt(etiquetasDisponibles),
       supplierId: supplierId || undefined,
     })
   }
@@ -72,6 +74,8 @@ export const ProductForm = ({ initial, categories, suppliers = [], onSubmit, onC
         <>
           <label className="field-label">Stock total (gramos)</label>
           <input className="field-input" type="number" value={stockGrams} onChange={(e) => setStockGrams(e.target.value)} />
+          <label className="field-label mt-4">Etiquetas disponibles</label>
+          <input className="field-input" type="number" value={etiquetasDisponibles} onChange={(e) => setEtiquetasDisponibles(e.target.value)} />
         </>
       )}
 

@@ -36,6 +36,7 @@ router.post('/', async (req, res, next) => {
       margin: req.body.margin ?? null,
       saleType: req.body.saleType ?? 'unit',
       stockGrams: req.body.saleType === 'fraction' ? (req.body.stockGrams ?? 0) : null,
+      etiquetasDisponibles: req.body.etiquetasDisponibles ?? null,
       marca: req.body.marca ?? '',
       tags: req.body.tags ?? [],
     })
@@ -52,6 +53,7 @@ router.put('/:id', async (req, res, next) => {
       margin: req.body.margin,
       saleType: req.body.saleType,
       stockGrams: req.body.stockGrams,
+      etiquetasDisponibles: req.body.etiquetasDisponibles ?? null,
       marca: req.body.marca ?? '',
       tags: req.body.tags ?? [],
     }
@@ -73,6 +75,18 @@ router.patch('/:id/stock-grams', async (req, res, next) => {
     const prod = await Product.findByIdAndUpdate(
       req.params.id,
       { stockGrams: req.body.stockGrams },
+      { new: true },
+    )
+    if (!prod) return res.status(404).json({ error: 'Not found' })
+    res.json(prod)
+  } catch (e) { next(e) }
+})
+
+router.patch('/:id/etiquetas', async (req, res, next) => {
+  try {
+    const prod = await Product.findByIdAndUpdate(
+      req.params.id,
+      { etiquetasDisponibles: req.body.etiquetasDisponibles },
       { new: true },
     )
     if (!prod) return res.status(404).json({ error: 'Not found' })

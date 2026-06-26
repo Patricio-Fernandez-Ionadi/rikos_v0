@@ -1,4 +1,5 @@
 import { InlineEdit } from '../../../components/inline-edit.jsx'
+import { ETIQUETAS_THRESHOLD } from '../../../data/calculations.js'
 
 export const ProductInfoSection = ({
 	isFraction,
@@ -9,6 +10,7 @@ export const ProductInfoSection = ({
 	categoryName,
 	saleTypeLabel,
 	marca,
+	etiquetasDisponibles,
 	activeSupplierName,
 	createdAt,
 	costUpdatedAt,
@@ -17,7 +19,10 @@ export const ProductInfoSection = ({
 	setStockGramsEdit,
 	setStockGramsValue,
 	handleStockGramsSave,
+	handleEtiquetasChange,
 }) => {
+	const faltaEtiquetas = isFraction && etiquetasDisponibles != null && etiquetasDisponibles < ETIQUETAS_THRESHOLD
+
 	return (
 		<div className='detail-page__info'>
 			<div className='detail-page__info-primary'>
@@ -87,6 +92,24 @@ export const ProductInfoSection = ({
 						)}
 					</span>
 				</div>
+				{isFraction && (
+					<div className='detail-page__info-secondary-item'>
+						<span className='detail-page__info-label'>Etiquetas disponibles</span>
+						<span className='detail-page__info-etiquetas'>
+							<InlineEdit
+								value={etiquetasDisponibles ?? 0}
+								onSave={handleEtiquetasChange}
+								suffix='u'
+								simple
+							/>
+							{faltaEtiquetas && (
+								<span className='badge badge--danger' style={{ marginLeft: 8 }}>
+									⚠ Faltan etiquetas
+								</span>
+							)}
+						</span>
+					</div>
+				)}
 			</div>
 
 			<div className='detail-page__info-tertiary'>
